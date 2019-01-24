@@ -1,0 +1,18 @@
+Package: MQMF
+Title: Provides R Functions that run the Examples in MQMF
+Version: 0.0.2
+Date: 2019-01-25
+Authors@R: person("Malcolm", "Haddon", email = "malcolm@haddon.net.au", role = c("aut", "cre"))
+Maintainer: Malcolm Haddon <malcolm@haddon.net.au>
+Description: Provides R functions that enable the main examples within the book
+    Modelling and Quantative Methods in Fisheries (Haddon, 2011) to be run in R.
+    The package provides the required functions, the help of which
+    describe how those functions can be used to implement the MQMF examples.
+Depends: R (>= 3.5.0)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1
