@@ -4,8 +4,8 @@
 \alias{do_MCMC}
 \title{do_MCMC conducts an MCMC using Gibbs within Metropolis}
 \usage{
-do_MCMC(chains, burnin, N, step, inpar, infunk, calcpred, calcdat, obsdat,
-  priorcalc, scales)
+do_MCMC(chains, burnin, N, thinstep, inpar, infunk, calcpred, calcdat,
+  obsdat, priorcalc, scales)
 }
 \arguments{
 \item{chains}{the number of independent MCMC chains produced}
@@ -15,7 +15,8 @@ vectors begin to be kept.}
 
 \item{N}{the total number of posterior parameter vectors retained}
 
-\item{step}{the number of interations before a vector is kept}
+\item{thinstep}{the number of interations before a vector is kept; must 
+be divisible by the number of parameters}
 
 \item{inpar}{the initial parameter values (usually log-transformed)}
 

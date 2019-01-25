@@ -22,7 +22,8 @@
 #' @param burnin the number of steps made before candidate parameter
 #'     vectors begin to be kept.
 #' @param N the total number of posterior parameter vectors retained
-#' @param step the number of interations before a vector is kept
+#' @param thinstep the number of interations before a vector is kept; must 
+#'     be divisible by the number of parameters
 #' @param inpar the initial parameter values (usually log-transformed)
 #' @param infunk the function used to calculate the negative log-likelihood
 #' @param calcpred the function used by infunk to calculate the predicted
@@ -44,18 +45,17 @@
 #' \dontrun{
 #'  print("Still being developed")
 #' }
-do_MCMC <- function(chains,burnin,N,step,inpar,infunk,calcpred,calcdat,
+do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
                     obsdat,priorcalc,scales) {
    totN <- N + burnin
    result <- vector("list",chains)
    for (ch in 1:chains) {
       param <- inpar
       np <- length(param)  # Number of parameters
-      if ((step %% np) != 0)  # step must be divisible by np
-         stop("step length must be a multiple of number of parameters")
-      stepnp <- step/np
-      #burn <- step * 1
-      nRand <- np * step   # Number of random values needed for one step
+      if ((thinstep %% np) != 0)  # thinstep must be divisible by np
+         stop("Thinning step length must be a multiple of number of parameters")
+      stepnp <- thinstep/np
+      nRand <- np * thinstep #Number of random values needed for one thinstep
       posterior <- matrix(0,nrow=totN,ncol=(np+1))
       colnames(posterior) <- c("r","K","Binit","sigma","Post")
       arate <- numeric(np) # to store acceptance rate
@@ -63,7 +63,7 @@ do_MCMC <- function(chains,burnin,N,step,inpar,infunk,calcpred,calcdat,
       func0 <- exp(-infunk(param,calcpred,calcdat,obsdat) + priorcalc(param))
       posterior[1,] <- c(exp(param),func0)
       for (iter in 2:totN) {  # iter = 1
-         randinc <-  matrix(rnorm(nRand,mean=0,sd=1),nrow=step,ncol=np)
+         randinc <-  matrix(rnorm(nRand,mean=0,sd=1),nrow=thinstep,ncol=np)
          for (i in 1:np) randinc[,i] <- randinc[,i] * scales[i]
          for (st in 1:stepnp) {
             uniform <- runif(np)
@@ -80,12 +80,13 @@ do_MCMC <- function(chains,burnin,N,step,inpar,infunk,calcpred,calcdat,
                   frate[i] <- frate[i] + 1
                }
             }    # end of parameter loop
-         } # end of step loop
+         } # end of thinstep loop
          posterior[iter,] <- c(exp(param),func0)
       }
       posterior <- posterior[(burnin+1):totN,]
       posterior[,"Post"] <- posterior[,"Post"]/sum(posterior[,"Post"])
       result[[ch]] <- posterior
    } # end of chains loop
-   return(list(result=result,arate=arate/(N*step/np),frate=frate/(N*step/np)))
+   return(list(result=result,arate=arate/(N*step/np),
+               frate=frate/(N*thinstep/np)))
 } # end of do_MCMC

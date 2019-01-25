@@ -89,6 +89,37 @@ countgtOne <- function(invect) {
    return(length(pick1)/length(invect))
 }
 
+#' @title facttonum converts a vector of numeric factors into numbers
+#'
+#' @description facttonum converts a vector of numeric factors into numbers.
+#'     If the factors are not numeric then the outcome will be a series of NA.
+#'     It is up to you to apply this function only to numeric factors. A warning
+#'     will be thrown if the resulting output vector contains NAs
+#'
+#' @param invect the vector of numeric factors to be converted back to numbers
+#'
+#' @return an output vector of numbers instead of the input factors
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'  DepCat <- as.factor(rep(seq(100,600,100),2)); DepCat
+#'  5 * DepCat[3]
+#'  as.numeric(levels(DepCat))  # #only converts the levels not the replicates
+#'  DepCat <- facttonum(DepCat)
+#'  5 * DepCat[3]
+#'  x <- factor(letters)
+#'  facttonum(x)
+#' }
+facttonum <- function(invect){
+  if (class(invect) == "factor") {
+    outvect <- suppressWarnings(as.numeric(levels(invect))[invect])
+  }
+  if (class(invect) == "numeric") outvect <- invect
+  if (any(is.na(outvect)))
+    warning("NAs produced, your input vector may have non-numbers present \n")
+  return(outvect)
+} # end of facttonum
 
 #' @title freqMean calculates the mean and stdev of count data
 #'
@@ -424,6 +455,45 @@ printV <- function(invect,label=c("index","value")) {
    return(outvect)
 } # end of print_V
 
+#' @title properties - used to check a data.frame before standardization
+#'
+#' @description properties - used to check a data.frame before
+#'     standardization
+#' @param indat the data.frame containing the data fields to be used
+#'     in the subsequent standardization. It tabulates the number of
+#'     NAs and the number of unique values for each variable and finds
+#'     the minimum and maximum of the numeric variables
+#' @param dimout determines whether or noth the dimensions of the data.frame
+#'     are printed to the screen or not; defaults to FALSE
+#' @return a data.frame with the rows being each variable from the input
+#'     input data.frame and the columns being the number of NAs, the
+#'     number of unique values, and minimum and maximum (where possible).
+#' @export properties
+#' @examples
+#' \dontrun{
+#' data(abdat)
+#' properties(abdat$fish)
+#' }
+properties <- function(indat,dimout=FALSE) {
+  if(dimout) print(dim(indat))
+  isna <- sapply(indat,function(x) sum(is.na(x)))
+  uniques <- sapply(indat,function(x) length(unique(x)))
+  clas <- sapply(indat,class)
+  numbers <- c("integer","numeric")
+  pick <- which(clas %in% numbers)
+  minimum <- numeric(length(uniques))
+  maximum <- minimum
+  minimum[pick] <- sapply(indat[,pick],min,na.rm=TRUE)
+  maximum[pick] <- sapply(indat[,pick],max,na.rm=TRUE)
+  index <- 1:length(isna)
+  props <- as.data.frame(cbind(index,isna,uniques,clas,minimum,
+                               maximum,t(indat[1,])))
+  colnames(props) <- c("Index","isNA","Unique","Class","Min",
+                       "Max","Example")
+  return(props)
+} # end of properties
+
+
 #' @title quants used in apply to estimate quantiles across a vector
 #'
 #' @description quants used in 'apply' to estimate quantiles across a vector
@@ -465,3 +535,8 @@ which.closest <- function(x,invect,index=T) {
       return(invect[pick])
    }
 } # end of which_.closest
+
+#' @export '%ni%'
+`%ni%` <- function(x,y) {
+  !(x %in% y)
+}

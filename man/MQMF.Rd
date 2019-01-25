@@ -11,6 +11,27 @@ The MQMF package provides a set of functions that
     Modelling and Quantitative Methods in Fisheries 2nd edition.
     Try \code{browseVignettes("MQMF")}
 }
+\section{Fisheries functions}{
+
+\describe{
+  \item{bce}{ the Baranov Catch Equation}
+  \item{discretelogistic}{ surplus production model, either Schaefer or
+     Fox models. Option to plot the outcomes.}
+  \item{logist}{ calculates a logistic curve that can be used for 
+     selectivity, maturity, etc. Uses L50 and delta = L95 - L50}
+  \item{MaA}{ an alternative logistic curve using a and b L50 = -a/b and
+     interquartile = 2.Ln(3).b}
+  \item{negNLL}{ negative log-likelihood for normally distributed 
+     variables}
+  \item{negNLP}{ negative log-likelihood for normally distributed 
+     variables with the option of fixing some parameters, which is 
+     useful when generating likelihood profiles}
+  \item{simpspm}{ calculates only the predicted cpue for an SPM}
+  \item{spm}{ calculates and returns the full dynamics of an SPM}
+  \item{vB}{ calculates the length-at-age for the von Bertalanffy curve}
+}
+}
+
 \section{Utility functions}{
 
 \describe{
@@ -20,20 +41,42 @@ The MQMF package provides a set of functions that
   \item{countNAs}{ used in apply to count the NAs in a vector}
   \item{countgtone}{ used in apply to count the numbers > 1 in a vector}
   \item{freqMean}{ calculates the mean and st dev count data}
+  \item{getmin}{ find the minimum of a series to help with ylim or xlim}
+  \item{getmax}{ find the maximum of a series to help with ylim or xlim}
+  \item{getname}{ extracts the name of a variable as character}
+  \item{halftable}{ subdivides a table to make it shorter and wider}
+  \item{magnitude}{ defines the relative size of parameters for use when
+      using nlm or optim without log-transforming the parameters}
+  \item{makelabel}{ simplifies combining a name with a vector of numbers
+      for use as a label or a legend entry}
+  \item{outfit}{ prints a pretty version of the results from optim, nlm,
+      or nlminb}
+  \item{printV}{ prints a vector of numbers vertically rather than 
+     horizontally}
   \item{quants}{ used in apply to estimate quantiles across a vector}
+  \item{which.closest}{ finds the value in a vector closest to a given
+      value.}
 }
 }
 
 \section{Plotting and printing functions}{
 
 \describe{
+  \item{addnorm}{ adds a normal distribution to the output from hist}
+  \item{addlnorm}{ adds a log-normal distribution to output from hist}
+  \item{inthist}{ plots a histogram of integer values more precisely
+     than hist.}
   \item{newplot}{ is a bare-bones setup routine to generate a plot
      in RStudio using a floating window. If you want to alter the
      default par settings then you can use either setplot() to get
      suitable syntax or, more simply, use parsyn() which only give
      a template for the par syntax}
+  \item{parset}{ defines the par statement for a single plot}
   \item{parsyn}{ types the standard syntax for the par command to
      the console}
+  \item{plot1}{ simplifies the plotting of two variables in a single
+     plot}
+  \item{plot2}{ sets up a plotting window for two plots}
   \item{plotprep}{ Sets up a window and the par values for a plot.
      it checks to see if a graphics device is open and opens a new
      one if not. This is simply a utility function to save typing
@@ -52,6 +95,8 @@ The MQMF package provides a set of functions that
 \section{Data sets}{
 
 \describe{
+  \item{abdat}{a fisheries dataset with a fish data.frame, resilience,
+       and a spsname.}
   \item{fishdat}{A fisheries data set containing fisheries dependent
       data, biological parameters and biological properties}
   \item{invert}{ Fisheris dependent data, catches, cpue, etc}
@@ -71,7 +116,7 @@ The MQMF package provides a set of functions that
 
 \section{Vignettes}{
 
-To learn more about MQMF, start with the vignette:
+To learn more about MQMF, start with the still to be written vignette:
 \code{browseVignettes(package = "MQMF")} or
 \code{browseVignettes("MQMF")}
 }
