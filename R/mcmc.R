@@ -87,6 +87,6 @@ do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
       posterior[,"Post"] <- posterior[,"Post"]/sum(posterior[,"Post"])
       result[[ch]] <- posterior
    } # end of chains loop
-   return(list(result=result,arate=arate/(N*step/np),
+   return(list(result=result,arate=arate/(N*thinstep/np),
                frate=frate/(N*thinstep/np)))
 } # end of do_MCMC

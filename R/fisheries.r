@@ -342,6 +342,10 @@ simpspm <- function(par,indat,schaefer=TRUE,
 #' @param schaefer a logical value determining whether the spm is to be a
 #'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
 #'     default is TRUE
+#' @param year the name of the year variable (in case your dataset names it 
+#'     fishingyearinwhichthecatchwastaken)
+#' @param cats the name of the catch variable, again this is for generality
+#' @param index the name of the cpue variable, for generality
 #'
 #' @return a list of five objects; outmat the matrix with the dynamics results,
 #'     q catchability, msy the maximum sustainable yield, the parameter values,

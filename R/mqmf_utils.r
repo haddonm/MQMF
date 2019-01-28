@@ -536,7 +536,14 @@ which.closest <- function(x,invect,index=T) {
    }
 } # end of which_.closest
 
-#' @export '%ni%'
-`%ni%` <- function(x,y) {
+
+
+#' @title '\%ni\%' identifies which element in x is NOT in y
+#'
+#' @param x a vector of elements which can be numeric or character
+#' @param y a vector of elements which can be numeric or character
+#' 
+#' @export
+`%ni%` <- function(x,y) {  
   !(x %in% y)
 }

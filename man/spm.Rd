@@ -17,6 +17,13 @@ after some initial depletion had occurred.}
 \item{schaefer}{a logical value determining whether the spm is to be a
 simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
 default is TRUE}
+
+\item{year}{the name of the year variable (in case your dataset names it 
+fishingyearinwhichthecatchwastaken)}
+
+\item{cats}{the name of the catch variable, again this is for generality}
+
+\item{index}{the name of the cpue variable, for generality}
 }
 \value{
 a list of five objects; outmat the matrix with the dynamics results,

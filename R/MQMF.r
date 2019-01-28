@@ -1,5 +1,5 @@
 #' @importFrom grDevices dev.new dev.cur dev.off png
-#' @importFrom graphics lines mtext par plot points grid
+#' @importFrom graphics lines mtext par plot points grid title
 #' @importFrom graphics arrows axis legend polygon segments layout
 #' @importFrom stats qnorm rnorm dnorm runif sd quantile optim loess
 #' @importFrom stats dmultinom
@@ -210,7 +210,10 @@ NULL
 #'
 #' @description A dataset containing the sex, the length and the estimated age
 #'    for 576 redfish (Centroberyx affinis) from eastern Australia sampled in 1997,
-#'    all from a single port.
+#'    all from a single port. This data is a small sub-set of very many more
+#'    samples collected across species and years by the many excellent people 
+#'    running the Integrated Stock Monitoring Program in the Australian 
+#'    South East Fishery over the years of its existence.
 #'
 #' @format A data frame with 576 rows and 3 variables:
 #' \describe{
@@ -251,6 +254,34 @@ NULL
 #'  print(plaice$agedata)
 #' }
 "plaice"
+
+#' @title schaefer is the yellowfin tuna fishery data from Schaefer 1957
+#'
+#' @description schaefer is the yellowfin tuna fishery data from Schaefer, 
+#'     M.B. (1957) A study of the dynamics of the fishery for yellowfin 
+#'     tuna in the Eastern Tropical Pacific Ocean. _Bulletin, Inter-American
+#'     Tropical Tuna Commission_ __2__: 247-285. It contains the year,
+#'     the catch, the effort, and the cpue and was used in one of the first 
+#'     descriptions of a stock assessment that used a surplus production 
+#'     model. The catch-per-unit-effort, cpue, is a ratio cpue of the total
+#'     catch divided by the total effort. These days such ratios tend not
+#'     to be used with individual records for each day's effort being used
+#'     instead. This does not obscure the variation between different 
+#'     vessels, areas, depths, and seasons.
+#'
+#' @format A data.frame of fisheries data
+#' \describe{
+#'   \item{year}{the fishing year from 1934 - 1955}
+#'   \item{catch}{the total annual catch, tonnes }
+#'   \item{effort}{ the total effort as standard fishing days}
+#'   \item{cpue}{the catch per standard fishing day, a ratio cpue}
+#' }
+#' @examples
+#'  \dontrun{
+#'  data(schaefer)
+#'  schaefer
+#' }
+"schaefer"
 
 #' @title tigers is spawning biomass and subsequent recruitment data
 #'
