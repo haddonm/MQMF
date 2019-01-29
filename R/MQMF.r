@@ -269,7 +269,7 @@ NULL
 #'     instead. This does not obscure the variation between different 
 #'     vessels, areas, depths, and seasons.
 #'
-#' @format A data.frame of fisheries data
+#' @format A matrix of fisheries data
 #' \describe{
 #'   \item{year}{the fishing year from 1934 - 1955}
 #'   \item{catch}{the total annual catch, tonnes }

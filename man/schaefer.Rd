@@ -4,7 +4,7 @@
 \name{schaefer}
 \alias{schaefer}
 \title{schaefer is the yellowfin tuna fishery data from Schaefer 1957}
-\format{A data.frame of fisheries data
+\format{A matrix of fisheries data
 \describe{
   \item{year}{the fishing year from 1934 - 1955}
   \item{catch}{the total annual catch, tonnes }
