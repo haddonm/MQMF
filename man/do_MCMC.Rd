@@ -56,10 +56,43 @@ do_MCMC conducts a Gibbs within Metropolis algorithm. One
    each parameter value (after multiplication by the specific scaling
    factor held in scales). Determination of suitable scaling values
    is generally done empirically, perhaps by trailing a small number of
-   iterations to begin with.
+   iterations to begin with. Multiple chains would be usual and the 
+   thinstep would be larger eg. 128, 256, or 512, but it would take 8, 
+   16, or 32 times longer. The scales are usually expirementally set
+   to otain an acceptance rate between 20 - 40%. It is also usual to
+   run numerous diagnostic plots on th eoutputs to ensure convergence
+   on the final stationary distribution.
 }
 \examples{
 \dontrun{
- print("Still being developed")
+data(abdat)
+fish <- abdat$fish
+ simpsch <- function(pars, indat) {  # generate log-predicted cpue
+   nyrs <- length(indat[,"year"])
+   biom <- numeric(nyrs+1)
+   catch <- indat[,"catch"]
+   p <- exp(pars) # par contains log of (r,K,Binit, and sigma)
+   biom[1] <- p[3]
+   for (yr in 1:nyrs) {
+     Bt <- biom[yr]  # avoid negative biomass using a max statement
+     biom[yr+1] <- max(Bt + (p[1] * Bt) * (1 - (Bt/p[2])) - catch[yr],40)
+   }
+   qval <- exp(mean(log(indat[,"cpue"]/biom[1:nyrs])))
+   return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
+ } # end of simpsch  
+ param <- log(c(0.4,9400,3400,0.05))  
+ result <- do_MCMC(chains=1,burnin=20,N=10000,thinstep=16,inpar=param,
+                   infunk=negLL,calcpred=simpsch,calcdat=fish,
+                   obsdat=log(fish$cpue),priorcalc=calcprior,
+                   scales=c(0.06,0.05,0.06,0.325))
+ cat("Acceptance Rate = ",result[[2]],"\\n")
+ cat("Failure Rate    = ",result[[3]],"\\n")
+ plotprep(width=6,height=5,newdev=FALSE)
+ out <- result[[1]][[1]] # get the list containing the matrix
+ pairs(out[,1:4],col=rgb(1,0,0,1/20))
+ 
+ plot2(titleY=TRUE,newdev=FALSE)
+ plot1(1:N,out[,1],ylabel="r",defpar=FALSE)
+ plot1(1:N,out[,2],ylabel="K",defpar=FALSE)
 }
 }

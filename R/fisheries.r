@@ -173,6 +173,39 @@ MaA <- function(ina,inb,depend) {
   return(ans)
 } # end of Maturity at age
 
+#' @title negLL calculate log-normal log-likelihoods
+#'
+#' @description negLL calculates log-normal negative log-likelihoods. It
+#'     expects the input parameters to be log-transformed, so the funk used
+#'     to calculate the log or the predicted values also needs to expect
+#'     log-transformed parameters
+#'
+#' @param pars the log-transformed parameters to be used in the funk for
+#'     calculating the log of the predicted values against which the log
+#'     observed values will be compared
+#' @param funk the function used to calculate the log-predicted values of
+#'     whatever variable is being used (eg. cpue, catches, etc.)
+#' @param indat the data used by funk with pars to calculate the log-
+#'     predicted values.
+#' @param logobs the observed values log-transformed ready for comparison
+#'     with the log-predicted values from funk and pars.
+#'
+#' @return the negative log-likelihood using log-normal errors.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' data(abdat)
+#' fish <- abdat$fish
+#' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
+#' negLL(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
+#' }
+negLL <- function(pars,funk,indat,logobs) {
+  logpred <- funk(pars,indat)
+  LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+  return(LL)
+} # end of negLL
+
 #' @title negNLL  -ve log-likelihood for normally distributed variables
 #'
 #' @description negNLL - Calculates the negative log-likelihood for

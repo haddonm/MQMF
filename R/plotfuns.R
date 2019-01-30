@@ -277,9 +277,11 @@ parsyn <- function() {
 #' }
 plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.85,
                   maxy=0,defpar=TRUE){
-  par(mfrow = c(1,1), mai = c(0.45,0.45,0.1,0.05),oma = c(0,0,0,0))
-  par(cex = cex, mgp = c(1.35, 0.35, 0), font.axis = usefont,
-      font = usefont, font.lab = usefont)
+  if (defpar) {
+    par(mfrow = c(1,1), mai = c(0.45,0.45,0.1,0.05),oma = c(0,0,0,0))
+    par(cex = cex, mgp = c(1.35, 0.35, 0), font.axis = usefont,
+        font = usefont, font.lab = usefont)
+  }
   if (maxy > 0) ymax <- maxy  else ymax <- getmax(y)
   if (min(y,na.rm=TRUE) < 0.0) ymin <- getmin(y) else ymin <- 0.0
   addline <- FALSE
