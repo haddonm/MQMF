@@ -80,8 +80,9 @@ fish <- abdat$fish
    qval <- exp(mean(log(indat[,"cpue"]/biom[1:nyrs])))
    return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
  } # end of simpsch  
- param <- log(c(0.4,9400,3400,0.05))  
- result <- do_MCMC(chains=1,burnin=20,N=10000,thinstep=16,inpar=param,
+ param <- log(c(0.4,9400,3400,0.05))
+ N <- 10000  
+ result <- do_MCMC(chains=1,burnin=20,N=N,thinstep=16,inpar=param,
                    infunk=negLL,calcpred=simpsch,calcdat=fish,
                    obsdat=log(fish$cpue),priorcalc=calcprior,
                    scales=c(0.06,0.05,0.06,0.325))

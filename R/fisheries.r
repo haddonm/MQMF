@@ -289,9 +289,61 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
   return(LL)
 }
 
-#' @title simpspm simply calculates the predicted CE for an SPM
+#' @title simpspm simply calculates the predicted log(CE) for an SPM
+#' 
+#' @description simpspm calculates the predicted log(CPUE) for an SPM model. 
+#'     It set the Polacheck et al parameter 'p' depending on the schaefer
+#'     term, and this determines the asymmetry of the production curve.
+#'     If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 it
+#'     approximates the Fox model. The output of log(CPUE) is to simplfy
+#'     the use of log-normal residual errors or likelihoods. This function 
+#'     is designed for data consisting of only a single cpue time-series.
 #'
-#' @description simpspm calculates the predicted CPUE for an SPM model. It
+#' @param par the parameters of the SPM are either c(r, K, Binit, sigma),
+#'     Binit is required if the fishery data starts after the stock has been
+#'     depleted. Each parameter must be log-transformed for improved model
+#'     stability and is transformed inside simpspm.
+#' @param indat the data which needs to include year, catch, and cpue. 
+#' @param schaefer a logical value determining whether the spm is to be a
+#'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
+#'     default is TRUE = Schaefer model
+#' @param year the column name within indat containing the years
+#' @param cats the column name within indat containing the catches
+#' @param index the column name within indat containing the cpue.
+#'
+#' @return a vector of length nyrs of log(cpue)
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'  data(abdat)
+#'  fish <- abdat$fish
+#'  colnames(fish) <- tolower(colnames(fish))
+#'  param <- log(c(r=0.4,K=9400,Binit=3400,sigma=0.05))
+#'  predCE <- simpspm(pars=param,fish)
+#'  cbind(fish,exp(predCE))
+#' } 
+simpspm <- function(pars, indat,schaefer=TRUE, # generate log-predicted cpue
+                    year="year",cats="catch",index="cpue") { 
+  nyrs <- length(indat[,year])
+  biom <- numeric(nyrs+1)
+  catch <- indat[,cats]
+  ep <- exp(pars) # par contains at least log of (r,K, and sigma)
+  biom[1] <- ep[2]  
+  if (length(ep) == 4) biom[1] <- ep[3] # Binit should be before sigma
+  #p is the location of mode parameter 1 = Schaefer, 1e-8 ~ Fox model
+  if(schaefer) p <- 1 else p <- 1e-8
+  for (yr in 1:nyrs) { # fill biom using Bt as an interim step
+    Bt <- biom[yr]  # avoid negative biomass using a max statement
+    biom[yr+1] <- max(Bt + ((ep[1]/p)*Bt*(1-(Bt/ep[2])^p)-catch[yr]),40)
+  }
+  qval <- exp(mean(log(indat[,"cpue"]/biom[1:nyrs])))
+  return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
+} # end of simpspm
+
+#' @title simpspmM simply calculates the predicted CE for an SPM
+#'
+#' @description simpspmM calculates the predicted CPUE for an SPM model. It
 #'     assumes that there is a variable called 'p' in the global environment
 #'     and this 'p' variable determines the asymmetry of the production curve.
 #'     If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 it
@@ -299,7 +351,7 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #'
 #' @param par the parameters of the SPM = r, K, a q for each column of cpue,
 #'     a sigma for each cpue, and Binit if fishery depleted to start with. Each
-#'     parameter is in log space and is transformed inside simpspm
+#'     parameter is in log space and is transformed inside simpspmM
 #' @param indat the data which needs to include year, catch, and cpue. The
 #'    latter should have a separate column for each fleet, with a column name
 #'    beginning with cpue or whatever name you put in index (see below) for
@@ -324,10 +376,10 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #' fish
 #' colnames(fish) <- tolower(colnames(fish))
 #' pars <- c(r=0.242,K=5170,Binit=2840)
-#' predCE <- simpspm(pars,fish)
+#' predCE <- simpspmM(pars,fish)
 #' cbind(fish[,"year"],fish[,"cpue"],predCE)
 #' }
-simpspm <- function(par,indat,schaefer=TRUE,
+simpspmM <- function(par,indat,schaefer=TRUE,
                     year="year",cats="catch",index="cpue") {
   # par=log(pars); indat=fish; schaefer=TRUE;year="year";cats="catch";index="cpue"
   celoc <- grep(index,colnames(indat))
@@ -353,14 +405,14 @@ simpspm <- function(par,indat,schaefer=TRUE,
     predCE[pick,i] <- biom[pick] * qval
   }
   return(predCE)
-} # end of simpspm
+} # end of simpspmM
 
 #' @title spm - calculates the dynamics using a Schaefer or Fox model
 #'
 #' @description spm calculates the dynamics using a Schaefer of Fox model.
 #'     The outputs include  predicted Biomass, year, catch, cpue, predicted
 #'     cpue, contributions to q, ssq, and depletion levels. Generally it
-#'     would be more sensible to use simpspm when fitting a Schaefer model and
+#'     would be more sensible to use simpspmM when fitting a Schaefer model and
 #'     simpfox when fitting a Fox model
 #'     as those functions are designed to generate only the predicted cpue
 #'     required by the functions ssq and negLL, but the example shows how it
@@ -396,7 +448,7 @@ simpspm <- function(par,indat,schaefer=TRUE,
 #' dat <- makespmdata(cbind(year,catch,cpue))
 #' pars <- c(0.35,7800,3500)
 #' ans <- displayModel(pars,dat)
-#' bestSP <- optim(par=pars,fn=ssq,callfun=simpspm,indat=dat)
+#' bestSP <- optim(par=pars,fn=ssq,callfun=simpspmM,indat=dat)
 #' bestSP
 #' ans <- displayModel(bestSP$par,dat,schaefer=TRUE)
 #' str(ans)

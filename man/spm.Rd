@@ -34,7 +34,7 @@ a list of five objects; outmat the matrix with the dynamics results,
 spm calculates the dynamics using a Schaefer of Fox model.
     The outputs include  predicted Biomass, year, catch, cpue, predicted
     cpue, contributions to q, ssq, and depletion levels. Generally it
-    would be more sensible to use simpspm when fitting a Schaefer model and
+    would be more sensible to use simpspmM when fitting a Schaefer model and
     simpfox when fitting a Fox model
     as those functions are designed to generate only the predicted cpue
     required by the functions ssq and negLL, but the example shows how it
@@ -53,7 +53,7 @@ cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,0.8582,
 dat <- makespmdata(cbind(year,catch,cpue))
 pars <- c(0.35,7800,3500)
 ans <- displayModel(pars,dat)
-bestSP <- optim(par=pars,fn=ssq,callfun=simpspm,indat=dat)
+bestSP <- optim(par=pars,fn=ssq,callfun=simpspmM,indat=dat)
 bestSP
 ans <- displayModel(bestSP$par,dat,schaefer=TRUE)
 str(ans)

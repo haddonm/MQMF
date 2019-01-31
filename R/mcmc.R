@@ -5,15 +5,15 @@
 #' @description so as to include a prior probability into Bayesian
 #'     calculations calcprior is a template for generating such priors.
 #'     The default given here is to return a constant small number for the
-#'     prior probability, it needs to sum to 1.0 so is the log(N) the number
-#'     of replicates returned by do_MCMC. If non-uniform priors are 
-#'     required write a different function and in do_MCMC point priorcalc
-#'     at it. whatever function you define it needs to have the same input
-#'     parameters as this calcprior, i.e. number of parameters and N. If
+#'     prior probability, it needs to sum to 1.0 across the replicates 
+#'     returned by do_MCMC. If non-uniform priors are required write
+#'     a different function and in do_MCMC point priorcalc at it. 
+#'     Whatever function you define needs to have the same input
+#'     parameters as this calcprior, i.e. the parameters and N. If
 #'     something else if required then do_MCMC will need modification in
-#'     the calculation of func1 where priorcalc is used.
+#'     in the two places where priorcalc is used.
 #'
-#' @param npars the number of model parameters being examined by the MCMC
+#' @param pars the parameters of the model being examined by the MCMC
 #' @param N the number of replicate parameter vectors to be returned from 
 #'     do_MCMC
 #'
@@ -22,11 +22,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' calcprior(npars=4,N=20000)  # should give -39.61395
+#' param <- log(c(0.4,9400,3400,0.05))  
+#' calcprior(pars=param,N=20000)  # should give -39.61395
 #' }
-calcprior <- function(npars,N) {
-  # return log(1/N) for all values entered.
-  return(sum(rep(log(1/N),npars)))
+calcprior <- function(pars,N) { # return log(1/N) for all values entered.
+  return(sum(rep(log(1/N),length(pars))))
 }
 
 
@@ -80,22 +80,10 @@ calcprior <- function(npars,N) {
 #' \dontrun{
 #' data(abdat)
 #' fish <- abdat$fish
-#'  simpsch <- function(pars, indat) {  # generate log-predicted cpue
-#'    nyrs <- length(indat[,"year"])
-#'    biom <- numeric(nyrs+1)
-#'    catch <- indat[,"catch"]
-#'    p <- exp(pars) # par contains log of (r,K,Binit, and sigma)
-#'    biom[1] <- p[3]
-#'    for (yr in 1:nyrs) {
-#'      Bt <- biom[yr]  # avoid negative biomass using a max statement
-#'      biom[yr+1] <- max(Bt + (p[1] * Bt) * (1 - (Bt/p[2])) - catch[yr],40)
-#'    }
-#'    qval <- exp(mean(log(indat[,"cpue"]/biom[1:nyrs])))
-#'    return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
-#'  } # end of simpsch  
-#'  param <- log(c(0.4,9400,3400,0.05))  
-#'  result <- do_MCMC(chains=1,burnin=20,N=10000,thinstep=16,inpar=param,
-#'                    infunk=negLL,calcpred=simpsch,calcdat=fish,
+#'  param <- log(c(0.4,9400,3400,0.05))
+#'  N <- 10000  
+#'  result <- do_MCMC(chains=1,burnin=20,N=N,thinstep=16,inpar=param,
+#'                    infunk=negLL,calcpred=simpspm,calcdat=fish,
 #'                    obsdat=log(fish$cpue),priorcalc=calcprior,
 #'                    scales=c(0.06,0.05,0.06,0.325))
 #'  cat("Acceptance Rate = ",result[[2]],"\n")
