@@ -289,79 +289,13 @@ plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.85,
        ylab=ylabel,xlab=xlabel,cex=cex,panel.first=grid())
 } # end of plot1
 
-#' @title plot2 prepares for 2 plots one on top of the other
-#'
-#' @description plot2 prepares for 2 plots one on top of the other.
-#'     it includes the option of having separate titles for each
-#'     plot or using mtext to cover off on both
-#'
-#' @param width defaults to 6 inches = 15.24cm - width of plot
-#' @param height defaults to 5 inches = 12.7 cm - height of plot
-#' @param usefont default is 7 (bold Times); 1 = sans serif, 2 = sans serif bold
-#' @param cex default is 1.0, but is used to alter the standard size of text
-#' @param newdev make a new graphics device or reuse a previously defined one;
-#'     defaults to TRUE
-#' @param titleX if TRUE then standard x-axis titles are expected for
-#'     plot and space is left appropriately, if FALSE then mtext is
-#'     expected to be used instead. Defaults to FALSE
-#' @param titleY if TRUE then standard y-axis titles are expected for
-#'     plot and space is left appropriately, if FALSE then mtext is
-#'     expected to be used instead.  Defaults to FALSE
-#' @param rows if rows = TRUE then 2 plots one above the other, if
-#'     FALSE then 2 plots side by side
-#'
-#' @return nothing but it prepares a device for 2 plots
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' x1 <- rnorm(1000,mean=0,sd=1.0)
-#' x2 <- rnorm(1000,mean=0,sd=1.0)
-#' plot2(rows=FALSE)
-#' hist(x1,breaks=30,main="",xlab="",ylab="",col=2)
-#' hist(x2,breaks=30,main="",xlab="",ylab="",col=2)
-#' mtext("Frequency",side=2,outer=TRUE,line=0.0,font=7,cex=1.0)
-#' mtext("Normal Random Variates",side=1,outer=TRUE,line=0.0,font=7,cex=1.0)
-#' }
-plot2 <- function(width = 6, height = 5, usefont = 7, cex = 0.9,
-                  newdev = TRUE,
-                  titleX = FALSE, titleY = FALSE, rows = TRUE) {
-  if ((names(grDevices::dev.cur()) != "null device") & (newdev))
-    suppressWarnings(grDevices::dev.off())
-  if ((names(grDevices::dev.cur()) %in% c("null device", "RStudioGD")) &
-      (newdev))
-    grDevices::dev.new(width = width, height = height, noRStudioGD = TRUE)
-  plots <- c(2,1)
-  if (!rows) plots <- c(1,2)
-  maivect <- c(0.25,0.25,0.1,0.05)
-  omavect <- c(1,1,0,0)
-  if ((titleX) & (titleY)) {
-    maivect <- c(0.45,0.45,0.1,0.05)
-    omavect <- c(0,0,0,0)
-  }
-  if ((!titleX) & (titleY)) {
-    maivect <- c(0.25,0.45,0.1,0.05)
-    omavect <- c(1,0,0,0)
-  }
-  if ((titleX) & (!titleY)) {
-    maivect <- c(0.45,0.3,0.1,0.05)
-    omavect <- c(0,1,0,0)
-  }
-  par(mfrow = plots, mai = maivect, oma = omavect)
-  par(cex = cex, mgp = c(1.35, 0.35, 0), font.axis = usefont,
-      font = usefont, font.lab = usefont)
-} # end of plot2
 
-#' @title plotprep: sets up a window and the par values for a single plot
+#' @title plotprep: sets up a window and the par values for plotting
 #'
-#' @description plotprep: sets up a window and the par values for a single plot.
-#'   it checks to see if a graphics device is open and opens a new one if not.
+#' @description plotprep: sets up a window and the par values for plots.
 #'   This is simply a utility function to save typing the standard syntax.
 #'   Some of the defaults can be changed. Typing the name without () will
-#'   provide a template for modification. If 'windows' is called repeatedly this
-#'   will generate a new active graphics device each time leaving the older ones
-#'   inactive but present. For quick exploratory plots this behaviour is not
-#'   wanted, hence the check if an active device exists already or not.
+#'   provide a template for modification. 
 #' @param width defaults to 6 inches = 15.24cm - width of plot
 #' @param height defaults to 3 inches = 7.62cm - height of plot
 #' @param plots defaults to c(1,1), but arranges multiple plots. If used it may
@@ -383,6 +317,9 @@ plot2 <- function(width = 6, height = 5, usefont = 7, cex = 0.9,
 #' x <- rnorm(1000,mean=0,sd=1.0)
 #' plotprep()
 #' hist(x,breaks=30,main="",col=2)
+#' plotprep(width=6,height=5,plots=c(2,1))
+#' hist(x,breaks=20,main="",col=2)
+#' hist(x,breaks=30,main="",col=3)
 plotprep <- function(width=6,height=3.6,plots=c(1,1),usefont=7,cex=0.85,
                      xmtext=TRUE,ymtext=TRUE,
                      newdev=TRUE,rows=TRUE,filename="") {
@@ -421,3 +358,94 @@ plotprep <- function(width=6,height=3.6,plots=c(1,1),usefont=7,cex=0.85,
   if (lenfile > 0) cat("\n Remember to place 'graphics.off()' after the plot \n")
 } # end of plot_prep
 
+
+
+#' @title plotprofile1 simplifies plotting single likelihood profiles
+#' 
+#' @description plotprofile1 simplifies plotting out the likelihood 
+#'     profiles of single parameters or variables. It is necessary to pass
+#'     the function the output from the profile calculations, identifying
+#'     the variable name against which to plot the likelihood. Identifying 
+#'     the name of the -ve log-likelihood column. Facilities are provided
+#'     for defining the x and y axis labels
+#'
+#' @param prof the results from teh likelihood profile calculations. This 
+#'     matrix should include, as a minimum, the fixed variable of interest 
+#'     and the matching -ve log-likelihood in named columns.
+#' @param var the name of the variable of interest to identify the column
+#'     in prof in which to find the vector of fixed values given.
+#' @param digit this is a vector of three that determine by how much the
+#'     round function limits the values printed of the 95% and mean at the 
+#'     top of the plot.
+#' @param xlabel the x-axis label, defaults to the name of the var
+#' @param ylabel the y-axis label, defaults to -ve Log-Likelihood
+#' @param like identifies the name of the column containing the -ve log-
+#'     likelihood
+#'
+#' @return nothing but this does generate a plot.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' data(abdat)
+#' fish <- abdat$fish
+#' simpspmP <- function(pars, indat,initpar,notfixed=c(1:length(pars)),
+#'                      schaefer=TRUE,depleted=TRUE,
+#'                      year="year",cats="catch",index="cpue") { 
+#'   nyrs <- length(indat[,year])
+#'   biom <- numeric(nyrs+1)
+#'   catch <- indat[,cats]
+#'   param <- initpar
+#'   param[notfixed] <- pars[notfixed] 
+#'   ep <- exp(param) 
+#'   biom[1] <- ep[2]  
+#'   if (depleted) biom[1] <- ep[3] 
+#'   if(schaefer) p <- 1 else p <- 1e-8
+#'   for (yr in 1:nyrs) { 
+#'     Bt <- biom[yr]  
+#'     biom[yr+1] <- max(Bt + ((ep[1]/p)*Bt*(1-(Bt/ep[2])^p)-catch[yr]),10)
+#'   }
+#'   qval <- exp(mean(log(indat[,"cpue"]/biom[1:nyrs])))
+#'   return(log(biom[1:nyrs] * qval))  
+#' } 
+#' negLLP <- function(pars, funk, indat, logobs, initpar=pars,
+#'                    notfixed=c(1:length(pars))) {
+#'   logpred <- funk(pars,indat,initpar,notfixed)
+#'   LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+#'   return(LL)
+#' }
+#' rval <- seq(0.325,0.45,0.001)
+#' ntrial <- length(rval)
+#' columns <- c("r","K","Binit","sigma","-veLL")
+#' result <- matrix(0,nrow=ntrial,ncol=length(columns),
+#'                  dimnames=list(rval,columns))
+#' bestest <- c(r= 0.32,K=11000,Binit=4000,sigma=0.05) 
+#' for (i in 1:ntrial) {  #i <- 1
+#'   param <- log(c(rval[i],bestest[2:4])) 
+#'   parinit <- param    
+#'   bestmodP <- nlm(f=negLLP,p=param,funk=simpspmP,initpar=parinit,
+#'                   indat=fish,logobs=log(fish$cpue),notfixed=c(2:4),
+#'                   typsize=magnitude(param),iterlim=1000)
+#'   bestest <- exp(bestmodP$estimate)
+#'   result[i,] <- c(bestest,bestmodP$minimum)
+#' }
+#' minLL <- min(result[,"-veLL"])
+#' head(result,20)  # now plot -veLL agsinst r
+#' }
+plotprofile1 <- function(prof,var,digit=c(3,3,3),xlabel=getname(var),
+                         ylabel="-ve Log-Likelihood",like="-veLL") {
+  plot1(prof[,var],prof[,like],xlabel=xlabel,
+        ylabel=ylabel)
+  ntrial <- dim(prof)[1]
+  minimLL <- min(prof[,like],na.rm=TRUE)
+  upper <- (minimLL+1.92)
+  abline(h=c(minimLL,upper),col=2)
+  mid <- which.closest(minimLL,prof[,like])
+  left <- which.closest(upper,prof[1:mid,like])
+  right <- which.closest(upper,prof[mid:ntrial,like])
+  abline(v=c(prof[c(left,mid,(mid+right-1)),var]),lwd=c(2,1,2),col=3)
+  label <- paste0("Mean +/- 95%CI = ",round(prof[left,var],digit[1]),"   ",
+                  round(prof[mid,var],digit[2]),"    ",
+                  round(prof[(mid+right-1),var],digit[3]))
+  mtext(label,side=3,outer=FALSE,line=-1.1,cex=1.0,font=7)
+} # end of plotpreofile1

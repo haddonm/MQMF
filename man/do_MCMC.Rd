@@ -67,23 +67,10 @@ do_MCMC conducts a Gibbs within Metropolis algorithm. One
 \dontrun{
 data(abdat)
 fish <- abdat$fish
- simpsch <- function(pars, indat) {  # generate log-predicted cpue
-   nyrs <- length(indat[,"year"])
-   biom <- numeric(nyrs+1)
-   catch <- indat[,"catch"]
-   p <- exp(pars) # par contains log of (r,K,Binit, and sigma)
-   biom[1] <- p[3]
-   for (yr in 1:nyrs) {
-     Bt <- biom[yr]  # avoid negative biomass using a max statement
-     biom[yr+1] <- max(Bt + (p[1] * Bt) * (1 - (Bt/p[2])) - catch[yr],40)
-   }
-   qval <- exp(mean(log(indat[,"cpue"]/biom[1:nyrs])))
-   return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
- } # end of simpsch  
  param <- log(c(0.4,9400,3400,0.05))
  N <- 10000  
  result <- do_MCMC(chains=1,burnin=20,N=N,thinstep=16,inpar=param,
-                   infunk=negLL,calcpred=simpsch,calcdat=fish,
+                   infunk=negLL,calcpred=simpspm,calcdat=fish,
                    obsdat=log(fish$cpue),priorcalc=calcprior,
                    scales=c(0.06,0.05,0.06,0.325))
  cat("Acceptance Rate = ",result[[2]],"\\n")

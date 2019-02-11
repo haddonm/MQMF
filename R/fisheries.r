@@ -307,6 +307,9 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #' @param schaefer a logical value determining whether the spm is to be a
 #'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
 #'     default is TRUE = Schaefer model
+#' @param depleted default = TRUE; implies the fishery was already depleted
+#'     once fishery data started to be collected. Implies that there needs
+#'     to be a Binit in third position among the input parameters
 #' @param year the column name within indat containing the years
 #' @param cats the column name within indat containing the catches
 #' @param index the column name within indat containing the cpue.
@@ -323,14 +326,14 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #'  predCE <- simpspm(pars=param,fish)
 #'  cbind(fish,exp(predCE))
 #' } 
-simpspm <- function(pars, indat,schaefer=TRUE, # generate log-predicted cpue
+simpspm <- function(pars, indat,schaefer=TRUE,depleted=TRUE,  
                     year="year",cats="catch",index="cpue") { 
   nyrs <- length(indat[,year])
   biom <- numeric(nyrs+1)
   catch <- indat[,cats]
   ep <- exp(pars) # par contains at least log of (r,K, and sigma)
   biom[1] <- ep[2]  
-  if (length(ep) == 4) biom[1] <- ep[3] # Binit should be before sigma
+  if (depleted) biom[1] <- ep[3] # Binit should be before sigma
   #p is the location of mode parameter 1 = Schaefer, 1e-8 ~ Fox model
   if(schaefer) p <- 1 else p <- 1e-8
   for (yr in 1:nyrs) { # fill biom using Bt as an interim step
@@ -339,7 +342,7 @@ simpspm <- function(pars, indat,schaefer=TRUE, # generate log-predicted cpue
   }
   qval <- exp(mean(log(indat[,"cpue"]/biom[1:nyrs])))
   return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
-} # end of simpspm
+} # end of simpspm generates log-predicted cpue
 
 #' @title simpspmM simply calculates the predicted CE for an SPM
 #'
@@ -427,6 +430,9 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #' @param schaefer a logical value determining whether the spm is to be a
 #'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
 #'     default is TRUE
+#' @param depleted default = TRUE; implies the fishery was already depleted
+#'     once fishery data started to be collected. Implies that there needs
+#'     to be a Binit in third position among the input parameters
 #' @param year the name of the year variable (in case your dataset names it 
 #'     fishingyearinwhichthecatchwastaken)
 #' @param cats the name of the catch variable, again this is for generality
@@ -453,7 +459,7 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #' ans <- displayModel(bestSP$par,dat,schaefer=TRUE)
 #' str(ans)
 #' }
-spm <- function(inp,indat,schaefer=TRUE,
+spm <- function(inp,indat,schaefer=TRUE,depleted=TRUE,
                 year="year",cats="catch",index="cpue") {
   #  inp=bestSPM$estimate; indat=fish; schaefer=FALSE;
   #  index="cpue"; year="year";cats="catch"
@@ -480,7 +486,7 @@ spm <- function(inp,indat,schaefer=TRUE,
   r <- exp(inp[1])
   K <- exp(inp[2])
   biom[1] <-K
-  if (length(inp) > npar) biom[1] <- exp(inp[npar+1])
+  if (depleted) biom[1] <- exp(inp[npar+1])
   if(schaefer) p <- 1 else p <- 1e-8
   for (index in 1:nyrs) {
     Bt <- biom[index]
