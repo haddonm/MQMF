@@ -4,8 +4,8 @@
 \alias{spm}
 \title{spm - calculates the dynamics using a Schaefer or Fox model}
 \usage{
-spm(inp, indat, schaefer = TRUE, year = "year", cats = "catch",
-  index = "cpue")
+spm(inp, indat, schaefer = TRUE, depleted = TRUE, year = "year",
+  cats = "catch", index = "cpue")
 }
 \arguments{
 \item{inp}{a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), you
@@ -17,6 +17,10 @@ after some initial depletion had occurred.}
 \item{schaefer}{a logical value determining whether the spm is to be a
 simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
 default is TRUE}
+
+\item{depleted}{default = TRUE; implies the fishery was already depleted
+once fishery data started to be collected. Implies that there needs
+to be a Binit in third position among the input parameters}
 
 \item{year}{the name of the year variable (in case your dataset names it 
 fishingyearinwhichthecatchwastaken)}

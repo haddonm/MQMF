@@ -4,8 +4,8 @@
 \alias{simpspm}
 \title{simpspm simply calculates the predicted log(CE) for an SPM}
 \usage{
-simpspm(pars, indat, schaefer = TRUE, year = "year", cats = "catch",
-  index = "cpue")
+simpspm(pars, indat, schaefer = TRUE, depleted = TRUE, year = "year",
+  cats = "catch", index = "cpue")
 }
 \arguments{
 \item{indat}{the data which needs to include year, catch, and cpue.}
@@ -13,6 +13,10 @@ simpspm(pars, indat, schaefer = TRUE, year = "year", cats = "catch",
 \item{schaefer}{a logical value determining whether the spm is to be a
 simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
 default is TRUE = Schaefer model}
+
+\item{depleted}{default = TRUE; implies the fishery was already depleted
+once fishery data started to be collected. Implies that there needs
+to be a Binit in third position among the input parameters}
 
 \item{year}{the column name within indat containing the years}
 

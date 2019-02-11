@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotfuns.R
 \name{plotprep}
 \alias{plotprep}
-\title{plotprep: sets up a window and the par values for a single plot}
+\title{plotprep: sets up a window and the par values for plotting}
 \usage{
 plotprep(width = 6, height = 3.6, plots = c(1, 1), usefont = 7,
   cex = 0.85, xmtext = TRUE, ymtext = TRUE, newdev = TRUE,
@@ -38,17 +38,16 @@ Checks for and sets up a graphics device and sets the default plotting
   par values. This changes the current plotting options!
 }
 \description{
-plotprep: sets up a window and the par values for a single plot.
-  it checks to see if a graphics device is open and opens a new one if not.
+plotprep: sets up a window and the par values for plots.
   This is simply a utility function to save typing the standard syntax.
   Some of the defaults can be changed. Typing the name without () will
-  provide a template for modification. If 'windows' is called repeatedly this
-  will generate a new active graphics device each time leaving the older ones
-  inactive but present. For quick exploratory plots this behaviour is not
-  wanted, hence the check if an active device exists already or not.
+  provide a template for modification.
 }
 \examples{
 x <- rnorm(1000,mean=0,sd=1.0)
 plotprep()
 hist(x,breaks=30,main="",col=2)
+plotprep(width=6,height=5,plots=c(2,1))
+hist(x,breaks=20,main="",col=2)
+hist(x,breaks=30,main="",col=3)
 }
