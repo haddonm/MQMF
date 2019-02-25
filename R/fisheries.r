@@ -78,7 +78,7 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,
    pop[1] <- N0
    for (year in 2:Yrs) {
       Bt <- pop[year-1]
-      pop[year] <- max((Bt + (r/p)*Bt*(1-(Bt/K)^p) - Ct),0)
+      pop[year] <- max((Bt + (r*Bt/p)*(1-(Bt/K)^p) - Ct),0)
    }
    pop2 <- pop[2:Yrs]
    if (outplot) {
@@ -172,6 +172,37 @@ MaA <- function(ina,inb,depend) {
   ans <- exp(ina+inb*depend)/(1+exp(ina+inb*depend))
   return(ans)
 } # end of Maturity at age
+
+#' @title mnnegLL generic multinomial negative log-likelihoods
+#' 
+#' @description mnnegLL a generic multinomial negative log-likelihood that
+#'     requires observed frequencies and predicted frequencies, although
+#'     the predicted frequencies could also be the final proportions, as 
+#'     long as they summed to one. It checks that the number of predicted
+#'     values matches the number of observed values
+#'
+#' @param obs the original observed frequencies
+#' @param predf the predicted frequencies or proportions
+#'
+#' @return a single scalar value
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   obs <- c(0,0,6,12,35,40,29,23,13,7,10,14,11,16,11,11,9,8,5,2,0)
+#'   predf <- c(0.1,0.9,4.5,14.4,29.7,39.9,35.2,21.3,10.9,8.0,9.5,12.1,
+#'              14.1,14.7,13.7,11.5,8.6,5.8,3.5,1.9,0.9) 
+#'  mnnegLL(obs,predf)   # should be  705.5333
+#' }
+mnnegLL <- function(obs,predf) { 
+  k <- length(obs)
+  if (length(predf) != k) {
+    label <- paste0("Need a predicted frequency for each observed ",
+                    "frequency input to mnnegLL  \n")
+    stop(label)
+  } 
+  return(-sum(obs * log(predf/sum(predf,na.rm=TRUE)),na.rm=TRUE))
+} # end of mnnegLL 
 
 #' @title negLL calculate log-normal log-likelihoods
 #'
