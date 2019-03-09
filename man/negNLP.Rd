@@ -5,7 +5,7 @@
 \title{negNLP  -ve log-likelihood for normally distributed variables}
 \usage{
 negNLP(pars, funk, independent, dependent, initpar = pars,
-  notfixed = c(1:length(pars)))
+  notfixed = c(1:length(pars)), ...)
 }
 \arguments{
 \item{pars}{a vector containing the parameters being used in funk, plus
@@ -27,6 +27,9 @@ the model will predict for each of the independent values.}
 fitted, which also defines those that will be fixed; defaults
 to all parameters. If some need to be kept constant so as to generate
 a likelihood profile then omit their index from 'notfixed'.}
+
+\item{...}{required to allow funk to access its other parameters without
+having to explicitly declare them in negLL}
 }
 \value{
 the sum of the negative log-likelihoods using a normal PDF

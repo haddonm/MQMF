@@ -4,7 +4,7 @@
 \alias{negLL}
 \title{negLL calculate log-normal log-likelihoods}
 \usage{
-negLL(pars, funk, indat, logobs)
+negLL(pars, funk, indat, logobs, ...)
 }
 \arguments{
 \item{pars}{the log-transformed parameters to be used in the funk for
@@ -19,6 +19,9 @@ predicted values.}
 
 \item{logobs}{the observed values log-transformed ready for comparison
 with the log-predicted values from funk and pars.}
+
+\item{...}{required to allow funk to access its other parameters without
+having to explicitly declare them in negLL}
 }
 \value{
 the negative log-likelihood using log-normal errors.

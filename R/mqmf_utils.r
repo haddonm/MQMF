@@ -300,6 +300,30 @@ halftable <- function(inmat,yearcol="Year",subdiv=3) {
    return(outmat)
 } # end of halftable
 
+#' @title incol is a utility to determine is a column is present in a matrix
+#'
+#' @description incol is a utility to determine whether a names columns is
+#'     present in a given matrix or data.frame.
+#'
+#' @param incol the name of the column; defaults to "year" as an example
+#' @param inmat the matrix or data.frame within which to search for incol
+#'
+#' @return TRUE or FALSE
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' test <- matrix(c(1,2,3,4),nrow=2,ncol=2,dimnames=list(1:2,c("year","Catch")))
+#' print(test)
+#' iscol("year",test)
+#' iscol("Catch",test)
+#' iscol("catch",test)
+#' iscol("ages",test)
+#' }
+iscol <- function(incol="year",inmat) { # incol="ages"; inmat=dat
+  if (length(grep(incol,colnames(inmat))) < 1) return(FALSE)
+  else return(TRUE)
+}
 
 #' @title magnitude returns the magnitude of numbers
 #'
@@ -423,6 +447,94 @@ outfit <- function(inopt,backtransform=FALSE){
    }
 } # end of outfit
 
+#' @title penalty0 enables the adding of a large penalty as one approaches 0.0
+#'
+#' @description penalty0 allows for the option of adding a large penalty as
+#'     a parameter approaches 0.0 . See spmLL
+#'     for example code that contains such a parameter. For example, when
+#'     fitting an spm sometimes the optimal mathematical model fit can occur
+#'     by depressing the r value to 0 or even go negative. This is only
+#'     used internally to simpleSA and so is not formally exported.
+#'
+#' @param x the parameter value that potentially incurs a penalty
+#'
+#' @return a single value as a penalty to be added to a Log-Likelihood or SSQ
+#'
+#' @examples
+#' \dontrun{
+#'   penalty0(0.5)
+#'   penalty0(0.1)
+#'   penalty0(0.01)
+#'   penalty0(0.005)
+#' }
+penalty0 <- function(x){
+  ans <- 100*exp(-1000*x)
+  return(ans)
+} # end of penalty0
+
+#' @title plotfishM plots the catch and optionally the cpue from fish
+#'
+#' @description plotfishM uses the matrix of fishery data used in the
+#'     simpleSA standard data format. It requires the matrix or data.frame
+#'     to contain the columns 'year', 'catch', and optionally 'cpue'.
+#'
+#' @param fish the matrix or data.frame containing year, catch, and cpue.
+#' @param glb the list of biologicals potentially containing the spsname
+#' @param ce a logical parameter determining whether to plot the cpue or not.
+#'     the default = TRUE
+#' @param title determines whether or not the spsname is printed at the top
+#'     of the plot. Default = TRUE but for a more formal publication it
+#'     might need to be set to FALSE, which also reallocates the room
+#'     given to the title to the plot.
+#' @param fnt the font used in the plot and axes.
+#' @param both plot both the catches and the CPUE
+#' @param maxy a vector of two zeros. These define the maximum y-axis value
+#'     for each plot. If it remains zero then getmax will be used to find
+#'     the maximum.
+#'
+#' @return plots a graph but returns nothing to the console
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   data(dataspm)
+#'   plotfishM(dataspm$fish,dataspm$glb,ce=TRUE)
+#' }   # fish=fish; glb=glb; ce=TRUE; title=FALSE; fnt=7;both=TRUE;maxy=c(0,124.5)
+plotfishM <- function(fish,glb,ce=TRUE,title=TRUE,fnt=7,both=TRUE,
+                      maxy=c(0,0)) {
+  colnames(fish) <- tolower(colnames(fish))
+  rows <- 1
+  if (ce) rows <- 2
+  yrs <- fish[,"year"]
+  par(mfrow=c(rows,1),mai=c(0.5,0.45,0.025,0.05))
+  if (title) {
+    par(oma=c(0.0,0,1.0,0.0))
+  } else {
+    par(oma=c(0.0,0,0.0,0.0))
+  }
+  par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=fnt,font=fnt,font.lab=fnt)
+  ymax <- maxy[1]
+  if (maxy[1] == 0) ymax <- getmax(fish[,"catch"])
+  plot(yrs,fish[,"catch"],type="l",lwd=2,ylab="Catch",xlab="Year",
+       ylim=c(0,ymax),yaxs="i",panel.first = grid())
+  if (title)
+    mtext(glb$spsname,side=3,cex=1.0,line=0,font=fnt,outer=TRUE)
+  if (ce) {
+    pickI <- grep("cpue",colnames(fish))
+    nce <- length(pickI)
+    ymax <- maxy[2]
+    if (maxy[2] == 0) ymax <- getmax(fish[,pickI])
+    plot(yrs,fish[,pickI[1]],type="l",lwd=2,ylab="CPUE",xlab="Year",
+         ylim=c(0,ymax),yaxs="i",panel.first = grid())
+    if (both) points(yrs,fish[,pickI[1]],cex=1.0,pch=16)
+    if (nce > 1) {
+      for (i in 2:nce) {
+        lines(yrs,fish[,pickI[i]],lwd=2,col=i)
+        if (both) points(yrs,fish[,pickI[i]],col=i,cex=1.0,pch=16)
+      }
+    }
+  }
+} # end of plotfishM
 
 
 #' @title printV returns a vector cbinded to 1:length(invect)

@@ -4,7 +4,7 @@
 \alias{negNLL}
 \title{negNLL  -ve log-likelihood for normally distributed variables}
 \usage{
-negNLL(pars, funk, independent, observed)
+negNLL(pars, funk, independent, observed, ...)
 }
 \arguments{
 \item{pars}{a vector containing the parameters being used in funk, plus
@@ -19,6 +19,9 @@ to the predicted values to compare with the observed 'dependent' variable}
 
 \item{observed}{the observed values of the values that the model will
 predict for each of the independent values.}
+
+\item{...}{required to allow funk to access its other parameters without
+having to explicitly declare them in negNLL}
 }
 \value{
 the sum of the negative log-likelihoods using a normal PDF

@@ -8,6 +8,11 @@ simpspm(pars, indat, schaefer = TRUE, depleted = TRUE, year = "year",
   cats = "catch", index = "cpue")
 }
 \arguments{
+\item{pars}{the parameters of the SPM are either c(r, K, Binit, sigma),
+Binit is required if the fishery data starts after the stock has been
+depleted. Each parameter must be log-transformed for improved model
+stability and is transformed inside simpspm.}
+
 \item{indat}{the data which needs to include year, catch, and cpue.}
 
 \item{schaefer}{a logical value determining whether the spm is to be a
@@ -23,11 +28,6 @@ to be a Binit in third position among the input parameters}
 \item{cats}{the column name within indat containing the catches}
 
 \item{index}{the column name within indat containing the cpue.}
-
-\item{par}{the parameters of the SPM are either c(r, K, Binit, sigma),
-Binit is required if the fishery data starts after the stock has been
-depleted. Each parameter must be log-transformed for improved model
-stability and is transformed inside simpspm.}
 }
 \value{
 a vector of length nyrs of log(cpue)

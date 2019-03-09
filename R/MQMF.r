@@ -1,10 +1,11 @@
 #' @importFrom grDevices dev.new dev.cur dev.off png
-#' @importFrom graphics lines mtext par plot points grid title
-#' @importFrom graphics arrows axis legend polygon segments layout
+#' @importFrom graphics lines mtext par plot points grid title abline
+#' @importFrom graphics arrows axis legend polygon segments layout text
 #' @importFrom stats qnorm rnorm dnorm runif sd quantile optim loess
-#' @importFrom stats dmultinom
+#' @importFrom stats dmultinom anova ccf lm median 
 #' @importFrom utils tail
 NULL
+
 
 
 #' @title MQMF R functions for Modelling and Quantitative Methods in Fisheries
@@ -123,7 +124,8 @@ NULL
 #' @description A dataset containing the fish data.frame, the
 #'     resilience, and the spsname set up ready for use with MQMF.
 #'     In particular it can be used when fitting a surplus
-#'     production model.
+#'     production model. Workable initial parameter values, before log-
+#'     transformation might be: r= 0.42,K=9400,Binit=3400,sigma=0.05
 #'
 #' @format A list of three objects
 #' \describe{
@@ -133,6 +135,24 @@ NULL
 #'   \item{fish}{ a data.frame containing year, catch, and cpue}
 #' }
 "abdat"
+
+#' @title dataspm Three data objects suitable for use with humbleSA.
+#'
+#' @description A dataset containing the fish data.frame, the glb list, and the
+#'     props data.frame set up ready for use with humbleSA. In particular it can
+#'     be used with the SPM functions, as well as the ASPM functions.
+#'
+#' @format A list of three objects
+#' \describe{
+#'   \item{fish}{ a data.frame containing Year, Catch, CPUE, SE, Records, and
+#'       GeoM which is the unstandardized geometric mean CPUE }
+#'   \item{glb}{ a list of global variables including maxage, M, parameters for
+#'       growth, weight-at-age, maturity-at-age, steepness, R0, selectivity,
+#'       resilience, number of ages, and the ages themselves. }
+#'   \item{props}{ a data.frame of age, laa, waa, maa, sela, and feca}
+#' }
+"dataspm"
+
 
 #' @title fishdat Three data objects suitable for use with MQMF.
 #'
@@ -255,9 +275,9 @@ NULL
 #' }
 "plaice"
 
-#' @title schaefer is the yellowfin tuna fishery data from Schaefer 1957
+#' @title schaef is the yellowfin tuna fishery data from Schaefer 1957
 #'
-#' @description schaefer is the yellowfin tuna fishery data from Schaefer, 
+#' @description schaef is the yellowfin tuna fishery data from Schaefer, 
 #'     M.B. (1957) A study of the dynamics of the fishery for yellowfin 
 #'     tuna in the Eastern Tropical Pacific Ocean. _Bulletin, Inter-American
 #'     Tropical Tuna Commission_ __2__: 247-285. It contains the year,
@@ -278,10 +298,10 @@ NULL
 #' }
 #' @examples
 #'  \dontrun{
-#'  data(schaefer)
-#'  schaefer
+#'  data(schaef)
+#'  schaef
 #' }
-"schaefer"
+"schaef"
 
 #' @title tigers is spawning biomass and subsequent recruitment data
 #'

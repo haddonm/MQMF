@@ -220,7 +220,9 @@ mnnegLL <- function(obs,predf) {
 #'     predicted values.
 #' @param logobs the observed values log-transformed ready for comparison
 #'     with the log-predicted values from funk and pars.
-#'
+#' @param ... required to allow funk to access its other parameters without
+#'     having to explicitly declare them in negLL
+#'     
 #' @return the negative log-likelihood using log-normal errors.
 #' @export
 #'
@@ -231,7 +233,7 @@ mnnegLL <- function(obs,predf) {
 #' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
 #' negLL(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
 #' }
-negLL <- function(pars,funk,indat,logobs) {
+negLL <- function(pars,funk,indat,logobs,...) {
   logpred <- funk(pars,indat)
   LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
   return(LL)
@@ -255,7 +257,9 @@ negLL <- function(pars,funk,indat,logobs) {
 #'   to the predicted values to compare with the observed 'dependent' variable
 #' @param observed the observed values of the values that the model will
 #'   predict for each of the independent values.
-#'
+#' @param ... required to allow funk to access its other parameters without
+#'     having to explicitly declare them in negNLL
+#'     
 #' @return the sum of the negative log-likelihoods using a normal PDF
 #' @export
 #'
@@ -266,7 +270,7 @@ negLL <- function(pars,funk,indat,logobs) {
 #'  negNLL(pars,vB,independent=kimura[,"age"],observed=kimura[,"length"])
 #'  # should be 19.20821
 #' }
-negNLL <- function(pars,funk,independent,observed) {
+negNLL <- function(pars,funk,independent,observed,...) {
   predobs <- funk(pars,independent)
   LL <- -sum(dnorm(observed,predobs,tail(pars,1),log=T))
   return(LL)
@@ -306,7 +310,9 @@ negNLL <- function(pars,funk,independent,observed) {
 #'     fitted, which also defines those that will be fixed; defaults
 #'     to all parameters. If some need to be kept constant so as to generate
 #'     a likelihood profile then omit their index from 'notfixed'.
-#'
+#' @param ... required to allow funk to access its other parameters without
+#'     having to explicitly declare them in negLL
+#'     
 #' @return the sum of the negative log-likelihoods using a normal PDF
 #' @export
 #' @examples
@@ -314,7 +320,7 @@ negNLL <- function(pars,funk,independent,observed) {
 #'   txt1 <- 'all example code should be able to run'
 #' }
 negNLP <- function(pars,funk,independent,dependent,initpar=pars,
-                   notfixed=c(1:length(pars))) {
+                   notfixed=c(1:length(pars)),...) {
   predobs <- funk(pars,independent,initpar,notfixed)
   LL <- -sum(dnorm(dependent,predobs,tail(pars,1),log=T))
   return(LL)
@@ -330,7 +336,7 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #'     the use of log-normal residual errors or likelihoods. This function 
 #'     is designed for data consisting of only a single cpue time-series.
 #'
-#' @param par the parameters of the SPM are either c(r, K, Binit, sigma),
+#' @param pars the parameters of the SPM are either c(r, K, Binit, sigma),
 #'     Binit is required if the fishery data starts after the stock has been
 #'     depleted. Each parameter must be log-transformed for improved model
 #'     stability and is transformed inside simpspm.
@@ -446,13 +452,15 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #' @description spm calculates the dynamics using a Schaefer of Fox model.
 #'     The outputs include  predicted Biomass, year, catch, cpue, predicted
 #'     cpue, contributions to q, ssq, and depletion levels. Generally it
-#'     would be more sensible to use simpspmM when fitting a Schaefer model and
-#'     simpfox when fitting a Fox model
+#'     would be more sensible to use simpspm when fitting a Schaefer model 
+#'     or a Fox model
 #'     as those functions are designed to generate only the predicted cpue
 #'     required by the functions ssq and negLL, but the example shows how it
 #'     could be used. the function spm is used inside 'displayModel'
 #'     and could be used alone, to generate a fullist of model outputs
-#'     after the model has been fitted.
+#'     after the model has been fitted. spm is designed when working with a
+#'     single vector of an index of relative abudnance. If there are 
+#'     multiple vectors then use spmCE
 #'
 #' @param inp a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), you
 #'     would use the latter if it was suspected that the fishery data started
@@ -492,22 +500,16 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #' }
 spm <- function(inp,indat,schaefer=TRUE,depleted=TRUE,
                 year="year",cats="catch",index="cpue") {
-  #  inp=bestSPM$estimate; indat=fish; schaefer=FALSE;
+  #  inp=param; indat=schaef; schaefer=TRUE; depleted=TRUE
   #  index="cpue"; year="year";cats="catch"
-  celoc <- grep(index,colnames(indat))
-  nce <- length(celoc)
-  npar <- 2 + nce + nce   # r + K + nce_q + nce_sigma
   years <- indat[,year]
   catch <- indat[,cats]
-  cpue <- as.matrix(indat[,celoc])
+  cpue <- indat[,index]
   nyrs <- length(years)
   biom <- numeric(nyrs+1)
-  predCE <- matrix(NA,nrow=nyrs,ncol=nce)
+  predCE <- matrix(NA,nrow=nyrs,ncol=1)
   columns <- c("Year","ModelB","Catch","Depletion","Harvest")
   addtxt <- c("CPUE","PredCE")
-  if (nce > 1) {
-    addtxt <- c(paste0("CPUE",1:nce),paste0("predCE",1:nce))
-  }
   columns <- c(columns,addtxt)
   extendyrs <- c(years,(years[nyrs]+1))
   answer <- matrix(NA,nrow=(nyrs+1),ncol=length(columns),
@@ -517,31 +519,29 @@ spm <- function(inp,indat,schaefer=TRUE,depleted=TRUE,
   r <- exp(inp[1])
   K <- exp(inp[2])
   biom[1] <-K
-  if (depleted) biom[1] <- exp(inp[npar+1])
+  if (depleted) biom[1] <- exp(inp[3])
   if(schaefer) p <- 1 else p <- 1e-8
   for (index in 1:nyrs) {
     Bt <- biom[index]
     biom[index+1] <- max(Bt + ((r/p)*Bt*(1-(Bt/K)^p)-catch[index]),40)
   }
+  qval <- exp(mean(log(indat[,"cpue"]/biom[1:nyrs])))
   answer[,"ModelB"] <- biom
   answer[,"Depletion"] <- biom/K
   answer[,"Harvest"] <- c(catch/biom[1:nyrs],NA)
-  answer[,(5+1)] <- c(cpue[,1],NA)
-  predCE <- biom * exp(inp[2+1])    # apply same catchability across all years
-  answer[,(5+nce+1)] <- predCE
-  if (nce > 1) {
-    for (i in 2:nce) {
-      predCE <- biom * exp(inp[2+i])
-      answer[,(5+i)] <- c(cpue[,i],NA)
-      answer[,(5+nce+i)] <- predCE
-    }
-  }
+  answer[,"CPUE"] <- c(cpue,NA)
+  predCE <- biom * qval # apply same catchability across all years
+  answer[,"PredCE"] <- predCE
   msy <- r*K/((p+1)^((p+1)/p))
-  if (length(inp) == npar) { copyp <- c(inp,inp[2])
-  } else { copyp <- inp
+  if (!depleted) { copyp <- c(inp,inp[2])
+         } else { copyp <- inp
   }
-  params <- exp(copyp)
-  names(params) <- c("r","K",paste0("Sigma",1:nce),paste0("q",1:nce),"Binit")
+  params <- c(exp(copyp),qval)
+  if (length(params) == 4) {
+    names(params) <- c("r","K","Sigma","q")
+  } else {
+      names(params) <- c("r","K","Binit","Sigma","q")
+  }
   sumout <- c(msy,p,answer[(nyrs+1),"Depletion"],answer[1,"Depletion"],
               answer[(nyrs+1),"ModelB"])
   names(sumout) <- c("msy","p","FinalDepl","InitDepl","FinalB")
