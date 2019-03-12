@@ -206,6 +206,7 @@ newplot <- function(width=6,height=3.6,newdev=TRUE) {
 #'     used to act as a prompt for the correct syntax. The output to
 #'     the console can be copied to your script and modified to suit.
 #'
+#' @param plots vector of number of rows and columns, defaults to c(1,1)
 #' @param cex the size of the font used, defaults to 0.85
 #' @param font the font used, defaults to 7 which is Times Bold, 6 is
 #'     Times, 1 is Sans and 2 is Sans Bold.
@@ -218,8 +219,8 @@ newplot <- function(width=6,height=3.6,newdev=TRUE) {
 #' parset()
 #' parsyn()
 #' }
-parset <- function(cex=0.85,font=7) {
-  par(mfrow=c(1,1),mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))
+parset <- function(plots=c(1,1),cex=0.85,font=7) {
+  par(mfrow=plots,mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))
   par(cex=cex, mgp=c(1.35,0.35,0), font.axis=font,font=font,
       font.lab=font)
 } # end of parset

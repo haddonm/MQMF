@@ -3,7 +3,7 @@
 \docType{data}
 \name{dataspm}
 \alias{dataspm}
-\title{dataspm Three data objects suitable for use with humbleSA.}
+\title{dataspm Three data objects suitable for use with MQMF.}
 \format{A list of three objects
 \describe{
   \item{fish}{ a data.frame containing Year, Catch, CPUE, SE, Records, and
@@ -17,8 +17,10 @@
 dataspm
 }
 \description{
-A dataset containing the fish data.frame, the glb list, and the
-    props data.frame set up ready for use with humbleSA. In particular it can
-    be used with the SPM functions, as well as the ASPM functions.
+A dataset containing the fish data.frame, the glb list, and 
+    the props data.frame set up ready for use with MQMF. In particular it 
+    can be used with the SPM functions, as well as the ASPM functions. 
+    Initial parameter estimates very close to the optimum values could be
+    param <- log(c(r=0.24,K=5174,Binit=2846,sigma=0.164))
 }
 \keyword{datasets}

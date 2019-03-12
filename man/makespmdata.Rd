@@ -38,5 +38,5 @@ ce <- rnorm(length(yrs),mean=20,sd=1)
 makemat <- cbind(year=yrs,catch=catches,cpue=ce)
 dat <- makespmdata(makemat)
 dat
-}
+}    # indata=schaef1; yearcol="YEAR";catchcol="CATCH";cpuecol="CPUE"
 }

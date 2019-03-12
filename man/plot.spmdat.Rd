@@ -4,13 +4,13 @@
 \alias{plot.spmdat}
 \title{plot.spmdat S3 method that plots an spmdat data set}
 \usage{
-\method{plot}{spmdat}(x, ...)
+\method{plot}{spmdat}(x, newdev = FALSE)
 }
 \arguments{
 \item{x}{a data set that should contain 'year', 'catch', and
 'cpue'}
 
-\item{...}{other arguments}
+\item{newdev}{should a new plotting device be used}
 }
 \value{
 nothing, but it does generate a new plot

@@ -136,11 +136,14 @@ NULL
 #' }
 "abdat"
 
-#' @title dataspm Three data objects suitable for use with humbleSA.
+#' @title dataspm Three data objects suitable for use with MQMF.
 #'
-#' @description A dataset containing the fish data.frame, the glb list, and the
-#'     props data.frame set up ready for use with humbleSA. In particular it can
-#'     be used with the SPM functions, as well as the ASPM functions.
+#' @description A dataset containing the fish data.frame, the glb list, and 
+#'     the props data.frame set up ready for use with MQMF. In particular it 
+#'     can be used with the SPM functions, as well as the ASPM functions. 
+#'     Initial parameter estimates very close to the optimum values could be
+#'     param <- log(c(r=0.24,K=5174,Binit=2846,sigma=0.164))
+
 #'
 #' @format A list of three objects
 #' \describe{
@@ -287,7 +290,9 @@ NULL
 #'     catch divided by the total effort. These days such ratios tend not
 #'     to be used with individual records for each day's effort being used
 #'     instead. This does not obscure the variation between different 
-#'     vessels, areas, depths, and seasons.
+#'     vessels, areas, depths, and seasons. Initial parameter estimates 
+#'     close to the optimum values could be
+#'     param <- log(c(r=0.23,K=2200000,Binit=2300000,sigma=0.2))
 #'
 #' @format A matrix of fisheries data
 #' \describe{

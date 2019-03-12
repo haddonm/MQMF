@@ -4,7 +4,8 @@
 \alias{fitSPM}
 \title{fitSPM fits a surplus production model}
 \usage{
-fitSPM(pars, fish, schaefer = TRUE, maxiter = 1000)
+fitSPM(pars, fish, schaefer = TRUE, maxiter = 1000, funk = simpspm,
+  funkone = FALSE)
 }
 \arguments{
 \item{pars}{the initial parameter values to start the search for the optimum}
@@ -16,30 +17,36 @@ fitSPM(pars, fish, schaefer = TRUE, maxiter = 1000)
 Schaefer model. If FALSE then the Fox model is fitted setting the p
 parameter to 1e-08 inside simpspm.}
 
-\item{maxiter}{the maximum number of iterations to be used in each optim run}
+\item{maxiter}{the maximum number of iterations to be used nlm}
+
+\item{funk}{the function used to generate the predicted cpue}
+
+\item{funkone}{defaujlt = FALSE. Means use negLL. If TRUE then use negLL1
+which is identical to negLL but constrains the first parameter > 0}
 }
 \value{
-an optim output object as a list
+an nlm output object as a list
 }
 \description{
-fitSPM fits a surplus production model (either Schaefer or Fox)
-    by applying optim twice. Being automated it is recommended that this only
-    be used once plausible initial parameters have been identified (through
-    rules of thumb or trial and error). It uses negLLM to apply a negative
-    log-likelihood, assuming log-normal ressidual errors. The output object
-    is the usual object output from optim. The $par values can be used in
-    displayModel to plot the outcome, or in bootspm to conduct bootstrap
-    sampling of the residuals from the CPUE model fit to gain an appreciation
-    of any uncerainty in the analysis. It uses the magnitude function to set
-    the values of the parscale parameters.
+fitSPM fits a surplus production model (either Schaefer or 
+    Fox) by applying nlm twice. Being automated it is recommended that 
+    this only be used once plausible initial parameters have been 
+    identified (through rules of thumb or trial and error). It uses 
+    negLL to apply a negative log-likelihood, assuming log-normal 
+    residual errors. The output object is the usual object output from 
+    nlm. The $estimate values can be used in plotModel to plot the 
+    outcome, or in bootspm to conduct bootstrap sampling of the residuals 
+    from the CPUE model fit to gain an appreciation of any uncerainty in 
+    the analysis. It uses the magnitude function to set the values of 
+    the parscale parameters.
 }
 \examples{
 \dontrun{
  data(dataspm)
- pars <- c(r=0.2,K=6000,Binit=2800)
+ pars <- c(r=0.2,K=6000,Binit=2800,sigma=0.2)
  ans <- fitSPM(pars,dataspm$fish,schaefer=TRUE,maxiter=1000)
- outoptim(ans)
- ansF <- fitSPM(pars,dataspm$fish,schaefer=FALSE,maxiter=1000)
- outoptim(ansF)
-}
+ outfit(ans)
+ ansF <- fitSPM(pars,dataspm$fish,schaefer=TRUE,maxiter=1000)
+ outfit(ansF)
+}  
 }

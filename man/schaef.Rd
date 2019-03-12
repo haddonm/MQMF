@@ -25,7 +25,9 @@ schaef is the yellowfin tuna fishery data from Schaefer,
     catch divided by the total effort. These days such ratios tend not
     to be used with individual records for each day's effort being used
     instead. This does not obscure the variation between different 
-    vessels, areas, depths, and seasons.
+    vessels, areas, depths, and seasons. Initial parameter estimates 
+    close to the optimum values could be
+    param <- log(c(r=0.23,K=2200000,Binit=2300000,sigma=0.2))
 }
 \examples{
  \dontrun{

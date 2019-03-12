@@ -239,6 +239,79 @@ negLL <- function(pars,funk,indat,logobs,...) {
   return(LL)
 } # end of negLL
 
+#' @title negLL calculate log-normal log-likelihoods
+#'
+#' @description negLL calculates log-normal negative log-likelihoods. It
+#'     expects the input parameters to be log-transformed, so the funk used
+#'     to calculate the log or the predicted values also needs to expect
+#'     log-transformed parameters
+#'
+#' @param pars the log-transformed parameters to be used in the funk for
+#'     calculating the log of the predicted values against which the log
+#'     observed values will be compared
+#' @param funk the function used to calculate the log-predicted values of
+#'     whatever variable is being used (eg. cpue, catches, etc.)
+#' @param indat the data used by funk with pars to calculate the log-
+#'     predicted values.
+#' @param logobs the observed values log-transformed ready for comparison
+#'     with the log-predicted values from funk and pars.
+#' @param ... required to allow funk to access its other parameters without
+#'     having to explicitly declare them in negLL
+#'     
+#' @return the negative log-likelihood using log-normal errors.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' data(abdat)
+#' fish <- abdat$fish
+#' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
+#' negLL(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
+#' }
+negLL <- function(pars,funk,indat,logobs,...) {
+  logpred <- funk(pars,indat)
+  LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+  
+  return(LL)
+} # end of negLL
+
+#' @title negLL1 calculate log-normal log-likelihoods
+#'
+#' @description negLL1 calculates log-normal negative log-likelihoods. It
+#'     expects the input parameters to be log-transformed, so the funk used
+#'     to calculate the log or the predicted values also needs to expect
+#'     log-transformed parameters
+#'
+#' @param pars the log-transformed parameters to be used in the funk for
+#'     calculating the log of the predicted values against which the log
+#'     observed values will be compared
+#' @param funk the function used to calculate the log-predicted values of
+#'     whatever variable is being used (eg. cpue, catches, etc.)
+#' @param indat the data used by funk with pars to calculate the log-
+#'     predicted values.
+#' @param logobs the observed values log-transformed ready for comparison
+#'     with the log-predicted values from funk and pars.
+#' @param ... required to allow funk to access its other parameters without
+#'     having to explicitly declare them in negLL
+#'     
+#' @return the negative log-likelihood using log-normal errors.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' data(abdat)
+#' fish <- abdat$fish
+#' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
+#' negLL1(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
+#' }
+negLL1 <- function(pars,funk,indat,logobs,...) {
+  logpred <- funk(pars,indat)
+  LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+  LL <- LL + penalty0(exp(pars[1]))
+  return(LL)
+} # end of negLL1
+
+
 #' @title negNLL  -ve log-likelihood for normally distributed variables
 #'
 #' @description negNLL - Calculates the negative log-likelihood for
@@ -456,7 +529,7 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #'     or a Fox model
 #'     as those functions are designed to generate only the predicted cpue
 #'     required by the functions ssq and negLL, but the example shows how it
-#'     could be used. the function spm is used inside 'displayModel'
+#'     could be used. the function spm is used inside 'plotModel'
 #'     and could be used alone, to generate a fullist of model outputs
 #'     after the model has been fitted. spm is designed when working with a
 #'     single vector of an index of relative abudnance. If there are 
@@ -492,10 +565,10 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #'           1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)
 #' dat <- makespmdata(cbind(year,catch,cpue))
 #' pars <- c(0.35,7800,3500)
-#' ans <- displayModel(pars,dat)
-#' bestSP <- optim(par=pars,fn=ssq,callfun=simpspmM,indat=dat)
+#' ans <- plotModel(pars,dat)
+#' bestSP <- optim(par=pars,fn=ssq,callfun=simpspm,indat=dat)
 #' bestSP
-#' ans <- displayModel(bestSP$par,dat,schaefer=TRUE)
+#' ans <- plotModel(bestSP$par,dat,schaefer=TRUE)
 #' str(ans)
 #' }
 spm <- function(inp,indat,schaefer=TRUE,depleted=TRUE,

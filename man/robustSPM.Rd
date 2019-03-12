@@ -4,15 +4,13 @@
 \alias{robustSPM}
 \title{robustSPM conducts a robustness test on the quality of fit of an SPM}
 \usage{
-robustSPM(inpar, fish, glb, N = 10, scaler = 15, console = TRUE,
-  schaefer = TRUE)
+robustSPM(inpar, fish, N = 10, scaler = 40, console = TRUE,
+  schaefer = TRUE, funk = simpspm, funkone = FALSE)
 }
 \arguments{
 \item{inpar}{the parameter set to begin the trials with}
 
 \item{fish}{the fisheries data: at least year, catch, and cpue}
-
-\item{glb}{the global variables containing the spsname}
 
 \item{N}{the number of random trials to run; defaults to 10, which is too few}
 
@@ -24,6 +22,12 @@ variable the outcome}
 
 \item{schaefer}{default = TRUE, which sets the analysis to the Schaefer
 model. setting it to FALSE applies the Fox model instead}
+
+\item{funk}{the function used to generate the predicted cpue}
+
+\item{funkone}{defaults=FALSE; determines whether to use negLL or negLL1
+with FALSE robustSPM will use negLL, with TRUE it will use negLL1
+which has a constraint on the first parameter to keep it > 0}
 }
 \value{
 a list of results from each run, the range of values across runs, and
@@ -43,10 +47,11 @@ robustSPM conducts a robustness test on the quality of fit of
 \dontrun{
   data(dataspm)
   fish <- dataspm$fish
-  glb <- dataspm$glb
-  props <- dataspm$props
-  pars <- c(14,0.19,0.6)
-  out <- robustSPM(pars,fish,glb,props)
+  data(dataspm)
+  param <- log(c(r=0.24,K=5174,Binit=2846,sigma=0.164))
+  ans <- fitSPM(pars=param,fish=fish,schaefer=TRUE,maxiter=1000)
+  out <- robustSPM(ans$estimate,fish,N=10,scaler=40,console=TRUE,
+                   schaefer=TRUE)
   str(out)
   print(out$results)
 }

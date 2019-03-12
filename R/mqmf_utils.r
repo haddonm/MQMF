@@ -383,9 +383,11 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #'     solution
 #'
 #' @param inopt the list object output by nlm, nlminb, or optim
-#' @param backtransform a logical default = FALSE. If TRUE it assumes
+#' @param backtransform a logical default = TRUE If TRUE it assumes
 #'     that the parameters have been log-transformed for stability
 #'     and need back-transforming
+#' @param digits the number of digits to round the backtransformed 
+#'     parameters. defaults to 5.
 #'
 #' @return nothing but it does print the list to the console tidily
 #' @export
@@ -403,7 +405,7 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #'  best <- nlm(f=ssq,p=par,typsize=magnitude(par),indat=alldat)
 #'  outfit(best)  # a=1.3134 and b=2.2029 -veLL=571.5804
 #' }
-outfit <- function(inopt,backtransform=FALSE){
+outfit <- function(inopt,backtransform=TRUE,digits=5){
    nlmcode <- c("relative gradient close to zero, probably solution.",
                 "repeated iterates in tolerance, probably solution.",
                 paste0("nothing lower than estimate.",
@@ -413,12 +415,18 @@ outfit <- function(inopt,backtransform=FALSE){
                        "asymptotic below or stepmax too small."))
    if (length(grep("value",names(inopt))) > 0) { # optim
       cat("optim solution:  \n")
-      cat("par         : ",inopt$par,"\n")
       cat("minimum     : ",inopt$value,"\n")
       cat("iterations  : ",inopt$counts," iterations, gradient\n")
       cat("code        : ",inopt$convergence,"\n")
+      if (backtransform) {
+        ans <- cbind(par=inopt$par,transpar=round(exp(inopt$par),digits))
+      } else {
+        ans <- t(inopt$par)
+      }
+      rownames(ans) <- 1:length(inopt$par)
+      print(ans)
       cat("message     : ",inopt$message,"\n")
-   }
+   } # end of optim
    if (length(grep("minimum",names(inopt))) > 0) {  # nlm - preferred
       cat("nlm solution:  \n")
       cat("minimum     : ",inopt$minimum,"\n")
@@ -426,13 +434,13 @@ outfit <- function(inopt,backtransform=FALSE){
       cat("code        : ",inopt$code,"  ",nlmcode[inopt$code],"\n")
       if (backtransform) {
          ans <- cbind(par=inopt$estimate,gradient=inopt$gradient,
-                      transpar=round(exp(inopt$estimate),6))
+                      transpar=round(exp(inopt$estimate),digits))
          } else {
          ans <- cbind(par=inopt$estimate,gradient=inopt$gradient)
       }
       rownames(ans) <- 1:length(inopt$estimate)
       print(ans)
-   }
+   } # end of nlm
    if (length(grep("objective",names(inopt))) > 0) {
       cat("nlminb solution:  \n")   # nlminb seems to be deprecated
       cat("par        : ",inopt$par,"\n")
@@ -459,6 +467,7 @@ outfit <- function(inopt,backtransform=FALSE){
 #' @param x the parameter value that potentially incurs a penalty
 #'
 #' @return a single value as a penalty to be added to a Log-Likelihood or SSQ
+#' @export
 #'
 #' @examples
 #' \dontrun{

@@ -5,8 +5,26 @@
 \title{negLL calculate log-normal log-likelihoods}
 \usage{
 negLL(pars, funk, indat, logobs, ...)
+
+negLL(pars, funk, indat, logobs, ...)
 }
 \arguments{
+\item{pars}{the log-transformed parameters to be used in the funk for
+calculating the log of the predicted values against which the log
+observed values will be compared}
+
+\item{funk}{the function used to calculate the log-predicted values of
+whatever variable is being used (eg. cpue, catches, etc.)}
+
+\item{indat}{the data used by funk with pars to calculate the log-
+predicted values.}
+
+\item{logobs}{the observed values log-transformed ready for comparison
+with the log-predicted values from funk and pars.}
+
+\item{...}{required to allow funk to access its other parameters without
+having to explicitly declare them in negLL}
+
 \item{pars}{the log-transformed parameters to be used in the funk for
 calculating the log of the predicted values against which the log
 observed values will be compared}
@@ -25,14 +43,27 @@ having to explicitly declare them in negLL}
 }
 \value{
 the negative log-likelihood using log-normal errors.
+
+the negative log-likelihood using log-normal errors.
 }
 \description{
 negLL calculates log-normal negative log-likelihoods. It
     expects the input parameters to be log-transformed, so the funk used
     to calculate the log or the predicted values also needs to expect
     log-transformed parameters
+
+negLL calculates log-normal negative log-likelihoods. It
+    expects the input parameters to be log-transformed, so the funk used
+    to calculate the log or the predicted values also needs to expect
+    log-transformed parameters
 }
 \examples{
+\dontrun{
+data(abdat)
+fish <- abdat$fish
+param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
+negLL(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
+}
 \dontrun{
 data(abdat)
 fish <- abdat$fish

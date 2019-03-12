@@ -42,7 +42,7 @@ spm calculates the dynamics using a Schaefer of Fox model.
     or a Fox model
     as those functions are designed to generate only the predicted cpue
     required by the functions ssq and negLL, but the example shows how it
-    could be used. the function spm is used inside 'displayModel'
+    could be used. the function spm is used inside 'plotModel'
     and could be used alone, to generate a fullist of model outputs
     after the model has been fitted. spm is designed when working with a
     single vector of an index of relative abudnance. If there are 
@@ -58,10 +58,10 @@ cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,0.8582,
           1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)
 dat <- makespmdata(cbind(year,catch,cpue))
 pars <- c(0.35,7800,3500)
-ans <- displayModel(pars,dat)
-bestSP <- optim(par=pars,fn=ssq,callfun=simpspmM,indat=dat)
+ans <- plotModel(pars,dat)
+bestSP <- optim(par=pars,fn=ssq,callfun=simpspm,indat=dat)
 bestSP
-ans <- displayModel(bestSP$par,dat,schaefer=TRUE)
+ans <- plotModel(bestSP$par,dat,schaefer=TRUE)
 str(ans)
 }
 }
