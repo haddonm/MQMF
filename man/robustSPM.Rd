@@ -54,5 +54,5 @@ robustSPM conducts a robustness test on the quality of fit of
                    schaefer=TRUE)
   str(out)
   print(out$results)
-}
+} 
 }

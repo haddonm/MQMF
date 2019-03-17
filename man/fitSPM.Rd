@@ -8,7 +8,8 @@ fitSPM(pars, fish, schaefer = TRUE, maxiter = 1000, funk = simpspm,
   funkone = FALSE)
 }
 \arguments{
-\item{pars}{the initial parameter values to start the search for the optimum}
+\item{pars}{the initial parameter values to start the search for the 
+optimum. These need to be on the log-scale (log-transformed)}
 
 \item{fish}{the matrix containing the fishery data 'year', 'catch', and
 'cpue' as a minimum.}
@@ -29,24 +30,25 @@ an nlm output object as a list
 }
 \description{
 fitSPM fits a surplus production model (either Schaefer or 
-    Fox) by applying nlm twice. Being automated it is recommended that 
-    this only be used once plausible initial parameters have been 
-    identified (through rules of thumb or trial and error). It uses 
-    negLL to apply a negative log-likelihood, assuming log-normal 
-    residual errors. The output object is the usual object output from 
-    nlm. The $estimate values can be used in plotModel to plot the 
+    Fox) by applying first optim (using Nelder-Mead) and then nlm. Being 
+    automated it is recommended that this only be used once plausible 
+    initial parameters have been identified (through rules of thumb or 
+    trial and error). It uses negLL to apply a negative log-likelihood, 
+    assuming log-normal residual errors. The output object is the usual 
+    object output from nlm, which can be neatly printed using outfit.
+    The $estimate values can be used in plotModel to plot the 
     outcome, or in bootspm to conduct bootstrap sampling of the residuals 
-    from the CPUE model fit to gain an appreciation of any uncerainty in 
-    the analysis. It uses the magnitude function to set the values of 
+    from the CPUE model fit to gain an appreciation of any uncertainty 
+    in the analysis. It uses the magnitude function to set the values of 
     the parscale parameters.
 }
 \examples{
 \dontrun{
  data(dataspm)
- pars <- c(r=0.2,K=6000,Binit=2800,sigma=0.2)
+ pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
  ans <- fitSPM(pars,dataspm$fish,schaefer=TRUE,maxiter=1000)
  outfit(ans)
- ansF <- fitSPM(pars,dataspm$fish,schaefer=TRUE,maxiter=1000)
+ ansF <- fitSPM(pars,dataspm$fish,schaefer=FALSE,maxiter=1000)
  outfit(ansF)
 }  
 }

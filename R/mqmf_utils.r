@@ -237,6 +237,35 @@ getname <- function(x) {
    return((deparse(substitute(x))))
 }
 
+
+#' @title getseed generates a random number seed
+#' 
+#' @description getseed generates a randmo number seed for use within
+#'     set.seed. It produces a 6 digit integer from the Sys.time. This
+#'     is effectively what the system does. As the help on set.seed says
+#'     Initially, there is no seed; a new one is created from the current 
+#'     time and the process ID when one is required. Here in getseed we
+#'     do not use the process ID so the process is not identical but this
+#'     at least allows the set.seed value to be stored should the need to 
+#'     repeat a set of simulations arise. 
+#'
+#' @return  a 6 digits integer
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' seed <- getseed()
+#' set.seed(seed)
+#' rnorm(5)
+#' set.seed(seed)
+#' rnorm(5)
+#' }
+getseed <- function() {
+  begin <- as.integer(Sys.time())
+  pickseed <- begin %% 1e6
+  return(pickseed)
+}
+
 #' @title halftable halves the height of a tall narrow data.frame
 #'
 #' @description halftable would be used when printing a table using kable

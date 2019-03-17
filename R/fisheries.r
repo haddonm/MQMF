@@ -108,6 +108,26 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,
 } # End of discretelogistic
 
 
+#' @title Gz calculates the predicted Gompertz length at age growth curve
+#'
+#' @description Gz calculates length at age for the Gompertz curve.
+#'
+#' @param par is a vector the first three cells of which are a, b, c, for
+#'     the Gz curve.
+#' @param ages is a vector of ages; could be a single number
+#'
+#' @return a vector of predicted lengths for the vector of ages in 'ages'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' ages <- seq(0,20,1)   # sigma is ignored here
+#' pars <- c(a=26.0,b=0.7,c=-0.5,sigma=1.0) # a, b, c, sigma; 
+#' cbind(ages,Gz(pars,ages))
+#' }
+Gz <- function(p, ages) {
+  return(p[1]*exp(-p[2]*exp(p[3]*ages)))
+}
 
 #' @title logist Logistic selectivity function
 #'
@@ -172,6 +192,28 @@ MaA <- function(ina,inb,depend) {
   ans <- exp(ina+inb*depend)/(1+exp(ina+inb*depend))
   return(ans)
 } # end of Maturity at age
+
+#' @title mm calculates the predicted Michaelis-Menton length at age
+#'
+#' @description mm calculates length at age for the generalized Michaelis-
+#'     Menton curve.
+#'
+#' @param par is a vector the first three cells of which are a, b, c
+#'    for the mm curve.
+#' @param ages is a vector of ages; could be a single number
+#'
+#' @return a vector of predicted lengths for the vector of ages in 'ages'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' ages <- seq(0,20,1)    # sigma is ignored here
+#' pars <- c(a=23.0,b=1.0,c=1.0,sigma=1.0) # a, b, c, sigma
+#' cbind(ages,mm(pars,ages))
+#' }
+mm <- function(p, ages) {
+  return((p[1]*ages)/(p[2] + ages^p[3]))
+}
 
 #' @title mnnegLL generic multinomial negative log-likelihoods
 #' 
@@ -662,7 +704,7 @@ ssq <- function(par,funk,independent,observed) {
 #' @description vB calculates length at age for the von Bertalanffy curve.
 #'
 #' @param par is a vector the first three cells of which are Linf, K, and t0
-#'    for the VB curve.
+#'    for the vB curve.
 #' @param ages is a vector of ages; could be a single number
 #'
 #' @return a vector of predicted lengths for the vector of ages in 'ages'
@@ -670,14 +712,13 @@ ssq <- function(par,funk,independent,observed) {
 #'
 #' @examples
 #' \dontrun{
-#' ages <- seq(0,20,1)
+#' ages <- seq(0,20,1)   # sigma is ignored here
 #' pars <- c(Linf=50,K=0.3,t0=-1.0,sigma=1.0) # Linf, K, t0, sigma
 #' cbind(ages,vB(pars,ages))
 #' }
 vB <- function(par,ages) {
   return(par[1] * (1 - exp(-par[2]*(ages-par[3]))))
 }
-
 
 
 

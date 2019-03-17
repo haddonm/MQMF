@@ -79,7 +79,8 @@ altnegLL <- function(inp,indat) {  #inp=pars; indat=fish
 #'  round(bootCI,3)
 #' }
 bootspm <- function(optpar,fishery,iter=100,schaefer=TRUE) {
- #  optpar=bestFox$par;fishery=fish;iter=10;schaefer=FALSE
+ #  optpar=ans$estimate;fishery=fish;iter=10;schaefer=TRUE
+
    out <- spm(inp=optpar,indat=fishery,schaefer=schaefer)
    outmat <- out$outmat
    years <- fishery[,"year"]
@@ -88,31 +89,30 @@ bootspm <- function(optpar,fishery,iter=100,schaefer=TRUE) {
    cpueO <- outmat[pickyr,"CPUE"]
    predO <- outmat[pickyr,"PredCE"]  # original values
    resids <- cpueO/predO
-   varib <- c("r","K")
-   if (length(optpar) > 2) varib <- c("r","K","Binit")
+   varib <- c("r","K","sigma")
+   if (length(optpar) > 3) varib <- c("r","K","Binit","sigma")
    bootpar <- matrix(0,nrow=iter,ncol=length(varib),dimnames=list(1:iter,varib))
    columns <- c("ModelB","BootCE","PredCE","Depletion","Harvest")
    dynam <- array(0,dim=c(iter,nyrs,length(columns)),
                   dimnames=list(1:iter,years,columns))
-   dynam[1,,] <- outmat[,c(1,3,4,7,8)]
+   dynam[1,,] <- outmat[1:nyrs,c(2,6,7,4,5)]
    bootpar[1,] <- optpar
-   negpar <- 0
    for (i in 2:iter) { # i = 2
       cpueOB <- rep(NA,nyrs) # bootstrap sample
       cpueOB[pickyr] <- predO * sample(resids)
       fishery[,"cpue"] <- cpueOB
       outspm <- fitSPM(optpar,fishery,schaefer=schaefer,maxiter=1000)
-      if (any(outspm$par < 0)) negpar <- negpar + 1
-      bootpar[i,] <- outspm$par
-      out <- spm(inp=outspm$par,indat=fishery,schaefer=schaefer)
-      dynam[i,,] <- out$outmat[,c(1,3,4,7,8)]
+      bootpar[i,] <- outspm$estimate
+      out <- spm(inp=outspm$estimate,indat=fishery,schaefer=schaefer)
+      dynam[i,,] <- out$outmat[1:nyrs,c(2,6,7,4,5)]
    }
+   bootpar <- exp(bootpar) # backtransform the parameters
    if(schaefer) p <- 1 else p <- 1e-8
    MSY <- (bootpar[,"r"]*bootpar[,"K"])/((p+1)^((p+1)/p))
    Depl <- dynam[,nyrs,"Depletion"]
    Harv <- dynam[,nyrs,"Harvest"]
    bootpar <- cbind(bootpar,MSY,Depl,Harv)
-   return(list(dynam=dynam,bootpar=bootpar,negativepars=negpar))
+   return(list(dynam=dynam,bootpar=bootpar))
 } # end of bootspm
 
 
@@ -155,18 +155,20 @@ checkspmdata <- function(infish) { # infish=fish
 #' @title fitSPM fits a surplus production model
 #'
 #' @description fitSPM fits a surplus production model (either Schaefer or 
-#'     Fox) by applying nlm twice. Being automated it is recommended that 
-#'     this only be used once plausible initial parameters have been 
-#'     identified (through rules of thumb or trial and error). It uses 
-#'     negLL to apply a negative log-likelihood, assuming log-normal 
-#'     residual errors. The output object is the usual object output from 
-#'     nlm. The $estimate values can be used in plotModel to plot the 
+#'     Fox) by applying first optim (using Nelder-Mead) and then nlm. Being 
+#'     automated it is recommended that this only be used once plausible 
+#'     initial parameters have been identified (through rules of thumb or 
+#'     trial and error). It uses negLL to apply a negative log-likelihood, 
+#'     assuming log-normal residual errors. The output object is the usual 
+#'     object output from nlm, which can be neatly printed using outfit.
+#'     The $estimate values can be used in plotModel to plot the 
 #'     outcome, or in bootspm to conduct bootstrap sampling of the residuals 
-#'     from the CPUE model fit to gain an appreciation of any uncerainty in 
-#'     the analysis. It uses the magnitude function to set the values of 
+#'     from the CPUE model fit to gain an appreciation of any uncertainty 
+#'     in the analysis. It uses the magnitude function to set the values of 
 #'     the parscale parameters.
 #'
-#' @param pars the initial parameter values to start the search for the optimum
+#' @param pars the initial parameter values to start the search for the 
+#'     optimum. These need to be on the log-scale (log-transformed)
 #' @param fish the matrix containing the fishery data 'year', 'catch', and
 #'     'cpue' as a minimum.
 #' @param schaefer if TRUE, the default, then simpspm is used to fit the
@@ -183,19 +185,21 @@ checkspmdata <- function(infish) { # infish=fish
 #' @examples
 #' \dontrun{
 #'  data(dataspm)
-#'  pars <- c(r=0.2,K=6000,Binit=2800,sigma=0.2)
+#'  pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
 #'  ans <- fitSPM(pars,dataspm$fish,schaefer=TRUE,maxiter=1000)
 #'  outfit(ans)
-#'  ansF <- fitSPM(pars,dataspm$fish,schaefer=TRUE,maxiter=1000)
+#'  ansF <- fitSPM(pars,dataspm$fish,schaefer=FALSE,maxiter=1000)
 #'  outfit(ansF)
 #' }  
 fitSPM <- function(pars,fish,schaefer=TRUE,maxiter=1000,
                    funk=simpspm,funkone=FALSE) { 
    if (funkone) minim=negLL1 else minim=negLL
    best <- optim(par=pars,fn=minim,funk=funk,indat=fish,schaefer=TRUE,
-                 logobs=log(fish[,"cpue"]),method="BFGS")
+                 logobs=log(fish[,"cpue"]),method="Nelder-Mead",
+                 control=list(parscale=magnitude(pars),maxit=maxiter))
    best2 <- nlm(f=minim,p=best$par,funk=funk,indat=fish,schaefer=TRUE,
-                logobs=log(fish[,"cpue"]),typsize=magnitude(pars))
+                logobs=log(fish[,"cpue"]),typsize=magnitude(pars),
+                iterlim=maxiter)
    return(best2)
 } # end of fitSPM
 
@@ -547,8 +551,8 @@ plotlag <- function(x, driver="catch",react="cpue",lag=0,interval="year",
 plotModel <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
                       target=0.48,addrmse=FALSE,filename="",resol=200,
                       fnt=7,plotout=TRUE,vline=0,plotprod=TRUE) {
-  # inp <- param; indat=schaef;schaefer=TRUE;extern=TRUE;limit=0.2;vline=0
-  # target=0.48;addrmse=TRUE;filename="";resol=200;fnt=7;plotout=TRUE
+  # inp <- best2$estimate; indat=schaef;schaefer=TRUE;extern=TRUE;limit=0.2;vline=0
+  # target=0.48;addrmse=TRUE;filename="";resol=200;fnt=7;plotout=TRUE;plotprod=FALSE
   lenfile <- nchar(filename)
   if (lenfile > 3) {
     end <- substr(filename,(lenfile-3),lenfile)
@@ -648,6 +652,7 @@ plotModel <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
     if (addrmse) {
       CEnames <- colnames(ans)[celoc]
       rmse <- vector("list",nce)
+      names(rmse) <- colnames(ans)[celoc]
       for (i in 1:nce) { # i=1
         rmse[[i]] <- getrmse(ans,invar=CEnames[i],inyr="Year")
         lines(yrs,c(rmse[[i]]$predictedCE),lwd=2,col=3)
@@ -673,7 +678,7 @@ plotModel <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
       segments(x0=yrs[pickCE],y0=rep(1.0,length(pickCE)),x1=yrs[pickCE],
                y1=resid[pickCE,i],lwd=2,col=2)
       points(yrs[pickCE],resid[pickCE,i],pch=16,col=1,cex=1.0)
-      rmseresid[i] <- sqrt(sum(resid[,i]^2)/length(pickCE))
+      rmseresid[i] <- sqrt(sum(resid[,i]^2,na.rm=TRUE)/length(pickCE))
     }
     legend("topleft",colnames(ans)[celoc],round(rmseresid,3),
            cex=1.0,bty="n")
@@ -706,7 +711,7 @@ plotModel <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
     }
   }
   result <- list(out,cbind(x,y),rmseresid,msy,Bmsy,Dmsy,Blim,Btarg,Ctarg,
-                 Dcurr,rmse$rmse,sigmaCE)
+                 Dcurr,rmse,sigmaCE)
   names(result) <- c("Dynamics","BiomProd","rmseresid","MSY","Bmsy",
                      "Dmsy","Blim","Btarg","Ctarg","Dcurr","rmse","sigma")
   return(invisible(result))
@@ -791,9 +796,11 @@ plot.spmdat <- function(x, newdev=FALSE){
 #'                    schaefer=TRUE)
 #'   str(out)
 #'   print(out$results)
-#' }
+#' } 
 robustSPM <- function(inpar,fish,N=10,scaler=40,console=TRUE,
                       schaefer=TRUE,funk=simpspm,funkone=FALSE) {
+  # inpar=ansS$estimate; fish=schaef;N=10;scaler=40;console=TRUE
+  # schaefer=TRUE; funk=simpspm; funkone=FALSE
   origpar <- inpar
   if (length(origpar) == 3) {
     pars <- cbind(rnorm(N,mean=origpar[1],sd=abs(origpar[1])/scaler),
@@ -812,10 +819,10 @@ robustSPM <- function(inpar,fish,N=10,scaler=40,console=TRUE,
   results <- matrix(0,nrow=N,ncol=length(columns),dimnames=list(1:N,columns))
   for (i in 1:N) {  # i=1
     if (funkone) {
-      origLL <-  negLL1(pars[i,],fish,funk=funk,logobs=fish[,"cpue"],
+      origLL <-  negLL1(pars[i,],fish,funk=funk,logobs=log(fish[,"cpue"]),
                        schaefer=schaefer)      
     } else {
-      origLL <-  negLL(pars[i,],fish,funk=funk,logobs=fish[,"cpue"],
+      origLL <-  negLL(pars[i,],fish,funk=funk,logobs=log(fish[,"cpue"]),
                        schaefer=schaefer)
     }
     bestSP <- fitSPM(pars[i,],fish,schaefer=schaefer,
