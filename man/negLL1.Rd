@@ -30,7 +30,10 @@ the negative log-likelihood using log-normal errors.
 negLL1 calculates log-normal negative log-likelihoods. It
     expects the input parameters to be log-transformed, so the funk used
     to calculate the log or the predicted values also needs to expect
-    log-transformed parameters
+    log-transformed parameters. In addition to estimating the negative 
+    log-liklelihoods for log-normally distributed data it also places a 
+    penalty on the first parameter if that parameter approaches very 
+    close to zero; see the function penalty0.
 }
 \examples{
 \dontrun{

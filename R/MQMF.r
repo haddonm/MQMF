@@ -2,8 +2,8 @@
 #' @importFrom graphics lines mtext par plot points grid title abline
 #' @importFrom graphics arrows axis legend polygon segments layout text
 #' @importFrom stats qnorm rnorm dnorm runif sd quantile optim loess
-#' @importFrom stats dmultinom anova ccf lm median 
-#' @importFrom utils tail
+#' @importFrom stats dmultinom anova ccf lm median nlm
+#' @importFrom utils tail head
 NULL
 
 

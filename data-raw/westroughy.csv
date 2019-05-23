@@ -1,0 +1,57 @@
+DeepWaterScalefish,,,
+,,,
+RESILIENCE  ,,,
+verylow   ,,,
+,,,
+,,,
+NYRS  ,,,
+30,   ,,
+,,,
+,,,
+YEARS,catch,cpue,SE  
+1986,3924.912,NA,NA  
+1987,5117.988,NA,NA  
+1988,4722.2,NA,NA  
+1989,1365.128,1.49,0.2
+1990,801.567,1.849,0.2
+1991,625.407,1.501,0.2
+1992,1108.241,2.997,0.2
+1993,964.409,1.415,0.2
+1994,800.618,1.139,0.2
+1995,962.399,0.7,0.2
+1996,1180.349,0.469,0.2
+1997,297.003,0.303,0.2
+1998,316.131,0.356,0.2
+1999,210.529,0.39,0.2
+2000,169.337,0.439,0.2
+2001,200.843,0.489,0.2
+2002,255.735,0.431,0.2
+2003,217.502,0.52,0.2
+2004,283.11,0.777,0.2
+2005,264.607,1.322,0.2
+2006,139.316,1.412,0.2
+2007,28.571,NA,NA  
+2008,3.331,NA,NA  
+2009,13.859,NA,NA  
+2010,21.44,NA,NA  
+2011,31.426,NA,NA  
+2012,17.253,NA,NA  
+2013,35.94,NA,NA  
+2014,22.087,NA,NA  
+2015,16.206,NA,NA  
+,,,
+,,,
+BIOLOGY  ,,,
+80, maxage  the maximum age, usually a plus group ,
+0.036, M  natural mortality  ,,
+39.6, Linf vB asymptotic maximum length ,,
+0.06, K vB Brody growth coefficient ,,
+-0.01, t0 theoretical age at zero length,,
+0.0365, Waa weight at age a parameter ,,
+2.965, Wab weight at age b parameter ,,
+31, M50a age at 50% maturity  ,,
+5, deltaM diff between ages at 50 and 95% maturity ,,
+31, sela50 age at 50% selectivity  ,,
+5, deltaS diff between 50 and 95% ,,
+0.6, steep stock recruitment steepness ,,
+14, R0 default value this will be estimated  ,,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fisheries.r
 \name{spm}
 \alias{spm}
-\title{spm - calculates the dynamics using a Schaefer or Fox model}
+\title{spm - calculates the dynamics of a Schaefer or Fox model}
 \usage{
 spm(inp, indat, schaefer = TRUE, depleted = TRUE, year = "year",
   cats = "catch", index = "cpue")

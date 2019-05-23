@@ -2,7 +2,7 @@
 % Please edit documentation in R/fisheries.r
 \name{simpspm}
 \alias{simpspm}
-\title{simpspm simply calculates the predicted log(CE) for an SPM}
+\title{simpspm calculates only the predicted log(CE) for an SPM}
 \usage{
 simpspm(pars, indat, schaefer = TRUE, depleted = TRUE, year = "year",
   cats = "catch", index = "cpue")
@@ -33,11 +33,12 @@ to be a Binit in third position among the input parameters}
 a vector of length nyrs of log(cpue)
 }
 \description{
-simpspm calculates the predicted log(CPUE) for an SPM model. 
-    It set the Polacheck et al parameter 'p' depending on the schaefer
-    term, and this determines the asymmetry of the production curve.
+simpspm calculates only the predicted log(CPUE) for an SPM 
+    model. It sets the Polacheck et al parameter 'p' depending on the 
+    schaefer boolean term, and this determines the asymmetry of the 
+    production curve.
     If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 it
-    approximates the Fox model. The output of log(CPUE) is to simplfy
+    approximates the Fox model. The output of log(CPUE) is to simplify
     the use of log-normal residual errors or likelihoods. This function 
     is designed for data consisting of only a single cpue time-series.
 }

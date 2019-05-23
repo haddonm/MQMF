@@ -33,7 +33,15 @@ if outplot = TRUE it generates a plot and alters default
     Nt, and Nt+1
 }
 \description{
-discretelogistic ex. box 2.2 Discrete logistic model
+discretelogistic is an implementation of example box 2.2 
+    from the the Excel version of MQMF. It enables the exploration of 
+    the dynamics of the Discrete logistic model, based around the 
+    classical Schaefer model. By setting the r parameter to <= 1.0, one
+    would generate monotonically damped equilibria. r values between 
+    1 < r < 2.03 would generate damped oscillatory equilibria, r values 
+    from 2.03 < r < 2.43 should generate stable limit cycles on a cycle
+    of 2., 2.43 < r < 2.54 gives stable limit cycles of cycle 4, then
+    2.54 < r < 2.57 gives cycles > 4, and ~2.575 < r gives chaos.
 }
 \examples{
 \dontrun{

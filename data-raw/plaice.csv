@@ -1,0 +1,88 @@
+European_Plaice ,,,,,,,,,,
+,,,,,,,,,,
+# The format of this file is such that the first line contains ,,,,,,,,,,
+# the species name or title for the subsequent analyses ,,,,,,,,,,
+# Each section contains a header fully in CAPITALS, which is used by ,,,,,,,,,
+# the function 'readdata' to identify the following data and read it ,,,,,,,,,,
+# in appropriately. If you do not have data for a particular ,,,,,,,,,,
+# section, just delete it and its header. ,,,,,,,,,
+# DO NOT confuse the software by having the same word used as ,,,,,,,,,,
+# a section header occur more than once in the data file ,,,,,,,,,,
+# Always save the file as a comma separated variable file as this ,,,,,,,,,,
+# is the default format when using 'readdata'. ,,,,,,,,,,
+,,,,,,,,,,
+RESILIENCE  ,,,,,,,,,,
+medium,,,,,,,,,,
+,,,,,,,,,,
+NYRS  ,,,,,,,,,,
+9,   ,,,,,,,,,
+,,,,,,,,,,
+YEARS,catch,cpue,SE  ,,,,,,,
+1929,2385.802016,0.409694448,0.2,,,,,,,
+1930,1462.543931,0.256707107,0.2,,,,,,,
+1931,2128.012468,0.444548074,0.2,,,,,,,
+1932,2429.704465,0.372527011,0.2,,,,,,,
+1933,1254.770896,0.277498217,0.2,,,,,,,
+1934,1435.446698,0.270752307,0.2,,,,,,,
+1935,1808.106632,0.385015278,0.2,,,,,,,
+1936,1806.872767,0.334474594,0.2,,,,,,,
+1937,1611.695032,0.39307579,0.2,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+# Other variables can be added to the biology list below. The ,,,,,,,,,,
+# standard format is to add the value followed by a comma, followed ,,,,,,,,,
+# by a descriptive name. This will then be able to be included in ,,,,,,,,,,
+# the standard input function 'readdata' once we know what data you ,,,,,,,,,,
+# may have that we did not think of. ,,,,,,,,,,
+,,,,,,,,,,
+BIOLOGY  ,,,,,,,,,,
+10, maxage  the maximum age, usually a plus group ,,,,,,,,
+0.3, M  natural mortality  ,,,,,,,,,
+60, Linf vB asymptotic maximum length ,,,,,,,,,
+0.3, K vB Brody growth coefficient ,,,,,,,,,
+-0.9, t0 theoretical age at zero length,,,,,,,,,
+1.5, Waa weight at age a parameter ,,,,,,,,,
+2.9, Wab weight at age b parameter ,,,,,,,,,
+2, M50a age at 50% maturity  ,,,,,,,,,
+1.5, deltaM diff between ages at 50 and 95% maturity ,,,,,,,,,
+3.375, sela50 age at 50% selectivity  ,,,,,,,,,
+0.955, deltaS diff between 50 and 95% selectivity ,,,,,,,,,
+0.8, steep stock recruitment steepness ,,,,,,,,,
+14, Ln(R0) initial value but this will be estimated  ,,,,,,,,,
+,,,,,,,,,,
+# The catch-at-age data derives from Table 13.1 in Beverton and ,,,,,,,,,,
+# Holt, 1957; this version uses -99 to indicate missing date. ,,,,,,,,,
+,,,,,,,,,,
+AGE data ,,,,,,,,,,
+9, years of numbers-at-age data ,,,,,,,,,
+2, sexes, if 2, females first then males ,,,,,,,
+Normally only insert years and sexes for which you have data,,,,,,,,,,
+2,3,4,5,6,7,8,9,10,  age classes ,
+1929,1,328,2120,2783,1128,370,768,237,112,48
+1930,1,223,2246,1938,1620,302,106,181,58,18
+1931,1,95,2898,3017,1159,591,116,100,82,33
+1932,1,77,606,4385,1186,231,138,42,21,51
+1933,1,50,489,1121,4738,456,106,80,27,18
+1934,1,44,475,1666,1538,2510,160,50,43,14
+1935,1,131,1373,1595,1587,1326,883,144,30,28
+1936,1,38,691,2862,1094,864,382,436,27,15
+1937,1,138,1293,1804,1810,426,390,163,228,26
+1929,2,-99,-99,-99,-99,-99,-99,-99,-99,-99
+1930,2,-99,-99,-99,-99,-99,-99,-99,-99,-99
+1931,2,-99,-99,-99,-99,-99,-99,-99,-99,-99
+1932,2,-99,-99,-99,-99,-99,-99,-99,-99,-99
+1933,2,-99,-99,-99,-99,-99,-99,-99,-99,-99
+1934,2,-99,-99,-99,-99,-99,-99,-99,-99,-99
+1935,2,-99,-99,-99,-99,-99,-99,-99,-99,-99
+1936,2,-99,-99,-99,-99,-99,-99,-99,-99,-99
+1937,2,-99,-99,-99,-99,-99,-99,-99,-99,-99
+,1,,,,,,,,,
+,,,,,,,,,,
+LENGTH data ,,,,,,,,,,
+2, years of numbers-at-length data ,,,,,,,,,
+2, sexes, if 2, females first then males ,,,,,,,
+15,18,21,24,27,30,33,36,39, length classes ,
+1990,1,15,100,200,300,400,350,300,220,100
+1990,1,15,100,200,300,400,350,300,220,100
+1998,2,15,100,200,300,400,350,300,220,100
+1998,2,15,100,200,300,400,350,300,220,100

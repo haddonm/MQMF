@@ -176,7 +176,7 @@ checkspmdata <- function(infish) { # infish=fish
 #'     parameter to 1e-08 inside simpspm.
 #' @param maxiter the maximum number of iterations to be used nlm
 #' @param funk the function used to generate the predicted cpue
-#' @param funkone defaujlt = FALSE. Means use negLL. If TRUE then use negLL1
+#' @param funkone default = FALSE. Means use negLL. If TRUE then use negLL1
 #'     which is identical to negLL but constrains the first parameter > 0
 #'
 #' @return an nlm output object as a list
@@ -194,10 +194,10 @@ checkspmdata <- function(infish) { # infish=fish
 fitSPM <- function(pars,fish,schaefer=TRUE,maxiter=1000,
                    funk=simpspm,funkone=FALSE) { 
    if (funkone) minim=negLL1 else minim=negLL
-   best <- optim(par=pars,fn=minim,funk=funk,indat=fish,schaefer=TRUE,
+   best <- optim(par=pars,fn=minim,funk=funk,indat=fish,schaefer=schaefer,
                  logobs=log(fish[,"cpue"]),method="Nelder-Mead",
                  control=list(parscale=magnitude(pars),maxit=maxiter))
-   best2 <- nlm(f=minim,p=best$par,funk=funk,indat=fish,schaefer=TRUE,
+   best2 <- nlm(f=minim,p=best$par,funk=funk,indat=fish,schaefer=schaefer,
                 logobs=log(fish[,"cpue"]),typsize=magnitude(pars),
                 iterlim=maxiter)
    return(best2)
@@ -724,7 +724,7 @@ plotModel <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
 #'
 #' @param x a data set that should contain 'year', 'catch', and
 #'     'cpue'
-#' @param newdev should a new plotting device be used
+#' @param ... extra parameters used by plot.spmdat
 #'
 #' @return nothing, but it does generate a new plot
 #' @export
@@ -737,9 +737,8 @@ plotModel <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
 #' makemat <- cbind(year=yrs,catch=catches,cpue=ce)
 #' dat <- makespmdata(makemat)
 #' plot(dat)
-#' }
-plot.spmdat <- function(x, newdev=FALSE){
-  if (newdev) dev.new(width=6,height=4.5,noRStudioGD = TRUE)
+#' }   # x=dat
+plot.spmdat <- function(x, ...){
   par(mfrow = c(2,1),mai = c(0.25, 0.45, 0.1, 0.05), oma = c(0,0,0,0))
   par(cex = 0.85, mgp = c(1.35,0.35,0),font.axis=7,font=7, font.lab=7)
   colnames(x) <- tolower(colnames(x))
@@ -753,6 +752,7 @@ plot.spmdat <- function(x, newdev=FALSE){
       ylim=c(0,ymax),yaxs="i")
   grid()
   abline(h=0,col=1)
+  NextMethod("plot")
 } # end of plot.spmdat
 
 

@@ -45,7 +45,15 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
 
 #' @title discretelogistic example box 2.2 Discrete logistic model
 #'
-#' @description discretelogistic ex. box 2.2 Discrete logistic model
+#' @description discretelogistic is an implementation of example box 2.2 
+#'     from the the Excel version of MQMF. It enables the exploration of 
+#'     the dynamics of the Discrete logistic model, based around the 
+#'     classical Schaefer model. By setting the r parameter to <= 1.0, one
+#'     would generate monotonically damped equilibria. r values between 
+#'     1 < r < 2.03 would generate damped oscillatory equilibria, r values 
+#'     from 2.03 < r < 2.43 should generate stable limit cycles on a cycle
+#'     of 2., 2.43 < r < 2.54 gives stable limit cycles of cycle 4, then
+#'     2.54 < r < 2.57 gives cycles > 4, and ~2.575 < r gives chaos.
 #'
 #' @param r intrinsic rate of population increase; default = 0.5
 #' @param K carrying capacity; default = 1000
@@ -112,7 +120,7 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,
 #'
 #' @description Gz calculates length at age for the Gompertz curve.
 #'
-#' @param par is a vector the first three cells of which are a, b, c, for
+#' @param p is a vector the first three cells of which are a, b, c, for
 #'     the Gz curve.
 #' @param ages is a vector of ages; could be a single number
 #'
@@ -198,7 +206,7 @@ MaA <- function(ina,inb,depend) {
 #' @description mm calculates length at age for the generalized Michaelis-
 #'     Menton curve.
 #'
-#' @param par is a vector the first three cells of which are a, b, c
+#' @param p is a vector the first three cells of which are a, b, c
 #'    for the mm curve.
 #' @param ages is a vector of ages; could be a single number
 #'
@@ -281,48 +289,15 @@ negLL <- function(pars,funk,indat,logobs,...) {
   return(LL)
 } # end of negLL
 
-#' @title negLL calculate log-normal log-likelihoods
-#'
-#' @description negLL calculates log-normal negative log-likelihoods. It
-#'     expects the input parameters to be log-transformed, so the funk used
-#'     to calculate the log or the predicted values also needs to expect
-#'     log-transformed parameters
-#'
-#' @param pars the log-transformed parameters to be used in the funk for
-#'     calculating the log of the predicted values against which the log
-#'     observed values will be compared
-#' @param funk the function used to calculate the log-predicted values of
-#'     whatever variable is being used (eg. cpue, catches, etc.)
-#' @param indat the data used by funk with pars to calculate the log-
-#'     predicted values.
-#' @param logobs the observed values log-transformed ready for comparison
-#'     with the log-predicted values from funk and pars.
-#' @param ... required to allow funk to access its other parameters without
-#'     having to explicitly declare them in negLL
-#'     
-#' @return the negative log-likelihood using log-normal errors.
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' data(abdat)
-#' fish <- abdat$fish
-#' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
-#' negLL(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
-#' }
-negLL <- function(pars,funk,indat,logobs,...) {
-  logpred <- funk(pars,indat)
-  LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
-  
-  return(LL)
-} # end of negLL
-
 #' @title negLL1 calculate log-normal log-likelihoods
 #'
 #' @description negLL1 calculates log-normal negative log-likelihoods. It
 #'     expects the input parameters to be log-transformed, so the funk used
 #'     to calculate the log or the predicted values also needs to expect
-#'     log-transformed parameters
+#'     log-transformed parameters. In addition to estimating the negative 
+#'     log-liklelihoods for log-normally distributed data it also places a 
+#'     penalty on the first parameter if that parameter approaches very 
+#'     close to zero; see the function penalty0.
 #'
 #' @param pars the log-transformed parameters to be used in the funk for
 #'     calculating the log of the predicted values against which the log
@@ -441,13 +416,14 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
   return(LL)
 }
 
-#' @title simpspm simply calculates the predicted log(CE) for an SPM
+#' @title simpspm calculates only the predicted log(CE) for an SPM
 #' 
-#' @description simpspm calculates the predicted log(CPUE) for an SPM model. 
-#'     It set the Polacheck et al parameter 'p' depending on the schaefer
-#'     term, and this determines the asymmetry of the production curve.
+#' @description simpspm calculates only the predicted log(CPUE) for an SPM 
+#'     model. It sets the Polacheck et al parameter 'p' depending on the 
+#'     schaefer boolean term, and this determines the asymmetry of the 
+#'     production curve.
 #'     If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 it
-#'     approximates the Fox model. The output of log(CPUE) is to simplfy
+#'     approximates the Fox model. The output of log(CPUE) is to simplify
 #'     the use of log-normal residual errors or likelihoods. This function 
 #'     is designed for data consisting of only a single cpue time-series.
 #'
@@ -562,7 +538,7 @@ simpspmM <- function(par,indat,schaefer=TRUE,
   return(predCE)
 } # end of simpspmM
 
-#' @title spm - calculates the dynamics using a Schaefer or Fox model
+#' @title spm - calculates the dynamics of a Schaefer or Fox model
 #'
 #' @description spm calculates the dynamics using a Schaefer of Fox model.
 #'     The outputs include  predicted Biomass, year, catch, cpue, predicted
@@ -577,9 +553,12 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #'     single vector of an index of relative abudnance. If there are 
 #'     multiple vectors then use spmCE
 #'
-#' @param inp a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), you
-#'     would use the latter if it was suspected that the fishery data started
-#'     after some initial depletion had occurred.
+#' @param inp a vector of 3 or 4 model parameters (r,K,sigma) or 
+#'     (r,K,Binit,sigma), you would use the latter if it was suspected that 
+#'     the fishery data started after some initial depletion had occurred.
+#'     The sigma is an estimate of the variation of the cpue through time.
+#'     This is required but is only used when fitting the model using
+#'     negative log-likelihoods.
 #' @param indat a matrix with at least columns 'year', 'catch', and 'cpue'
 #' @param schaefer a logical value determining whether the spm is to be a
 #'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The

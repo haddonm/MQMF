@@ -4,13 +4,13 @@
 \alias{plot.spmdat}
 \title{plot.spmdat S3 method that plots an spmdat data set}
 \usage{
-\method{plot}{spmdat}(x, newdev = FALSE)
+\method{plot}{spmdat}(x, ...)
 }
 \arguments{
 \item{x}{a data set that should contain 'year', 'catch', and
 'cpue'}
 
-\item{newdev}{should a new plotting device be used}
+\item{...}{extra parameters used by plot.spmdat}
 }
 \value{
 nothing, but it does generate a new plot
@@ -27,5 +27,5 @@ ce <- rnorm(length(yrs),mean=20,sd=1)
 makemat <- cbind(year=yrs,catch=catches,cpue=ce)
 dat <- makespmdata(makemat)
 plot(dat)
-}
+}   # x=dat
 }

@@ -14,11 +14,12 @@ a single value as a penalty to be added to a Log-Likelihood or SSQ
 }
 \description{
 penalty0 allows for the option of adding a large penalty as
-    a parameter approaches 0.0 . See spmLL
-    for example code that contains such a parameter. For example, when
+    a parameter approaches 0.0 . See negLL1 for example code that 
+    contains such a parameter. For example, when
     fitting an spm sometimes the optimal mathematical model fit can occur
-    by depressing the r value to 0 or even go negative. This is only
-    used internally to simpleSA and so is not formally exported.
+    by depressing the r value to 0 or even go negative. Input values 
+    < 0.006 begin to generate large values as one goes smaller. The
+    examples below illustrate this.
 }
 \examples{
 \dontrun{
