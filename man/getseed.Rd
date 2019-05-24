@@ -10,7 +10,7 @@ getseed()
 a 6 digits integer
 }
 \description{
-getseed generates a randmo number seed for use within
+getseed generates a random number seed for use within
     set.seed. It produces a 6 digit integer from the Sys.time. This
     is effectively what the system does. As the help on set.seed says
     Initially, there is no seed; a new one is created from the current 

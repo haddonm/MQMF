@@ -79,8 +79,7 @@ altnegLL <- function(inp,indat) {  #inp=pars; indat=fish
 #'  round(bootCI,3)
 #' }
 bootspm <- function(optpar,fishery,iter=100,schaefer=TRUE) {
- #  optpar=ans$estimate;fishery=fish;iter=10;schaefer=TRUE
-
+ #  optpar=ans$estimate;fishery=fish;iter=10;schaefer=FALSE
    out <- spm(inp=optpar,indat=fishery,schaefer=schaefer)
    outmat <- out$outmat
    years <- fishery[,"year"]
@@ -89,24 +88,26 @@ bootspm <- function(optpar,fishery,iter=100,schaefer=TRUE) {
    cpueO <- outmat[pickyr,"CPUE"]
    predO <- outmat[pickyr,"PredCE"]  # original values
    resids <- cpueO/predO
-   varib <- c("r","K","sigma")
-   if (length(optpar) > 3) varib <- c("r","K","Binit","sigma")
+   varib <- c("r","K","sigma","-veLL")
+   lenpar <- length(optpar)
+   if (lenpar > 3) varib <- c("r","K","Binit","sigma","-veLL")
    bootpar <- matrix(0,nrow=iter,ncol=length(varib),dimnames=list(1:iter,varib))
    columns <- c("ModelB","BootCE","PredCE","Depletion","Harvest")
    dynam <- array(0,dim=c(iter,nyrs,length(columns)),
                   dimnames=list(1:iter,years,columns))
    dynam[1,,] <- outmat[1:nyrs,c(2,6,7,4,5)]
-   bootpar[1,] <- optpar
+   outspm <- fitSPM(optpar,fishery,schaefer=schaefer,maxiter=1000)
+   bootpar[1,] <- c(outspm$estimate,outspm$minimum)
    for (i in 2:iter) { # i = 2
       cpueOB <- rep(NA,nyrs) # bootstrap sample
       cpueOB[pickyr] <- predO * sample(resids)
       fishery[,"cpue"] <- cpueOB
       outspm <- fitSPM(optpar,fishery,schaefer=schaefer,maxiter=1000)
-      bootpar[i,] <- outspm$estimate
+      bootpar[i,] <- c(outspm$estimate,outspm$minimum)
       out <- spm(inp=outspm$estimate,indat=fishery,schaefer=schaefer)
       dynam[i,,] <- out$outmat[1:nyrs,c(2,6,7,4,5)]
    }
-   bootpar <- exp(bootpar) # backtransform the parameters
+   bootpar[,1:lenpar] <- exp(bootpar[,1:lenpar]) # backtransform parameters
    if(schaefer) p <- 1 else p <- 1e-8
    MSY <- (bootpar[,"r"]*bootpar[,"K"])/((p+1)^((p+1)/p))
    Depl <- dynam[,nyrs,"Depletion"]

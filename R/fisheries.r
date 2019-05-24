@@ -284,7 +284,7 @@ mnnegLL <- function(obs,predf) {
 #' negLL(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
 #' }
 negLL <- function(pars,funk,indat,logobs,...) {
-  logpred <- funk(pars,indat)
+  logpred <- funk(pars,indat,...)
   LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
   return(LL)
 } # end of negLL
@@ -322,7 +322,7 @@ negLL <- function(pars,funk,indat,logobs,...) {
 #' negLL1(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
 #' }
 negLL1 <- function(pars,funk,indat,logobs,...) {
-  logpred <- funk(pars,indat)
+  logpred <- funk(pars,indat,...)
   LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
   LL <- LL + penalty0(exp(pars[1]))
   return(LL)
@@ -361,7 +361,7 @@ negLL1 <- function(pars,funk,indat,logobs,...) {
 #'  # should be 19.20821
 #' }
 negNLL <- function(pars,funk,independent,observed,...) {
-  predobs <- funk(pars,independent)
+  predobs <- funk(pars,independent,...)
   LL <- -sum(dnorm(observed,predobs,tail(pars,1),log=T))
   return(LL)
 }
@@ -411,7 +411,7 @@ negNLL <- function(pars,funk,independent,observed,...) {
 #' }
 negNLP <- function(pars,funk,independent,dependent,initpar=pars,
                    notfixed=c(1:length(pars)),...) {
-  predobs <- funk(pars,independent,initpar,notfixed)
+  predobs <- funk(pars,independent,initpar,notfixed,...)
   LL <- -sum(dnorm(dependent,predobs,tail(pars,1),log=T))
   return(LL)
 }

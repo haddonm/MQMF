@@ -22,7 +22,7 @@ parameter to 1e-08 inside simpspm.}
 
 \item{funk}{the function used to generate the predicted cpue}
 
-\item{funkone}{defaujlt = FALSE. Means use negLL. If TRUE then use negLL1
+\item{funkone}{default = FALSE. Means use negLL. If TRUE then use negLL1
 which is identical to negLL but constrains the first parameter > 0}
 }
 \value{

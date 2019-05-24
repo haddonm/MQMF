@@ -8,9 +8,12 @@ spm(inp, indat, schaefer = TRUE, depleted = TRUE, year = "year",
   cats = "catch", index = "cpue")
 }
 \arguments{
-\item{inp}{a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), you
-would use the latter if it was suspected that the fishery data started
-after some initial depletion had occurred.}
+\item{inp}{a vector of 3 or 4 model parameters (r,K,sigma) or 
+(r,K,Binit,sigma), you would use the latter if it was suspected that 
+the fishery data started after some initial depletion had occurred.
+The sigma is an estimate of the variation of the cpue through time.
+This is required but is only used when fitting the model using
+negative log-likelihoods.}
 
 \item{indat}{a matrix with at least columns 'year', 'catch', and 'cpue'}
 
