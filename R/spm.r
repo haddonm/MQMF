@@ -179,6 +179,7 @@ checkspmdata <- function(infish) { # infish=fish
 #' @param funk the function used to generate the predicted cpue
 #' @param funkone default = FALSE. Means use negLL. If TRUE then use negLL1
 #'     which is identical to negLL but constrains the first parameter > 0
+#' @param hess default is FALSE; should one calculate the hessian matrix?
 #'
 #' @return an nlm output object as a list
 #' @export
@@ -193,14 +194,14 @@ checkspmdata <- function(infish) { # infish=fish
 #'  outfit(ansF)
 #' }  
 fitSPM <- function(pars,fish,schaefer=TRUE,maxiter=1000,
-                   funk=simpspm,funkone=FALSE) { 
+                   funk=simpspm,funkone=FALSE,hess=FALSE) { 
    if (funkone) minim=negLL1 else minim=negLL
    best <- optim(par=pars,fn=minim,funk=funk,indat=fish,schaefer=schaefer,
                  logobs=log(fish[,"cpue"]),method="Nelder-Mead",
                  control=list(parscale=magnitude(pars),maxit=maxiter))
    best2 <- nlm(f=minim,p=best$par,funk=funk,indat=fish,schaefer=schaefer,
                 logobs=log(fish[,"cpue"]),typsize=magnitude(pars),
-                iterlim=maxiter)
+                iterlim=maxiter,hessian=hess)
    return(best2)
 } # end of fitSPM
 
