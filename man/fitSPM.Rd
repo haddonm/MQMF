@@ -5,7 +5,7 @@
 \title{fitSPM fits a surplus production model}
 \usage{
 fitSPM(pars, fish, schaefer = TRUE, maxiter = 1000, funk = simpspm,
-  funkone = FALSE)
+  funkone = FALSE, hess = FALSE)
 }
 \arguments{
 \item{pars}{the initial parameter values to start the search for the 
@@ -24,6 +24,8 @@ parameter to 1e-08 inside simpspm.}
 
 \item{funkone}{default = FALSE. Means use negLL. If TRUE then use negLL1
 which is identical to negLL but constrains the first parameter > 0}
+
+\item{hess}{default is FALSE; should one calculate the hessian matrix?}
 }
 \value{
 an nlm output object as a list
