@@ -125,7 +125,9 @@ NULL
 #'     resilience, and the spsname set up ready for use with MQMF.
 #'     In particular it can be used when fitting a surplus
 #'     production model. Workable initial parameter values, before log-
-#'     transformation might be: r= 0.42,K=9400,Binit=3400,sigma=0.05
+#'     transformation might be: r= 0.42,K=9400,Binit=3400,sigma=0.05 for 
+#'     the Schaefer version, and r=0.3, K=12000, Binit=4000, sigma=0.05 for
+#'     the Fox model version.
 #'
 #' @format A list of three objects
 #' \describe{
@@ -142,7 +144,9 @@ NULL
 #'     the props data.frame set up ready for use with MQMF. In particular it 
 #'     can be used with the SPM functions, as well as the ASPM functions. 
 #'     Initial parameter estimates very close to the optimum values could be
-#'     param <- log(c(r=0.24,K=5174,Binit=2846,sigma=0.164))
+#'     param <- log(c(r=0.25,K=5500,Binit=3000,sigma=0.2)) for the 
+#'     Schaefer model and log(c(r=0.15,K=6500,Binit=3000,sigma=0.2)) for 
+#'     the Fox model
 
 #'
 #' @format A list of three objects

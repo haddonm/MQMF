@@ -456,6 +456,7 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #' } 
 simpspm <- function(pars, indat,schaefer=TRUE,depleted=TRUE,  
                     year="year",cats="catch",index="cpue") { 
+  # pars=pars;indat=fish;schaefer=TRUE;depleted=FALSE;year="year";cats="catch";index="cpue"
   nyrs <- length(indat[,year])
   biom <- numeric(nyrs+1)
   catch <- indat[,cats]
@@ -468,8 +469,9 @@ simpspm <- function(pars, indat,schaefer=TRUE,depleted=TRUE,
     Bt <- biom[yr]  # avoid negative biomass using a max statement
     biom[yr+1] <- max(Bt + ((ep[1]/p)*Bt*(1-(Bt/ep[2])^p)-catch[yr]),40)
   }
-  qval <- exp(mean(log(indat[,"cpue"]/biom[1:nyrs])))
-  return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
+  pick <- which(indat[,"cpue"] > 0)
+  qval <- exp(mean(log(indat[pick,"cpue"]/biom[pick])))
+  return(log(biom[pick] * qval))  # the log of predicted cpue
 } # end of simpspm generates log-predicted cpue
 
 #' @title simpspmM simply calculates the predicted CE for an SPM
