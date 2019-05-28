@@ -30,7 +30,7 @@ A dataset containing the invert data.frame as a 31 x 7
     There is also columns of the catch, the standard error of the
     standardized cpue (too small to be useful in stock assessments),
     the number of vessels reporting each year, and thje number of
-    records ewach year
+    records each year
 }
 \examples{
  \dontrun{

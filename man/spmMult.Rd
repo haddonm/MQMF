@@ -23,7 +23,7 @@ a list of five objects; outmat the matrix with the dynamics results,
     and sumout, which contains r, K, B0, msy, p, q, Depl, FinalB, and InitDepl
 }
 \description{
-spmMult calculates the dynamics using a Schaefer of Fox model.
+spmMult calculates the dynamics using a Schaefer or Fox model.
     The outputs include  predicted Biomass, year, catch, cpue, predicted
     cpue, contributions to q, ssq, and depletion levels. Generally it
     would be more sensible to use simpspm when fitting a Schaefer model and

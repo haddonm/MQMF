@@ -4,12 +4,13 @@
 \alias{simpspm}
 \title{simpspm calculates only the predicted log(CE) for an SPM}
 \usage{
-simpspm(pars, indat, schaefer = TRUE, depleted = TRUE, year = "year",
-  cats = "catch", index = "cpue")
+simpspm(pars, indat, schaefer = TRUE, year = "year", cats = "catch",
+  index = "cpue")
 }
 \arguments{
 \item{pars}{the parameters of the SPM are either c(r, K, Binit, sigma),
-Binit is required if the fishery data starts after the stock has been
+or c(r, K, sigma), the sigma is required in all cases. Binit is 
+required if the fishery data starts after the stock has been
 depleted. Each parameter must be log-transformed for improved model
 stability and is transformed inside simpspm.}
 
@@ -18,10 +19,6 @@ stability and is transformed inside simpspm.}
 \item{schaefer}{a logical value determining whether the spm is to be a
 simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
 default is TRUE = Schaefer model}
-
-\item{depleted}{default = TRUE; implies the fishery was already depleted
-once fishery data started to be collected. Implies that there needs
-to be a Binit in third position among the input parameters}
 
 \item{year}{the column name within indat containing the years}
 
@@ -41,6 +38,9 @@ simpspm calculates only the predicted log(CPUE) for an SPM
     approximates the Fox model. The output of log(CPUE) is to simplify
     the use of log-normal residual errors or likelihoods. This function 
     is designed for data consisting of only a single cpue time-series.
+    simpspm must have at least three parameters, including the sigma, 
+    even if sum-of-squared residuals is used as a minimizer, then sigma
+    would just float.
 }
 \examples{
 \dontrun{

@@ -110,13 +110,33 @@ LatA <- laa[order(laa$Sex,laa$Age),]
 save(LatA,file="data/LatA.RData")
 
 
+# Schaefer Yellowfin Tuna --------------------------------------------------
+
+filename <- "C:/A_Mal/Rcode/MQMF/data-raw/schaef.csv"
+schaef <- read.csv(filename,header=TRUE)
+class(schaef)
+schaef
+
+save(schaef,file="C:/A_Mal/Rcode/MQMF/data-raw/schaef.RData")
+
+
+
+
+
+
 #  check data ---------------
-tools::checkRdaFiles(paths="C:/A_Mal/Rcode/MQMF/data")
-tools::resaveRdaFiles(paths="C:/A_Mal/Rcode/MQMF/data",compress="auto")
-tools::checkRdaFiles(paths="C:/A_Mal/Rcode/MQMF/data")
+tools::checkRdaFiles(paths="C:/A_Mal/Rcode/MQMF/data-raw")
+tools::resaveRdaFiles(paths="C:/A_Mal/Rcode/MQMF/data-raw",compress="auto")
+tools::checkRdaFiles(paths="C:/A_Mal/Rcode/MQMF/data-raw")
 
 
 
+
+
+
+
+
+# west pink ling age data --------------------------------------------------
 # try to get age data for Western Pink Ling
 filename <- "C:/A_CSIRO/Rcode/simpleSA_use/CAF16in17.csv"
 dat <- read.csv(filename,header=TRUE,"stringsAsFactors"=FALSE)

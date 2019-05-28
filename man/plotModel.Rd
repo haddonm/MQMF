@@ -6,7 +6,7 @@
 \usage{
 plotModel(inp, indat, schaefer = TRUE, extern = FALSE, limit = 0.2,
   target = 0.48, addrmse = FALSE, filename = "", resol = 200,
-  fnt = 7, plotout = TRUE, vline = 0, plotprod = TRUE)
+  fnt = 7, plotout = TRUE, vline = 0, plotprod = TRUE, maxy = 0)
 }
 \arguments{
 \item{inp}{a vector of model parameters at least (r,K,B0)}
@@ -45,6 +45,9 @@ will be added on year-based plots}
 
 \item{plotprod}{if TRUE, the default, the productivity curves are also
 plotted.}
+
+\item{maxy}{defaults to 0, if > 0 then that value will be used in the
+plot of CPUE}
 }
 \value{
 invisibly a list of the dynamics, production curve, MSY, and Bmsy
