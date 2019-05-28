@@ -265,7 +265,7 @@ NULL
 #'
 #' @format A list of five objects with only the first four containing data, the
 #'     lendata only contains formatted data for illustrating that format, it is
-#'     not real data. The other objects contain real data.
+#'     not real data. The other objects contain real data. 
 #' \describe{
 #'   \item{fish}{ a data.frame containing year, catch, cpue, SE of the cpue }
 #'   \item{glb}{biological parameters relating to growth, selectivity,
