@@ -126,8 +126,8 @@ NULL
 #'     In particular it can be used when fitting a surplus
 #'     production model. Workable initial parameter values, before log-
 #'     transformation might be: r= 0.42,K=9400,Binit=3400,sigma=0.05 for 
-#'     the Schaefer version, and r=0.3, K=12000, Binit=4000, sigma=0.05 for
-#'     the Fox model version.
+#'     the Schaefer version, while these also work for the Fox model one
+#'     could use r=0.3, K=12000, Binit=4000, sigma=0.05.
 #'
 #' @format A list of three objects
 #' \describe{
@@ -147,7 +147,6 @@ NULL
 #'     param <- log(c(r=0.25,K=5500,Binit=3000,sigma=0.2)) for the 
 #'     Schaefer model and log(c(r=0.15,K=6500,Binit=3000,sigma=0.2)) for 
 #'     the Fox model
-
 #'
 #' @format A list of three objects
 #' \describe{
@@ -163,17 +162,18 @@ NULL
 
 #' @title fishdat Three data objects suitable for use with MQMF.
 #'
-#' @description A dataset containing the fish data.frame, the glb list, and the
-#'     props data.frame set up ready for use with simpleSA. In particular it can
-#'     be used with fitASPM, fitSPM, run_cMSY, and DBSRA.
+#' @description A dataset containing the fish data.frame, the glb list, and
+#'     the props data.frame set up ready for use with simpleSA. In 
+#'     particular it can be used with fitASPM, fitSPM (though it only 
+#'     provides a very poor fit), run_cMSY, and DBSRA.
 #'
 #' @format A list of three objects
 #' \describe{
-#'   \item{fish}{ a data.frame containing Year, Catch, CPUE, and SE, the standard
-#'       error of the CPUE estimates, if present}
-#'   \item{glb}{ a list of global variables including maxage, M, parameters for
-#'       growth, weight-at-age, maturity-at-age, steepness, R0, selectivity,
-#'       resilience, number of ages, and the ages themselves. }
+#'   \item{fish}{ a data.frame containing Year, Catch, CPUE, and SE, the 
+#'       standarderror of the CPUE estimates, if present}
+#'   \item{glb}{ a list of global variables including maxage, M, parameters 
+#'       for growth, weight-at-age, maturity-at-age, steepness, R0, 
+#'       selectivity, resilience, number of ages, and the ages themselves.}
 #'   \item{props}{ a data.frame of age, laa, waa, maa, sela, and feca}
 #' }
 "fishdat"
@@ -185,8 +185,9 @@ NULL
 #'     well as the unstandardized geometric mean cpue, labelled 'geom'.
 #'     There is also columns of the catch, the standard error of the
 #'     standardized cpue (too small to be useful in stock assessments),
-#'     the number of vessels reporting each year, and thje number of
-#'     records ewach year
+#'     the number of vessels reporting each year, and the number of
+#'     records each year. Very difficult to obtain a plausible solution
+#'     when trying to apply a spm model.
 #'
 #' @format A data.frame of fishery dependent data
 #' \describe{
@@ -256,7 +257,11 @@ NULL
 #'     for North sea plaice dervied from tables and the text of the classical
 #'     Beverton and Holt, 1957, book. Includes age data that is useful for
 #'     illustratung the catch curves. Much of this data has also been included
-#'     in the age-structured model described in Haddon, 2011.
+#'     in the age-structured model described in Haddon, 2011. The sparse 
+#'     fisheries data can be used in an spm analysis but the answers lack
+#'     robustness and depend very much on the startng values! 
+#'     Try Schaefer log( c(r=2.0,K=6000,Binit=2000,sigma=0.1)) 
+#'     and log( c(r=1.75,K=10000,Binit=2000,sigma=0.2)) for the Fox.
 #'
 #' @format A list of five objects with only the first four containing data, the
 #'     lendata only contains formatted data for illustrating that format, it is
@@ -291,19 +296,21 @@ NULL
 #'     the catch, the effort, and the cpue and was used in one of the first 
 #'     descriptions of a stock assessment that used a surplus production 
 #'     model. The catch-per-unit-effort, cpue, is a ratio cpue of the total
-#'     catch divided by the total effort. These days such ratios tend not
-#'     to be used with individual records for each day's effort being used
-#'     instead. This does not obscure the variation between different 
+#'     catch divided by the total effort as thousands of punds per day. 
+#'     These days such ratios tend not to be used with individual records 
+#'     for each day's effort being used instead. 
+#'     This does not obscure the variation between different 
 #'     vessels, areas, depths, and seasons. Initial parameter estimates 
-#'     close to the optimum values could be
-#'     param <- log(c(r=0.23,K=2200000,Binit=2300000,sigma=0.2))
+#'     close to the optimum values for both the Schaefer model and the
+#'     Fox model could be
+#'     param <- log(c(r=0.24,K=2100000,Binit=2200000,sigma=0.2))
 #'
 #' @format A matrix of fisheries data
 #' \describe{
 #'   \item{year}{the fishing year from 1934 - 1955}
 #'   \item{catch}{the total annual catch, tonnes }
 #'   \item{effort}{ the total effort as standard fishing days}
-#'   \item{cpue}{the catch per standard fishing day, a ratio cpue}
+#'   \item{cpue}{the catch '000 pounds per standard day, a ratio cpue}
 #' }
 #' @examples
 #'  \dontrun{

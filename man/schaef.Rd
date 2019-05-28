@@ -9,7 +9,7 @@
   \item{year}{the fishing year from 1934 - 1955}
   \item{catch}{the total annual catch, tonnes }
   \item{effort}{ the total effort as standard fishing days}
-  \item{cpue}{the catch per standard fishing day, a ratio cpue}
+  \item{cpue}{the catch '000 pounds per standard day, a ratio cpue}
 }}
 \usage{
 schaef
@@ -22,12 +22,14 @@ schaef is the yellowfin tuna fishery data from Schaefer,
     the catch, the effort, and the cpue and was used in one of the first 
     descriptions of a stock assessment that used a surplus production 
     model. The catch-per-unit-effort, cpue, is a ratio cpue of the total
-    catch divided by the total effort. These days such ratios tend not
-    to be used with individual records for each day's effort being used
-    instead. This does not obscure the variation between different 
+    catch divided by the total effort as thousands of punds per day. 
+    These days such ratios tend not to be used with individual records 
+    for each day's effort being used instead. 
+    This does not obscure the variation between different 
     vessels, areas, depths, and seasons. Initial parameter estimates 
-    close to the optimum values could be
-    param <- log(c(r=0.23,K=2200000,Binit=2300000,sigma=0.2))
+    close to the optimum values for both the Schaefer model and the
+    Fox model could be
+    param <- log(c(r=0.24,K=2100000,Binit=2200000,sigma=0.2))
 }
 \examples{
  \dontrun{

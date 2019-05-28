@@ -285,7 +285,12 @@ mnnegLL <- function(obs,predf) {
 #' }
 negLL <- function(pars,funk,indat,logobs,...) {
   logpred <- funk(pars,indat,...)
-  LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+  pick <- which(is.na(logobs))
+  if (length(pick) > 0) {
+    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(tail(pars,1)),log=T))
+  } else {
+    LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+  }
   return(LL)
 } # end of negLL
 
@@ -323,7 +328,12 @@ negLL <- function(pars,funk,indat,logobs,...) {
 #' }
 negLL1 <- function(pars,funk,indat,logobs,...) {
   logpred <- funk(pars,indat,...)
-  LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+  pick <- which(is.na(logobs))
+  if (length(pick) > 0) {
+    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(tail(pars,1)),log=T))
+  } else {
+    LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+  }
   LL <- LL + penalty0(exp(pars[1]))
   return(LL)
 } # end of negLL1
@@ -426,18 +436,19 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #'     approximates the Fox model. The output of log(CPUE) is to simplify
 #'     the use of log-normal residual errors or likelihoods. This function 
 #'     is designed for data consisting of only a single cpue time-series.
+#'     simpspm must have at least three parameters, including the sigma, 
+#'     even if sum-of-squared residuals is used as a minimizer, then sigma
+#'     would just float.
 #'
 #' @param pars the parameters of the SPM are either c(r, K, Binit, sigma),
-#'     Binit is required if the fishery data starts after the stock has been
+#'     or c(r, K, sigma), the sigma is required in all cases. Binit is 
+#'     required if the fishery data starts after the stock has been
 #'     depleted. Each parameter must be log-transformed for improved model
 #'     stability and is transformed inside simpspm.
 #' @param indat the data which needs to include year, catch, and cpue. 
 #' @param schaefer a logical value determining whether the spm is to be a
 #'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
 #'     default is TRUE = Schaefer model
-#' @param depleted default = TRUE; implies the fishery was already depleted
-#'     once fishery data started to be collected. Implies that there needs
-#'     to be a Binit in third position among the input parameters
 #' @param year the column name within indat containing the years
 #' @param cats the column name within indat containing the catches
 #' @param index the column name within indat containing the cpue.
@@ -454,15 +465,15 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #'  predCE <- simpspm(pars=param,fish)
 #'  cbind(fish,exp(predCE))
 #' } 
-simpspm <- function(pars, indat,schaefer=TRUE,depleted=TRUE,  
+simpspm <- function(pars, indat,schaefer=TRUE,  
                     year="year",cats="catch",index="cpue") { 
-  # pars=pars;indat=fish;schaefer=TRUE;depleted=FALSE;year="year";cats="catch";index="cpue"
+  # pars=paramS; indat=fish; schaefer=TRUE;year="year";cats="catch";index="cpue"
   nyrs <- length(indat[,year])
   biom <- numeric(nyrs+1)
   catch <- indat[,cats]
   ep <- exp(pars) # par contains at least log of (r,K, and sigma)
   biom[1] <- ep[2]  
-  if (depleted) biom[1] <- ep[3] # Binit should be before sigma
+  if (length(pars) > 3) biom[1] <- ep[3] # Binit should be before sigma
   #p is the location of mode parameter 1 = Schaefer, 1e-8 ~ Fox model
   if(schaefer) p <- 1 else p <- 1e-8
   for (yr in 1:nyrs) { # fill biom using Bt as an interim step
@@ -471,7 +482,7 @@ simpspm <- function(pars, indat,schaefer=TRUE,depleted=TRUE,
   }
   pick <- which(indat[,"cpue"] > 0)
   qval <- exp(mean(log(indat[pick,"cpue"]/biom[pick])))
-  return(log(biom[pick] * qval))  # the log of predicted cpue
+  return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
 } # end of simpspm generates log-predicted cpue
 
 #' @title simpspmM simply calculates the predicted CE for an SPM
@@ -514,7 +525,7 @@ simpspm <- function(pars, indat,schaefer=TRUE,depleted=TRUE,
 #' }
 simpspmM <- function(par,indat,schaefer=TRUE,
                     year="year",cats="catch",index="cpue") {
-  # par=log(pars); indat=fish; schaefer=TRUE;year="year";cats="catch";index="cpue"
+
   celoc <- grep(index,colnames(indat))
   nce <- length(celoc)
   npar <- 2 + nce + nce   # r + K + nce_sigma + nce_q
@@ -565,9 +576,6 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #' @param schaefer a logical value determining whether the spm is to be a
 #'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
 #'     default is TRUE
-#' @param depleted default = TRUE; implies the fishery was already depleted
-#'     once fishery data started to be collected. Implies that there needs
-#'     to be a Binit in third position among the input parameters
 #' @param year the name of the year variable (in case your dataset names it 
 #'     fishingyearinwhichthecatchwastaken)
 #' @param cats the name of the catch variable, again this is for generality
@@ -594,9 +602,9 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #' ans <- plotModel(bestSP$par,dat,schaefer=TRUE)
 #' str(ans)
 #' }
-spm <- function(inp,indat,schaefer=TRUE,depleted=TRUE,
+spm <- function(inp,indat,schaefer=TRUE,
                 year="year",cats="catch",index="cpue") {
-  #  inp=param; indat=schaef; schaefer=TRUE; depleted=TRUE
+  #  inp=best2$estimate; indat=fish; schaefer=TRUE; 
   #  index="cpue"; year="year";cats="catch"
   years <- indat[,year]
   catch <- indat[,cats]
@@ -614,14 +622,15 @@ spm <- function(inp,indat,schaefer=TRUE,depleted=TRUE,
   answer[,"Year"] <- extendyrs
   r <- exp(inp[1])
   K <- exp(inp[2])
-  biom[1] <-K
-  if (depleted) biom[1] <- exp(inp[3])
+  biom[1] <- K
+  if (length(inp) > 3) biom[1] <- exp(inp[3])
   if(schaefer) p <- 1 else p <- 1e-8
-  for (index in 1:nyrs) {
+  for (index in 1:nyrs) { # index=1
     Bt <- biom[index]
     biom[index+1] <- max(Bt + ((r/p)*Bt*(1-(Bt/K)^p)-catch[index]),40)
   }
-  qval <- exp(mean(log(indat[,"cpue"]/biom[1:nyrs])))
+  pick <- which(indat[,"cpue"] > 0)
+  qval <- exp(mean(log(indat[pick,"cpue"]/biom[pick])))
   answer[,"ModelB"] <- biom
   answer[,"Depletion"] <- biom/K
   answer[,"Harvest"] <- c(catch/biom[1:nyrs],NA)
@@ -629,10 +638,7 @@ spm <- function(inp,indat,schaefer=TRUE,depleted=TRUE,
   predCE <- biom * qval # apply same catchability across all years
   answer[,"PredCE"] <- predCE
   msy <- r*K/((p+1)^((p+1)/p))
-  if (!depleted) { copyp <- c(inp,inp[2])
-         } else { copyp <- inp
-  }
-  params <- c(exp(copyp),qval)
+  params <- c(exp(inp),qval)
   if (length(params) == 4) {
     names(params) <- c("r","K","Sigma","q")
   } else {

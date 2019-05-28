@@ -195,13 +195,14 @@ checkspmdata <- function(infish) { # infish=fish
 #' }  
 fitSPM <- function(pars,fish,schaefer=TRUE,maxiter=1000,
                    funk=simpspm,funkone=FALSE,hess=FALSE) { 
+#  pars=paramS;fish=fish;funk=simpspm;schaefer=TRUE;hess=TRUE; funkone=FALSE; maxiter=1000
    if (funkone) minim=negLL1 else minim=negLL
    best <- optim(par=pars,fn=minim,funk=funk,indat=fish,schaefer=schaefer,
-                 logobs=log(fish[,"cpue"]),method="Nelder-Mead",
+           logobs=log(fish[,"cpue"]),method="Nelder-Mead",
                  control=list(parscale=magnitude(pars),maxit=maxiter))
    best2 <- nlm(f=minim,p=best$par,funk=funk,indat=fish,schaefer=schaefer,
-                logobs=log(fish[,"cpue"]),typsize=magnitude(pars),
-                iterlim=maxiter,hessian=hess)
+                logobs=log(fish[,"cpue"]),
+                typsize=magnitude(pars),iterlim=maxiter,hessian=hess)
    return(best2)
 } # end of fitSPM
 
@@ -532,6 +533,8 @@ plotlag <- function(x, driver="catch",react="cpue",lag=0,interval="year",
 #'     will be added on year-based plots
 #' @param plotprod if TRUE, the default, the productivity curves are also
 #'     plotted.
+#' @param maxy defaults to 0, if > 0 then that value will be used in the
+#'     plot of CPUE
 #' @return invisibly a list of the dynamics, production curve, MSY, and Bmsy
 #' @export
 #'
@@ -552,8 +555,8 @@ plotlag <- function(x, driver="catch",react="cpue",lag=0,interval="year",
 #' }
 plotModel <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
                       target=0.48,addrmse=FALSE,filename="",resol=200,
-                      fnt=7,plotout=TRUE,vline=0,plotprod=TRUE) {
-  # inp <- best2$estimate; indat=schaef;schaefer=TRUE;extern=TRUE;limit=0.2;vline=0
+                      fnt=7,plotout=TRUE,vline=0,plotprod=TRUE,maxy=0) {
+  # inp <- best2$estimate; indat=fish;schaefer=TRUE;extern=TRUE;limit=0.2;vline=0
   # target=0.48;addrmse=TRUE;filename="";resol=200;fnt=7;plotout=TRUE;plotprod=FALSE
   lenfile <- nchar(filename)
   if (lenfile > 3) {
@@ -561,7 +564,6 @@ plotModel <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
     if (end != ".png") filename <- paste0(filename,".png")
     png(filename=filename,width=6.0,height=5.5,units="in",res=resol)
   }
-  colnames(indat) <- tolower(colnames(indat))
   if(schaefer) p <- 1 else p <- 1e-8
   out <- spm(inp=inp,indat=indat,schaefer = schaefer)
   ans <- out$outmat
@@ -639,7 +641,8 @@ plotModel <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
       obsce <- ans[,celoc]
     }
     pickCE <- which(ans[,celoc[1]] > 0)
-    ymax <- max(ans[,c(celoc,predloc)],na.rm=T)*1.025
+    ymax <- max(ans[pickCE,c(celoc,predloc)],na.rm=T)*1.025    
+    if (maxy > 0) ymax <- maxy
     plot(yrs,ans[,celoc[1]],type="p",pch=16,col=1,cex=1.0,ylab="",xlab="",
          ylim=c(0,ymax),yaxs="i",xlim=range(yrs),panel.first = grid())
     if (vline > 0) abline(v=vline,col=1,lty=2)
@@ -1008,7 +1011,7 @@ spmphaseplot <- function(answer,Blim=0.2,Btarg=0.5,filename="",resol=200,fnt=7) 
 
 #' @title spmMult - calculates the dynamics using a Schaefer or Fox model
 #'
-#' @description spmMult calculates the dynamics using a Schaefer of Fox model.
+#' @description spmMult calculates the dynamics using a Schaefer or Fox model.
 #'     The outputs include  predicted Biomass, year, catch, cpue, predicted
 #'     cpue, contributions to q, ssq, and depletion levels. Generally it
 #'     would be more sensible to use simpspm when fitting a Schaefer model and
@@ -1067,7 +1070,7 @@ spmMult <- function(inp,indat,schaefer=TRUE) { #  inp=pars; indat=fish; schaefer
    r <- max(inp[1],0.01)
    K <- inp[2]
    biom[1] <- inp[2]
-   if (length(inp) > 2) biom[1] <- inp[3]
+   if (length(inp) > 3) biom[1] <- inp[3]
    if(schaefer) p <- 1 else p <- 1e-8
    for (index in 2:nyrs) {
       Bt <- biom[index-1]
