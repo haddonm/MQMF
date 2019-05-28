@@ -257,6 +257,28 @@ getlag <- function(fish,maxlag=10,plotout=TRUE,indexI=1) { # fish=dat; maxlag=10
 } # end of getlag
 
 
+#' @title getMSY calculates the MSY for the Polacheck et al 1993 equation
+#' 
+#' @description getMSY calculates the MSY for the Polacheck et al 1993 
+#'     equation. This simplifies to rK/4 when p = 1.0. But this is a 
+#'     general equation that covers off for all values of p.
+#'
+#' @param pars the model parameters r, K, Binit, sigma; p is separate
+#' @param p the asymmetry parameter for the polacheck et al 1993 equation
+#'
+#' @return the MSY
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' param <- c(r=1.1,K=1000.0,Binit=800.0,sigma=0.075)
+#' getMSY(param,p=1.0)
+#' getMSY(param,p=1e-08)
+#' }
+getMSY <- function(pars,p) {
+  return(pars[1]*pars[2]/((p+1)^((p+1)/p)))
+}
+
 #' @title getrmse calculates the rmse of the input 'invar' series
 #'
 #' @description getrmse calculates the rmse of the input invar series (defaults
@@ -834,7 +856,7 @@ robustSPM <- function(inpar,fish,N=10,scaler=40,console=TRUE,
                      funk=funk, funkone=funkone)
     if (schaefer) pval=1.0 else pval=1e-08
     opar <- exp(bestSP$estimate)
-    MSY <- spMSY(opar,p=pval)
+    MSY <- getMSY(opar,p=pval)
     results[i,] <- c(exp(pars[i,]),origLL,opar,bestSP$minimum,MSY,
                      bestSP$iterations[1])
     if (console) cat(i,"   ")
@@ -1212,28 +1234,6 @@ spmCE <- function(inp,indat,schaefer=TRUE,
    return(output)
 } # End of spmCE
 
-
-#' @title spMSY calculates the MSY for the Polacheck et al 1993 equation
-#' 
-#' @description spMSY calculates the MSY for the Polacheck et al 1993 
-#'     equation. This simplifies to rK/4 when p = 1.0. But this is a 
-#'     general equation that covers off for all values of p.
-#'
-#' @param pars the model parameters r, K, Binit, sigma; p is separate
-#' @param p the asymmetry parameter for the polacheck et al 1993 equation
-#'
-#' @return the MSY
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' param <- c(r=1.1,K=1000.0,Binit=800.0,sigma=0.075)
-#' spMSY(param,p=1.0)
-#' spMSY(param,p=1e-08)
-#' }
-spMSY <- function(pars,p) {
-  return(pars[1]*pars[2]/((p+1)^((p+1)/p)))
-}
 
 #' @title ssqL a function for summing log-transformed squared residuals
 #'

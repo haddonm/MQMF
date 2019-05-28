@@ -6,7 +6,7 @@
 \title{plaice data derived from Beverton and Holt, 1957 for European Plaice.}
 \format{A list of five objects with only the first four containing data, the
     lendata only contains formatted data for illustrating that format, it is
-    not real data. The other objects contain real data.
+    not real data. The other objects contain real data. 
 \describe{
   \item{fish}{ a data.frame containing year, catch, cpue, SE of the cpue }
   \item{glb}{biological parameters relating to growth, selectivity,
@@ -27,7 +27,11 @@ plaice data including fish, glb, props, agedata, and lendata
     for North sea plaice dervied from tables and the text of the classical
     Beverton and Holt, 1957, book. Includes age data that is useful for
     illustratung the catch curves. Much of this data has also been included
-    in the age-structured model described in Haddon, 2011.
+    in the age-structured model described in Haddon, 2011. The sparse 
+    fisheries data can be used in an spm analysis but the answers lack
+    robustness and depend very much on the startng values! 
+    Try Schaefer log( c(r=2.0,K=6000,Binit=2000,sigma=0.1)) 
+    and log( c(r=1.75,K=10000,Binit=2000,sigma=0.2)) for the Fox.
 }
 \examples{
  \dontrun{
