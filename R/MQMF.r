@@ -125,7 +125,7 @@ NULL
 #'     resilience, and the spsname set up ready for use with MQMF.
 #'     In particular it can be used when fitting a surplus
 #'     production model. Workable initial parameter values, before log-
-#'     transformation might be: r= 0.42,K=9400,Binit=3400,sigma=0.05 for 
+#'     transformation might be: r= 0.4,K=9400,Binit=3400,sigma=0.05 for 
 #'     the Schaefer version, while these also work for the Fox model one
 #'     could use r=0.3, K=12000, Binit=4000, sigma=0.05.
 #'
