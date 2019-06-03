@@ -30,7 +30,9 @@ the negative log-likelihood using log-normal errors.
 negLL calculates log-normal negative log-likelihoods. It
     expects the input parameters to be log-transformed, so the funk used
     to calculate the log or the predicted values also needs to expect
-    log-transformed parameters
+    log-transformed parameters. In addition, it checks that there are no
+    missing data (NA) within the input observed log-transformed data. If
+    there are it uses only those records for which there are values.
 }
 \examples{
 \dontrun{

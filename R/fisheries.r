@@ -259,7 +259,9 @@ mnnegLL <- function(obs,predf) {
 #' @description negLL calculates log-normal negative log-likelihoods. It
 #'     expects the input parameters to be log-transformed, so the funk used
 #'     to calculate the log or the predicted values also needs to expect
-#'     log-transformed parameters
+#'     log-transformed parameters. In addition, it checks that there are no
+#'     missing data (NA) within the input observed log-transformed data. If
+#'     there are it uses only those records for which there are values.
 #'
 #' @param pars the log-transformed parameters to be used in the funk for
 #'     calculating the log of the predicted values against which the log
@@ -426,6 +428,81 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
   return(LL)
 }
 
+#' @title negLLP  -ve log-likelihood for normally distributed variables
+#'
+#' @description negLLP Calculates the negative log-likelihood for normally
+#'     distributed variables. It assumes the presence of a function 'funk'
+#'     that will calculate predicted values of a dependent variable from a
+#'     vector of independent values. By having a separate vector of
+#'     parameters in 'initpar' and a vector of the indices of those parameters
+#'     that will be fitted it is possible to fit only a subset of parameters.
+#'     This is useful if generating a likelihood profile, or setting up a
+#'     likelihood ratio test. With more complex models it is often a useful
+#'     strategy to estimate the full number of parameters in a series of
+#'     phases, increasing the number being estimated each time while keeping
+#'     the rest fixed. 'negLLP' makes such phasing of the fitting of a model
+#'     to data possible.
+#'     This function can be applied directly to normally distributed data or
+#'     to log-transformed data for log-normally distributed data.
+#'
+#' @param pars a vector containing the log-transformed parameters being 
+#'     used in funk, plus an extra sigma which is the standard deviation of 
+#'     the log-normal random likelihoods in dnorm
+#' @param funk the function name that calculates the predicted values from
+#'     the independent values
+#' @param indat the data.frame that contains the data used by the input funk
+#' @param logobs the log-transformed observed values for comparison with the
+#'     values that the model will predict for each of the independent values
+#' @param initpar this defaults to the same as pars - using all parameters
+#' @param notfixed a vector identifying the indices of the parameters to be
+#'     fitted, which also defines those that will be fixed; defaults
+#'     to all parameters. If some need to be kept constant so as to generate
+#'     a likelihood profile then omit their index from 'notfixed'.
+#' @param ... required to allow funk to access its other parameters without
+#'     having to explicitly declare them in negLL
+#'     
+#' @return the sum of the negative log-likelihoods using a normal PDF
+#' @export
+#' @examples
+#' \dontrun{
+#'  data(abdat)
+#'  fish <- abdat$fish 
+#'  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
+#'  optmod <- nlm(f=negLLP,p=param,funk=simpspm,initpar=param,
+#'               notfixed=c(1,2,3,4),indat=fish,logobs=log(fish$cpue),
+#'               typsize=magnitude(param),iterlim=1000)
+#'  outfit(optmod,backtransform = TRUE)
+#'   
+#'  rval <- seq(0.325,0.45,0.0125)  # set up the test sequence
+#'  columns <- c("r","K","Binit","sigma","-veLL")
+#'  result <- matrix(0,nrow=11,ncol=5,dimnames=list(rval,columns))
+#'  profest <- c(r= 0.32,K=11500,Binit=4250,sigma=0.05) # end of sequence
+#'  for (i in 1:11) { 
+#'    param <- log(c(rval[i],profest[2:4])) #recycle the profest values to
+#'    parinit <- param                # improve the stability of nlm as  
+#'    bestmodP <- nlm(f=negLLP,p=param,funk=simpspm,initpar=parinit,#the r
+#'                indat=fish,logobs=log(fish$cpue),notfixed=c(2:4), #value
+#'                typsize=magnitude(param),iterlim=1000)       # changes
+#'    bestest <- exp(bestmodP$estimate)     
+#'    result[i,] <- c(bestest,bestmodP$minimum)  # store each result
+#'  }
+#'  result   #Now plot -veLL againt r values for the profile
+#' }
+negLLP <- function(pars, funk, indat, logobs, initpar=pars,
+                   notfixed=c(1:length(pars)),...) {
+  usepar <- initpar
+  usepar[notfixed] <- pars[notfixed]
+  logpred <- funk(usepar,indat,...)
+  pick <- which(is.na(logobs))
+  if (length(pick) > 0) {
+    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(tail(pars,1)),log=T))
+  } else {
+    LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+  }
+  return(LL)
+} # end of negLLP
+
+
 #' @title simpspm calculates only the predicted log(CE) for an SPM
 #' 
 #' @description simpspm calculates only the predicted log(CPUE) for an SPM 
@@ -467,7 +544,7 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #' } 
 simpspm <- function(pars, indat,schaefer=TRUE,  
                     year="year",cats="catch",index="cpue") { 
-  # pars=paramS; indat=fish; schaefer=TRUE;year="year";cats="catch";index="cpue"
+  # pars=param; indat=fish; schaefer=TRUE;year="year";cats="catch";index="cpue"
   nyrs <- length(indat[,year])
   biom <- numeric(nyrs+1)
   catch <- indat[,cats]
@@ -480,8 +557,8 @@ simpspm <- function(pars, indat,schaefer=TRUE,
     Bt <- biom[yr]  # avoid negative biomass using a max statement
     biom[yr+1] <- max(Bt + ((ep[1]/p)*Bt*(1-(Bt/ep[2])^p)-catch[yr]),40)
   }
-  pick <- which(indat[,"cpue"] > 0)
-  qval <- exp(mean(log(indat[pick,"cpue"]/biom[pick])))
+  pick <- which(indat[,index] > 0)
+  qval <- exp(mean(log(indat[pick,index]/biom[pick])))
   return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
 } # end of simpspm generates log-predicted cpue
 
