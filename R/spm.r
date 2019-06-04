@@ -194,14 +194,14 @@ checkspmdata <- function(infish) { # infish=fish
 #'  outfit(ansF)
 #' }  
 fitSPM <- function(pars,fish,schaefer=TRUE,maxiter=1000,
-                   funk=simpspm,funkone=FALSE,hess=FALSE) { 
+                   funk=simpspm,funkone=FALSE,hess=FALSE,steptol=1e-06) { 
 #  pars=paramS;fish=fish;funk=simpspm;schaefer=TRUE;hess=TRUE; funkone=FALSE; maxiter=1000
    if (funkone) minim=negLL1 else minim=negLL
    best <- optim(par=pars,fn=minim,funk=funk,indat=fish,schaefer=schaefer,
            logobs=log(fish[,"cpue"]),method="Nelder-Mead",
                  control=list(parscale=magnitude(pars),maxit=maxiter))
    best2 <- nlm(f=minim,p=best$par,funk=funk,indat=fish,schaefer=schaefer,
-                logobs=log(fish[,"cpue"]),
+                logobs=log(fish[,"cpue"]),steptol=steptol,
                 typsize=magnitude(pars),iterlim=maxiter,hessian=hess)
    return(best2)
 } # end of fitSPM

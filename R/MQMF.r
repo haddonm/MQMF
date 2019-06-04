@@ -251,6 +251,31 @@ NULL
 #' }
 "LatA"
 
+#' @title npf is the brown and grooved tiger prawn fishery data from NPF
+#'
+#' @description npf is fishery data from teh Northern Prawn Fishery of 
+#'     Australia. It represents the combined catches of the brown tiger
+#'     prawn (Penaeus esculentus) and the grooved tiger prawn (Penaeus
+#'     semisulcatus) from 1970 to 1998. The data are derived from Pownall,
+#'     P.C. (ed.) (1994) Australia's Northern Prawn Fishery: The first 25 
+#'     years. NPF25. Cleveland, Austrlaia.
+#'
+#' @format A matrix of fisheries data
+#' \describe{
+#'   \item{year}{the fishing year from 1970 - 1998}
+#'   \item{catch}{the total annual catch, tonnes }
+#'   \item{cpue}{the catch tonnes per standard day, a ratio cpue}
+#' }
+#' @examples
+#'  \dontrun{
+#'  data(npf)
+#'  npf
+#' }
+"npf"
+
+
+
+
 #' @title plaice data derived from Beverton and Holt, 1957 for European Plaice.
 #'
 #' @description plaice data including fish, glb, props, agedata, and lendata

@@ -119,7 +119,14 @@ schaef
 
 save(schaef,file="C:/A_Mal/Rcode/MQMF/data-raw/schaef.RData")
 
+# npfprawn -----------------------------------------------------------------
 
+filename <- "C:/A_Mal/Rcode/MQMF/data-raw/npf.csv"
+npf <- read.csv(filename,header=TRUE)
+class(npf)
+npf
+
+save(npf,file="C:/A_Mal/Rcode/MQMF/data-raw/npf.RData")
 
 
 

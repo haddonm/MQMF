@@ -41,31 +41,6 @@ plotprofile1 simplifies plotting out the likelihood
 \dontrun{
 data(abdat)
 fish <- abdat$fish
-simpspmP <- function(pars, indat,initpar,notfixed=c(1:length(pars)),
-                     schaefer=TRUE,depleted=TRUE,
-                     year="year",cats="catch",index="cpue") { 
-  nyrs <- length(indat[,year])
-  biom <- numeric(nyrs+1)
-  catch <- indat[,cats]
-  param <- initpar
-  param[notfixed] <- pars[notfixed] 
-  ep <- exp(param) 
-  biom[1] <- ep[2]  
-  if (depleted) biom[1] <- ep[3] 
-  if(schaefer) p <- 1 else p <- 1e-8
-  for (yr in 1:nyrs) { 
-    Bt <- biom[yr]  
-    biom[yr+1] <- max(Bt + ((ep[1]/p)*Bt*(1-(Bt/ep[2])^p)-catch[yr]),10)
-  }
-  qval <- exp(mean(log(indat[,"cpue"]/biom[1:nyrs])))
-  return(log(biom[1:nyrs] * qval))  
-} 
-negLLP <- function(pars, funk, indat, logobs, initpar=pars,
-                   notfixed=c(1:length(pars))) {
-  logpred <- funk(pars,indat,initpar,notfixed)
-  LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
-  return(LL)
-}
 rval <- seq(0.325,0.45,0.001)
 ntrial <- length(rval)
 columns <- c("r","K","Binit","sigma","-veLL")

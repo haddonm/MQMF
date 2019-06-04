@@ -72,6 +72,6 @@ negLLP Calculates the negative log-likelihood for normally
    bestest <- exp(bestmodP$estimate)     
    result[i,] <- c(bestest,bestmodP$minimum)  # store each result
  }
- result
+ result   #Now plot -veLL againt r values for the profile
 }
 }
