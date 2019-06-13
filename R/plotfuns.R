@@ -363,57 +363,59 @@ plotprep <- function(width=6,height=3.6,plots=c(1,1),usefont=7,cex=0.85,
 
 
 
-#' @title plotprofile1 simplifies plotting single likelihood profiles
+#' @title plotprofile simplifies plotting single likelihood profiles
 #' 
-#' @description plotprofile1 simplifies plotting out the likelihood 
-#'     profiles of single parameters or variables. It is necessary to pass
-#'     the function the output from the profile calculations, identifying
-#'     the variable name against which to plot the likelihood. Identifying 
-#'     the name of the -ve log-likelihood column. Facilities are provided
-#'     for defining the x and y axis labels
+#' @description plotprofile simplifies plotting out the likelihood 
+#'     profiles of single parameters or variables. It is necessary to 
+#'     pass the function the output from the profile calculations, 
+#'     identifying the variable name against which to plot the 
+#'     likelihood. Identifying the name of the -ve log-likelihood 
+#'     column. Facilities are provided for defining the x and y axis 
+#'     labels
 #'
-#' @param prof the results from teh likelihood profile calculations. This 
-#'     matrix should include, as a minimum, the fixed variable of interest 
-#'     and the matching -ve log-likelihood in named columns.
-#' @param var the name of the variable of interest to identify the column
-#'     in prof in which to find the vector of fixed values given.
-#' @param digit this is a vector of three that determine by how much the
-#'     round function limits the values printed of the 95% and mean at the 
-#'     top of the plot.
+#' @param prof the results from te elikelihood profile calculations. 
+#'     This matrix should include, as a minimum, the fixed variable 
+#'     of interest and the matching -ve log-likelihood in named 
+#'     columns.
+#' @param var the name of the variable of interest to identify the 
+#'     column in prof in which to find the vector of fixed values 
+#'     given.
+#' @param digit this is a vector of three that determine by how much 
+#'     the round function limits the values printed of the 95% and 
+#'     mean at the top of the plot.
 #' @param xlabel the x-axis label, defaults to the name of the var
 #' @param ylabel the y-axis label, defaults to -ve Log-Likelihood
-#' @param like identifies the name of the column containing the -ve log-
-#'     likelihood
+#' @param like identifies the name of the column containing the -ve 
+#'     log-likelihood
 #'
 #' @return nothing but this does generate a plot.
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' data(abdat)
-#' fish <- abdat$fish
-#' rval <- seq(0.325,0.45,0.001)
-#' ntrial <- length(rval)
-#' columns <- c("r","K","Binit","sigma","-veLL")
-#' result <- matrix(0,nrow=ntrial,ncol=length(columns),
-#'                  dimnames=list(rval,columns))
-#' bestest <- c(r= 0.32,K=11000,Binit=4000,sigma=0.05) 
-#' for (i in 1:ntrial) {  #i <- 1
-#'   param <- log(c(rval[i],bestest[2:4])) 
-#'   parinit <- param    
-#'   bestmodP <- nlm(f=negLLP,p=param,funk=simpspmP,initpar=parinit,
+#'  data(abdat)
+#'  fish <- abdat$fish
+#'  rval <- seq(0.325,0.45,0.001)
+#'  ntrial <- length(rval)
+#'  columns <- c("r","K","Binit","sigma","-veLL")
+#'  result <- matrix(0,nrow=ntrial,ncol=length(columns),
+#'                   dimnames=list(rval,columns))
+#'  bestest <- c(r= 0.32,K=11000,Binit=4000,sigma=0.05) 
+#'  for (i in 1:ntrial) {  #i <- 1
+#'    param <- log(c(rval[i],bestest[2:4])) 
+#'    parinit <- param    
+#'    bestmodP <- nlm(f=negLLP,p=param,funk=simpspmP,initpar=parinit,
 #'                   indat=fish,logobs=log(fish$cpue),notfixed=c(2:4),
 #'                   typsize=magnitude(param),iterlim=1000)
-#'   bestest <- exp(bestmodP$estimate)
-#'   result[i,] <- c(bestest,bestmodP$minimum)
+#'    bestest <- exp(bestmodP$estimate)
+#'    result[i,] <- c(bestest,bestmodP$minimum)
+#'  }
+#'  plotprofile(result,var="r",defpar=TRUE)
 #' }
-#' minLL <- min(result[,"-veLL"])
-#' head(result,20)  # now plot -veLL agsinst r
-#' }
-plotprofile1 <- function(prof,var,digit=c(3,3,3),xlabel=getname(var),
-                         ylabel="-ve Log-Likelihood",like="-veLL") {
-  plot1(prof[,var],prof[,like],xlabel=xlabel,
-        ylabel=ylabel)
+plotprofile <- function(prof,var,digit=c(3,3,3),
+                         ylabel="-ve Log-Likelihood",like="-veLL",
+                         defpar=TRUE) {
+  plot1(prof[,var],prof[,like],xlabel=var,ylabel=ylabel,defpar=defpar)
   ntrial <- dim(prof)[1]
   minimLL <- min(prof[,like],na.rm=TRUE)
   upper <- (minimLL+1.92)
@@ -426,4 +428,4 @@ plotprofile1 <- function(prof,var,digit=c(3,3,3),xlabel=getname(var),
                   round(prof[mid,var],digit[2]),"    ",
                   round(prof[(mid+right-1),var],digit[3]))
   mtext(label,side=3,outer=FALSE,line=-1.1,cex=1.0,font=7)
-} # end of plotpreofile1
+} # end of plotpreofile
