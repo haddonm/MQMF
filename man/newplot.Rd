@@ -25,7 +25,9 @@ newplot is a bare-bones setup routine to generate a plot in
     more simply, use parsyn() which only give a template for the par syntax
 }
 \examples{
-x <- rnorm(1000,mean=0,sd=1.0)
-plotprep()
-hist(x,breaks=30,main="",col=2)
+\dontrun{
+ x <- rnorm(1000,mean=0,sd=1.0)
+ plotprep()
+ hist(x,breaks=30,main="",col=2)
+}
 }

@@ -26,6 +26,9 @@ parameter to 1e-08 inside simpspm.}
 which is identical to negLL but constrains the first parameter > 0}
 
 \item{hess}{default is FALSE; should one calculate the hessian matrix?}
+
+\item{steptol}{the internal step tolerance, required in case nlm reports
+the steptol as being too small. defaults to 1e-06}
 }
 \value{
 an nlm output object as a list

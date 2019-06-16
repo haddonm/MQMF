@@ -25,8 +25,10 @@ addlnorm - estiamtes a log-normal distribution from output of
    a histogram of a data set.
 }
 \examples{
-egdata <- rlnorm(200,meanlog=0.075,sdlog=0.5)
-outh <- hist(egdata,main="",col=2,breaks=seq(0,8,0.2))
-ans <- addlnorm(outh,egdata)
-lines(ans[,"x"],ans[,"y"],lwd=2,col=4)
+\dontrun{
+ egdata <- rlnorm(200,meanlog=0.075,sdlog=0.5)
+ outh <- hist(egdata,main="",col=2,breaks=seq(0,8,0.2))
+ ans <- addlnorm(outh,egdata)
+ lines(ans[,"x"],ans[,"y"],lwd=2,col=4) 
+}
 }

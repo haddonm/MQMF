@@ -44,10 +44,12 @@ plotprep: sets up a window and the par values for plots.
   provide a template for modification.
 }
 \examples{
-x <- rnorm(1000,mean=0,sd=1.0)
-plotprep()
-hist(x,breaks=30,main="",col=2)
-plotprep(width=6,height=5,plots=c(2,1))
-hist(x,breaks=20,main="",col=2)
-hist(x,breaks=30,main="",col=3)
+\dontrun{
+ x <- rnorm(1000,mean=0,sd=1.0)
+ plotprep()
+ hist(x,breaks=30,main="",col=2)
+ plotprep(width=6,height=5,plots=c(2,1))
+ hist(x,breaks=20,main="",col=2)
+ hist(x,breaks=30,main="",col=3)
+}
 }

@@ -180,6 +180,8 @@ checkspmdata <- function(infish) { # infish=fish
 #' @param funkone default = FALSE. Means use negLL. If TRUE then use negLL1
 #'     which is identical to negLL but constrains the first parameter > 0
 #' @param hess default is FALSE; should one calculate the hessian matrix?
+#' @param steptol the internal step tolerance, required in case nlm reports
+#'     the steptol as being too small. defaults to 1e-06
 #'
 #' @return an nlm output object as a list
 #' @export

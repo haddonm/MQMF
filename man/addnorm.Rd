@@ -27,12 +27,14 @@ addnorm - adds a normal distribution to a histogram of a data
    normalizes a set of catch or cpue data.
 }
 \examples{
-x <- rnorm(1000,mean=5,sd=1)
-dev.new(height=6,width=4,noRStudioGD = TRUE)
-par(mfrow= c(1,1),mai=c(0.5,0.5,0.3,0.05))
-par(cex=0.85, mgp=c(1.5,0.35,0), font.axis=7)
-outH <- hist(x,breaks=25,col=3,main="")
-nline <- addnorm(outH,x)
-lines(nline$x,nline$y,lwd=3,col=2)
-print(nline$stats)
+\dontrun{
+ x <- rnorm(1000,mean=5,sd=1)
+ dev.new(height=6,width=4,noRStudioGD = TRUE)
+ par(mfrow= c(1,1),mai=c(0.5,0.5,0.3,0.05))
+ par(cex=0.85, mgp=c(1.5,0.35,0), font.axis=7)
+ outH <- hist(x,breaks=25,col=3,main="")
+ nline <- addnorm(outH,x)
+ lines(nline$x,nline$y,lwd=3,col=2)
+ print(nline$stats)
+}
 }

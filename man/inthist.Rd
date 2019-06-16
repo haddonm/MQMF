@@ -56,8 +56,10 @@ inthist - a replacement for the hist function for use with
    numbers it will issue a warning and then round all values before plotting.
 }
 \examples{
-x <- trunc(runif(1000)*10) + 1
-plotprep(width=6,height=4,plots=c(1,1))
-inthist(x,col="grey",border=3,width=0.75,xlabel="Random Uniform",
-        ylabel="Frequency")
+\dontrun{
+ x <- trunc(runif(1000)*10) + 1
+ plotprep(width=6,height=4,plots=c(1,1))
+ inthist(x,col="grey",border=3,width=0.75,xlabel="Random Uniform",
+         ylabel="Frequency")
+}
 }

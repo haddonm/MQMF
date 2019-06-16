@@ -4,7 +4,7 @@
 \alias{plotprofile}
 \title{plotprofile simplifies plotting single likelihood profiles}
 \usage{
-plotprofile(prof, var, digit = c(3, 3, 3),
+plotprofile(prof, var, digit = c(3, 3, 3), xlabel = var,
   ylabel = "-ve Log-Likelihood", like = "-veLL", defpar = TRUE)
 }
 \arguments{
@@ -21,12 +21,17 @@ given.}
 the round function limits the values printed of the 95% and 
 mean at the top of the plot.}
 
+\item{xlabel}{the x-axis label, defaults to the name of the var}
+
 \item{ylabel}{the y-axis label, defaults to -ve Log-Likelihood}
 
 \item{like}{identifies the name of the column containing the -ve 
 log-likelihood}
 
-\item{xlabel}{the x-axis label, defaults to the name of the var}
+\item{defpar}{logical, should the par values be assumed or defined, 
+defaults to TRUE, so only one plot will be produced. If part of 
+a multiple plot define the formatting before calling and set this
+to FALSE}
 }
 \value{
 nothing but this does generate a plot.

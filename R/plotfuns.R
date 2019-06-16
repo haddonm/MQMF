@@ -1,4 +1,88 @@
 
+#' @title addcontours facilitates adding ontours to an xy plot of points
+#' 
+#' @description addcontours is used to add contours to a dense plot of xy
+#'     points such as might be generated when conducting an analysis of the
+#'     the uncertainty associated with a stock assessment, or other 
+#'     analysis using a bootstrap, a Bayesian MCMC, or even using 
+#'     asymptotic errors and sampling from a muti-variate normal. 
+#'     addcoutours first uses the kde2d function from the MASS package to
+#'     translate the density of points into 2-D kernal densities, and then 
+#'     searches through the resulting densities for those points that would
+#'     identify approximate contours. Finally it calls the contour function
+#'     to add the identified contours to the xy plot.
+#'
+#' @param xval the vector of x-axis values, one halfopf the data pairs
+#' @param yval the vector of y-axis values, the other half of plotted data
+#' @param xrange the range of x-axis data included in the graph
+#' @param yrange the range of y-axis data included in the graph
+#' @param ngrid the number of subdivisions by hich to split the data along
+#'     each axis; defaults to 100
+#' @param contval the contour values, defaults to those containing 50 and
+#'     90 percent i.e. c(0.5, 0.9) 
+#' @param lwd the width of the contour lines, defaults=1
+#' @param col the col of the contour lines, default=1
+#'
+#' @return nothing but it does add contours to a plot of points
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # library(mvtnorm)
+#' # library(MASS)
+#'  data(abdat)
+#'  fish <- abdat$fish
+#'  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
+#'  bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=fish, hessian=TRUE,
+#'             logobs=log(fish$cpue),typsize=magnitude(param),iterlim=1000)
+#'  optpar <- bestmod$estimate
+#'  vcov <- solve(bestmod$hessian)      # solve inverts matrices
+#'  columns <- c("r","K","Binit","sigma")
+#'  N <- 1000  # the contours improve as N increases; try 5000
+#'  mvnpar <- matrix(exp(rmvnorm(N,mean=optpar,sigma=vcov)),
+#'                   nrow=N,ncol=4,dimnames=list(1:N,columns))
+#'  xv <- mvnpar[,"K"]
+#'  yv <- mvnpar[,"r"]
+#'  plotprep(width=6,height=5,newdev = FALSE)
+#'  plot(xv,yv,type="p")
+#'  addcontours(xv,yv,range(xv),range(yv),lwd=2,col=2)
+#'  points(mean(xv),mean(yv),pch=16,cex=1.5,col=2)
+#' }
+addcontours <- function(xval,yval,xrange,yrange,ngrid=100,
+                        contval=c(0.5,0.90),lwd=1,col=1) {
+  z<-kde2d(xval,yval,n=ngrid,lims=c(range(xrange),range(yrange)))
+  zdat <- z$z      # get the kde values
+  tot <- sum(zdat)  
+  target <- 1-contval  # contour values
+  ntarg <- length(target)   # number contours
+  contourvalues <- numeric(ntarg) 
+  steps <- 10
+  for (targ in 1:ntarg) {  # for each contour  targ=1
+    finish <- max(zdat)  
+    begin <- finish/(2*steps)
+    tmpval <- numeric(steps)
+    count <- 0
+    repeat {
+      count <- count + 1
+      for (i in 1:steps) {
+        test <- seq(begin,finish,length=steps)
+        pick <- which(zdat < test[i])
+        samp <- sum(zdat[pick])
+        tmpval[i] <- (samp/tot)-target[targ]
+      }
+      pickx <- which(tmpval > 0.0)
+      if (count > 10) warning("Searching Loop reached 10; caution!")
+      if ((tmpval[pickx[1]] < 0.01) | (count > 10)) break
+      begin <- test[pickx[1]-1]
+      finish <- test[pickx[1]]
+    }
+    contourvalues[targ] <- test[pickx[1]]
+  }
+  contour(z,drawlabels=FALSE,levels=c(contourvalues),add=TRUE,col=col,
+          lwd=lwd,xlim=range(xrange,finite=TRUE),
+          ylim=range(yrange,finite=TRUE))
+} # end of addcontour
+
 
 #' @title addnorm - adds a normal distribution to a histogram of a data set.
 #'
@@ -14,16 +98,18 @@
 #'    used to plot the fitted normal probability density function), and a vector
 #'    used two called 'stats' containing the mean and sandard deviation of the
 #'    input data
-#' @export addnorm
+#' @export
 #' @examples
-#' x <- rnorm(1000,mean=5,sd=1)
-#' dev.new(height=6,width=4,noRStudioGD = TRUE)
-#' par(mfrow= c(1,1),mai=c(0.5,0.5,0.3,0.05))
-#' par(cex=0.85, mgp=c(1.5,0.35,0), font.axis=7)
-#' outH <- hist(x,breaks=25,col=3,main="")
-#' nline <- addnorm(outH,x)
-#' lines(nline$x,nline$y,lwd=3,col=2)
-#' print(nline$stats)
+#' \dontrun{
+#'  x <- rnorm(1000,mean=5,sd=1)
+#'  dev.new(height=6,width=4,noRStudioGD = TRUE)
+#'  par(mfrow= c(1,1),mai=c(0.5,0.5,0.3,0.05))
+#'  par(cex=0.85, mgp=c(1.5,0.35,0), font.axis=7)
+#'  outH <- hist(x,breaks=25,col=3,main="")
+#'  nline <- addnorm(outH,x)
+#'  lines(nline$x,nline$y,lwd=3,col=2)
+#'  print(nline$stats)
+#' }
 addnorm <- function(inhist,xdata,inc=0.01) {
   lower <- inhist$breaks[1]
   upper <- tail(inhist$breaks,1)
@@ -51,10 +137,12 @@ addnorm <- function(inhist,xdata,inc=0.01) {
 #' @export addlnorm
 #'
 #' @examples
-#' egdata <- rlnorm(200,meanlog=0.075,sdlog=0.5)
-#' outh <- hist(egdata,main="",col=2,breaks=seq(0,8,0.2))
-#' ans <- addlnorm(outh,egdata)
-#' lines(ans[,"x"],ans[,"y"],lwd=2,col=4)
+#' \dontrun{
+#'  egdata <- rlnorm(200,meanlog=0.075,sdlog=0.5)
+#'  outh <- hist(egdata,main="",col=2,breaks=seq(0,8,0.2))
+#'  ans <- addlnorm(outh,egdata)
+#'  lines(ans[,"x"],ans[,"y"],lwd=2,col=4) 
+#' }
 addlnorm <- function(inhist,xdata,inc=0.01) {
   lower <- inhist$breaks[1]
   upper <- tail(inhist$breaks,1)
@@ -99,10 +187,12 @@ addlnorm <- function(inhist,xdata,inc=0.01) {
 #' @return a matrix of values and counts is returned invisibly
 #' @export inthist
 #' @examples
-#' x <- trunc(runif(1000)*10) + 1
-#' plotprep(width=6,height=4,plots=c(1,1))
-#' inthist(x,col="grey",border=3,width=0.75,xlabel="Random Uniform",
-#'         ylabel="Frequency")
+#' \dontrun{
+#'  x <- trunc(runif(1000)*10) + 1
+#'  plotprep(width=6,height=4,plots=c(1,1))
+#'  inthist(x,col="grey",border=3,width=0.75,xlabel="Random Uniform",
+#'          ylabel="Frequency")
+#' }
 inthist <- function(x,col=1,border=NULL,width=1,xlabel="",ylabel="",
                     main="",lwd=1,xmin=NA,xmax=NA,ymax=NA,plotout=TRUE,
                     prop=FALSE,inc=1,xaxis=TRUE) {
@@ -183,9 +273,11 @@ inthist <- function(x,col=1,border=NULL,width=1,xlabel="",ylabel="",
 #'   par values. This changes the current plotting options!
 #' @export
 #' @examples
-#' x <- rnorm(1000,mean=0,sd=1.0)
-#' plotprep()
-#' hist(x,breaks=30,main="",col=2)
+#' \dontrun{
+#'  x <- rnorm(1000,mean=0,sd=1.0)
+#'  plotprep()
+#'  hist(x,breaks=30,main="",col=2)
+#' }
 newplot <- function(width=6,height=3.6,newdev=TRUE) {
   if  ((names(dev.cur()) != "null device") & (newdev)) suppressWarnings(dev.off())
   if (names(dev.cur()) %in% c("null device","RStudioGD"))
@@ -216,8 +308,8 @@ newplot <- function(width=6,height=3.6,newdev=TRUE) {
 #'
 #' @examples
 #' \dontrun{
-#' parset()
-#' parsyn()
+#'  parset()
+#'  parsyn()
 #' }
 parset <- function(plots=c(1,1),cex=0.85,font=7) {
   par(mfrow=plots,mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))
@@ -235,7 +327,7 @@ parset <- function(plots=c(1,1),cex=0.85,font=7) {
 #'
 #' @examples
 #' \dontrun{
-#' parsyn()
+#'  parsyn()
 #' }
 parsyn <- function() {
   cat("par(mfrow=c(1,1),mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0)) \n")
@@ -275,8 +367,8 @@ parsyn <- function() {
 #'
 #' @examples
 #' \dontrun{
-#' x <- rnorm(20,mean=5,sd=1)
-#' plot1(x,x,xlabel="x-values",ylabel="yvalues")
+#'  x <- rnorm(20,mean=5,sd=1)
+#'  plot1(x,x,xlabel="x-values",ylabel="yvalues")
 #' }
 plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.85,
                   maxy=0,defpar=TRUE,inpch=16,incol=1){
@@ -317,12 +409,14 @@ plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.85,
 #'   par values. This changes the current plotting options!
 #' @export plotprep
 #' @examples
-#' x <- rnorm(1000,mean=0,sd=1.0)
-#' plotprep()
-#' hist(x,breaks=30,main="",col=2)
-#' plotprep(width=6,height=5,plots=c(2,1))
-#' hist(x,breaks=20,main="",col=2)
-#' hist(x,breaks=30,main="",col=3)
+#' \dontrun{
+#'  x <- rnorm(1000,mean=0,sd=1.0)
+#'  plotprep()
+#'  hist(x,breaks=30,main="",col=2)
+#'  plotprep(width=6,height=5,plots=c(2,1))
+#'  hist(x,breaks=20,main="",col=2)
+#'  hist(x,breaks=30,main="",col=3)
+#' }
 plotprep <- function(width=6,height=3.6,plots=c(1,1),usefont=7,cex=0.85,
                      xmtext=TRUE,ymtext=TRUE,
                      newdev=TRUE,rows=TRUE,filename="") {
@@ -387,6 +481,10 @@ plotprep <- function(width=6,height=3.6,plots=c(1,1),usefont=7,cex=0.85,
 #' @param ylabel the y-axis label, defaults to -ve Log-Likelihood
 #' @param like identifies the name of the column containing the -ve 
 #'     log-likelihood
+#' @param defpar logical, should the par values be assumed or defined, 
+#'     defaults to TRUE, so only one plot will be produced. If part of 
+#'     a multiple plot define the formatting before calling and set this
+#'     to FALSE
 #'
 #' @return nothing but this does generate a plot.
 #' @export
@@ -412,10 +510,10 @@ plotprep <- function(width=6,height=3.6,plots=c(1,1),usefont=7,cex=0.85,
 #'  }
 #'  plotprofile(result,var="r",defpar=TRUE)
 #' }
-plotprofile <- function(prof,var,digit=c(3,3,3),
+plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
                          ylabel="-ve Log-Likelihood",like="-veLL",
                          defpar=TRUE) {
-  plot1(prof[,var],prof[,like],xlabel=var,ylabel=ylabel,defpar=defpar)
+  plot1(prof[,var],prof[,like],xlabel=xlabel,ylabel=ylabel,defpar=defpar)
   ntrial <- dim(prof)[1]
   minimLL <- min(prof[,like],na.rm=TRUE)
   upper <- (minimLL+1.92)

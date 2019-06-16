@@ -30,7 +30,7 @@ parset alters the current base graphics par settings
 }
 \examples{
 \dontrun{
-parset()
-parsyn()
+ parset()
+ parsyn()
 }
 }

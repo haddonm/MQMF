@@ -1,9 +1,11 @@
 #' @importFrom grDevices dev.new dev.cur dev.off png
 #' @importFrom graphics lines mtext par plot points grid title abline
 #' @importFrom graphics arrows axis legend polygon segments layout text
+#' @importFrom graphics contour
 #' @importFrom stats qnorm rnorm dnorm runif sd quantile optim loess
 #' @importFrom stats dmultinom anova ccf lm median nlm
 #' @importFrom utils tail head
+#' @importFrom MASS kde2d
 NULL
 
 
