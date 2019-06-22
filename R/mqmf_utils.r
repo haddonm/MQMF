@@ -859,6 +859,31 @@ readdata <- function(filename,property=FALSE,verbose=TRUE) {
   return(ans)
 } # end of readdata
 
+#' @title timenum calculates time in seconds passed each day
+#' 
+#' @description timenum is a function designed to facilitate the measurement
+#'     of time between intervals within R software that are expected to
+#'     take a maximum of hours. It calculates the time as seconds elapsed 
+#'     from the start of each day. As long as the timing of events does not
+#'     pass from one day to the next accurate results will be generated.
+#'
+#' @return the time in seconds from the start of a day
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   begin <- timenum()
+#'   for (i in 1:1e6) sqrt(i)
+#'   finish <- timenum()
+#'   print(finish - begin)
+#' }
+timenum <- function() {
+  tim <- unlist(as.POSIXlt(Sys.time()))
+  hr <- as.numeric(tim["hour"])*3600
+  min <- as.numeric(tim["min"])*60
+  sec <- as.numeric(tim["sec"])
+  return(hr+min+sec)
+} # end of timenum
 
 #' @title removeEmpty removes empty strings from a vector of strings
 #'
