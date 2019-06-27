@@ -62,7 +62,7 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #' @param inpar the initial parameter values (usually log-transformed)
 #' @param infunk the function used to calculate the negative log-likelihood
 #' @param calcpred the function used by infunk to calculate the predicted
-#'     values for comparison with obsdat.
+#'     values for comparison with obsdat; defaults to simpspm.
 #' @param calcdat the data used by calcpred to calculate the predicted
 #'     values
 #' @param obsdat the observed data (on the same scale as the predicted)
@@ -72,6 +72,7 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #' @param scales The re-scaling factors for each parameter to convert the
 #'     normal random deviates into +/- values on a scale that leads to
 #'     acceptance rates of between 20 and 40percent.
+#' @param ... needed by the simpspm function = calcpred 
 #'
 #' @return a list of the result chains, the acceptance and rejection rates
 #' @export
@@ -97,7 +98,7 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #'  plot1(1:N,out[,2],ylabel="K",defpar=FALSE)
 #' }
 do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
-                    obsdat,priorcalc,scales) {
+                    obsdat,priorcalc,scales,...) {
    totN <- N + burnin
    result <- vector("list",chains)
    for (ch in 1:chains) {
@@ -111,7 +112,8 @@ do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
       colnames(posterior) <- c("r","K","Binit","sigma","Post")
       arate <- numeric(np) # to store acceptance rate
       frate <- numeric(np)
-      func0 <- exp(-infunk(param,calcpred,calcdat,obsdat) + priorcalc(np,N))
+      func0 <- exp(-infunk(param,calcpred,calcdat,obsdat,...) 
+                   + priorcalc(np,N))
       posterior[1,] <- c(exp(param),func0)
       for (iter in 2:totN) {  # iter = 1
          randinc <-  matrix(rnorm(nRand,mean=0,sd=1),nrow=thinstep,ncol=np)
@@ -121,8 +123,8 @@ do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
             for (i in 1:np) {       # loop through parameters
                oldpar <- param[i]
                param[i] <- param[i] + randinc[st,i]
-               func1 <- exp(-infunk(param,calcpred,calcdat,obsdat) +
-                               priorcalc(np,N)) # new +velog-likelihood
+               func1 <- exp(-infunk(param,calcpred,calcdat,obsdat,...) 
+                            + priorcalc(np,N)) 
                if (func1/func0 > uniform[i]) { #
                   func0 = func1
                   arate[i] = arate[i] + 1

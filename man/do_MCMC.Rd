@@ -5,7 +5,7 @@
 \title{do_MCMC conducts an MCMC using Gibbs within Metropolis}
 \usage{
 do_MCMC(chains, burnin, N, thinstep, inpar, infunk, calcpred, calcdat,
-  obsdat, priorcalc, scales)
+  obsdat, priorcalc, scales, ...)
 }
 \arguments{
 \item{chains}{the number of independent MCMC chains produced}
@@ -23,7 +23,7 @@ be divisible by the number of parameters}
 \item{infunk}{the function used to calculate the negative log-likelihood}
 
 \item{calcpred}{the function used by infunk to calculate the predicted
-values for comparison with obsdat.}
+values for comparison with obsdat; defaults to simpspm.}
 
 \item{calcdat}{the data used by calcpred to calculate the predicted
 values}
@@ -37,6 +37,8 @@ each of the parameters in each trial parameter vector.}
 \item{scales}{The re-scaling factors for each parameter to convert the
 normal random deviates into +/- values on a scale that leads to
 acceptance rates of between 20 and 40percent.}
+
+\item{...}{needed by the simpspm function = calcpred}
 }
 \value{
 a list of the result chains, the acceptance and rejection rates
