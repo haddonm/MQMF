@@ -8,53 +8,53 @@ spm(inp, indat, schaefer = TRUE, year = "year", cats = "catch",
   index = "cpue")
 }
 \arguments{
-\item{inp}{a vector of 3 or 4 model parameters (r,K,sigma) or 
-(r,K,Binit,sigma), you would use the latter if it was suspected that 
-the fishery data started after some initial depletion had occurred.
-The sigma is an estimate of the variation of the cpue through time.
-This is required but is only used when fitting the model using
-negative log-likelihoods.}
+\item{inp}{a vector of 3 or 4 model parameters (r,K,sigma) or (r, K,
+Binit,sigma), you would use the latter if it was suspected that 
+the fishery data started after some initial depletion had 
+occurred. The sigma is an estimate of the variation of the cpue 
+through time. This is required but is only used when fitting the 
+model using negative log-likelihoods.}
 
-\item{indat}{a matrix with at least columns 'year', 'catch', and 'cpue'}
+\item{indat}{a matrix with at least columns year, catch, and cpue}
 
-\item{schaefer}{a logical value determining whether the spm is to be a
-simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
-default is TRUE}
+\item{schaefer}{a logical value determining whether the spm is to 
+be a simple Schaefer model (p=1) or approximately a Fox model 
+(p=1e-08). The default is TRUE}
 
-\item{year}{the name of the year variable (in case your dataset names it 
-fishingyearinwhichthecatchwastaken)}
+\item{year}{the name of the year variable (in case your dataset 
+names it fishingyearinwhichthecatchwastaken)}
 
-\item{cats}{the name of the catch variable, again this is for generality}
+\item{cats}{name of the catch variable, again this is for generality}
 
 \item{index}{the name of the cpue variable, for generality}
 }
 \value{
-a list of five objects; outmat the matrix with the dynamics results,
-    q catchability, msy the maximum sustainable yield, the parameter values,
-    and sumout, which contains r, K, B0, msy, p, q, Depl, FinalB, and InitDepl
+a list of five objects; parameters plus q, then outmat, the 
+    matrix with the dynamics, msy the maximum sustainable yield, and 
+    sumout, which contains r,K,B0,msy,p,q,Depl, FinalB, and InitDepl
 }
 \description{
-spm calculates the dynamics using a Schaefer of Fox model.
-    The outputs include  predicted Biomass, year, catch, cpue, predicted
-    cpue, contributions to q, ssq, and depletion levels. Generally it
-    would be more sensible to use simpspm when fitting a Schaefer model 
-    or a Fox model
-    as those functions are designed to generate only the predicted cpue
-    required by the functions ssq and negLL, but the example shows how it
-    could be used. the function spm is used inside 'plotModel'
-    and could be used alone, to generate a fullist of model outputs
-    after the model has been fitted. spm is designed when working with a
+spm calculates the dynamics using a Schaefer of Fox 
+    model. The outputs include  predicted Biomass, year, catch, cpue,
+    predicted cpue, contributions to q, ssq, and depletion levels. 
+    Generally it would be more sensible to use simpspm when fitting 
+    a Schaefer model or a Fox model as those functions are designed 
+    to generate only the predicted cpue required by the functions 
+    ssq and negLL, but the example shows how it could be used. 
+    The function spm is used inside 'plotModel' and could be 
+    used alone, to generate a fullist of model outputs after the 
+    model has been fitted. spm is designed when working with a
     single vector of an index of relative abudnance. If there are 
     multiple vectors then use spmCE
 }
 \examples{
 \dontrun{
 year <- 1985:2008
-catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,645,961,
-           940,912,955,935,940,952,1030,985)
-cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,0.8582,
-          0.8876,1.0126,1.1533,1.2326,1.2764,1.3307,1.3538,1.2648,1.2510,
-          1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)
+catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,
+           645,961,940,912,955,935,940,952,1030,985)
+cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,
+          0.8582,0.8876,1.0126,1.1533,1.2326,1.2764,1.3307,1.3538,
+          1.2648,1.2510,1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)
 dat <- makespmdata(cbind(year,catch,cpue))
 pars <- c(0.35,7800,3500)
 ans <- plotModel(pars,dat)
