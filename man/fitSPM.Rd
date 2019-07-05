@@ -42,7 +42,7 @@ fitSPM fits a surplus production model (either Schaefer or
     assuming log-normal residual errors. The output object is the usual 
     object output from nlm, which can be neatly printed using outfit.
     The $estimate values can be used in plotModel to plot the 
-    outcome, or in bootspm to conduct bootstrap sampling of the residuals 
+    outcome, or in spmboot to conduct bootstrap sampling of the residuals 
     from the CPUE model fit to gain an appreciation of any uncertainty 
     in the analysis. It uses the magnitude function to set the values of 
     the parscale parameters.

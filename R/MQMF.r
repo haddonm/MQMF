@@ -6,6 +6,7 @@
 #' @importFrom stats dmultinom anova ccf lm median nlm
 #' @importFrom utils tail head
 #' @importFrom MASS kde2d
+#' @importFrom mvtnorm rmvnorm
 NULL
 
 
