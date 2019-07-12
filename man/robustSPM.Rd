@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm.r
 \name{robustSPM}
 \alias{robustSPM}
-\title{robustSPM conducts a robustness test on the quality of fit of an SPM}
+\title{robustSPM doess a robustness test on quality of fit of an SPM}
 \usage{
 robustSPM(inpar, fish, N = 10, scaler = 40, console = TRUE,
   schaefer = TRUE, funk = simpspm, funkone = FALSE)
@@ -12,36 +12,38 @@ robustSPM(inpar, fish, N = 10, scaler = 40, console = TRUE,
 
 \item{fish}{the fisheries data: at least year, catch, and cpue}
 
-\item{N}{the number of random trials to run; defaults to 10, which is too few}
+\item{N}{number of random trials to run; default = 10 = not enough}
 
-\item{scaler}{the divisor that sets the degree of normal random variation to
-add to the parameter values; default = 15 the smaller the value the more
-variable the outcome}
+\item{scaler}{the divisor that sets the degree of normal random 
+variation to add to the parameter values; default = 15 the 
+smaller the value the more variable the outcome}
 
 \item{console}{print summary statistics to the screen? default = TRUE}
 
-\item{schaefer}{default = TRUE, which sets the analysis to the Schaefer
-model. setting it to FALSE applies the Fox model instead}
+\item{schaefer}{default = TRUE, which sets the analysis to the 
+Schaefer model. setting it to FALSE applies the Fox model}
 
 \item{funk}{the function used to generate the predicted cpue}
 
-\item{funkone}{defaults=FALSE; determines whether to use negLL or negLL1
-with FALSE robustSPM will use negLL, with TRUE it will use negLL1
+\item{funkone}{defaults=FALSE; use negLL or negLL1, with FALSE 
+robustSPM will use negLL, with TRUE it will use negLL1
 which has a constraint on the first parameter to keep it > 0}
 }
 \value{
-a list of results from each run, the range of values across runs, and
-    the median values.
+a list of results from each run, the range of values across 
+    runs, and the median values.
 }
 \description{
-robustSPM conducts a robustness test on the quality of fit of
-    an SPM. This is done by using the original optimal model parameters or
-    the original guessed parameter values, add random variation to each of
-    them, and re-fit the model. This process needs to be repeated multiple
-    times. This should enable an analysis of the stability of the modelling
-    outcomes. If the optimum parameters are used then add more variation, if
-    initial guesses are used you may need to select different starting points
-    so that the random variation covers the parameter space reasonably well.
+robustSPM conducts a robustness test on the quality of 
+    fit of an SPM. This is done by using the original optimal model 
+    parameters or the original guessed parameter values, add random 
+    variation to each of them, and re-fit the model. This process 
+    needs to be repeated multiple times. This should enable an 
+    analysis of the stability of the modelling outcomes. If the 
+    optimum parameters are used then add more variation, if initial 
+    guesses are used you may need to select different starting 
+    points so that the random variation covers the parameter space 
+    reasonably well.
 }
 \examples{
 \dontrun{

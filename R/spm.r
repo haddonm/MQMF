@@ -766,14 +766,14 @@ plotproj <- function(projs,spmout,qprob=c(0.1,0.5,0.9),
   return(invisible(qts))
 } # end of plotproj
 
-#' @title plot.spmdat S3 method that plots an spmdat data set
+#' @title plotspmdat plots the fish data containing catches and cpue
 #'
-#' @description plot.spmdat is an S3 method that plots an spmdat
-#'     data set. It plots the catch and CPUE against time
+#' @description plotspmdat plots a fish data set. It plots the catch 
+#'     and CPUE against time
 #'
 #' @param x a data set that should contain 'year', 'catch', and
 #'     'cpue'
-#' @param ... extra parameters used by plot.spmdat
+#' @param ... extra parameters potentially used by plotspmdat
 #'
 #' @return nothing, but it does generate a new plot
 #' @export
@@ -783,55 +783,53 @@ plotproj <- function(projs,spmout,qprob=c(0.1,0.5,0.9),
 #' yrs <- 2000:2010
 #' catches <- rnorm(length(yrs),mean=150,sd=5)
 #' ce <- rnorm(length(yrs),mean=20,sd=1)
-#' makemat <- cbind(year=yrs,catch=catches,cpue=ce)
-#' dat <- makespmdata(makemat)
-#' plot(dat)
+#' fish <- as.data.frame(cbind(year=yrs,catch=catches,cpue=ce))
+#' plotspmdat(fish)
 #' }   # x=dat
-plot.spmdat <- function(x, ...){
+plotspmdat <- function(x, ...){
   par(mfrow = c(2,1),mai = c(0.25, 0.45, 0.1, 0.05), oma = c(0,0,0,0))
   par(cex = 0.85, mgp = c(1.35,0.35,0),font.axis=7,font=7, font.lab=7)
   colnames(x) <- tolower(colnames(x))
   ymax <- max(x[,"catch"],na.rm=TRUE) * 1.025
   plot(x[,"year"],x[,"catch"],type="l",lwd=2,xlab="",ylab="Catch (t)",
-      ylim=c(0,ymax),yaxs="i")
-  grid()
+      ylim=c(0,ymax),yaxs="i",panel.first=grid())
   abline(h=0,col=1)
   ymax <- max(x[,"cpue"],na.rm=TRUE) * 1.025
   plot(x[,"year"],x[,"cpue"],type="l",lwd=2,xlab="",ylab="CPUE",
-      ylim=c(0,ymax),yaxs="i")
-  grid()
+      ylim=c(0,ymax),yaxs="i",panel.first=grid())
   abline(h=0,col=1)
-  NextMethod("plot")
-} # end of plot.spmdat
+} # end of plotspmdat
 
 
-#' @title robustSPM conducts a robustness test on the quality of fit of an SPM
+#' @title robustSPM doess a robustness test on quality of fit of an SPM
 #'
-#' @description robustSPM conducts a robustness test on the quality of fit of
-#'     an SPM. This is done by using the original optimal model parameters or
-#'     the original guessed parameter values, add random variation to each of
-#'     them, and re-fit the model. This process needs to be repeated multiple
-#'     times. This should enable an analysis of the stability of the modelling
-#'     outcomes. If the optimum parameters are used then add more variation, if
-#'     initial guesses are used you may need to select different starting points
-#'     so that the random variation covers the parameter space reasonably well.
+#' @description robustSPM conducts a robustness test on the quality of 
+#'     fit of an SPM. This is done by using the original optimal model 
+#'     parameters or the original guessed parameter values, add random 
+#'     variation to each of them, and re-fit the model. This process 
+#'     needs to be repeated multiple times. This should enable an 
+#'     analysis of the stability of the modelling outcomes. If the 
+#'     optimum parameters are used then add more variation, if initial 
+#'     guesses are used you may need to select different starting 
+#'     points so that the random variation covers the parameter space 
+#'     reasonably well.
 #'
 #' @param inpar the parameter set to begin the trials with
 #' @param fish the fisheries data: at least year, catch, and cpue
-#' @param N the number of random trials to run; defaults to 10, which is too few
-#' @param scaler the divisor that sets the degree of normal random variation to
-#'     add to the parameter values; default = 15 the smaller the value the more
-#'     variable the outcome
+#' @param N number of random trials to run; default = 10 = not enough
+#' @param scaler the divisor that sets the degree of normal random 
+#'     variation to add to the parameter values; default = 15 the 
+#'     smaller the value the more variable the outcome
 #' @param console print summary statistics to the screen? default = TRUE
-#' @param schaefer default = TRUE, which sets the analysis to the Schaefer
-#'     model. setting it to FALSE applies the Fox model instead
+#' @param schaefer default = TRUE, which sets the analysis to the 
+#'     Schaefer model. setting it to FALSE applies the Fox model
 #' @param funk the function used to generate the predicted cpue
-#' @param funkone defaults=FALSE; determines whether to use negLL or negLL1
-#'     with FALSE robustSPM will use negLL, with TRUE it will use negLL1
+#' @param funkone defaults=FALSE; use negLL or negLL1, with FALSE 
+#'     robustSPM will use negLL, with TRUE it will use negLL1
 #'     which has a constraint on the first parameter to keep it > 0
 #'
-#' @return a list of results from each run, the range of values across runs, and
-#'     the median values.
+#' @return a list of results from each run, the range of values across 
+#'     runs, and the median values.
 #' @export
 #'
 #' @examples
