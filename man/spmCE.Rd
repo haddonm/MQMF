@@ -9,8 +9,8 @@ spmCE(inp, indat, schaefer = TRUE, year = "year", cats = "catch",
 }
 \arguments{
 \item{inp}{a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), you
-would use the latter if it was suspected that the fishery data started
-after some initial depletion had occurred.}
+would use the latter if it was suspected that the fishery data 
+started after some initial depletion had occurred.}
 
 \item{indat}{a matrix with at least columns 'year', 'catch', and 'cpue'}
 
@@ -34,11 +34,11 @@ a list of five objects; outmat the matrix with the dynamics
 spmCE calculates the dynamics using a Schaefer of Fox model.
     The outputs include  predicted Biomass, year, catch, cpue, predicted
     cpue, contributions to q, ssq, and depletion levels. Generally it
-    would be more sensible to use simpspm when fitting a Schaefer model and
-    simpfox when fitting a Fox model
+    would be more sensible to use simpspm when fitting a Schaefer model 
+    and simpfox when fitting a Fox model
     as those functions are designed to generate only the predicted cpue
-    required by the functions ssq and negLLM, but the example shows how it
-    could be used. the function spm is used inside 'plotModel'
+    required by the functions ssq and negLLM, but the example shows how 
+    it could be used. the function spm is used inside 'plotModel'
     and could be used alone, to generate a fullist of model outputs
     after the model has been fitted.
 }

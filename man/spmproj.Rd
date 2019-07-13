@@ -48,5 +48,5 @@ spmproj uses a matrix of parameter vectors to project
   matpar <- parsasympt(bestmod,1000)
   projs <- spmproj(matpar,fish,projyr=10,constC=900)
   head(projs)
-}  # parmat=matparB; indat=fish;constC=900;projyr=10;year="year";cats="catch";index="cpue"
+}  
 }

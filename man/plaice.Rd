@@ -3,19 +3,20 @@
 \docType{data}
 \name{plaice}
 \alias{plaice}
-\title{plaice data derived from Beverton and Holt, 1957 for European Plaice.}
-\format{A list of five objects with only the first four containing data, the
-    lendata only contains formatted data for illustrating that format, it is
-    not real data. The other objects contain real data. 
+\title{plaice data derived from Beverton and Holt, 1957}
+\format{A list of five objects with only the first four containing data, 
+    the lendata only contains formatted data for illustrating that 
+    format, it is not real data. The other objects contain real data. 
 \describe{
-  \item{fish}{ a data.frame containing year, catch, cpue, SE of the cpue }
+  \item{fish}{a data.frame containing year, catch, cpue, SE of the cpue}
   \item{glb}{biological parameters relating to growth, selectivity,
     weight-at-age, steepness, and resilience and spsname }
-  \item{props}{ contains six variables ages, laa, waa, maa, sela, and feca,
-    which are all relative to age.}
-  \item{agedata}{ a list of 5 objects, yrage - the years in which age data are
-    available, ages - the observed ages, agemax - the maximum age, nage -
-    the number of observed ages, and naa - the numbers-at-age by year}
+  \item{props}{ contains six variables ages, laa, waa, maa, sela, and 
+    feca, which are all relative to age.}
+  \item{agedata}{ a list of 5 objects, yrage - the years in which age 
+    data are available, ages - the observed ages, agemax - the maximum 
+    age, nage - the number of observed ages, and naa - the numbers-at-age 
+    by year}
   \item{lendata}{ a list of 5 objects akin to the agedata object but for
     length data.}
 }}
@@ -24,12 +25,12 @@ plaice
 }
 \description{
 plaice data including fish, glb, props, agedata, and lendata
-    for North sea plaice dervied from tables and the text of the classical
-    Beverton and Holt, 1957, book. Includes age data that is useful for
-    illustratung the catch curves. Much of this data has also been included
-    in the age-structured model described in Haddon, 2011. The sparse 
-    fisheries data can be used in an spm analysis but the answers lack
-    robustness and depend very much on the startng values! 
+    for North sea plaice dervied from tables and the text of the 
+    classical Beverton and Holt, 1957, book. Includes age data that is 
+    useful for illustratung the catch curves. Much of this data has also 
+    been included in the age-structured model described in Haddon, 2011. 
+    The sparse fisheries data can be used in an spm analysis but the 
+    answers lack robustness and depend very much on the startng values! 
     Try Schaefer log( c(r=2.0,K=6000,Binit=2000,sigma=0.1)) 
     and log( c(r=1.75,K=10000,Binit=2000,sigma=0.2)) for the Fox.
 }

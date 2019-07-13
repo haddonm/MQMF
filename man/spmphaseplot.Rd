@@ -12,18 +12,18 @@ spmphaseplot(answer, Blim = 0.2, Btarg = 0.5, filename = "",
 production curve, the fishery dynamics (predicted harvest rate and
 biomass through time).}
 
-\item{Blim}{the limit reference point, defaults to 0.2 so that 0.2B0 is used.}
+\item{Blim}{limit reference point, defaults to 0.2 so that 0.2B0 is used.}
 
-\item{Btarg}{what target reference point will be used in the phase plot. A
-default of 0.5 is used.}
+\item{Btarg}{what target reference point will be used in the phase plot. 
+A default of 0.5 is used.}
 
 \item{filename}{default is empty. If a filename is put here a .png file
 with that name will be put into the working directory.}
 
 \item{resol}{the resolution of the png file, defaults to 200 dpi}
 
-\item{fnt}{the font used in the plot and axes. Default=7, bold Times. Using
-6 gives Times, 1 will give SansSerif, 2 = bold Sans}
+\item{fnt}{the font used in the plot and axes. Default=7, bold Times. 
+Using 6 gives Times, 1 will give SansSerif, 2 = bold Sans}
 }
 \value{
 an invisible list of B0, Bmsy, Hmsy, and Hlim.
@@ -33,8 +33,8 @@ spmphaseplot uses the output from plotModel to plot up
     the phase plot of harvest rate vs Biomass, marked with the limit and
     default targets. It identifies the start and end years (green and red
     dots) and permits the stock status to be determined visually. It also
-    plots out the catch time-series and harvest rate time-series to aid in
-    interpretation of the phase plot.
+    plots out the catch time-series and harvest rate time-series to aid 
+    in interpretation of the phase plot.
 }
 \examples{
 \dontrun{

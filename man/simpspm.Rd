@@ -17,8 +17,8 @@ stability and is transformed inside simpspm.}
 \item{indat}{the data which needs to include year, catch, and cpue.}
 
 \item{schaefer}{a logical value determining whether the spm is to be a
-simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
-default is TRUE = Schaefer model}
+simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
+The default is TRUE = Schaefer model}
 
 \item{year}{the column name within indat containing the years}
 

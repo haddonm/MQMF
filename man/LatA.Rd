@@ -14,11 +14,12 @@
 LatA
 }
 \description{
-A dataset containing the sex, the length and the estimated age
-   for 576 redfish (Centroberyx affinis) from eastern Australia sampled in 1997,
-   all from a single port. This data is a small sub-set of very many more
-   samples collected across species and years by the many excellent people 
-   running the Integrated Stock Monitoring Program in the Australian 
-   South East Fishery over the years of its existence.
+A dataset containing the sex, the length and the estimated 
+    age for 576 redfish (Centroberyx affinis) from eastern Australia 
+    sampled in 1997, all from a single port. This data is a small 
+    sub-set of very many more samples collected across species and years 
+    by the many excellent people running the Integrated Stock Monitoring 
+    Program in the Australian South East Fishery over the years of its 
+    existence.
 }
 \keyword{datasets}

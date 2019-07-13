@@ -2,33 +2,33 @@
 % Please edit documentation in R/spm.r
 \name{makespmdata}
 \alias{makespmdata}
-\title{makespmdata puts together correctly formatted data for SPM analysis}
+\title{makespmdata puts together data formatted for SPM analysis}
 \usage{
-makespmdata(indata, yearcol = "year", catchcol = "catch",
-  cpuecol = "cpue")
+makespmdata(indata, year = "year", catch = "catch", cpue = "cpue")
 }
 \arguments{
-\item{indata}{either the list obtained from readdata or the data.frame 'fish'
-from with the list obtained from readdata. Alternatively a simple matrix
-containing at least vectors of year, catch, and cpue with those column
-headings.}
+\item{indata}{either the list obtained from readdata or the data.frame 
+'fish' from with the list obtained from readdata. Alternatively a 
+simple matrix containing at least vectors of year, catch, and cpue 
+with those column headings.}
 
-\item{yearcol}{the column name of the column containng the years}
+\item{year}{the column name of the column containng the years}
 
-\item{catchcol}{the column name of the column containng the catch data}
+\item{catch}{the column name of the column containng the catch data}
 
-\item{cpuecol}{the column name of the column containng the cpue data}
+\item{cpuec}{the column name of the column containng the cpue data}
 }
 \value{
 a matrix of class 'spmdat', which has the correct formatting for
     use with the spm related functions in simpleSA
 }
 \description{
-makespmdata takes an input data set and out of it puts together
-    the three vectors of the years, the catch, and the CPUE, in that order,
-    to be analysed using surplus production modelling. The output matrixc is
-    put into a suitable format, having column headings 'year', 'catch', and
-    'cpue' and gives it the class spmdat (which has a plot method).
+makespmdata takes an input data set and out of it puts 
+    together the three vectors of the years, the catch, and the CPUE, 
+    in that order, to be analysed using surplus production modelling. 
+    The output matrixc is put into a suitable format, having column 
+    headings 'year', 'catch', and 'cpue' and gives it the class spmdat 
+    (which has a plot method).
 }
 \examples{
 \dontrun{

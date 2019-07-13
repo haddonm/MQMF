@@ -9,26 +9,26 @@ simpspmO(par, indat, schaefer = TRUE, year = "year", cats = "catch",
 }
 \arguments{
 \item{par}{the parameters of the SPM = r, K, a q for each column of cpue,
-a sigma for each cpue, and Binit if fishery depleted to start with. Each
-parameter is in log space and is transformed inside simpspm}
+a sigma for each cpue, and Binit if fishery depleted to start with. 
+Each parameter is in log space and is transformed inside simpspm}
 
 \item{indat}{the data which needs to include year, catch, and cpue. The
-latter should have a separate column for each fleet, with a column name
-beginning with cpue or whatever name you put in index (see below) for
-example cpue1, cpue2,etc.}
+latter should have a separate column for each fleet, with a column 
+name beginning with cpue or whatever name you put in index (see below)
+for example cpue1, cpue2,etc.}
 
 \item{schaefer}{a logical value determining whether the spm is to be a
-simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
-default is TRUE}
+simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
+The default is TRUE}
 
 \item{year}{the column name within indat containing the years}
 
 \item{cats}{the cloumn name within indat containing the catches}
 
-\item{index}{the prefix in the column names given to the indices of relative
-abundance used, perhaps 'cpue' as in cpueTW, cpueAL, etc. grep is used
-to search for columns containing this prefix to identify whether there
-are more than one column of cpue data.}
+\item{index}{the prefix in the column names given to the indices of 
+relative abundance used, perhaps 'cpue' as in cpueTW, cpueAL, etc. 
+grep is used to search for columns containing this prefix to 
+identify whether there are more than one column of cpue data.}
 }
 \value{
 a vector or matrix of nyrs of the predicted CPUE
@@ -36,9 +36,9 @@ a vector or matrix of nyrs of the predicted CPUE
 \description{
 simpspmO calculates the predicted CPUE for an SPM model. It
     assumes that there is a variable called 'p' in the global environment
-    and this 'p' variable determines the asymmetry of the production curve.
-    If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 it
-    approximates the Fox model.
+    and this 'p' variable determines the asymmetry of the production 
+    curve. If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 
+    it approximates the Fox model.
 }
 \examples{
 \dontrun{

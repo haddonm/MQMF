@@ -25,27 +25,27 @@ with that name will be put into the working directory.}
 
 \item{resol}{the resolution of the png file, defaults to 200 dpi}
 
-\item{fnt}{the font used in the plot and axes. Default=7, bold Times. Using
-6 gives Times, 1 will give SansSerif, 2 = bold Sans}
+\item{fnt}{the font used in the plot and axes. Default=7, bold Times. 
+Using 6 gives Times, 1 will give SansSerif, 2 = bold Sans}
 }
 \value{
 a list containing some summary results, the anova of the linear
     model fitted in aov, and a summary of the linear model in summ
 }
 \description{
-the use of the function ccf can suggest a lagged relationship
-    between a driver variable and a react(ing) variable. For example, cpue
-    may respond to catches in a negative manner after a lag of a few years.
-    One looks for a negative lag, which would imply that the driver variable
-    influences the react(ing) variable after the given lag has passed. The
-    lag is always assumed to be based on yearly intervals, though this can
-    be changed.
+the use of the function ccf can suggest a lagged 
+    relationship between a driver variable and a react(ing) variable. 
+    For example, cpue may respond to catches in a negative manner after 
+    a lag of a few years. One looks for a negative lag, which would 
+    imply that the driver variable influences the react(ing) variable 
+    after the given lag has passed. The lag is always assumed to be 
+    based on yearly intervals, though this can be changed.
 }
 \examples{
 \dontrun{
 year <- 1985:2008
-catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,645,961,
-           940,912,955,935,940,952,1030,985)
+catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,645,
+           961,940,912,955,935,940,952,1030,985)
 cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,0.8582,
           0.8876,1.0126,1.1533,1.2326,1.2764,1.3307,1.3538,1.2648,1.2510,
           1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)

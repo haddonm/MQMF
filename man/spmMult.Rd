@@ -8,28 +8,29 @@ spmMult(inp, indat, schaefer = TRUE)
 }
 \arguments{
 \item{inp}{a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), you
-would use the latter if it was suspected that the fishery data started
-after some initial depletion had occurred.}
+would use the latter if it was suspected that the fishery data 
+started after some initial depletion had occurred.}
 
 \item{indat}{a matrix with at least columns 'year', 'catch', and 'cpue'}
 
 \item{schaefer}{a logical value determining whether the spm is to be a
-simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
-default is TRUE}
+simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
+The default=TRUE}
 }
 \value{
-a list of five objects; outmat the matrix with the dynamics results,
-    q catchability, msy the maximum sustainable yield, the parameter values,
-    and sumout, which contains r, K, B0, msy, p, q, Depl, FinalB, and InitDepl
+a list of five objects; outmat the matrix with the dynamics 
+    results, q catchability, msy the maximum sustainable yield, the 
+    parameter values, and sumout, which contains r, K, B0, msy, p, q, 
+    Depl, FinalB, and InitDepl
 }
 \description{
-spmMult calculates the dynamics using a Schaefer or Fox model.
-    The outputs include  predicted Biomass, year, catch, cpue, predicted
-    cpue, contributions to q, ssq, and depletion levels. Generally it
-    would be more sensible to use simpspm when fitting a Schaefer model and
-    simpfox when fitting a Fox model
-    as those functions are designed to generate only the predicted cpue
-    required by the functions ssq and negLLM, but the example shows how it
+spmMult calculates the dynamics using a Schaefer or Fox 
+    model. The outputs include  predicted Biomass, year, catch, cpue, 
+    predicted cpue, contributions to q, ssq, and depletion levels. 
+    Generally it would be more sensible to use simpspm when fitting a 
+    Schaefer model and simpfox when fitting a Fox model as those 
+    functions are designed to generate only the predicted cpue required
+    by the functions ssq and negLLM, but the example shows how it
     could be used. the function spm is used inside 'plotModel'
     and could be used alone, to generate a fullist of model outputs
     after the model has been fitted.
@@ -37,8 +38,8 @@ spmMult calculates the dynamics using a Schaefer or Fox model.
 \examples{
 \dontrun{
 year <- 1985:2008
-catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,645,961,
-           940,912,955,935,940,952,1030,985)
+catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,645,
+           961,940,912,955,935,940,952,1030,985)
 cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,0.8582,
           0.8876,1.0126,1.1533,1.2326,1.2764,1.3307,1.3538,1.2648,1.2510,
           1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)

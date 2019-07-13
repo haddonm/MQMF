@@ -15,8 +15,8 @@ likelihoods in dnorm}
 \item{funk}{the function name that calculates the predicted values from
 the independent values}
 
-\item{independent}{the x-axis variable, that which in the model gives rise
-to the predicted values of the dependent variable}
+\item{independent}{the x-axis variable, that which in the model gives 
+rise to the predicted values of the dependent variable}
 
 \item{dependent}{the observed values for comparison with the values that
 the model will predict for each of the independent values.}
@@ -39,19 +39,19 @@ negNLP Calculates the negative log-likelihood for normally
     distributed variables. It assumes the presence of a function 'funk'
     that will calculate predicted values of a dependent variable from a
     vector of independent values. By having a separate vector of
-    parameters in 'initpar' and a vector of the indices of those parameters
-    that will be fitted it is possible to fit only a subset of parameters.
-    This is useful if generating a likelihood profile, or setting up a
-    likelihood ratio test. With more complex models it is often a useful
-    strategy to estimate the full number of parameters in a series of
-    phases, increasing the number being estimated each time while keeping
-    the rest fixed. 'negNLP' makes such phasing of the fitting of a model
-    to data possible.
-    This function can be applied directly to normally distributed data or to
-    log-transformed data for log-normally distributed data.
-    There is a slight cost in terms of time such that
-    using negNLP takes approximate 0.4 milliseconds longer than when using
-    negNL; and that is with either 13 or 1300 observations.
+    parameters in 'initpar' and a vector of the indices of those 
+    parameters that will be fitted it is possible to fit only a subset 
+    of parameters. This is useful if generating a likelihood profile, or 
+    setting up a likelihood ratio test. With more complex models it is 
+    often a useful strategy to estimate the full number of parameters in 
+    a series of phases, increasing the number being estimated each time 
+    while keeping the rest fixed. 'negNLP' makes such phasing of the 
+    fitting of a model to data possible. This function can be applied 
+    directly to normally distributed data or to log-transformed data for 
+    log-normally distributed data. There is a slight cost in terms of 
+    time such that using negNLP takes approximate 0.4 milliseconds 
+    longer than when using negNL; and that is with either 13 or 1300 
+    observations.
 }
 \examples{
 \dontrun{

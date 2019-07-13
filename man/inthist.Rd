@@ -2,15 +2,15 @@
 % Please edit documentation in R/plotfuns.R
 \name{inthist}
 \alias{inthist}
-\title{inthist - a replacement for the hist function for use with integers}
+\title{inthist a replacement for the hist function for use with integers}
 \usage{
 inthist(x, col = 1, border = NULL, width = 1, xlabel = "",
   ylabel = "", main = "", lwd = 1, xmin = NA, xmax = NA,
   ymax = NA, plotout = TRUE, prop = FALSE, inc = 1, xaxis = TRUE)
 }
 \arguments{
-\item{x}{- the vector of integers to be counted and plotted OR a matrix of
-values in column 1 and counts in column 2}
+\item{x}{- the vector of integers to be counted and plotted OR a matrix 
+of values in column 1 and counts in column 2}
 
 \item{col}{- the colour of the fill; defaults to black = 1, set this to 0
 for an empty bar, but then give a value for border}
@@ -50,10 +50,10 @@ defaults to TRUE}
 a matrix of values and counts is returned invisibly
 }
 \description{
-inthist - a replacement for the hist function for use with
-   integers because the ordinary function fails to count them correctly at
-   the end. The function is designed for integers and if it is given real
-   numbers it will issue a warning and then round all values before plotting.
+inthist a replacement for the hist function for use with
+   integers because the ordinary function fails to count them correctly. 
+   The function is designed for integers and if it is given real numbers
+    it will issue a warning and then round all values before plotting.
 }
 \examples{
 \dontrun{

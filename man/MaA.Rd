@@ -15,13 +15,13 @@ MaA(ina, inb, depend)
 value will be calculated}
 }
 \value{
-A vector of length(depend) containing the predicted maturity values
+A vector of length(depend) contains the predicted maturity values
 }
 \description{
-MaA - the logistic function exp(a+bxdepend)/(1+exp(a+bxdepend)),
-    which can also be expressed as 1/(1+(1/exp(a + b x depend))). This has
-    the property that the SM50 = -a/b and the interquartile distance is
-    2.Ln(3)/b.
+MaA logistic function exp(a+bxdepend)/(1+exp(a+bxdepend)),
+    which can also be expressed as 1/(1+(1/exp(a + b x depend))). This 
+    has the property that the SM50 = -a/b and the interquartile distance 
+    is 2.Ln(3)/b.
 }
 \examples{
 a <- -14.383

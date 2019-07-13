@@ -14,8 +14,8 @@ likelihoods in dnorm}
 \item{funk}{the function name that calculates the predicted values from
 the independent values}
 
-\item{independent}{the x-axis variable, that which in the model gives rise
-to the predicted values to compare with the observed 'dependent' variable}
+\item{independent}{the x-axis variable, which in the model gives rise
+to the predicted values to compare with observed 'dependent' variable}
 
 \item{observed}{the observed values of the values that the model will
 predict for each of the independent values.}

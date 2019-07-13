@@ -50,7 +50,7 @@ plotted.}
 plot of CPUE}
 }
 \value{
-invisibly a list of the dynamics, production curve, MSY, and Bmsy
+invisibly a list of dynamics, production curve, MSY, and Bmsy
 }
 \description{
 plotModel takes a parameter set and the spmdat matrix

@@ -15,22 +15,22 @@ column and an invar column (default to 'cpue')}
 \item{inyr}{the column that points to the year name}
 }
 \value{
-a list of the rmse and the loess predicted values of the invar for
-    each year in the time-series
+a list of the rmse and the loess predicted values of the invar 
+    for each year in the time-series
 }
 \description{
-getrmse calculates the rmse of the input invar series (defaults
-    to 'cpue') against an input 'year' time series. This is primarily
-    designed to generate a more feasible estimate of the intrinsic
-    variability of a cpue time-series that may be obtained from a cpue
-    standardization
+getrmse calculates the rmse of the input invar series 
+    (defaults to 'cpue') against an input 'year' time series. This is 
+    primarily designed to generate a more feasible estimate of the 
+    intrinsic variability of a cpue time-series that may be obtained 
+    from a cpue standardization
 }
 \examples{
 \dontrun{
-year <- 1986:1995
-cpue <- c(1.2006,1.3547,1.0585,1.0846,0.9738,1.0437,0.7759,1.0532,1.284,1.3327)
+year <- 1986:1994
+cpue <- c(1.2006,1.3547,1.0585,1.0846,0.9738,1.0437,0.7759,1.0532,1.284)
 dat <- as.matrix(cbind(year,cpue))
-getrmse(dat,invar="cpue")  # should be 0.08856596
+getrmse(dat,invar="cpue")  # should be 0.08265127
 getrmse(dat,invar="cpue")$rmse
 }
 }

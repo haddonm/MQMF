@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotfuns.R
 \name{addlnorm}
 \alias{addlnorm}
-\title{addlnorm - estimates a log-normal distribution from output of hist.}
+\title{addlnorm - estimates a log-normal distribution from output of hist}
 \usage{
 addlnorm(inhist, xdata, inc = 0.01)
 }
@@ -11,18 +11,18 @@ addlnorm(inhist, xdata, inc = 0.01)
 
 \item{xdata}{-  is the data that is being plotted in the histogram.}
 
-\item{inc}{- defaults to a value of 0.01; is the fine grain increment used to
-define the normal curve. The histogram will be coarse grained relative to
-this.}
+\item{inc}{- defaults to a value of 0.01; is the fine grain increment 
+used to define the normal curve. The histogram will be coarse grained 
+relative to this.}
 }
 \value{
-a 4 x N matrix of x and y values to be used to plot the fitted normal
-   probability density function.Combined with estiamtes of mean(log(indata))
-   and log(sd(indata))
+a 4 x N matrix of x and y values to be used to plot the fitted 
+    normal probability density function.Combined with estiamtes of 
+    mean(log(indata)) and log(sd(indata))
 }
 \description{
-addlnorm - estiamtes a log-normal distribution from output of
-   a histogram of a data set.
+addlnorm - estiamtes a log-normal distribution from output 
+    of a histogram of a data set.
 }
 \examples{
 \dontrun{

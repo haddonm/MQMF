@@ -4,12 +4,12 @@
 \alias{parset}
 \title{parset alters the current base graphics par settings}
 \usage{
-parset(plots = c(1, 1), cex = 0.85, font = 7)
+parset(plots = c(1, 1), cex = 0.75, font = 7)
 }
 \arguments{
 \item{plots}{vector of number of rows and columns, defaults to c(1,1)}
 
-\item{cex}{the size of the font used, defaults to 0.85}
+\item{cex}{the size of the font used, defaults to 0.75}
 
 \item{font}{the font used, defaults to 7 which is Times Bold, 6 is
 Times, 1 is Sans and 2 is Sans Bold.}

@@ -4,51 +4,44 @@
 \alias{plotprep}
 \title{plotprep: sets up a window and the par values for plotting}
 \usage{
-plotprep(width = 6, height = 3.6, plots = c(1, 1), usefont = 7,
-  cex = 0.85, xmtext = TRUE, ymtext = TRUE, newdev = TRUE,
-  rows = TRUE, filename = "")
+plotprep(width = 6, height = 3.6, usefont = 7, cex = 0.75,
+  newdev = TRUE, filename = "", resol = 300)
 }
 \arguments{
 \item{width}{defaults to 6 inches = 15.24cm - width of plot}
 
 \item{height}{defaults to 3 inches = 7.62cm - height of plot}
 
-\item{plots}{defaults to c(1,1), but arranges multiple plots. If used it may
-be necessary to print out this code and adjust the mai and oma variables}
+\item{usefont}{default=7 (bold Times) 1=sans serif, 2=sans serif bold}
 
-\item{usefont}{default is 7 (bold Times); 1 = sans serif, 2 = sans serif bold}
+\item{cex}{default=0.75, the size of font used for text within the plots}
 
-\item{cex}{default is 0.85, the size of font used for text within the plots}
+\item{newdev}{reuse a previously defined graphics device or make a new 
+one; default=TRUE}
 
-\item{xmtext}{default is TRUE; if plots is not c(1,1) this alters the mai and
-oma variables for the x-axis to allow for mtexting and avoid the x title}
+\item{filename}{default="" ie do not save to a filename. If a filename 
+is defined it creates that file as a png file with resolution resol}
 
-\item{ymtext}{default is TRUE; if plots is not c(1,1) this alters the mai and
-oma variables for the y-axis to allow for mtexting and avoid the y title}
-
-\item{newdev}{reuse a previously defined graphics device or make a new one;
-defaults to TRUE}
-
-\item{rows}{defaults to TRUE, determines whether to use mfrow or mfcol}
-
-\item{filename}{defaults to "" = do not save to a filename. If a filename is}
+\item{resol}{resolution of the png file if one is defined, default=300}
 }
 \value{
-Checks for and sets up a graphics device and sets the default plotting
-  par values. This changes the current plotting options!
+sets up a graphics device, if needed and sets the default 
+    plotting par values. This changes the current plotting options!
 }
 \description{
 plotprep: sets up a window and the par values for plots.
-  This is simply a utility function to save typing the standard syntax.
-  Some of the defaults can be changed. Typing the name without () will
-  provide a template for modification.
+   This is simply a utility function to save typing the standard syntax.
+   Some of the defaults can be changed. Typing the name without () will
+   provide a template for modification. If different par values are 
+   wanted then just include a par statement after plotprep()
 }
 \examples{
 \dontrun{
  x <- rnorm(1000,mean=0,sd=1.0)
  plotprep()
  hist(x,breaks=30,main="",col=2)
- plotprep(width=6,height=5,plots=c(2,1))
+ plotprep(width=6,height=5)
+ par(mfrow = c(2,1))
  hist(x,breaks=20,main="",col=2)
  hist(x,breaks=30,main="",col=3)
 }

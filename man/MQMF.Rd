@@ -4,7 +4,7 @@
 \name{MQMF}
 \alias{MQMF}
 \alias{MQMF-package}
-\title{MQMF R functions for Modelling and Quantitative Methods in Fisheries}
+\title{MQMF R functions for the New Book}
 \description{
 The MQMF package provides a set of functions that
     enable translations into R of the main examples in the book
