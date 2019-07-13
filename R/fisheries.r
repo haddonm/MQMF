@@ -74,13 +74,14 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
 #'
 #' @examples
 #' \dontrun{
-#'   discretelogistic(0.5,1000.0,25,0.0,50)
+#'   discretelogistic(0.5,1000.0,25,0.0,50) # asymptotic
+#'   discretelogistic(2.5,1000.0,25,0.0,50) # 4-phase stable limit
 #'   ans <- discretelogistic(r=2.55,K=1000.0,N0=100,Ct=95.0,Yrs=100)
 #'   head(ans,20)
 #' }
 discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,
                              p=1.0,outplot=TRUE,title="") {
-   fntsze <- 1.1
+   fntsze <- 0.9
    Time <- seq(1,Yrs,1)
    pop <- numeric(Yrs)
    pop[1] <- N0
@@ -97,16 +98,16 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,
       ymax <- max(pop)*1.025
       x <- c(0,ymax)
       par(mfrow=c(1,2),mai=c(0.45,0.45,0.05,0.1),oma=c(0.0,0,2.0,0.0))
-      par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)
+      par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)
       plot(Time,pop,type="l",col=2,lwd=2,ylim=c(0,ymax),yaxs="i",
            panel.first = grid(),xlab="Time",ylab="Population Size")
       mtext("Population Dynamics",side=3,line=0.0,cex=fntsze,font=7)
-      plot(pop[1:(Yrs-1)],pop2,type="p",pch=1,lwd=1.5,cex=1.2,
+      plot(pop[1:(Yrs-1)],pop2,type="p",pch=1,lwd=1.0,cex=0.9,
            yaxs="i",xlim=c(0,ymax),ylim=c(0,ymax),panel.first = grid(),
            xlab="Population Nt",ylab="Population Nt+1")
       begin <- trunc(Yrs * 0.8)      # final 20%
       lines(x,x,lwd=2,col="grey")
-      points(pop[begin:(Yrs-1)],pop2[begin:(Yrs-1)],pch=16,col=2,cex=1.1)
+      points(pop[begin:(Yrs-1)],pop2[begin:(Yrs-1)],pch=16,col=2,cex=0.9)
       mtext("Phase Plot",side=3,line=0.0,cex=fntsze,font=7,outer=FALSE)
       mtext(title,side=3,line=1.0,cex=fntsze,font=7,outer=TRUE)
    }
