@@ -12,7 +12,7 @@ NULL
 
 
 
-#' @title MQMF R functions for Modelling and Quantitative Methods in Fisheries
+#' @title MQMF R functions for the New Book
 #'
 #' @description The MQMF package provides a set of functions that
 #'     enable translations into R of the main examples in the book
@@ -154,11 +154,11 @@ NULL
 #'
 #' @format A list of three objects
 #' \describe{
-#'   \item{fish}{ a data.frame containing Year, Catch, CPUE, SE, Records, and
-#'       GeoM which is the unstandardized geometric mean CPUE }
-#'   \item{glb}{ a list of global variables including maxage, M, parameters for
-#'       growth, weight-at-age, maturity-at-age, steepness, R0, selectivity,
-#'       resilience, number of ages, and the ages themselves. }
+#'   \item{fish}{ a data.frame containing Year, Catch, CPUE, SE, Records, 
+#'       and GeoM which is the unstandardized geometric mean CPUE }
+#'   \item{glb}{ a list of global variables including maxage, M, parameters 
+#'       for growth, weight-at-age, maturity-at-age, steepness, R0, 
+#'       selectivity, resilience, number of ages, and the ages themselves.}
 #'   \item{props}{ a data.frame of age, laa, waa, maa, sela, and feca}
 #' }
 "dataspm"
@@ -240,12 +240,13 @@ NULL
 
 #' @title LatA Length at age for 576 fish including both males and females.
 #'
-#' @description A dataset containing the sex, the length and the estimated age
-#'    for 576 redfish (Centroberyx affinis) from eastern Australia sampled in 1997,
-#'    all from a single port. This data is a small sub-set of very many more
-#'    samples collected across species and years by the many excellent people 
-#'    running the Integrated Stock Monitoring Program in the Australian 
-#'    South East Fishery over the years of its existence.
+#' @description A dataset containing the sex, the length and the estimated 
+#'     age for 576 redfish (Centroberyx affinis) from eastern Australia 
+#'     sampled in 1997, all from a single port. This data is a small 
+#'     sub-set of very many more samples collected across species and years 
+#'     by the many excellent people running the Integrated Stock Monitoring 
+#'     Program in the Australian South East Fishery over the years of its 
+#'     existence.
 #'
 #' @format A data frame with 576 rows and 3 variables:
 #' \describe{
@@ -280,30 +281,31 @@ NULL
 
 
 
-#' @title plaice data derived from Beverton and Holt, 1957 for European Plaice.
+#' @title plaice data derived from Beverton and Holt, 1957
 #'
 #' @description plaice data including fish, glb, props, agedata, and lendata
-#'     for North sea plaice dervied from tables and the text of the classical
-#'     Beverton and Holt, 1957, book. Includes age data that is useful for
-#'     illustratung the catch curves. Much of this data has also been included
-#'     in the age-structured model described in Haddon, 2011. The sparse 
-#'     fisheries data can be used in an spm analysis but the answers lack
-#'     robustness and depend very much on the startng values! 
+#'     for North sea plaice dervied from tables and the text of the 
+#'     classical Beverton and Holt, 1957, book. Includes age data that is 
+#'     useful for illustratung the catch curves. Much of this data has also 
+#'     been included in the age-structured model described in Haddon, 2011. 
+#'     The sparse fisheries data can be used in an spm analysis but the 
+#'     answers lack robustness and depend very much on the startng values! 
 #'     Try Schaefer log( c(r=2.0,K=6000,Binit=2000,sigma=0.1)) 
 #'     and log( c(r=1.75,K=10000,Binit=2000,sigma=0.2)) for the Fox.
 #'
-#' @format A list of five objects with only the first four containing data, the
-#'     lendata only contains formatted data for illustrating that format, it is
-#'     not real data. The other objects contain real data. 
+#' @format A list of five objects with only the first four containing data, 
+#'     the lendata only contains formatted data for illustrating that 
+#'     format, it is not real data. The other objects contain real data. 
 #' \describe{
-#'   \item{fish}{ a data.frame containing year, catch, cpue, SE of the cpue }
+#'   \item{fish}{a data.frame containing year, catch, cpue, SE of the cpue}
 #'   \item{glb}{biological parameters relating to growth, selectivity,
 #'     weight-at-age, steepness, and resilience and spsname }
-#'   \item{props}{ contains six variables ages, laa, waa, maa, sela, and feca,
-#'     which are all relative to age.}
-#'   \item{agedata}{ a list of 5 objects, yrage - the years in which age data are
-#'     available, ages - the observed ages, agemax - the maximum age, nage -
-#'     the number of observed ages, and naa - the numbers-at-age by year}
+#'   \item{props}{ contains six variables ages, laa, waa, maa, sela, and 
+#'     feca, which are all relative to age.}
+#'   \item{agedata}{ a list of 5 objects, yrage - the years in which age 
+#'     data are available, ages - the observed ages, agemax - the maximum 
+#'     age, nage - the number of observed ages, and naa - the numbers-at-age 
+#'     by year}
 #'   \item{lendata}{ a list of 5 objects akin to the agedata object but for
 #'     length data.}
 #' }

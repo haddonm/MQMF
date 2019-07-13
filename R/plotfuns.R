@@ -86,25 +86,25 @@ addcontours <- function(xval,yval,xrange,yrange,ngrid=100,
 
 #' @title addnorm - adds a normal distribution to a histogram of a data set.
 #'
-#' @description  addnorm - adds a normal distribution to a histogram of a data
-#'    set. This is generally to be used to illustrate whether log-transformation
-#'    normalizes a set of catch or cpue data.
+#' @description  addnorm - adds a normal distribution to a histogram of a 
+#'     data set. This is generally to be used to illustrate whether 
+#'     log-transformation normalizes a set of catch or cpue data.
 #' @param inhist - is the output from a call to 'hist' (see examples)
 #' @param xdata -  is the data that is being plotted in the histogram.
-#' @param inc - defaults to a value of 0.01; is the fine grain increment used to
-#'    define the normal curve. The histogram will be coarse grained relative to
-#'    this.
-#' @return a list with a vector of 'x' values and a vector of 'y' values (to be
-#'    used to plot the fitted normal probability density function), and a vector
-#'    used two called 'stats' containing the mean and sandard deviation of the
-#'    input data
+#' @param inc - defaults to a value of 0.01; is the fine grain increment 
+#'     used to define the normal curve. The histogram will be coarse 
+#'     grained relative to this.
+#' @return a list with a vector of 'x' values and a vector of 'y' values 
+#'     (to be used to plot the fitted normal probability density function), 
+#'     and a vector used two called 'stats' containing the mean and sandard 
+#'     deviation of the input data
 #' @export
 #' @examples
 #' \dontrun{
 #'  x <- rnorm(1000,mean=5,sd=1)
 #'  dev.new(height=6,width=4,noRStudioGD = TRUE)
 #'  par(mfrow= c(1,1),mai=c(0.5,0.5,0.3,0.05))
-#'  par(cex=0.85, mgp=c(1.5,0.35,0), font.axis=7)
+#'  par(cex=0.75, mgp=c(1.5,0.35,0), font.axis=7)
 #'  outH <- hist(x,breaks=25,col=3,main="")
 #'  nline <- addnorm(outH,x)
 #'  lines(nline$x,nline$y,lwd=3,col=2)
@@ -122,18 +122,18 @@ addnorm <- function(inhist,xdata,inc=0.01) {
   return(ans)
 } # end of addnorm
 
-#' @title addlnorm - estimates a log-normal distribution from output of hist.
+#' @title addlnorm - estimates a log-normal distribution from output of hist
 #'
-#' @description  addlnorm - estiamtes a log-normal distribution from output of
-#'    a histogram of a data set.
+#' @description  addlnorm - estiamtes a log-normal distribution from output 
+#'     of a histogram of a data set.
 #' @param inhist - is the output from a call to 'hist' (see examples)
 #' @param xdata -  is the data that is being plotted in the histogram.
-#' @param inc - defaults to a value of 0.01; is the fine grain increment used to
-#'    define the normal curve. The histogram will be coarse grained relative to
-#'    this.
-#' @return a 4 x N matrix of x and y values to be used to plot the fitted normal
-#'    probability density function.Combined with estiamtes of mean(log(indata))
-#'    and log(sd(indata))
+#' @param inc - defaults to a value of 0.01; is the fine grain increment 
+#'     used to define the normal curve. The histogram will be coarse grained 
+#'     relative to this.
+#' @return a 4 x N matrix of x and y values to be used to plot the fitted 
+#'     normal probability density function.Combined with estiamtes of 
+#'     mean(log(indata)) and log(sd(indata))
 #' @export addlnorm
 #'
 #' @examples
@@ -156,14 +156,14 @@ addlnorm <- function(inhist,xdata,inc=0.01) {
   return(ans)
 } # end of addlnorm
 
-#' @title inthist - a replacement for the hist function for use with integers
+#' @title inthist a replacement for the hist function for use with integers
 #'
-#' @description inthist - a replacement for the hist function for use with
-#'    integers because the ordinary function fails to count them correctly at
-#'    the end. The function is designed for integers and if it is given real
-#'    numbers it will issue a warning and then round all values before plotting.
-#' @param x - the vector of integers to be counted and plotted OR a matrix of
-#'     values in column 1 and counts in column 2
+#' @description inthist a replacement for the hist function for use with
+#'    integers because the ordinary function fails to count them correctly. 
+#'    The function is designed for integers and if it is given real numbers
+#'     it will issue a warning and then round all values before plotting.
+#' @param x - the vector of integers to be counted and plotted OR a matrix 
+#'     of values in column 1 and counts in column 2
 #' @param col - the colour of the fill; defaults to black = 1, set this to 0
 #'    for an empty bar, but then give a value for border
 #' @param border - the colour of the outline of each bar defaults to col
@@ -206,7 +206,8 @@ inthist <- function(x,col=1,border=NULL,width=1,xlabel="",ylabel="",
   }
   
   if (sum(!(abs(values - round(values)) < .Machine$double.eps^0.5)) > 0) {
-    warning("Attempting to use 'inthist' with non-integers; Values now rounded \n")
+    warning("Attempting to use 'inthist' with non-integers; 
+            Values now rounded \n")
     values <- round(values,0)
   }
   if (width <= 0) {
@@ -231,9 +232,9 @@ inthist <- function(x,col=1,border=NULL,width=1,xlabel="",ylabel="",
     }
   }
   if (plotout) {
-    plot(values,outplot,type="n",xlim=c((xmin-(width*0.75)),(xmax+(width*0.75))),
-         xaxs="r",ylim=c(0,ymax),yaxs="i",xlab="",ylab="",xaxt="n",
-         panel.first = grid())
+    plot(values,outplot,type="n",xlim=c((xmin-(width*0.75)),
+         (xmax+(width*0.75))),xaxs="r",ylim=c(0,ymax),yaxs="i",xlab="",
+         ylab="",xaxt="n", panel.first = grid())
     if (xaxis) axis(side=1,at=seq(xmin,xmax,inc),labels=seq(xmin,xmax,inc))
     if (length(counts) > 0) {
       for (i in 1:nct) {  # i <- 1
@@ -263,14 +264,14 @@ inthist <- function(x,col=1,border=NULL,width=1,xlabel="",ylabel="",
 #'
 #' @description newplot is a bare-bones setup routine to generate a plot in
 #'     RStudio using a floating window. If you want to alter the default par
-#'     settings then you can use either setplot() to get suitable syntax or,
-#'     more simply, use parsyn() which only give a template for the par syntax
+#'     settings then you can use either setplot to get suitable syntax or,
+#'     more simply, use parsyn which only give a template for the par syntax
 #' @param width defaults to 6 inches = 15.24cm - width of plot
 #' @param height defaults to 3.6 inches = 9.144cm - height of plot
-#' @param newdev reuse a previously defined graphics device or make a new one;
-#'    defaults to TRUE
-#' @return Checks for and sets up a graphics device and sets the default plotting
-#'   par values. This changes the current plotting options!
+#' @param newdev reuse a previously defined graphics device or make a new 
+#'     one; defaults to TRUE
+#' @return Checks for and sets up a graphics device and sets the default 
+#'     plotting par values. This changes the current plotting options!
 #' @export
 #' @examples
 #' \dontrun{
@@ -278,12 +279,13 @@ inthist <- function(x,col=1,border=NULL,width=1,xlabel="",ylabel="",
 #'  plotprep()
 #'  hist(x,breaks=30,main="",col=2)
 #' }
-newplot <- function(width=6,height=3.6,newdev=TRUE) {
-  if  ((names(dev.cur()) != "null device") & (newdev)) suppressWarnings(dev.off())
+newplot <- function(width=5,height=3.15,newdev=TRUE) {
+  if  ((names(dev.cur()) != "null device") & (newdev)) 
+    suppressWarnings(dev.off())
   if (names(dev.cur()) %in% c("null device","RStudioGD"))
     dev.new(width=width,height=height,noRStudioGD = TRUE)
   par(mfrow=c(1,1),mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))
-  par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)
+  par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)
 } # end of new_plot
 
 #' @title parset alters the current base graphics par settings
@@ -299,7 +301,7 @@ newplot <- function(width=6,height=3.6,newdev=TRUE) {
 #'     the console can be copied to your script and modified to suit.
 #'
 #' @param plots vector of number of rows and columns, defaults to c(1,1)
-#' @param cex the size of the font used, defaults to 0.85
+#' @param cex the size of the font used, defaults to 0.75
 #' @param font the font used, defaults to 7 which is Times Bold, 6 is
 #'     Times, 1 is Sans and 2 is Sans Bold.
 #'
@@ -311,16 +313,16 @@ newplot <- function(width=6,height=3.6,newdev=TRUE) {
 #'  parset()
 #'  parsyn()
 #' }
-parset <- function(plots=c(1,1),cex=0.85,font=7) {
+parset <- function(plots=c(1,1),cex=0.75,font=7) {
   par(mfrow=plots,mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))
   par(cex=cex, mgp=c(1.35,0.35,0), font.axis=font,font=font,
       font.lab=font)
 } # end of parset
 
-#' @title parsyn types the standard syntax for the par command to the console
+#' @title parsyn types the standard par command syntax  to the console
 #'
-#' @description parsyn types the standard syntax for the par command to the
-#'     console so it can be copied and pasted into your own code and modified.
+#' @description parsyn types the standard par command syntax to the console
+#'      so it can be copied and pasted into your own code and modified.
 #'
 #' @return it writes two lines of R code to the console
 #' @export
@@ -330,8 +332,8 @@ parset <- function(plots=c(1,1),cex=0.85,font=7) {
 #'  parsyn()
 #' }
 parsyn <- function() {
-  cat("par(mfrow=c(1,1),mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0)) \n")
-  cat("par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)  \n")
+  cat("par(mfrow=c(1,1),mai=c(0.45,0.45,0.05,0.05),oma=c(0,0,0,0)) \n")
+  cat("par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7) \n")
 }
 
 #' @title plot1 a simple way to plot an xy line plot
@@ -353,11 +355,11 @@ parsyn <- function() {
 #' @param type the type of plot "l" is for line, the default, "p" is
 #'     points. If you want both plot a line and add points afterwards.
 #' @param usefont which font to use, defaults to 7 which is Times bold
-#' @param cex the size of the fonts used. defaults to 0.85
+#' @param cex the size of the fonts used. defaults to 0.75
 #' @param maxy defaults to 0, which does nothing. If a value is given
 #'     then this value is used rather than estimating from the input y
-#' @param defpar if TRUE then plot1 will declare a par statement. If false it
-#'     will expect one outside the function. In this way plot1 can be
+#' @param defpar if TRUE then plot1 will declare a par statement. If false 
+#'     it will expect one outside the function. In this way plot1 can be
 #'     used when plotting multiple graphs, perhaps as mfrow=c(2,2)
 #' @param inpch the input character type if using type="p", default=16
 #' @param incol the colour to use for the line or points, default = black
@@ -370,7 +372,7 @@ parsyn <- function() {
 #'  x <- rnorm(20,mean=5,sd=1)
 #'  plot1(x,x,xlabel="x-values",ylabel="yvalues")
 #' }
-plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.85,
+plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
                   maxy=0,defpar=TRUE,inpch=16,incol=1){
   if (defpar) {
     par(mfrow = c(1,1), mai = c(0.45,0.45,0.1,0.05),oma = c(0,0,0,0))
@@ -388,71 +390,53 @@ plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.85,
 #' @title plotprep: sets up a window and the par values for plotting
 #'
 #' @description plotprep: sets up a window and the par values for plots.
-#'   This is simply a utility function to save typing the standard syntax.
-#'   Some of the defaults can be changed. Typing the name without () will
-#'   provide a template for modification. 
+#'    This is simply a utility function to save typing the standard syntax.
+#'    Some of the defaults can be changed. Typing the name without () will
+#'    provide a template for modification. If different par values are 
+#'    wanted then just include a par statement after plotprep()
+#'   
 #' @param width defaults to 6 inches = 15.24cm - width of plot
 #' @param height defaults to 3 inches = 7.62cm - height of plot
-#' @param plots defaults to c(1,1), but arranges multiple plots. If used it may
-#'    be necessary to print out this code and adjust the mai and oma variables
-#' @param usefont default is 7 (bold Times); 1 = sans serif, 2 = sans serif bold
-#' @param cex default is 0.85, the size of font used for text within the plots
-#' @param xmtext default is TRUE; if plots is not c(1,1) this alters the mai and
-#'    oma variables for the x-axis to allow for mtexting and avoid the x title
-#' @param ymtext default is TRUE; if plots is not c(1,1) this alters the mai and
-#'    oma variables for the y-axis to allow for mtexting and avoid the y title
-#' @param newdev reuse a previously defined graphics device or make a new one;
-#'    defaults to TRUE
-#' @param rows defaults to TRUE, determines whether to use mfrow or mfcol
-#' @param filename defaults to "" = do not save to a filename. If a filename is
-#' @return Checks for and sets up a graphics device and sets the default plotting
-#'   par values. This changes the current plotting options!
+#' @param usefont default=7 (bold Times) 1=sans serif, 2=sans serif bold
+#' @param cex default=0.75, the size of font used for text within the plots
+#' @param newdev reuse a previously defined graphics device or make a new 
+#'     one; default=TRUE
+#' @param filename default="" ie do not save to a filename. If a filename 
+#'     is defined it creates that file as a png file with resolution resol
+#' @param resol resolution of the png file if one is defined, default=300
+#' 
+#' @return sets up a graphics device, if needed and sets the default 
+#'     plotting par values. This changes the current plotting options! 
 #' @export plotprep
+#' 
 #' @examples
 #' \dontrun{
 #'  x <- rnorm(1000,mean=0,sd=1.0)
 #'  plotprep()
 #'  hist(x,breaks=30,main="",col=2)
-#'  plotprep(width=6,height=5,plots=c(2,1))
+#'  plotprep(width=6,height=5)
+#'  par(mfrow = c(2,1))
 #'  hist(x,breaks=20,main="",col=2)
 #'  hist(x,breaks=30,main="",col=3)
 #' }
-plotprep <- function(width=6,height=3.6,plots=c(1,1),usefont=7,cex=0.85,
-                     xmtext=TRUE,ymtext=TRUE,
-                     newdev=TRUE,rows=TRUE,filename="") {
-  if  ((names(dev.cur()) != "null device") & (newdev)) suppressWarnings(dev.off())
+plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
+                     newdev=TRUE,filename="",resol=300) {
+  if  ((names(dev.cur()) != "null device") & (newdev)) 
+      suppressWarnings(dev.off())
   lenfile <- nchar(filename)
   if (lenfile > 3) {
     end <- substr(filename,(lenfile-3),lenfile)
     if (end != ".png") filename <- paste0(filename,".png")
-    png(filename=filename,width=width,height=height,units="in",res=300)
+    png(filename=filename,width=width,height=height,units="in",res=resol)
   } else {
     if (names(dev.cur()) %in% c("null device","RStudioGD"))
       dev.new(width=width,height=height,noRStudioGD = TRUE)
   }
-  firstmai <- 0.45; secondmai <- 0.45; thirdmai <- 0.1
-  firstoma <- 0.0; secondoma <- 0.0; thirdoma <- 0.0
-  if (sum(plots) != 2) {
-    if (xmtext) {
-      firstmai <- 0.25
-      thirdmai <- 0.05
-      firstoma <- 1.0
-      thirdoma <- 0.1
-    }
-    if (ymtext) {
-      secondmai <- 0.25
-      secondoma <- 1.0
-    }
-  }
-  maival <- c(firstmai,secondmai,thirdmai,0.05)
-  omaval <- c(firstoma,secondoma,thirdoma,0.0)
-  if (rows) {
-    par(mfrow = plots,mai=maival,oma=omaval)
-  } else {
-    par(mfcol = plots,mai=maival,oma=omaval)
-  }
-  par(cex=cex, mgp=c(1.35,0.35,0), font.axis=usefont,font=usefont,font.lab=usefont)
-  if (lenfile > 0) cat("\n Remember to place 'graphics.off()' after the plot \n")
+  par(mfrow = c(1,1),mai=c(0.45,0.45,0.1,0.05), oma=c(0,0,0,0))
+  par(cex=cex,mgp=c(1.35,0.35,0),font.axis=usefont,font=usefont, 
+      font.lab=usefont)
+  if (lenfile > 0) 
+      cat("\n Remember to place 'graphics.off()' after plot \n")
 } # end of plot_prep
 
 
@@ -525,5 +509,5 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
   label <- paste0("Mean +/- 95%CI = ",round(prof[left,var],digit[1]),"   ",
                   round(prof[mid,var],digit[2]),"    ",
                   round(prof[(mid+right-1),var],digit[3]))
-  mtext(label,side=3,outer=FALSE,line=-1.1,cex=1.0,font=7)
+  mtext(label,side=3,outer=FALSE,line=-1.1,cex=0.9,font=7)
 } # end of plotpreofile

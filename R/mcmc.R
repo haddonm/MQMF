@@ -105,9 +105,9 @@ do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
       param <- inpar
       np <- length(param)  # Number of parameters
       if ((thinstep %% np) != 0)  # thinstep must be divisible by np
-         stop("Thinning step length must be a multiple of number of parameters")
+         stop("Thinning step must be a multiple of number of parameters")
       stepnp <- thinstep/np
-      nRand <- np * thinstep #Number of random values needed for one thinstep
+      nRand <- np * thinstep #Number of random values for one thinstep
       posterior <- matrix(0,nrow=totN,ncol=(np+1))
       colnames(posterior) <- c("r","K","Binit","sigma","Post")
       arate <- numeric(np) # to store acceptance rate

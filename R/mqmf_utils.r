@@ -638,7 +638,7 @@ plotfishM <- function(fish,glb,ce=TRUE,title=TRUE,fnt=7,both=TRUE,
   } else {
     par(oma=c(0.0,0,0.0,0.0))
   }
-  par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=fnt,font=fnt,font.lab=fnt)
+  par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=fnt,font=fnt,font.lab=fnt)
   ymax <- maxy[1]
   if (maxy[1] == 0) ymax <- getmax(fish[,"catch"])
   plot(yrs,fish[,"catch"],type="l",lwd=2,ylab="Catch",xlab="Year",

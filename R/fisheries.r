@@ -99,7 +99,7 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,
       x <- c(0,ymax)
       par(mfrow=c(1,2),mai=c(0.45,0.45,0.05,0.1),oma=c(0.0,0,2.0,0.0))
       par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)
-      plot(Time,pop,type="l",col=2,lwd=2,ylim=c(0,ymax),yaxs="i",
+      plot(Time,pop,type="l",col=2,lwd=1,ylim=c(0,ymax),yaxs="i",
            panel.first = grid(),xlab="Time",ylab="Population Size")
       mtext("Population Dynamics",side=3,line=0.0,cex=fntsze,font=7)
       plot(pop[1:(Yrs-1)],pop2,type="p",pch=1,lwd=1.0,cex=0.9,
@@ -180,15 +180,15 @@ logist <- function(inL50,delta,depend,knifeedge=FALSE) {
 
 #' @title MaA an alternative logistic function commonly used for maturity
 #'
-#' @description MaA - the logistic function exp(a+bxdepend)/(1+exp(a+bxdepend)),
-#'     which can also be expressed as 1/(1+(1/exp(a + b x depend))). This has
-#'     the property that the SM50 = -a/b and the interquartile distance is
-#'     2.Ln(3)/b.
+#' @description MaA logistic function exp(a+bxdepend)/(1+exp(a+bxdepend)),
+#'     which can also be expressed as 1/(1+(1/exp(a + b x depend))). This 
+#'     has the property that the SM50 = -a/b and the interquartile distance 
+#'     is 2.Ln(3)/b.
 #' @param ina is the intercept of the exponential function
 #' @param inb is the gradient of the exponential function
 #' @param depend is a vector of lengths/ages for which the logistic maturity
 #'     value will be calculated
-#' @return A vector of length(depend) containing the predicted maturity values
+#' @return A vector of length(depend) contains the predicted maturity values
 #'
 #' @export
 #' @examples
@@ -356,8 +356,8 @@ negLL1 <- function(pars,funk,indat,logobs,...) {
 #'   likelihoods in dnorm
 #' @param funk the function name that calculates the predicted values from
 #'   the independent values
-#' @param independent the x-axis variable, that which in the model gives rise
-#'   to the predicted values to compare with the observed 'dependent' variable
+#' @param independent the x-axis variable, which in the model gives rise
+#'   to the predicted values to compare with observed 'dependent' variable
 #' @param observed the observed values of the values that the model will
 #'   predict for each of the independent values.
 #' @param ... required to allow funk to access its other parameters without
@@ -385,27 +385,27 @@ negNLL <- function(pars,funk,independent,observed,...) {
 #'     distributed variables. It assumes the presence of a function 'funk'
 #'     that will calculate predicted values of a dependent variable from a
 #'     vector of independent values. By having a separate vector of
-#'     parameters in 'initpar' and a vector of the indices of those parameters
-#'     that will be fitted it is possible to fit only a subset of parameters.
-#'     This is useful if generating a likelihood profile, or setting up a
-#'     likelihood ratio test. With more complex models it is often a useful
-#'     strategy to estimate the full number of parameters in a series of
-#'     phases, increasing the number being estimated each time while keeping
-#'     the rest fixed. 'negNLP' makes such phasing of the fitting of a model
-#'     to data possible.
-#'     This function can be applied directly to normally distributed data or to
-#'     log-transformed data for log-normally distributed data.
-#'     There is a slight cost in terms of time such that
-#'     using negNLP takes approximate 0.4 milliseconds longer than when using
-#'     negNL; and that is with either 13 or 1300 observations.
+#'     parameters in 'initpar' and a vector of the indices of those 
+#'     parameters that will be fitted it is possible to fit only a subset 
+#'     of parameters. This is useful if generating a likelihood profile, or 
+#'     setting up a likelihood ratio test. With more complex models it is 
+#'     often a useful strategy to estimate the full number of parameters in 
+#'     a series of phases, increasing the number being estimated each time 
+#'     while keeping the rest fixed. 'negNLP' makes such phasing of the 
+#'     fitting of a model to data possible. This function can be applied 
+#'     directly to normally distributed data or to log-transformed data for 
+#'     log-normally distributed data. There is a slight cost in terms of 
+#'     time such that using negNLP takes approximate 0.4 milliseconds 
+#'     longer than when using negNL; and that is with either 13 or 1300 
+#'     observations.
 #'
 #' @param pars a vector containing the parameters being used in funk, plus
 #'     an extra sigma which is the standard deviation of the normal random
 #'     likelihoods in dnorm
 #' @param funk the function name that calculates the predicted values from
 #'     the independent values
-#' @param independent the x-axis variable, that which in the model gives rise
-#'     to the predicted values of the dependent variable
+#' @param independent the x-axis variable, that which in the model gives 
+#'     rise to the predicted values of the dependent variable
 #' @param dependent the observed values for comparison with the values that
 #'     the model will predict for each of the independent values.
 #' @param initpar this defaults to the same as pars - using all parameters
@@ -435,14 +435,14 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #'     distributed variables. It assumes the presence of a function 'funk'
 #'     that will calculate predicted values of a dependent variable from a
 #'     vector of independent values. By having a separate vector of
-#'     parameters in 'initpar' and a vector of the indices of those parameters
-#'     that will be fitted it is possible to fit only a subset of parameters.
-#'     This is useful if generating a likelihood profile, or setting up a
-#'     likelihood ratio test. With more complex models it is often a useful
-#'     strategy to estimate the full number of parameters in a series of
-#'     phases, increasing the number being estimated each time while keeping
-#'     the rest fixed. 'negLLP' makes such phasing of the fitting of a model
-#'     to data possible.
+#'     parameters in 'initpar' and a vector of the indices of those 
+#'     parameters that will be fitted it is possible to fit only a subset 
+#'     of parameters. This is useful if generating a likelihood profile, or 
+#'     setting up a likelihood ratio test. With more complex models it is 
+#'     often a useful strategy to estimate the full number of parameters in 
+#'     a series of phases, increasing the number being estimated each time 
+#'     while keeping the rest fixed. 'negLLP' makes such phasing of the 
+#'     fitting of a model to data possible.
 #'     This function can be applied directly to normally distributed data or
 #'     to log-transformed data for log-normally distributed data.
 #'
@@ -525,8 +525,8 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
 #'     stability and is transformed inside simpspm.
 #' @param indat the data which needs to include year, catch, and cpue. 
 #' @param schaefer a logical value determining whether the spm is to be a
-#'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
-#'     default is TRUE = Schaefer model
+#'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
+#'     The default is TRUE = Schaefer model
 #' @param year the column name within indat containing the years
 #' @param cats the column name within indat containing the catches
 #' @param index the column name within indat containing the cpue.
@@ -545,7 +545,6 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
 #' } 
 simpspm <- function(pars, indat,schaefer=TRUE,  
                     year="year",cats="catch",index="cpue") { 
-  # pars=param; indat=fish; schaefer=TRUE;year="year";cats="catch";index="cpue"
   nyrs <- length(indat[,year])
   biom <- numeric(nyrs+1)
   catch <- indat[,cats]
@@ -567,26 +566,26 @@ simpspm <- function(pars, indat,schaefer=TRUE,
 #'
 #' @description simpspmM calculates the predicted CPUE for an SPM model. It
 #'     assumes that there is a variable called 'p' in the global environment
-#'     and this 'p' variable determines the asymmetry of the production curve.
-#'     If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 it
-#'     approximates the Fox model.
+#'     and this 'p' variable determines the asymmetry of the production 
+#'     curve. If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 
+#'     it approximates the Fox model.
 #'
 #' @param par the parameters of the SPM = r, K, a q for each column of cpue,
-#'     a sigma for each cpue, and Binit if fishery depleted to start with. Each
-#'     parameter is in log space and is transformed inside simpspmM
+#'     a sigma for each cpue, and Binit if fishery depleted to start with. 
+#'     Each parameter is in log space and is transformed inside simpspmM
 #' @param indat the data which needs to include year, catch, and cpue. The
-#'    latter should have a separate column for each fleet, with a column name
-#'    beginning with cpue or whatever name you put in index (see below) for
-#'    example cpue1, cpue2,etc.
+#'    latter should have a separate column for each fleet, with a column 
+#'    name beginning with cpue or whatever name you put in index (see below) 
+#'    for example cpue1, cpue2,etc.
 #' @param schaefer a logical value determining whether the spm is to be a
-#'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). The
-#'     default is TRUE
+#'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
+#'     The default is TRUE
 #' @param year the column name within indat containing the years
 #' @param cats the cloumn name within indat containing the catches
-#' @param index the prefix in the column names given to the indices of relative
-#'     abundance used, perhaps 'cpue' as in cpueTW, cpueAL, etc. grep is used
-#'     to search for columns containing this prefix to identify whether there
-#'     are more than one column of cpue data.
+#' @param index the prefix in the column names given to the indices of 
+#'     relative abundance used, perhaps 'cpue' as in cpueTW, cpueAL, etc. 
+#'     grep is used to search for columns containing this prefix to 
+#'     identify whether there are more than one column of cpue data.
 #'
 #' @return a vector or matrix of nyrs of the predicted CPUE
 #' @export
@@ -614,8 +613,7 @@ simpspmM <- function(par,indat,schaefer=TRUE,
   r <- exp(par[1])
   K <- exp(par[2])
   biom[1] <- K
-  if (length(par) > npar) biom[1] <- exp(par[npar+1]) # BiNit at end of pars
-  #p is the location of mode parameter 1 = Schaefer, 1e-8 ~ Fox model
+  if (length(par) > npar) biom[1] <- exp(par[npar+1]) 
   if(schaefer) p <- 1 else p <- 1e-8
   for (loc in 1:nyrs) {
     Bt <- biom[loc]
