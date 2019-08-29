@@ -863,7 +863,7 @@ robustSPM <- function(inpar,fish,N=10,scaler=40,console=TRUE,
     columns <- c("ir","iK","iBinit","isigma","iLike","r","K","Binit",
                  "sigma","-veLL","MSY","Iters")  # prefix i implies input
   }
-  coln <- length(coluns)
+  coln <- length(columns)
   results <- matrix(0,nrow=N,ncol=coln,dimnames=list(1:N,columns))
   for (i in 1:N) {  # i=1
     if (funkone) {

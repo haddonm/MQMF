@@ -48,12 +48,14 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
 #' @description discretelogistic is an implementation of example box 2.2 
 #'     from the the Excel version of MQMF. It enables the exploration of 
 #'     the dynamics of the Discrete logistic model, based around the 
-#'     classical Schaefer model. By setting the r parameter to <= 1.0, one
+#'     classical Schaefer model. By setting the r parameter to <= 1.0, 1
 #'     would generate monotonically damped equilibria. r values between 
-#'     1 < r < 2.03 would generate damped oscillatory equilibria, r values 
-#'     from 2.03 < r < 2.43 should generate stable limit cycles on a cycle
-#'     of 2., 2.43 < r < 2.54 gives stable limit cycles of cycle 4, then
-#'     2.54 < r < 2.57 gives cycles > 4, and ~2.575 < r gives chaos.
+#'     1 < r < 2.03 would generate damped oscillatory equilibria, r 
+#'     values from 2.03 < r < 2.43 should generate stable limit cycles 
+#'     on a cycle of 2., 2.43 < r < 2.54 gives stable limit cycles of 
+#'     cycle 4, then 2.54 < r < 2.57 gives cycles > 4, and ~2.575 < r 
+#'     gives chaos. Should be used in conjunction with plot. for which 
+#'     an S3 method has been defined plot.dlpop
 #'
 #' @param r intrinsic rate of population increase; default = 0.5
 #' @param K carrying capacity; default = 1000
@@ -63,13 +65,8 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
 #' @param p the asymmetry parameter. the default value of 1.0 leads
 #'     to the classical Schaefer model. A value of 1e-08 approximates
 #'     the Fox model where the mode is skewed to the left of centre.
-#' @param outplot default = TRUE; should the dynamics be plotted?
-#' @param title If using the default = "" it is filled with r, K, Ct,
-#'     N0, and p. But this can be replaced with text if required.
 #'
-#' @return if outplot = TRUE it generates a plot and alters default
-#'     par settings. In addition, invisibly returns a matrix of year,
-#'     Nt, and Nt+1
+#' @return invisibly returns a matrix of year, nt, and nt1
 #' @export
 #'
 #' @examples
@@ -79,45 +76,24 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
 #'   ans <- discretelogistic(r=2.55,K=1000.0,N0=100,Ct=95.0,Yrs=100)
 #'   head(ans,20)
 #' }
-discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,
-                             p=1.0,outplot=TRUE,title="") {
-   fntsze <- 0.9
-   Time <- seq(1,Yrs,1)
-   pop <- numeric(Yrs)
-   pop[1] <- N0
-   for (year in 2:Yrs) {
-      Bt <- pop[year-1]
-      pop[year] <- max((Bt + (r*Bt/p)*(1-(Bt/K)^p) - Ct),0)
-   }
-   pop2 <- pop[2:Yrs]
-   if (outplot) {
-      if (nchar(title) == 0) {
-         title <- paste0("r= ",r," K= ",K," Ct= ",Ct, " N0= ",N0,
-                         " p= ",p)
-      }
-      ymax <- max(pop)*1.025
-      x <- c(0,ymax)
-      par(mfrow=c(1,2),mai=c(0.45,0.45,0.05,0.1),oma=c(0.0,0,2.0,0.0))
-      par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)
-      plot(Time,pop,type="l",col=2,lwd=1,ylim=c(0,ymax),yaxs="i",
-           panel.first = grid(),xlab="Time",ylab="Population Size")
-      mtext("Population Dynamics",side=3,line=0.0,cex=fntsze,font=7)
-      plot(pop[1:(Yrs-1)],pop2,type="p",pch=1,lwd=1.0,cex=0.9,
-           yaxs="i",xlim=c(0,ymax),ylim=c(0,ymax),panel.first = grid(),
-           xlab="Population Nt",ylab="Population Nt+1")
-      begin <- trunc(Yrs * 0.8)      # final 20%
-      lines(x,x,lwd=2,col="grey")
-      points(pop[begin:(Yrs-1)],pop2[begin:(Yrs-1)],pch=16,col=2,cex=0.9)
-      mtext("Phase Plot",side=3,line=0.0,cex=fntsze,font=7,outer=FALSE)
-      mtext(title,side=3,line=1.0,cex=fntsze,font=7,outer=TRUE)
-   }
-   out <- cbind(Year=Time,Nt=pop,Nt1=c(pop2,NA))
-   rownames(out) <- Time
-   return(invisible(out))
-} # End of discretelogistic
+discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,
+                             Yrs=50,p=1.0) {
+  years <- seq(1,Yrs,1)
+  pop <- numeric(Yrs)
+  pop[1] <- N0
+  for (year in 2:Yrs) {
+    Bt <- pop[year-1]
+    pop[year] <- max((Bt + (r*Bt/p)*(1-(Bt/K)^p) - Ct),0)
+  }
+  pop2 <- pop[2:Yrs]
+  out <- cbind(year=years,nt=pop,nt1=c(pop2,NA))
+  rownames(out) <- years
+  class(out) <- "dlpop"
+  return(invisible(out))
+} # End of discretelogistic generating class dlpop
 
 
-#' @title Gz calculates the predicted Gompertz length at age growth curve
+#' @title Gz calculates predicted Gompertz length at age growth curve
 #'
 #' @description Gz calculates length at age for the Gompertz curve.
 #'
@@ -125,7 +101,7 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,
 #'     the Gz curve.
 #' @param ages is a vector of ages; could be a single number
 #'
-#' @return a vector of predicted lengths for the vector of ages in 'ages'
+#' @return a vector of predicted lengths for a vector of ages in 'ages'
 #' @export
 #'
 #' @examples
@@ -141,8 +117,8 @@ Gz <- function(p, ages) {
 #' @title logist Logistic selectivity function
 #'
 #' @description logist calcualtes a Logistic curve that can be used as a
-#'     selectivity function, or maturity curve, of wherever a logistic is
-#'     required. This version uses the logistic function
+#'     selectivity function, or maturity curve, of wherever a logistic 
+#'     is required. This version uses the logistic function
 #'     1/(1+exp(-log(19.0)*(lens-inL50)/delta)), which
 #'     explicitly defines the L50 and uses delta = (inL95-inL50) as
 #'     the second parameter.
@@ -178,17 +154,18 @@ logist <- function(inL50,delta,depend,knifeedge=FALSE) {
   return(ans)
 } # end of logist
 
-#' @title MaA an alternative logistic function commonly used for maturity
+#' @title MaA alternative logistic function commonly used for maturity
 #'
-#' @description MaA logistic function exp(a+bxdepend)/(1+exp(a+bxdepend)),
-#'     which can also be expressed as 1/(1+(1/exp(a + b x depend))). This 
-#'     has the property that the SM50 = -a/b and the interquartile distance 
-#'     is 2.Ln(3)/b.
+#' @description MaA a function exp(a+bxdepend)/(1+exp(a+bxdepend)),
+#'     which can also be expressed as 1/(1+(1/exp(a + b x depend))) to
+#'     for a symmetric logistic curve. This has the property that the 
+#'     SM50 = -a/b and the interquartile distance is 2.Ln(3)/b.
+#'     
 #' @param ina is the intercept of the exponential function
 #' @param inb is the gradient of the exponential function
-#' @param depend is a vector of lengths/ages for which the logistic maturity
-#'     value will be calculated
-#' @return A vector of length(depend) contains the predicted maturity values
+#' @param depend is a vector of lengths/ages for which the logistic 
+#'     maturity value will be calculated
+#' @return A vector of length(depend) with predicted maturity values
 #'
 #' @export
 #' @examples
@@ -204,14 +181,14 @@ MaA <- function(ina,inb,depend) {
 
 #' @title mm calculates the predicted Michaelis-Menton length at age
 #'
-#' @description mm calculates length at age for the generalized Michaelis-
-#'     Menton curve.
+#' @description mm calculates length at age for the generalized 
+#'     Michaelis-Menton curve.
 #'
 #' @param p is a vector the first three cells of which are a, b, c
 #'    for the mm curve.
 #' @param ages is a vector of ages; could be a single number
 #'
-#' @return a vector of predicted lengths for the vector of ages in 'ages'
+#' @return a vector of predicted lengths for a vector of ages in 'ages'
 #' @export
 #'
 #' @examples
@@ -226,11 +203,11 @@ mm <- function(p, ages) {
 
 #' @title mnnegLL generic multinomial negative log-likelihoods
 #' 
-#' @description mnnegLL a generic multinomial negative log-likelihood that
-#'     requires observed frequencies and predicted frequencies, although
-#'     the predicted frequencies could also be the final proportions, as 
-#'     long as they summed to one. It checks that the number of predicted
-#'     values matches the number of observed values
+#' @description mnnegLL a generic multinomial negative log-likelihood 
+#'     that requires observed frequencies and predicted frequencies, 
+#'     although the predicted frequencies could also be the final 
+#'     proportions, as long as they summed to one. It checks that the 
+#'     number of predicted values matches the number of observed values
 #'
 #' @param obs the original observed frequencies
 #' @param predf the predicted frequencies or proportions
@@ -258,23 +235,24 @@ mnnegLL <- function(obs,predf) {
 #' @title negLL calculate log-normal log-likelihoods
 #'
 #' @description negLL calculates log-normal negative log-likelihoods. It
-#'     expects the input parameters to be log-transformed, so the funk used
-#'     to calculate the log or the predicted values also needs to expect
-#'     log-transformed parameters. In addition, it checks that there are no
-#'     missing data (NA) within the input observed log-transformed data. If
-#'     there are it uses only those records for which there are values.
+#'     expects the input parameters to be log-transformed, so the funk 
+#'     used to calculate the log or the predicted values also needs to 
+#'     expect log-transformed parameters. In addition, it checks that 
+#'     there are no missing data (NA) within the input observed 
+#'     log-transformed data. If there are it uses only those records 
+#'     for which there are values.
 #'
 #' @param pars the log-transformed parameters to be used in the funk for
 #'     calculating the log of the predicted values against which the log
 #'     observed values will be compared
-#' @param funk the function used to calculate the log-predicted values of
-#'     whatever variable is being used (eg. cpue, catches, etc.)
+#' @param funk the function used to calculate the log-predicted values 
+#'     of whatever variable is being used (eg. cpue, catches, etc.)
 #' @param indat the data used by funk with pars to calculate the log-
 #'     predicted values.
-#' @param logobs the observed values log-transformed ready for comparison
-#'     with the log-predicted values from funk and pars.
-#' @param ... required to allow funk to access its other parameters without
-#'     having to explicitly declare them in negLL
+#' @param logobs the observed values log-transformed ready for 
+#'     comparison with the log-predicted values from funk and pars.
+#' @param ... required to allow funk to access its other parameters 
+#'     without having to explicitly declare them in negLL
 #'     
 #' @return the negative log-likelihood using log-normal errors.
 #' @export

@@ -13,11 +13,11 @@ for the mm curve.}
 \item{ages}{is a vector of ages; could be a single number}
 }
 \value{
-a vector of predicted lengths for the vector of ages in 'ages'
+a vector of predicted lengths for a vector of ages in 'ages'
 }
 \description{
-mm calculates length at age for the generalized Michaelis-
-    Menton curve.
+mm calculates length at age for the generalized 
+    Michaelis-Menton curve.
 }
 \examples{
 \dontrun{

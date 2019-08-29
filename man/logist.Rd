@@ -25,8 +25,8 @@ A vector of length(depend) with the predicted logistic values
 }
 \description{
 logist calcualtes a Logistic curve that can be used as a
-    selectivity function, or maturity curve, of wherever a logistic is
-    required. This version uses the logistic function
+    selectivity function, or maturity curve, of wherever a logistic 
+    is required. This version uses the logistic function
     1/(1+exp(-log(19.0)*(lens-inL50)/delta)), which
     explicitly defines the L50 and uses delta = (inL95-inL50) as
     the second parameter.

@@ -386,6 +386,51 @@ plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
        ylab=ylabel,xlab=xlabel,cex=cex,panel.first=grid())
 } # end of plot1
 
+#' @title plot.dlpop an S3 method for plotting dlpop objects
+#' 
+#' @description plot.dlpop an S3 method for plotting dlpop objects
+#'
+#' @param x a dlpop matrix containing year, nt, and nt1 as columns
+#' @param main defines text to print across top of plot with the
+#'     intention of including the parameter values, default="" 
+#' @param cex the size of the fonts used, default=0.9
+#' @param font the font used default=7 (bold serif) 1 = non-serif,
+#'     2 = bold non-serif, 6 = serif
+#' @param ... ready for extra graphical parameters
+#'
+#' @return it returns the dlpop matrix invisibly
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   r <- 2.5; K <- 1000.0; N0 <- 50; Ct <- 0.0; yrs <- 50; p <- 1
+#'   pop <- discretelogistic(r=r,K=K,N0=N0,Ct=Ct,Yrs=yrs,p=p)
+#'   plot(pop,main=paste0("r=",r,"  K=",K,"  Ct=",Ct, "  N0=",N0,
+#'                        "  p=",p),cex=0.85,font=7)
+#' }
+plot.dlpop <- function(x,main="",cex=0.9,font=7, ...) { 
+  NextMethod("plot")
+  colnames(x) <- tolower(colnames(x))
+  ymax <- getmax(x[,"nt"])
+  xl <- c(0,ymax)
+  yrs <- length(x[,"year"])
+  par(mfrow=c(1,2),mai=c(0.45,0.45,0.05,0.1),oma=c(0.0,0,2.0,0.0))
+  par(cex=cex, mgp=c(1.35,0.35,0), font.axis=font,font=font,
+      font.lab=font)
+  plot(x[,"year"],x[,"nt"],type="l",col=2,lwd=1,ylim=c(0,ymax),yaxs="i",
+       panel.first = grid(),xlab="Time",ylab="Population Size")
+  mtext("Population Dynamics",side=3,line=0.0,cex=cex,font=font)
+  plot(x[1:(yrs-1),"nt"],x[1:(yrs-1),"nt1"],type="p",pch=1,lwd=1.0,
+       cex=0.9,yaxs="i",xlim=c(0,ymax),ylim=c(0,ymax),
+       panel.first=grid(),xlab="Population Nt",ylab="Population Nt+1")
+  begin <- trunc(yrs * 0.8)      # final 20%
+  lines(xl,xl,lwd=2,col="grey")
+  points(x[begin:(yrs-1),"nt"],x[begin:(yrs-1),"nt1"],pch=16,col=2,
+         cex=(cex*1.5))
+  mtext("Phase Plot",side=3,line=0.0,cex=cex,font=font,outer=FALSE)
+  mtext(main,side=3,line=1.0,cex=cex,font=font,outer=TRUE)
+  invisible(x)
+} # end of S3 method plot.dlpop
 
 #' @title plotprep: sets up a window and the par values for plotting
 #'

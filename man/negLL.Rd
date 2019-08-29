@@ -11,28 +11,29 @@ negLL(pars, funk, indat, logobs, ...)
 calculating the log of the predicted values against which the log
 observed values will be compared}
 
-\item{funk}{the function used to calculate the log-predicted values of
-whatever variable is being used (eg. cpue, catches, etc.)}
+\item{funk}{the function used to calculate the log-predicted values 
+of whatever variable is being used (eg. cpue, catches, etc.)}
 
 \item{indat}{the data used by funk with pars to calculate the log-
 predicted values.}
 
-\item{logobs}{the observed values log-transformed ready for comparison
-with the log-predicted values from funk and pars.}
+\item{logobs}{the observed values log-transformed ready for 
+comparison with the log-predicted values from funk and pars.}
 
-\item{...}{required to allow funk to access its other parameters without
-having to explicitly declare them in negLL}
+\item{...}{required to allow funk to access its other parameters 
+without having to explicitly declare them in negLL}
 }
 \value{
 the negative log-likelihood using log-normal errors.
 }
 \description{
 negLL calculates log-normal negative log-likelihoods. It
-    expects the input parameters to be log-transformed, so the funk used
-    to calculate the log or the predicted values also needs to expect
-    log-transformed parameters. In addition, it checks that there are no
-    missing data (NA) within the input observed log-transformed data. If
-    there are it uses only those records for which there are values.
+    expects the input parameters to be log-transformed, so the funk 
+    used to calculate the log or the predicted values also needs to 
+    expect log-transformed parameters. In addition, it checks that 
+    there are no missing data (NA) within the input observed 
+    log-transformed data. If there are it uses only those records 
+    for which there are values.
 }
 \examples{
 \dontrun{

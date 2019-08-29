@@ -5,7 +5,7 @@
 \title{discretelogistic example box 2.2 Discrete logistic model}
 \usage{
 discretelogistic(r = 0.5, K = 1000, N0 = 50, Ct = 0, Yrs = 50,
-  p = 1, outplot = TRUE, title = "")
+  p = 1)
 }
 \arguments{
 \item{r}{intrinsic rate of population increase; default = 0.5}
@@ -21,27 +21,22 @@ discretelogistic(r = 0.5, K = 1000, N0 = 50, Ct = 0, Yrs = 50,
 \item{p}{the asymmetry parameter. the default value of 1.0 leads
 to the classical Schaefer model. A value of 1e-08 approximates
 the Fox model where the mode is skewed to the left of centre.}
-
-\item{outplot}{default = TRUE; should the dynamics be plotted?}
-
-\item{title}{If using the default = "" it is filled with r, K, Ct,
-N0, and p. But this can be replaced with text if required.}
 }
 \value{
-if outplot = TRUE it generates a plot and alters default
-    par settings. In addition, invisibly returns a matrix of year,
-    Nt, and Nt+1
+invisibly returns a matrix of year, nt, and nt1
 }
 \description{
 discretelogistic is an implementation of example box 2.2 
     from the the Excel version of MQMF. It enables the exploration of 
     the dynamics of the Discrete logistic model, based around the 
-    classical Schaefer model. By setting the r parameter to <= 1.0, one
+    classical Schaefer model. By setting the r parameter to <= 1.0, 1
     would generate monotonically damped equilibria. r values between 
-    1 < r < 2.03 would generate damped oscillatory equilibria, r values 
-    from 2.03 < r < 2.43 should generate stable limit cycles on a cycle
-    of 2., 2.43 < r < 2.54 gives stable limit cycles of cycle 4, then
-    2.54 < r < 2.57 gives cycles > 4, and ~2.575 < r gives chaos.
+    1 < r < 2.03 would generate damped oscillatory equilibria, r 
+    values from 2.03 < r < 2.43 should generate stable limit cycles 
+    on a cycle of 2., 2.43 < r < 2.54 gives stable limit cycles of 
+    cycle 4, then 2.54 < r < 2.57 gives cycles > 4, and ~2.575 < r 
+    gives chaos. Should be used in conjunction with plot. for which 
+    an S3 method has been defined plot.dlpop
 }
 \examples{
 \dontrun{

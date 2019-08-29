@@ -2,7 +2,7 @@
 % Please edit documentation in R/fisheries.r
 \name{MaA}
 \alias{MaA}
-\title{MaA an alternative logistic function commonly used for maturity}
+\title{MaA alternative logistic function commonly used for maturity}
 \usage{
 MaA(ina, inb, depend)
 }
@@ -11,17 +11,17 @@ MaA(ina, inb, depend)
 
 \item{inb}{is the gradient of the exponential function}
 
-\item{depend}{is a vector of lengths/ages for which the logistic maturity
-value will be calculated}
+\item{depend}{is a vector of lengths/ages for which the logistic 
+maturity value will be calculated}
 }
 \value{
-A vector of length(depend) contains the predicted maturity values
+A vector of length(depend) with predicted maturity values
 }
 \description{
-MaA logistic function exp(a+bxdepend)/(1+exp(a+bxdepend)),
-    which can also be expressed as 1/(1+(1/exp(a + b x depend))). This 
-    has the property that the SM50 = -a/b and the interquartile distance 
-    is 2.Ln(3)/b.
+MaA a function exp(a+bxdepend)/(1+exp(a+bxdepend)),
+    which can also be expressed as 1/(1+(1/exp(a + b x depend))) to
+    for a symmetric logistic curve. This has the property that the 
+    SM50 = -a/b and the interquartile distance is 2.Ln(3)/b.
 }
 \examples{
 a <- -14.383

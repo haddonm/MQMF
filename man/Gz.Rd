@@ -2,7 +2,7 @@
 % Please edit documentation in R/fisheries.r
 \name{Gz}
 \alias{Gz}
-\title{Gz calculates the predicted Gompertz length at age growth curve}
+\title{Gz calculates predicted Gompertz length at age growth curve}
 \usage{
 Gz(p, ages)
 }
@@ -13,7 +13,7 @@ the Gz curve.}
 \item{ages}{is a vector of ages; could be a single number}
 }
 \value{
-a vector of predicted lengths for the vector of ages in 'ages'
+a vector of predicted lengths for a vector of ages in 'ages'
 }
 \description{
 Gz calculates length at age for the Gompertz curve.
