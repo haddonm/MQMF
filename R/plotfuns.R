@@ -386,11 +386,13 @@ plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
        ylab=ylabel,xlab=xlabel,cex=cex,panel.first=grid())
 } # end of plot1
 
-#' @title plot.dlpop an S3 method for plotting dlpop objects
+#' @title plot.dynpop an S3 method for plotting dlpop objects
 #' 
-#' @description plot.dlpop an S3 method for plotting dlpop objects
+#' @description plot.dynpop an S3 method for plotting dynpop objects
 #'
-#' @param x a dlpop matrix containing year, nt, and nt1 as columns
+#' @param x a dynpop matrix containing at least year, nt, and nt1 as
+#'     columns
+#' @param y a second y value added to the first plot if presnet
 #' @param main defines text to print across top of plot with the
 #'     intention of including the parameter values, default="" 
 #' @param cex the size of the fonts used, default=0.9
@@ -398,7 +400,7 @@ plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
 #'     2 = bold non-serif, 6 = serif
 #' @param ... ready for extra graphical parameters
 #'
-#' @return it returns the dlpop matrix invisibly
+#' @return it returns the dynpop matrix invisibly
 #' @export
 #'
 #' @examples
@@ -408,8 +410,8 @@ plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
 #'   plot(pop,main=paste0("r=",r,"  K=",K,"  Ct=",Ct, "  N0=",N0,
 #'                        "  p=",p),cex=0.85,font=7)
 #' }
-plot.dlpop <- function(x,main="",cex=0.9,font=7, ...) { 
-  NextMethod("plot")
+plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) { 
+ # NextMethod("plot")
   colnames(x) <- tolower(colnames(x))
   ymax <- getmax(x[,"nt"])
   xl <- c(0,ymax)
@@ -419,6 +421,9 @@ plot.dlpop <- function(x,main="",cex=0.9,font=7, ...) {
       font.lab=font)
   plot(x[,"year"],x[,"nt"],type="l",col=2,lwd=1,ylim=c(0,ymax),yaxs="i",
        panel.first = grid(),xlab="Time",ylab="Population Size")
+  if (length(y) > 0) {
+    lines(x[,"year"],y,lwd=1,col=3)
+  }
   mtext("Population Dynamics",side=3,line=0.0,cex=cex,font=font)
   plot(x[1:(yrs-1),"nt"],x[1:(yrs-1),"nt1"],type="p",pch=1,lwd=1.0,
        cex=0.9,yaxs="i",xlim=c(0,ymax),ylim=c(0,ymax),

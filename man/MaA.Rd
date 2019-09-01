@@ -18,9 +18,9 @@ maturity value will be calculated}
 A vector of length(depend) with predicted maturity values
 }
 \description{
-MaA a function exp(a+bxdepend)/(1+exp(a+bxdepend)),
-    which can also be expressed as 1/(1+(1/exp(a + b x depend))) to
-    for a symmetric logistic curve. This has the property that the 
+MaA a function 1/(1+(1/exp(a + b x depend))) which can
+    be expressed as exp(a + b x depend)/(1 + exp(a + b x depend)).
+    This describes a symmetric logistic curve that has the property
     SM50 = -a/b and the interquartile distance is 2.Ln(3)/b.
 }
 \examples{

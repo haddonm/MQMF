@@ -48,14 +48,18 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
 #' @description discretelogistic is an implementation of example box 2.2 
 #'     from the the Excel version of MQMF. It enables the exploration of 
 #'     the dynamics of the Discrete logistic model, based around the 
-#'     classical Schaefer model. By setting the r parameter to <= 1.0, 1
+#'     classical Schaefer model. Setting the r parameter to <= 1.0,
 #'     would generate monotonically damped equilibria. r values between 
 #'     1 < r < 2.03 would generate damped oscillatory equilibria, r 
 #'     values from 2.03 < r < 2.43 should generate stable limit cycles 
 #'     on a cycle of 2., 2.43 < r < 2.54 gives stable limit cycles of 
 #'     cycle 4, then 2.54 < r < 2.57 gives cycles > 4, and ~2.575 < r 
-#'     gives chaos. Should be used in conjunction with plot. for which 
-#'     an S3 method has been defined plot.dlpop
+#'     gives chaos (though r = 2.63 appears to generate a repeat period
+#'     of six!). discretelogistic should be used in conjunction with 
+#'     plot, for which an S3 method has been defined plot.dynpop. As the
+#'     dynamics are obviously sequential (i.e. n at t+1 is dependent 
+#'     upon n at t) the last line of the dynamics is removed to avoid 
+#'     an empty nt1 row.
 #'
 #' @param r intrinsic rate of population increase; default = 0.5
 #' @param K carrying capacity; default = 1000
@@ -75,20 +79,23 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
 #'   discretelogistic(2.5,1000.0,25,0.0,50) # 4-phase stable limit
 #'   ans <- discretelogistic(r=2.55,K=1000.0,N0=100,Ct=95.0,Yrs=100)
 #'   head(ans,20)
+#'   plot(ans)
 #' }
 discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,
                              Yrs=50,p=1.0) {
-  years <- seq(1,Yrs,1)
-  pop <- numeric(Yrs)
+  yr1 <- Yrs + 1
+  years <- seq(1,yr1,1)
+  pop <- numeric(yr1)
   pop[1] <- N0
-  for (year in 2:Yrs) {
+  for (year in 2:yr1) {
     Bt <- pop[year-1]
     pop[year] <- max((Bt + (r*Bt/p)*(1-(Bt/K)^p) - Ct),0)
   }
-  pop2 <- pop[2:Yrs]
+  pop2 <- pop[2:yr1]
   out <- cbind(year=years,nt=pop,nt1=c(pop2,NA))
   rownames(out) <- years
-  class(out) <- "dlpop"
+  out <- out[-yr1,]  # to remove the empty last year for nt1
+  class(out) <- "dynpop"
   return(invisible(out))
 } # End of discretelogistic generating class dlpop
 
@@ -156,9 +163,9 @@ logist <- function(inL50,delta,depend,knifeedge=FALSE) {
 
 #' @title MaA alternative logistic function commonly used for maturity
 #'
-#' @description MaA a function exp(a+bxdepend)/(1+exp(a+bxdepend)),
-#'     which can also be expressed as 1/(1+(1/exp(a + b x depend))) to
-#'     for a symmetric logistic curve. This has the property that the 
+#' @description MaA a function 1/(1+(1/exp(a + b x depend))) which can
+#'     be expressed as exp(a + b x depend)/(1 + exp(a + b x depend)).
+#'     This describes a symmetric logistic curve that has the property
 #'     SM50 = -a/b and the interquartile distance is 2.Ln(3)/b.
 #'     
 #' @param ina is the intercept of the exponential function
@@ -175,7 +182,7 @@ logist <- function(inL50,delta,depend,knifeedge=FALSE) {
 #' round(MaA(a,b,depend=lens),5) # length based
 #' round(MaA(-2.5,0.95,0:25),5)   # age based
 MaA <- function(ina,inb,depend) {
-  ans <- exp(ina+inb*depend)/(1+exp(ina+inb*depend))
+  ans <- exp(ina + inb * depend)/(1 + exp(ina + inb * depend))
   return(ans)
 } # end of Maturity at age
 

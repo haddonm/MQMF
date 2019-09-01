@@ -29,14 +29,18 @@ invisibly returns a matrix of year, nt, and nt1
 discretelogistic is an implementation of example box 2.2 
     from the the Excel version of MQMF. It enables the exploration of 
     the dynamics of the Discrete logistic model, based around the 
-    classical Schaefer model. By setting the r parameter to <= 1.0, 1
+    classical Schaefer model. Setting the r parameter to <= 1.0,
     would generate monotonically damped equilibria. r values between 
     1 < r < 2.03 would generate damped oscillatory equilibria, r 
     values from 2.03 < r < 2.43 should generate stable limit cycles 
     on a cycle of 2., 2.43 < r < 2.54 gives stable limit cycles of 
     cycle 4, then 2.54 < r < 2.57 gives cycles > 4, and ~2.575 < r 
-    gives chaos. Should be used in conjunction with plot. for which 
-    an S3 method has been defined plot.dlpop
+    gives chaos (though r = 2.63 appears to generate a repeat period
+    of six!). discretelogistic should be used in conjunction with 
+    plot, for which an S3 method has been defined plot.dynpop. As the
+    dynamics are obviously sequential (i.e. n at t+1 is dependent 
+    upon n at t) the last line of the dynamics is removed to avoid 
+    an empty nt1 row.
 }
 \examples{
 \dontrun{
@@ -44,5 +48,6 @@ discretelogistic is an implementation of example box 2.2
   discretelogistic(2.5,1000.0,25,0.0,50) # 4-phase stable limit
   ans <- discretelogistic(r=2.55,K=1000.0,N0=100,Ct=95.0,Yrs=100)
   head(ans,20)
+  plot(ans)
 }
 }
