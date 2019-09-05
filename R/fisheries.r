@@ -2,7 +2,13 @@
 
 #' @title bce Baranov catch equation
 #'
-#' @description bce the Baranov Catch Equation
+#' @description bce the Baranov Catch Equation. The total kill is made
+#'     up of fish being killed by fishing and other dying naturally.
+#'     We use the bce to estimate the catch (those killed by fishing).
+#'     The problem is that some fish that would be expected to die 
+#'     naturally can be expected to be caught and killed by fishing
+#'     so estimating the catch is slightly more complex than Nt x Ht.
+#'     It is invariably better to use the Baranov Catch Equation.
 #'
 #' @param M instantaneous rate of natural mortality, assumed constant
 #' @param Ft a vector of age-specific instantaneous rates of fishing
@@ -29,7 +35,7 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
     warning("Ft contains fewer values than number of ages  \n")
   }
   Z <- (M + Ft)
-  columns <- c("Nt","Numbers Dying","Catch")
+  columns <- c("Nt","N-Dying","Catch")
   ans <- matrix(0,nrow=nage,ncol=length(columns),
                 dimnames=list(ages,columns))
   ans[1,] <- c(Nt,NA,NA)
@@ -48,7 +54,11 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
 #' @description discretelogistic is an implementation of example box 2.2 
 #'     from the the Excel version of MQMF. It enables the exploration of 
 #'     the dynamics of the Discrete logistic model, based around the 
-#'     classical Schaefer model. Setting the r parameter to <= 1.0,
+#'     classical Schaefer model. 
+#'     
+#'     The time series nature of population growth is clear from 
+#'     the fatc that Nt+1 is a function of Nt. One can expect serial
+#'     correlation. Setting the r parameter to <= 1.0,
 #'     would generate monotonically damped equilibria. r values between 
 #'     1 < r < 2.03 would generate damped oscillatory equilibria, r 
 #'     values from 2.03 < r < 2.43 should generate stable limit cycles 
@@ -81,8 +91,7 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
 #'   head(ans,20)
 #'   plot(ans)
 #' }
-discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,
-                             Yrs=50,p=1.0) {
+discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
   yr1 <- Yrs + 1
   years <- seq(1,yr1,1)
   pop <- numeric(yr1)
@@ -103,6 +112,8 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,
 #' @title Gz calculates predicted Gompertz length at age growth curve
 #'
 #' @description Gz calculates length at age for the Gompertz curve.
+#'     This curve can have an inflection near the origin as well
+#'     as at an age where growth slows due to maturity occurring.
 #'
 #' @param p is a vector the first three cells of which are a, b, c, for
 #'     the Gz curve.
@@ -416,7 +427,7 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 
 #' @title negLLP  -ve log-likelihood for normally distributed variables
 #'
-#' @description negLLP Calculates the negative log-likelihood for normally
+#' @description negLLP calculates the negative log-likelihood for normally
 #'     distributed variables. It assumes the presence of a function 'funk'
 #'     that will calculate predicted values of a dependent variable from a
 #'     vector of independent values. By having a separate vector of
@@ -428,8 +439,15 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #'     a series of phases, increasing the number being estimated each time 
 #'     while keeping the rest fixed. 'negLLP' makes such phasing of the 
 #'     fitting of a model to data possible.
-#'     This function can be applied directly to normally distributed data or
-#'     to log-transformed data for log-normally distributed data.
+#'     This function can be applied directly to log-transformed data for 
+#'     log-normally distributed data but also to normally distributed 
+#'     data, in which case one would not log-transform the data being 
+#'     input to the logobs argument and funk would not be generated the
+#'     log-transformed rpedicted values.
+#'     
+#'     The selection of which parameters to vary is simply implemented 
+#'     through repeatedly copying the original input values from initpar
+#'     and then changing those notfixed from the varying par values
 #'
 #' @param pars a vector containing the log-transformed parameters being 
 #'     used in funk, plus an extra sigma which is the standard deviation of 
@@ -442,8 +460,9 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
 #' @param initpar this defaults to the same as pars - using all parameters
 #' @param notfixed a vector identifying the indices of the parameters to be
 #'     fitted, which also defines those that will be fixed; defaults
-#'     to all parameters. If some need to be kept constant so as to generate
-#'     a likelihood profile then omit their index from 'notfixed'.
+#'     to all parameters set to vary. If some need to be kept constant 
+#'     so as to generate a likelihood profile then omit their index from 
+#'     'notfixed'.
 #' @param ... required to allow funk to access its other parameters without
 #'     having to explicitly declare them in negLL
 #'     

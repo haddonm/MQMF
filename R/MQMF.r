@@ -256,21 +256,31 @@ NULL
 #' }
 "LatA"
 
-#' @title npf is the brown and grooved tiger prawn fishery data from NPF
+#' @title npf fishery catch data from Northern Prawn Fishery 1970-1992
 #'
-#' @description npf is fishery data from teh Northern Prawn Fishery of 
-#'     Australia. It represents the combined catches of the brown tiger
-#'     prawn (Penaeus esculentus) and the grooved tiger prawn (Penaeus
-#'     semisulcatus) from 1970 to 1998. The data are derived from Pownall,
-#'     P.C. (ed.) (1994) Australia's Northern Prawn Fishery: The first 25 
-#'     years. NPF25. Cleveland, Austrlaia.
+#' @description npf is fishery catch data from Australia's Northern 
+#'     Prawn Fishery from 1970 to 1992. It contains the catches, in 
+#'     tonnes, of banana prawns (Penaeus merguiensis and P. indicus), 
+#'     tiger prawns (brown - P. esculentus) and (grooved - P. 
+#'     semisulcatus), endeavour prawns, (Metapenaeus endevaouri and M.
+#'     ensis), king prawns (P. latisulcatus and P. longistylus), the
+#'     number of vessesl fishing, and the annual effort as boatdays.
 #'
-#' @format A matrix of fisheries data
+#' @format A data.frame of fisheries data
 #' \describe{
-#'   \item{year}{the fishing year from 1970 - 1998}
-#'   \item{catch}{the total annual catch, tonnes }
-#'   \item{cpue}{the catch tonnes per standard day, a ratio cpue}
+#'   \item{year}{the fishing year from 1970 - 1992.}
+#'   \item{banana}{banana prawn catches, tonnes.}
+#'   \item{tiger}{tiger prawn catches, tonnes.}
+#'   \item{endevaour}{endeavour prawn catches, tonnes.}
+#'   \item{king}{king prawn catches, tonnes.}
+#'   \item{boats}{the number of vessesl fishing in that year.}
+#'   \item{boatday}{the total annual effort as boatdays.}
 #' }
+#' 
+#' @references Robins, C. and I. Somers (1994) Appendix A. Fishery 
+#'     Statistics pp 141 - 164 in Pownall, P.C. (ed.) Australia's 
+#'     Northern Prawn Fishery: The first 25 years. NPF25. Cleveland, 
+#'     Austrlaia. 179p.
 #' @examples
 #'  \dontrun{
 #'  data(npf)

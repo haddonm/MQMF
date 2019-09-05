@@ -24,8 +24,9 @@ values that the model will predict for each of the independent values}
 
 \item{notfixed}{a vector identifying the indices of the parameters to be
 fitted, which also defines those that will be fixed; defaults
-to all parameters. If some need to be kept constant so as to generate
-a likelihood profile then omit their index from 'notfixed'.}
+to all parameters set to vary. If some need to be kept constant 
+so as to generate a likelihood profile then omit their index from 
+'notfixed'.}
 
 \item{...}{required to allow funk to access its other parameters without
 having to explicitly declare them in negLL}
@@ -34,7 +35,7 @@ having to explicitly declare them in negLL}
 the sum of the negative log-likelihoods using a normal PDF
 }
 \description{
-negLLP Calculates the negative log-likelihood for normally
+negLLP calculates the negative log-likelihood for normally
     distributed variables. It assumes the presence of a function 'funk'
     that will calculate predicted values of a dependent variable from a
     vector of independent values. By having a separate vector of
@@ -46,8 +47,15 @@ negLLP Calculates the negative log-likelihood for normally
     a series of phases, increasing the number being estimated each time 
     while keeping the rest fixed. 'negLLP' makes such phasing of the 
     fitting of a model to data possible.
-    This function can be applied directly to normally distributed data or
-    to log-transformed data for log-normally distributed data.
+    This function can be applied directly to log-transformed data for 
+    log-normally distributed data but also to normally distributed 
+    data, in which case one would not log-transform the data being 
+    input to the logobs argument and funk would not be generated the
+    log-transformed rpedicted values.
+    
+    The selection of which parameters to vary is simply implemented 
+    through repeatedly copying the original input values from initpar
+    and then changing those notfixed from the varying par values
 }
 \examples{
 \dontrun{

@@ -22,7 +22,13 @@ at age.}
 a matrix of numbers-, natural mortality-, and catch-at-age
 }
 \description{
-bce the Baranov Catch Equation
+bce the Baranov Catch Equation. The total kill is made
+    up of fish being killed by fishing and other dying naturally.
+    We use the bce to estimate the catch (those killed by fishing).
+    The problem is that some fish that would be expected to die 
+    naturally can be expected to be caught and killed by fishing
+    so estimating the catch is slightly more complex than Nt x Ht.
+    It is invariably better to use the Baranov Catch Equation.
 }
 \examples{
 \dontrun{

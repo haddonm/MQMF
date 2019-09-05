@@ -1,17 +1,20 @@
 Package: MQMF
 Title: Provides R Functions that run the Examples in MQMF
-Version: 0.0.5
-Date: 2019-07-05
+Version: 0.0.8
+Date: 2019-09-05
 Authors@R: person("Malcolm", "Haddon", email = "malcolm@haddon.net.au", role = c("aut", "cre"))
 Maintainer: Malcolm Haddon <malcolm@haddon.net.au>
 Description: Provides R functions that enable the abbreviated and translated
     version of the book Modelling and Quantative Methods in Fisheries 
-    (Haddon, 2011) to be run in R. The package provides numerous functions
-    required to either run or support the practical examples. The integral
-    help for each function describes how those functions can be used to 
-    implement the MQMF examples. MQMF often goes beyond the examples in the 
-    original book, but does not include the chapters on the more advanced
-    subjects, such as age-structured models and length-based models.
+    (Haddon, 2011) to be run in R. The new book will be called 
+    Modelling and Quantitative Methods in Fisheries using R. 
+    The package provides numerous 
+    functions and data-sets required to either run or support the 
+    practical examples.  The integral help for each function describes 
+    how those functions can be used to implement the MQMF examples. 
+    MQMF often goes beyond the examples in the original book, but does 
+    not include the chapters on the more advanced subjects, such as 
+    age-structured models and length-based models.
 Depends: R (>= 3.5.0)
 License: GPL-3
 Encoding: UTF-8

@@ -16,7 +16,7 @@ with those column headings.}
 
 \item{catch}{the column name of the column containng the catch data}
 
-\item{cpuec}{the column name of the column containng the cpue data}
+\item{cpue}{the column name of the column containng the cpue data}
 }
 \value{
 a matrix of class 'spmdat', which has the correct formatting for

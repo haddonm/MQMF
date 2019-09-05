@@ -261,7 +261,7 @@ getrmse <- function(indat,invar="cpue",inyr="year"){
 #'     with those column headings.
 #' @param year the column name of the column containng the years
 #' @param catch the column name of the column containng the catch data
-#' @param cpuec the column name of the column containng the cpue data
+#' @param cpue the column name of the column containng the cpue data
 #'
 #' @return a matrix of class 'spmdat', which has the correct formatting for
 #'     use with the spm related functions in simpleSA

@@ -4,12 +4,12 @@
 \alias{halftable}
 \title{halftable halves the height of a tall narrow data.frame}
 \usage{
-halftable(inmat, yearcol = "Year", subdiv = 3)
+halftable(inmat, yearcol = "year", subdiv = 3)
 }
 \arguments{
 \item{inmat}{the data.frame to be subdivided}
 
-\item{yearcol}{the column name of the year field}
+\item{yearcol}{the column name of the year field default="year"}
 
 \item{subdiv}{the number of times the data.frame should be subdivided;
 the default is 3 but the numbers can only be 2 or 3.}

@@ -29,7 +29,11 @@ invisibly returns a matrix of year, nt, and nt1
 discretelogistic is an implementation of example box 2.2 
     from the the Excel version of MQMF. It enables the exploration of 
     the dynamics of the Discrete logistic model, based around the 
-    classical Schaefer model. Setting the r parameter to <= 1.0,
+    classical Schaefer model. 
+    
+    The time series nature of population growth is clear from 
+    the fatc that Nt+1 is a function of Nt. One can expect serial
+    correlation. Setting the r parameter to <= 1.0,
     would generate monotonically damped equilibria. r values between 
     1 < r < 2.03 would generate damped oscillatory equilibria, r 
     values from 2.03 < r < 2.43 should generate stable limit cycles 

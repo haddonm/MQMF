@@ -362,7 +362,7 @@ getvector <- function(indat,locate,sep=",") { # indat=dat; locate=pick+2;sep=","
 #'     index.
 #'
 #' @param inmat the data.frame to be subdivided
-#' @param yearcol the column name of the year field
+#' @param yearcol the column name of the year field default="year"
 #' @param subdiv the number of times the data.frame should be subdivided;
 #'     the default is 3 but the numbers can only be 2 or 3.
 #'
@@ -380,7 +380,7 @@ getvector <- function(indat,locate,sep=",") { # indat=dat; locate=pick+2;sep=","
 #' x1[21,"V1"] <- 2006
 #' halftable(x1,yearcol="V1",subdiv=3)
 #' }
-halftable <- function(inmat,yearcol="Year",subdiv=3) {
+halftable <- function(inmat,yearcol="year",subdiv=3) {
    if (!(subdiv %in% c(2,3))) stop("\n subdiv must be 2 or 3 \n")
    numrow <- dim(inmat)[1]
    numcol <- dim(inmat)[2]
