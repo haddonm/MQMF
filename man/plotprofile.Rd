@@ -8,7 +8,7 @@ plotprofile(prof, var, digit = c(3, 3, 3), xlabel = var,
   ylabel = "-ve Log-Likelihood", like = "-veLL", defpar = TRUE)
 }
 \arguments{
-\item{prof}{the results from te elikelihood profile calculations. 
+\item{prof}{the results from the likelihood profile calculations. 
 This matrix should include, as a minimum, the fixed variable 
 of interest and the matching -ve log-likelihood in named 
 columns.}
@@ -43,7 +43,9 @@ plotprofile simplifies plotting out the likelihood
     identifying the variable name against which to plot the 
     likelihood. Identifying the name of the -ve log-likelihood 
     column. Facilities are provided for defining the x and y axis 
-    labels
+    labels. We need to use the function which.closest because we
+    use a sequence of parameter values so an exact match would be
+    highly unlikely.
 }
 \examples{
 \dontrun{

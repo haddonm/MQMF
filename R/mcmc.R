@@ -35,23 +35,30 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #' @description do_MCMC conducts a Gibbs within Metropolis algorithm. One
 #'    can define the number of chains, the burnin before candidate
 #'    parameter vectors and associated probabilities are stored, the total
-#'    number of candidate vectors to keep and the step between accepting
-#'    a result into the posterior. One needs to input three functions: 1)
-#'    infunk to calculate the likelihoods, 2) calcpred used within infunk
-#'    to calculate the predicted values,used to compare with the observed
-#'    (found in obsdat), and 3) priorcalc used to calculate the prior
-#'    probabilities of the various parameters in each trial. N * step
-#'    iterations are made in total although only N are stored. The jumping
+#'    number of candidate vectors to keep and the step or thinning rate
+#'    between accepting a result into the Markov Chain. One needs to 
+#'    input three functions: 1) infunk to calculate the likelihoods, 
+#'    2) calcpred used within infunk to calculate the predicted values
+#'    used to compare with the observed (found in obsdat), and 
+#'    3) priorcalc used to calculate the prior probabilities of the 
+#'    various parameters in each trial. N * thinstep iterations are made 
+#'    in total although only N are stored. The jumping
 #'    function uses random normal deviates (mean=0, sd=1) to combine with
 #'    each parameter value (after multiplication by the specific scaling
 #'    factor held in scales). Determination of suitable scaling values
-#'    is generally done empirically, perhaps by trailing a small number of
-#'    iterations to begin with. Multiple chains would be usual and the 
-#'    thinstep would be larger eg. 128, 256, or 512, but it would take 8, 
-#'    16, or 32 times longer. The scales are usually expirementally set
-#'    to otain an acceptance rate between 20 - 40%. It is also usual to
-#'    run numerous diagnostic plots on th eoutputs to ensure convergence
-#'    on the final stationary distribution.
+#'    is generally done empirically, perhaps by trialing a small number 
+#'    of iterations to begin with. Multiple chains would be usual and 
+#'    the thinstep would be larger eg. 128, 256, or 512, but it would 
+#'    take 8, 16, or 32 times longer. The scales are usually 
+#'    expirementally set to otain an acceptance rate between 20 - 40%. 
+#'    It is also usual to run numerous diagnostic plots on th eoutputs 
+#'    to ensure convergence on the final stationary distribution. There 
+#'    are three main loops: 1) total number of iterations N * thinstep,
+#'    2) thinstep/(number of parameters) so that at least all parameters 
+#'    are stepped through at least once (=thinstep  = np) before any 
+#'    combinations are considered for acceptance, this means that the
+#'    true thinning rate is thinstep/np, and 3) the number of parameters
+#'    loop that steps through the np parameters varying each one.
 #'
 #' @param chains the number of independent MCMC chains produced
 #' @param burnin the number of steps made before candidate parameter
@@ -97,49 +104,49 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #'  plot1(1:N,out[,1],ylabel="r",defpar=FALSE)
 #'  plot1(1:N,out[,2],ylabel="K",defpar=FALSE)
 #' }
+# chains=chains;burnin=0;N=50;thinstep=8;inpar=inpar;infunk=negLL;calcpred=simpspm
+# calcdat=fish;obsdat=log(fish$cpue);priorcalc=calcprior;scales=scales
 do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
                     obsdat,priorcalc,scales,...) {
-   totN <- N + burnin
-   result <- vector("list",chains)
-   for (ch in 1:chains) {
-      param <- inpar
+   totN <- N + burnin   # total number of replicate steps
+   result <- vector("list",chains) # to store all results
+   for (ch in 1:chains) { 
+      param <- inpar # initiate the chain from here to next for loop
       np <- length(param)  # Number of parameters
+      if (ch > 1) param <- param + (rnorm(np) * scales) #change start pt
       if ((thinstep %% np) != 0)  # thinstep must be divisible by np
          stop("Thinning step must be a multiple of number of parameters")
       stepnp <- thinstep/np
-      nRand <- np * thinstep #Number of random values for one thinstep
       posterior <- matrix(0,nrow=totN,ncol=(np+1))
       colnames(posterior) <- c("r","K","Binit","sigma","Post")
       arate <- numeric(np) # to store acceptance rate
-      frate <- numeric(np)
       func0 <- exp(-infunk(param,calcpred,calcdat,obsdat,...) 
-                   + priorcalc(np,N))
-      posterior[1,] <- c(exp(param),func0)
-      for (iter in 2:totN) {  # iter = 1
-         randinc <-  matrix(rnorm(nRand,mean=0,sd=1),nrow=thinstep,ncol=np)
+                   + priorcalc(np,N)) #back transform log-likelihoods 
+      posterior[1,] <- c(exp(param),func0) # start the chain
+      for (iter in 2:totN) {  # Generate the Markov Chain
+         randinc <-  matrix(rnorm(thinstep,mean=0,sd=1),nrow=stepnp,ncol=np)
          for (i in 1:np) randinc[,i] <- randinc[,i] * scales[i]
          for (st in 1:stepnp) {
             uniform <- runif(np)
-            for (i in 1:np) {       # loop through parameters
-               oldpar <- param[i]
+            for (i in 1:np) {      # loop through parameters
+               oldpar <- param[i]  # incrementing them one a at time
                param[i] <- param[i] + randinc[st,i]
                func1 <- exp(-infunk(param,calcpred,calcdat,obsdat,...) 
                             + priorcalc(np,N)) 
-               if (func1/func0 > uniform[i]) { #
+               if (func1/func0 > uniform[i]) { # Accept 
                   func0 = func1
                   arate[i] = arate[i] + 1
-               } else {
+               } else {    # Reject
                   param[i] <- oldpar
-                  frate[i] <- frate[i] + 1
                }
             }    # end of parameter loop
          } # end of thinstep loop
          posterior[iter,] <- c(exp(param),func0)
-      }
-      posterior <- posterior[(burnin+1):totN,]
+      } # end of Markov Chain generation; now remove burn-in and rescale 
+      posterior <- posterior[(burnin+1):totN,] # to a post probability
       posterior[,"Post"] <- posterior[,"Post"]/sum(posterior[,"Post"])
       result[[ch]] <- posterior
    } # end of chains loop
-   return(list(result=result,arate=arate/(N*thinstep/np),
-               frate=frate/(N*thinstep/np)))
+   P_arate=arate/((N+burnin-1)*thinstep/np)
+   return(list(result=result,arate=P_arate,frate=1-P_arate))
 } # end of do_MCMC

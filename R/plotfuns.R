@@ -499,9 +499,11 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
 #'     identifying the variable name against which to plot the 
 #'     likelihood. Identifying the name of the -ve log-likelihood 
 #'     column. Facilities are provided for defining the x and y axis 
-#'     labels
+#'     labels. We need to use the function which.closest because we
+#'     use a sequence of parameter values so an exact match would be
+#'     highly unlikely.
 #'
-#' @param prof the results from te elikelihood profile calculations. 
+#' @param prof the results from the likelihood profile calculations. 
 #'     This matrix should include, as a minimum, the fixed variable 
 #'     of interest and the matching -ve log-likelihood in named 
 #'     columns.

@@ -47,23 +47,30 @@ a list of the result chains, the acceptance and rejection rates
 do_MCMC conducts a Gibbs within Metropolis algorithm. One
    can define the number of chains, the burnin before candidate
    parameter vectors and associated probabilities are stored, the total
-   number of candidate vectors to keep and the step between accepting
-   a result into the posterior. One needs to input three functions: 1)
-   infunk to calculate the likelihoods, 2) calcpred used within infunk
-   to calculate the predicted values,used to compare with the observed
-   (found in obsdat), and 3) priorcalc used to calculate the prior
-   probabilities of the various parameters in each trial. N * step
-   iterations are made in total although only N are stored. The jumping
+   number of candidate vectors to keep and the step or thinning rate
+   between accepting a result into the Markov Chain. One needs to 
+   input three functions: 1) infunk to calculate the likelihoods, 
+   2) calcpred used within infunk to calculate the predicted values
+   used to compare with the observed (found in obsdat), and 
+   3) priorcalc used to calculate the prior probabilities of the 
+   various parameters in each trial. N * thinstep iterations are made 
+   in total although only N are stored. The jumping
    function uses random normal deviates (mean=0, sd=1) to combine with
    each parameter value (after multiplication by the specific scaling
    factor held in scales). Determination of suitable scaling values
-   is generally done empirically, perhaps by trailing a small number of
-   iterations to begin with. Multiple chains would be usual and the 
-   thinstep would be larger eg. 128, 256, or 512, but it would take 8, 
-   16, or 32 times longer. The scales are usually expirementally set
-   to otain an acceptance rate between 20 - 40%. It is also usual to
-   run numerous diagnostic plots on th eoutputs to ensure convergence
-   on the final stationary distribution.
+   is generally done empirically, perhaps by trialing a small number 
+   of iterations to begin with. Multiple chains would be usual and 
+   the thinstep would be larger eg. 128, 256, or 512, but it would 
+   take 8, 16, or 32 times longer. The scales are usually 
+   expirementally set to otain an acceptance rate between 20 - 40%. 
+   It is also usual to run numerous diagnostic plots on th eoutputs 
+   to ensure convergence on the final stationary distribution. There 
+   are three main loops: 1) total number of iterations N * thinstep,
+   2) thinstep/(number of parameters) so that at least all parameters 
+   are stepped through at least once (=thinstep  = np) before any 
+   combinations are considered for acceptance, this means that the
+   true thinning rate is thinstep/np, and 3) the number of parameters
+   loop that steps through the np parameters varying each one.
 }
 \examples{
 \dontrun{

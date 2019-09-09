@@ -2,7 +2,7 @@
 % Please edit documentation in R/fisheries.r
 \name{simpspmM}
 \alias{simpspmM}
-\title{simpspmM simply calculates the predicted CE for an SPM}
+\title{simpspmM calculates the predicted CE for an SPM}
 \usage{
 simpspmM(par, indat, schaefer = TRUE, year = "year", cats = "catch",
   index = "cpue")

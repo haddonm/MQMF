@@ -566,7 +566,7 @@ simpspm <- function(pars, indat,schaefer=TRUE,
   return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
 } # end of simpspm generates log-predicted cpue
 
-#' @title simpspmM simply calculates the predicted CE for an SPM
+#' @title simpspmM calculates the predicted CE for an SPM
 #'
 #' @description simpspmM calculates the predicted CPUE for an SPM model. It
 #'     assumes that there is a variable called 'p' in the global environment
