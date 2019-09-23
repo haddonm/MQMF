@@ -111,6 +111,8 @@ The MQMF package provides a set of functions that
   \item{tigers}{ A dataset from Penn and Caputi, 1986, containing the
       stock recruitment data for the fiurst example of fitting a
       model to data using Log-Normal Likelihoods}
+  \item{minnow}{a dataset of weeks vs lengths of minnows for use with
+      fitting seasonal growth curves and growth curves}
 }
 }
 

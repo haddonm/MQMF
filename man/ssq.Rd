@@ -4,7 +4,7 @@
 \alias{ssq}
 \title{ssq a generalized function for summing squared residuals}
 \usage{
-ssq(par, funk, independent, observed)
+ssq(par, funk, independent, observed, ...)
 }
 \arguments{
 \item{par}{a vector of parameters used by funk}
@@ -17,6 +17,9 @@ predicted values to compare with the dep values}
 dependent.}
 
 \item{observed}{a vector containing the observed data (y-axis)}
+
+\item{...}{required to allow funk to access its other parameters 
+without having to explicitly declare them in ssq}
 }
 \value{
 a single number (scaler) that is the sum of squared
@@ -34,6 +37,8 @@ ssq is a generalized function for summing squared
 }
 \examples{
 \dontrun{
-   print("an example being developed")
+  data(minnow)
+  pars <- c(89, 0.1,-13)  # ssq = 83477.84
+  ssq(pars,vB,independent=minnow$week,observed=minnow$length)
 }
 }

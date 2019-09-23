@@ -17,8 +17,8 @@
 fishdat
 }
 \description{
-A dataset containing the fish data.frame, the glb list, and
-    the props data.frame set up ready for use with simpleSA. In 
+A dataset containing the fish data.frame, the glb list, 
+    and the props data.frame set up ready for use with simpleSA. In 
     particular it can be used with fitASPM, fitSPM (though it only 
     provides a very poor fit), run_cMSY, and DBSRA.
 }

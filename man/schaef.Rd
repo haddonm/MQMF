@@ -15,15 +15,13 @@
 schaef
 }
 \description{
-schaef is the yellowfin tuna fishery data from Schaefer, 
-    M.B. (1957) A study of the dynamics of the fishery for yellowfin 
-    tuna in the Eastern Tropical Pacific Ocean. _Bulletin, Inter-American
-    Tropical Tuna Commission_ __2__: 247-285. It contains the year,
-    the catch, the effort, and the cpue and was used in one of the first 
-    descriptions of a stock assessment that used a surplus production 
-    model. The catch-per-unit-effort, cpue, is a ratio cpue of the total
-    catch divided by the total effort as thousands of punds per day. 
-    These days such ratios tend not to be used with individual records 
+schaef is yellowfin tuna fishery data from Schaefer
+    (1957) It contains the year, the catch, the effort, and the cpue 
+    and was used in one of the first descriptions of a stock 
+    assessment that used a surplus production model. The catch-per-
+    unit-effort, cpue, is a ratio cpue of the total catch divided by 
+    the total effort as thousands of punds per day. These days such 
+    ratios tend not to be used with individual records 
     for each day's effort being used instead. 
     This does not obscure the variation between different 
     vessels, areas, depths, and seasons. Initial parameter estimates 
@@ -36,5 +34,10 @@ schaef is the yellowfin tuna fishery data from Schaefer,
  data(schaef)
  schaef
 }
+}
+\references{
+Schaefer, M.B. (1957) A study of the dynamics of the 
+    fishery for yellowfin tuna in the Eastern Tropical Pacific Ocean. 
+    Bulletin, Inter-American Tropical Tuna Commission 2: 247-285.
 }
 \keyword{datasets}

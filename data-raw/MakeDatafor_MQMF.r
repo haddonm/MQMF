@@ -1,6 +1,6 @@
 #rm(list=ls())   # Cleanup the R console if required
 # Set up the run ----------
-library(humbleSA)
+
 
 options("show.signif.stars"=FALSE,"stringsAsFactors"=FALSE,
         "max.print"=50000,"width"=240)
@@ -198,16 +198,26 @@ timeser[18:49,c("Yr","obs_cat:_1","obs_cat:_2")]
 
 
 
+# seasonal growth data Pitcher and Macdonald 1973 ----------------------
+getfile <- filename <- "C:/Users/user/Dropbox/rcode/MQMF/data-raw/minnow.csv"
+minnow <- read.csv(getfile,header=TRUE)
+minnow
+class(minnow)
+
+filename <- "C:/Users/user/Dropbox/rcode/MQMF/data-raw/minnow.RData"
+
+save(minnow,file=filename)
 
 
+# abalone  tagging data
 
+infile <- "C:/Users/User/Dropbox/rcode/MQMF/data-raw/blackisland.csv"
+blackisland <- read.csv(infile,header=TRUE)
+blackisland <- droplevels(blackisland[,-c(1,2,3)])
 
-
-
-
-
-
-
-
+colnames(blackisland) <- c("deltat","time1","len1","time2","len2",
+                           "deltal")
+filename <- "C:/Users/User/Dropbox/rcode/MQMF/data-raw/blackisland.RData"
+save(blackisland,file=filename)
 
 

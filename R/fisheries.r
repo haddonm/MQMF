@@ -649,8 +649,9 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #' @param independent a vector containing the independent variable
 #'     (x-axis) upon which the observed variable is assumed to be
 #'     dependent.
-#'
 #' @param observed a vector containing the observed data (y-axis)
+#' @param ...  required to allow funk to access its other parameters 
+#'     without having to explicitly declare them in ssq 
 #'
 #' @return a single number (scaler) that is the sum of squared
 #'     residuals between the dep values and those calculated by funk
@@ -658,9 +659,11 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #'
 #' @examples
 #' \dontrun{
-#'    print("an example being developed")
+#'   data(minnow)
+#'   pars <- c(89, 0.1,-13)  # ssq = 83477.84
+#'   ssq(pars,vB,independent=minnow$week,observed=minnow$length)
 #' }
-ssq <- function(par,funk,independent,observed) {
+ssq <- function(par,funk,independent,observed, ...) {
   predval <- funk(par,independent)
   return(sum((observed - predval)^2,na.rm=TRUE))
 } # end of general ssq

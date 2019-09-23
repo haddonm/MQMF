@@ -6,23 +6,24 @@
 \title{dataspm Three data objects suitable for use with MQMF.}
 \format{A list of three objects
 \describe{
-  \item{fish}{ a data.frame containing Year, Catch, CPUE, SE, Records, 
+  \item{fish}{a data.frame containing Year, Catch, CPUE, SE, Records, 
       and GeoM which is the unstandardized geometric mean CPUE }
-  \item{glb}{ a list of global variables including maxage, M, parameters 
-      for growth, weight-at-age, maturity-at-age, steepness, R0, 
-      selectivity, resilience, number of ages, and the ages themselves.}
+  \item{glb}{a list of global variables including maxage, M, 
+      parameters for growth, weight-at-age, maturity-at-age, 
+      steepness, R0, selectivity, resilience, number of ages, and the 
+      ages themselves.}
   \item{props}{ a data.frame of age, laa, waa, maa, sela, and feca}
 }}
 \usage{
 dataspm
 }
 \description{
-A dataset containing the fish data.frame, the glb list, and 
-    the props data.frame set up ready for use with MQMF. In particular it 
-    can be used with the SPM functions, as well as the ASPM functions. 
-    Initial parameter estimates very close to the optimum values could be
-    param <- log(c(r=0.25,K=5500,Binit=3000,sigma=0.2)) for the 
-    Schaefer model and log(c(r=0.15,K=6500,Binit=3000,sigma=0.2)) for 
-    the Fox model
+A dataset containing the fish data.frame, the glb list, 
+    and the props data.frame set up ready for use with MQMF. In 
+    particular it can be used with the SPM functions, as well as the 
+    ASPM functions. Initial parameter estimates very close to the 
+    optimum values could be param <- log(c(r=0.25,K=5500,Binit=3000,
+    sigma=0.2)) for the Schaefer model and log(c(r=0.15,K=6500,
+    Binit=3000,sigma=0.2)) for the Fox model
 }
 \keyword{datasets}

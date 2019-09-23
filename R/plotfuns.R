@@ -363,6 +363,8 @@ parsyn <- function() {
 #'     used when plotting multiple graphs, perhaps as mfrow=c(2,2)
 #' @param inpch the input character type if using type="p", default=16
 #' @param incol the colour to use for the line or points, default = black
+#' @param ...  required to allow funk to access its other parameters 
+#'     without having to explicitly declare them in plot1
 #'
 #' @return nothing but it does plot a graph and changes the par setting
 #' @export
@@ -373,7 +375,7 @@ parsyn <- function() {
 #'  plot1(x,x,xlabel="x-values",ylabel="yvalues")
 #' }
 plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
-                  maxy=0,defpar=TRUE,inpch=16,incol=1){
+                  maxy=0,defpar=TRUE,inpch=16,incol=1,...){
   if (defpar) {
     par(mfrow = c(1,1), mai = c(0.45,0.45,0.1,0.05),oma = c(0,0,0,0))
     par(cex = cex, mgp = c(1.35, 0.35, 0), font.axis = usefont,
@@ -381,9 +383,8 @@ plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
   }
   if (maxy > 0) ymax <- maxy  else ymax <- getmax(y)
   if (min(y,na.rm=TRUE) < 0.0) ymin <- getmin(y) else ymin <- 0.0
-  addline <- FALSE
-  plot(x,y,type=type,pch=inpch,lwd=2,col=incol,ylim=c(ymin,ymax),yaxs="i",
-       ylab=ylabel,xlab=xlabel,cex=cex,panel.first=grid())
+  plot(x,y,type=type,pch=inpch,lwd=2,col=incol,ylim=c(ymin,ymax),
+       yaxs="i",ylab=ylabel,xlab=xlabel,cex=cex,panel.first=grid(),...)
 } # end of plot1
 
 #' @title plot.dynpop an S3 method for plotting dlpop objects

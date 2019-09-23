@@ -5,7 +5,8 @@
 \title{plot1 a simple way to plot an xy line plot}
 \usage{
 plot1(x, y, xlabel = "", ylabel = "", type = "l", usefont = 7,
-  cex = 0.75, maxy = 0, defpar = TRUE, inpch = 16, incol = 1)
+  cex = 0.75, maxy = 0, defpar = TRUE, inpch = 16, incol = 1,
+  ...)
 }
 \arguments{
 \item{x}{The single vector of x data}
@@ -34,6 +35,9 @@ used when plotting multiple graphs, perhaps as mfrow=c(2,2)}
 \item{inpch}{the input character type if using type="p", default=16}
 
 \item{incol}{the colour to use for the line or points, default = black}
+
+\item{...}{required to allow funk to access its other parameters 
+without having to explicitly declare them in plot1}
 }
 \value{
 nothing but it does plot a graph and changes the par setting

@@ -113,6 +113,8 @@ NULL
 #'   \item{tigers}{ A dataset from Penn and Caputi, 1986, containing the
 #'       stock recruitment data for the fiurst example of fitting a
 #'       model to data using Log-Normal Likelihoods}
+#'   \item{minnow}{a dataset of weeks vs lengths of minnows for use with
+#'       fitting seasonal growth curves and growth curves}
 #' }
 #' @section Vignettes:
 #' To learn more about MQMF, start with the still to be written vignette:
@@ -142,23 +144,53 @@ NULL
 #' }
 "abdat"
 
+#' @title blackisland tagging data from an abalone population
+#'
+#' @description A dataset containing the time1 of tagging, the time2
+#'     of tag return (approximately 1 year between them), the shell 
+#'     length at tagging, len1, and at recapture, len2, with the time
+#'     interval, deltat, and the growth increment, deltal. This data
+#'     can be used to estimate the growth characteristics of abalone
+#'     from the Black Island site, which is on the south west coast of
+#'     Tasmania, Australia. Thanks to Dr Craig Mundy and the abalone 
+#'     team at the Institute of Marine and Antarctic Studies, of the
+#'     University of Tasmania for the use of this data. The time 
+#'     interval between tagging and recapture is 1 year and 1 week,
+#'     1.02 years, which reflects the practical problems of taking a 
+#'     vessel around the bottom of Tasmania, where it is essential to
+#'     wait on suitable weather for such sub-tidal field work.
+#'
+#' @format A data.frame of six columns
+#' \describe{
+#'   \item{deltat}{the time between tagging and recapture, in years}
+#'   \item{time1}{the date at tagging}
+#'   \item{len1}{the shell length when tagged in mm}
+#'   \item{time2}{the date of recapture}
+#'   \item{len2}{the shell length at recapture in mm}
+#'   \item{deltal}{the growth increment between tagging and recapture
+#'                 in mm; there are a few negative values.}
+#' }
+"blackisland"
+
+
 #' @title dataspm Three data objects suitable for use with MQMF.
 #'
-#' @description A dataset containing the fish data.frame, the glb list, and 
-#'     the props data.frame set up ready for use with MQMF. In particular it 
-#'     can be used with the SPM functions, as well as the ASPM functions. 
-#'     Initial parameter estimates very close to the optimum values could be
-#'     param <- log(c(r=0.25,K=5500,Binit=3000,sigma=0.2)) for the 
-#'     Schaefer model and log(c(r=0.15,K=6500,Binit=3000,sigma=0.2)) for 
-#'     the Fox model
+#' @description A dataset containing the fish data.frame, the glb list, 
+#'     and the props data.frame set up ready for use with MQMF. In 
+#'     particular it can be used with the SPM functions, as well as the 
+#'     ASPM functions. Initial parameter estimates very close to the 
+#'     optimum values could be param <- log(c(r=0.25,K=5500,Binit=3000,
+#'     sigma=0.2)) for the Schaefer model and log(c(r=0.15,K=6500,
+#'     Binit=3000,sigma=0.2)) for the Fox model
 #'
 #' @format A list of three objects
 #' \describe{
-#'   \item{fish}{ a data.frame containing Year, Catch, CPUE, SE, Records, 
+#'   \item{fish}{a data.frame containing Year, Catch, CPUE, SE, Records, 
 #'       and GeoM which is the unstandardized geometric mean CPUE }
-#'   \item{glb}{ a list of global variables including maxage, M, parameters 
-#'       for growth, weight-at-age, maturity-at-age, steepness, R0, 
-#'       selectivity, resilience, number of ages, and the ages themselves.}
+#'   \item{glb}{a list of global variables including maxage, M, 
+#'       parameters for growth, weight-at-age, maturity-at-age, 
+#'       steepness, R0, selectivity, resilience, number of ages, and the 
+#'       ages themselves.}
 #'   \item{props}{ a data.frame of age, laa, waa, maa, sela, and feca}
 #' }
 "dataspm"
@@ -166,8 +198,8 @@ NULL
 
 #' @title fishdat Three data objects suitable for use with MQMF.
 #'
-#' @description A dataset containing the fish data.frame, the glb list, and
-#'     the props data.frame set up ready for use with simpleSA. In 
+#' @description A dataset containing the fish data.frame, the glb list, 
+#'     and the props data.frame set up ready for use with simpleSA. In 
 #'     particular it can be used with fitASPM, fitSPM (though it only 
 #'     provides a very poor fit), run_cMSY, and DBSRA.
 #'
@@ -256,6 +288,35 @@ NULL
 #' }
 "LatA"
 
+#' @title minnow is individual growth data for use with growth curves
+#'
+#' @description minnow is a dataset derived from Pitcher & Macdonald 
+#'     (1973) for use when fitting growth curves, especially seasonal 
+#'     growth curves. The data exhibit increases and decreases because 
+#'     these are mean lengths rather than individual measurements 
+#'     (which would be more typically used these days.). The data have 
+#'     been read off the graphs within the paper as it is not reported 
+#'     explicitly and are therefore only approximate, but will do for
+#'     our purposes (but expect different parameters to those shown 
+#'     in the original paper.
+#'
+#' @format A data.frame of length-at-age data
+#' \describe{
+#'   \item{week}{the week of sampling for lengths}
+#'   \item{length}{the mean length in the corresponding week in mm}
+#' }
+#' 
+#' @references Pitcher, T.J., and P.D M. MacDonald. (1973) Two models 
+#'     of seasonal growth. Journal of Applied Ecology 10:599–606.
+#' 
+#' @examples
+#'  \dontrun{
+#'  data(minnow)
+#'  minnow
+#' }
+"minnow"
+
+
 #' @title npf fishery catch data from Northern Prawn Fishery 1970-1992
 #'
 #' @description npf is fishery catch data from Australia's Northern 
@@ -289,35 +350,35 @@ NULL
 "npf"
 
 
-
-
 #' @title plaice data derived from Beverton and Holt, 1957
 #'
-#' @description plaice data including fish, glb, props, agedata, and lendata
-#'     for North sea plaice dervied from tables and the text of the 
-#'     classical Beverton and Holt, 1957, book. Includes age data that is 
-#'     useful for illustratung the catch curves. Much of this data has also 
-#'     been included in the age-structured model described in Haddon, 2011. 
-#'     The sparse fisheries data can be used in an spm analysis but the 
-#'     answers lack robustness and depend very much on the startng values! 
-#'     Try Schaefer log( c(r=2.0,K=6000,Binit=2000,sigma=0.1)) 
-#'     and log( c(r=1.75,K=10000,Binit=2000,sigma=0.2)) for the Fox.
+#' @description plaice data including fish, glb, props, agedata, and 
+#'     lendata for North sea plaice dervied from tables and the text of 
+#'     the classical Beverton and Holt, 1957, book. Includes age data 
+#'     that is useful for illustratung the catch curves. Much of this 
+#'     data has also been included in the age-structured model described 
+#'     in Haddon, 2011. The sparse fisheries data can be used in an spm 
+#'     analysis but the answers lack robustness and depend very much on 
+#'     the startng values! Try Schaefer log( c(r=2.0,K=6000,Binit=2000,
+#'     sigma=0.1)) and log( c(r=1.75,K=10000,Binit=2000,sigma=0.2)) 
+#'     for the Fox.
 #'
-#' @format A list of five objects with only the first four containing data, 
-#'     the lendata only contains formatted data for illustrating that 
-#'     format, it is not real data. The other objects contain real data. 
+#' @format A list of five objects with only the first four containing 
+#'     data, the lendata only contains formatted data for illustrating 
+#'     that format, it is not real data. The other objects contain real 
+#'     data. 
 #' \describe{
-#'   \item{fish}{a data.frame containing year, catch, cpue, SE of the cpue}
+#'   \item{fish}{a data.frame containing year,catch,cpue,SE of the cpue}
 #'   \item{glb}{biological parameters relating to growth, selectivity,
 #'     weight-at-age, steepness, and resilience and spsname }
 #'   \item{props}{ contains six variables ages, laa, waa, maa, sela, and 
 #'     feca, which are all relative to age.}
 #'   \item{agedata}{ a list of 5 objects, yrage - the years in which age 
-#'     data are available, ages - the observed ages, agemax - the maximum 
-#'     age, nage - the number of observed ages, and naa - the numbers-at-age 
-#'     by year}
-#'   \item{lendata}{ a list of 5 objects akin to the agedata object but for
-#'     length data.}
+#'     data are available, ages, the observed ages, agemax, the maximum 
+#'     age, nage - the number of observed ages, and naa, 
+#'     the numbers-at-age by year}
+#'   \item{lendata}{ a list of 5 objects akin to the agedata object but 
+#'     for length data.}
 #' }
 #' @examples
 #'  \dontrun{
@@ -330,15 +391,13 @@ NULL
 
 #' @title schaef is the yellowfin tuna fishery data from Schaefer 1957
 #'
-#' @description schaef is the yellowfin tuna fishery data from Schaefer, 
-#'     M.B. (1957) A study of the dynamics of the fishery for yellowfin 
-#'     tuna in the Eastern Tropical Pacific Ocean. _Bulletin, Inter-American
-#'     Tropical Tuna Commission_ __2__: 247-285. It contains the year,
-#'     the catch, the effort, and the cpue and was used in one of the first 
-#'     descriptions of a stock assessment that used a surplus production 
-#'     model. The catch-per-unit-effort, cpue, is a ratio cpue of the total
-#'     catch divided by the total effort as thousands of punds per day. 
-#'     These days such ratios tend not to be used with individual records 
+#' @description schaef is yellowfin tuna fishery data from Schaefer
+#'     (1957) It contains the year, the catch, the effort, and the cpue 
+#'     and was used in one of the first descriptions of a stock 
+#'     assessment that used a surplus production model. The catch-per-
+#'     unit-effort, cpue, is a ratio cpue of the total catch divided by 
+#'     the total effort as thousands of punds per day. These days such 
+#'     ratios tend not to be used with individual records 
 #'     for each day's effort being used instead. 
 #'     This does not obscure the variation between different 
 #'     vessels, areas, depths, and seasons. Initial parameter estimates 
@@ -353,6 +412,11 @@ NULL
 #'   \item{effort}{ the total effort as standard fishing days}
 #'   \item{cpue}{the catch '000 pounds per standard day, a ratio cpue}
 #' }
+#' 
+#' @references Schaefer, M.B. (1957) A study of the dynamics of the 
+#'     fishery for yellowfin tuna in the Eastern Tropical Pacific Ocean. 
+#'     Bulletin, Inter-American Tropical Tuna Commission 2: 247-285.
+#' 
 #' @examples
 #'  \dontrun{
 #'  data(schaef)
