@@ -8,28 +8,29 @@ negNLP(pars, funk, independent, dependent, initpar = pars,
   notfixed = c(1:length(pars)), ...)
 }
 \arguments{
-\item{pars}{a vector containing the parameters being used in funk, plus
-an extra sigma which is the standard deviation of the normal random
-likelihoods in dnorm}
+\item{pars}{a vector containing the parameters being used in funk, 
+plus an extra sigma which is the standard deviation of the normal 
+random likelihoods in dnorm}
 
-\item{funk}{the function name that calculates the predicted values from
-the independent values}
+\item{funk}{the function name that calculates the predicted values 
+from the independent values}
 
 \item{independent}{the x-axis variable, that which in the model gives 
 rise to the predicted values of the dependent variable}
 
-\item{dependent}{the observed values for comparison with the values that
-the model will predict for each of the independent values.}
+\item{dependent}{the observed values for comparison with the values 
+that the model will predict for each of the independent values.}
 
-\item{initpar}{this defaults to the same as pars - using all parameters}
+\item{initpar}{this defaults to the same as pars using all parameters}
 
-\item{notfixed}{a vector identifying the indices of the parameters to be
-fitted, which also defines those that will be fixed; defaults
-to all parameters. If some need to be kept constant so as to generate
-a likelihood profile then omit their index from 'notfixed'.}
+\item{notfixed}{a vector identifying the indices of the parameters to 
+be fitted, which also defines those that will be fixed; defaults
+to all parameters. If some need to be kept constant so as to 
+generate a likelihood profile then omit their index from 
+'notfixed'.}
 
-\item{...}{required to allow funk to access its other parameters without
-having to explicitly declare them in negLL}
+\item{...}{required to allow funk to access its other parameters if
+required without having to explicitly declare them in negNLP}
 }
 \value{
 the sum of the negative log-likelihoods using a normal PDF

@@ -1,7 +1,7 @@
 Package: MQMF
 Title: Provides R Functions that run the Examples in MQMF
-Version: 0.0.8
-Date: 2019-09-05
+Version: 0.0.9
+Date: 2019-09-24
 Authors@R: person("Malcolm", "Haddon", email = "malcolm@haddon.net.au", role = c("aut", "cre"))
 Maintainer: Malcolm Haddon <malcolm@haddon.net.au>
 Description: Provides R functions that enable the abbreviated and translated

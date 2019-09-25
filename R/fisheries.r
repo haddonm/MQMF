@@ -17,7 +17,7 @@
 #'     at age.
 #' @param Nt The population numbers at the start of time t
 #' @param ages the ages 0:maxage used in the calculations
-#'
+#' 
 #' @return a matrix of numbers-, natural mortality-, and catch-at-age
 #' @export
 #'
@@ -108,6 +108,35 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
   return(invisible(out))
 } # End of discretelogistic generating class dlpop
 
+#' @title fabens calculates predicted growth increment for tagging data
+#' 
+#' @description fabens requires at least two parameters, Linf and K from
+#'     the von Bertalanffy growth curve in a vector, as well as the 
+#'     initial length and the change in time between tag release and 
+#'     recapture. It then calculates the expected growth increment.
+#'
+#' @param par a vector of at least Linf, and K from teh von Bertalanffy 
+#'     growth curve
+#' @param indat the matrix or data.frame of data columns containing at
+#'     least the initial lengths and the deltaT, time intervals between
+#'     tag release and recapture.
+#' @param initL column name of the initial lengths within indat
+#' @param delT column name of the time interval, deltaT, within indat
+#'
+#' @return a vector of predicted growth increments 
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   data(blackisland)
+#'   param <- c(170, 0.3, 4.0) # Linf, K, sigma
+#'   predDL <- fabens(param,blackisland,initL="len1",delT="deltat")
+#'   cbind(blackisland[1:15,"deltal"],predDl[1:15])
+#' }
+fabens <- function(par,indat,initL="len1",delT="deltat") {
+  preddL <- (par[1] - indat[,initL])*(1 - exp(-(par[2] * indat[,delT])))
+  return(preddL)
+}
 
 #' @title Gz calculates predicted Gompertz length at age growth curve
 #'
@@ -130,6 +159,44 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
 #' }
 Gz <- function(p, ages) {
   return(p[1]*exp(-p[2]*exp(p[3]*ages)))
+}
+
+#' @title invl calculates growth increments for the inverse logistic
+#' 
+#' @description invl requires at least three parameters, MaxDL, L50, and
+#'     delta, in a vector, as well as the initial length and the change 
+#'     in time between tag release and recapture. Given those it 
+#'     calculates the expected growth increment according to the inverse
+#'     logistic curve. The parameter delta is equivalent to L95 - L50, 
+#'     the length difference between the length at half MaxDL, and the
+#'     length at 5% of MaxDL.
+#'
+#' @param par a vector of at least Linf, and K from teh von Bertalanffy 
+#'     growth curve
+#' @param indat the matrix or data.frame of data columns containing at
+#'     least the initial lengths and the deltaT, time intervals between
+#'     tag release and recapture.
+#' @param initL column name of the initial lengths within indat
+#' @param delT column name of the time interval, deltaT, within indat
+#'
+#'#' @references Haddon, M., Mundy, C., and D. Tarbath (2008) Using an 
+#'    inverse-logistic model to describe growth increments of blacklip 
+#'    abalone (Haliotis rubra) in Tasmania. Fishery Bulletin 106:58-71
+#'
+#' @return a vector of predicted growth increments 
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   data(blackisland)
+#'   param <- c(25, 130, 35, 3) # MaxDL, L50, delta, sigma
+#'   predDL <- fabens(param,blackisland,initL="len1",delT="deltat")
+#'   cbind(blackisland[1:15,"deltal"],predDl[1:15])
+#' }
+invl <- function(par,indat,initL="len1",delT="deltat") {
+  preddl <- (par[1] * indat[,delT])/
+    (1 + exp(log(19) * (indat[,initL] - par[2])/par[3]))
+  return(preddl)
 }
 
 #' @title logist Logistic selectivity function
@@ -395,22 +462,23 @@ negNLL <- function(pars,funk,independent,observed,...) {
 #'     longer than when using negNL; and that is with either 13 or 1300 
 #'     observations.
 #'
-#' @param pars a vector containing the parameters being used in funk, plus
-#'     an extra sigma which is the standard deviation of the normal random
-#'     likelihoods in dnorm
-#' @param funk the function name that calculates the predicted values from
-#'     the independent values
+#' @param pars a vector containing the parameters being used in funk, 
+#'     plus an extra sigma which is the standard deviation of the normal 
+#'     random likelihoods in dnorm
+#' @param funk the function name that calculates the predicted values 
+#'     from the independent values
 #' @param independent the x-axis variable, that which in the model gives 
 #'     rise to the predicted values of the dependent variable
-#' @param dependent the observed values for comparison with the values that
-#'     the model will predict for each of the independent values.
-#' @param initpar this defaults to the same as pars - using all parameters
-#' @param notfixed a vector identifying the indices of the parameters to be
-#'     fitted, which also defines those that will be fixed; defaults
-#'     to all parameters. If some need to be kept constant so as to generate
-#'     a likelihood profile then omit their index from 'notfixed'.
-#' @param ... required to allow funk to access its other parameters without
-#'     having to explicitly declare them in negLL
+#' @param dependent the observed values for comparison with the values 
+#'     that the model will predict for each of the independent values.
+#' @param initpar this defaults to the same as pars using all parameters
+#' @param notfixed a vector identifying the indices of the parameters to 
+#'     be fitted, which also defines those that will be fixed; defaults
+#'     to all parameters. If some need to be kept constant so as to 
+#'     generate a likelihood profile then omit their index from 
+#'     'notfixed'.
+#' @param ... required to allow funk to access its other parameters if
+#'     required without having to explicitly declare them in negNLP
 #'     
 #' @return the sum of the negative log-likelihoods using a normal PDF
 #' @export
@@ -422,6 +490,44 @@ negNLP <- function(pars,funk,independent,dependent,initpar=pars,
                    notfixed=c(1:length(pars)),...) {
   predobs <- funk(pars,independent,initpar,notfixed,...)
   LL <- -sum(dnorm(dependent,predobs,tail(pars,1),log=T))
+  return(LL)
+}
+
+#' @title negnormL an alternative -log-likelihood for normal errors
+#' 
+#' @description negnormL is an alternative to negNLL to produce
+#'     -ve log-likelihoods for nromal random errors. The two functions
+#'     differ by how they reference the independent and dependent 
+#'     variables. In negnormL only the observed (for comparison with the
+#'     predicted) is identified. This is to allow for different column
+#'     headings in one's data.frames
+#'
+#' @param par  the vector of parameters, with sigma, the standard
+#'     deviation of the normal random deviates at the end.
+#' @param funk the funk needed to generate the predicted values
+#' @param indat the data.frame or matrix containing the obs and the 
+#'     independent variable used by funk
+#' @param obs identifies the column name or column number that contains 
+#'     the observed data for comparison with the predicted from funk
+#' @param ... the standard R for including extra parameters needed by
+#'     funk but without having to be explicitly defined.
+#'
+#' @return the negative log-likelihood, for use in an optimizer, eg nlm
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'  data(blackisland)
+#'  param <- c(Linf=173.65,K=0.2666,sigma=3.6)
+#'  negnormL(par=param,funk=fabens,indat=blackisland,obs="deltal",
+#'           initL="len1",delT="deltat")   # should be 291.6809
+#'  param2 <- c(21.03,130.94,40.65,3.162)  
+#'  negnormL(par=param2,funk=invl,indat=blackisland,obs="deltal",
+#'           initL="len1",delT="deltat")  # should be 277.5663 
+#' }
+negnormL <- function(par,funk,indat,obs="deltal",...) {
+  predobs <- funk(par,indat,...)
+  LL <- -sum(dnorm(indat[,obs],predobs,tail(par,1),log=T))
   return(LL)
 }
 
