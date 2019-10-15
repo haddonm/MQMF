@@ -2,9 +2,9 @@
 % Please edit documentation in R/fisheries.r
 \name{negLL1}
 \alias{negLL1}
-\title{negLL1 calculate log-normal log-likelihoods}
+\title{negLL1 calculate log-normal log-likelihoods with a penalty}
 \usage{
-negLL1(pars, funk, indat, logobs, ...)
+negLL1(pars, funk, logobs, ...)
 }
 \arguments{
 \item{pars}{the log-transformed parameters to be used in the funk for
@@ -13,9 +13,6 @@ observed values will be compared}
 
 \item{funk}{the function used to calculate the log-predicted values of
 whatever variable is being used (eg. cpue, catches, etc.)}
-
-\item{indat}{the data used by funk with pars to calculate the log-
-predicted values.}
 
 \item{logobs}{the observed values log-transformed ready for comparison
 with the log-predicted values from funk and pars.}
@@ -33,13 +30,15 @@ negLL1 calculates log-normal negative log-likelihoods. It
     log-transformed parameters. In addition to estimating the negative 
     log-liklelihoods for log-normally distributed data it also places a 
     penalty on the first parameter if that parameter approaches very 
-    close to zero; see the function penalty0.
+    close to zero; see the function penalty0. With SPM the first 
+    parameter is the population growth rate r, which obviously 
+    should never be negative. The use of penalty0 prevents this.
 }
 \examples{
 \dontrun{
 data(abdat)
 fish <- abdat$fish
 param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
-negLL1(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
+negLL1(pars=param,funk=simpspm,logobs=log(fish[,"cpue"]),indat=fish)
 }
 }

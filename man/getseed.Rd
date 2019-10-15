@@ -10,14 +10,18 @@ getseed()
 a 6 digits integer
 }
 \description{
-getseed generates a random number seed for use within
-    set.seed. It produces a 6 digit integer from the Sys.time. This
-    is effectively what the system does. As the help on set.seed says
-    Initially, there is no seed; a new one is created from the current 
-    time and the process ID when one is required. Here in getseed we
-    do not use the process ID so the process is not identical but this
-    at least allows the set.seed value to be stored should the need to 
-    repeat a set of simulations arise.
+getseed generates a seed for use within set.seed. 
+    It produces up to a 6 digit integer from the Sys.time. This
+    Initially, at the start of a session there is no seed; a new one 
+    is created from the current time and the process ID when one is 
+    first required. Here, in getseed, we do not use the process ID so 
+    the process is not identical but this at least allows the 
+    set.seed value to be stored should the need to repeat a set of 
+    simulations arise. The process generates up to a six digit number
+    it then randomly reorders those digits and that becomes the seed.
+    That way, if you were to call getseed in quick succession the
+    seeds generated should differ even when they are generated close
+    together in time.
 }
 \examples{
 \dontrun{

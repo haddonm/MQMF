@@ -4,22 +4,20 @@
 \alias{ssq}
 \title{ssq a generalized function for summing squared residuals}
 \usage{
-ssq(par, funk, independent, observed, ...)
+ssq(funk, observed, ...)
 }
 \arguments{
-\item{par}{a vector of parameters used by funk}
-
-\item{funk}{a function that uses par and indep to calculate
-predicted values to compare with the dep values}
-
-\item{independent}{a vector containing the independent variable
-(x-axis) upon which the observed variable is assumed to be
-dependent.}
+\item{funk}{a function that uses a parameter vector and vector of
+observations to calculate predicted values, which are compared
+with the observed values to give the ssq and be returned}
 
 \item{observed}{a vector containing the observed data (y-axis)}
 
-\item{...}{required to allow funk to access its other parameters 
-without having to explicitly declare them in ssq}
+\item{...}{required to allow funk to access its parameters and data 
+without having to explicitly declare them in ssq. Note that
+this means inside the ssq function the call to funk also needs
+to have the ellipsis, otherwise it will not be able to see those
+other arguments.}
 }
 \value{
 a single number (scaler) that is the sum of squared
@@ -28,17 +26,23 @@ a single number (scaler) that is the sum of squared
 \description{
 ssq is a generalized function for summing squared
     residuals which is designed for ease of use in nlm (or
-    optim, or nlminb). NAs are removed. It assumes the input of
-    a predefined function 'funk' that will calculate predicted
-    values of a 'dependent' variable from a vector of 'independent'
-    values, for which one has observations. The predicted values
-    are compared with the observed 'dependent data, and the
-    resulting SSQ returned.
+    optim, or nlminb). NAs are removed automatically. It assumes the 
+    input of a predefined function 'funk' that will calculate 
+    predicted values of a 'dependent' variable from a vector of 
+    'independent' or observed values, for which one has observations. 
+    The dependent or predicted values are compared with the observed 
+    or 'independent' data, and the resulting SSQ returned. The use 
+    of ... means this is a very general function but it does mean you 
+    need to be very careful with placement and spelling of the input 
+    variables required by whatever funk you are using. It is
+    always best to explicitly name the arguments although the correct
+    order will also work correctly.
 }
 \examples{
 \dontrun{
   data(minnow)
   pars <- c(89, 0.1,-13)  # ssq = 83477.84
-  ssq(pars,vB,independent=minnow$week,observed=minnow$length)
+  # the use of ... obviously means we need to know the vB arguments
+  ssq(funk=vB,observed=minnow$length,p=pars,ages=minnow$week)
 }
 }

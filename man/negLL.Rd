@@ -4,7 +4,7 @@
 \alias{negLL}
 \title{negLL calculate log-normal log-likelihoods}
 \usage{
-negLL(pars, funk, indat, logobs, ...)
+negLL(pars, funk, logobs, ...)
 }
 \arguments{
 \item{pars}{the log-transformed parameters to be used in the funk for
@@ -14,14 +14,12 @@ observed values will be compared}
 \item{funk}{the function used to calculate the log-predicted values 
 of whatever variable is being used (eg. cpue, catches, etc.)}
 
-\item{indat}{the data used by funk with pars to calculate the log-
-predicted values.}
-
 \item{logobs}{the observed values log-transformed ready for 
 comparison with the log-predicted values from funk and pars.}
 
-\item{...}{required to allow funk to access its other parameters 
-without having to explicitly declare them in negLL}
+\item{...}{required to allow funk to access its other arguments 
+without having to explicitly declare them in negLL. In the 
+example below, indat is passed via the ...}
 }
 \value{
 the negative log-likelihood using log-normal errors.
@@ -40,6 +38,6 @@ negLL calculates log-normal negative log-likelihoods. It
 data(abdat)
 fish <- abdat$fish
 param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
-negLL(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
+negLL(pars=param,funk=simpspm,logobs=log(fish[,"cpue"]),indat=fish)
 }
 }

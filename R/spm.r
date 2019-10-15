@@ -893,6 +893,129 @@ robustSPM <- function(inpar,fish,N=10,scaler=40,console=TRUE,
   return(list(results=ordres,range=bounds,medians=medvalues))
 } # end of robustSPM
 
+#' @title simpspm calculates only the predicted log(CE) for an SPM
+#' 
+#' @description simpspm calculates only the predicted log(CPUE) for a 
+#'     Surplus Production Model (SPM). It sets the Polacheck et al, 1993 
+#'     parameter 'p' depending on the schaefer boolean argument, and 
+#'     this determines the asymmetry of the production curve. Note p is
+#'     set not estimated. If p = 1.0 then the SPM is the Schaefer model, 
+#'     if it is 1e-8 it approximates the Fox model. The output of 
+#'     log(CPUE) is to simplify the use of log-normal residual errors or 
+#'     likelihoods. This function is designed for data consisting of 
+#'     only a single cpue time-series. simpspm must have at least three 
+#'     parameters, including the sigma, even if sum-of-squared residuals 
+#'     is used as a minimizer, then sigma would just float. The column 
+#'     titles for year, catch and cpue are included to facilitate ease
+#'     of use with other data sets.
+#'
+#' @param pars the parameters of the SPM are either c(r,K,Binit,sigma),
+#'     or c(r, K, sigma), the sigma is required in both cases. Binit is 
+#'     required if the fishery data starts after the stock has been
+#'     depleted. Each parameter must be log-transformed for improved 
+#'     model stability and is transformed inside simpspm.
+#' @param indat the data which needs to include year, catch, and cpue. 
+#' @param schaefer a logical value determining whether the spm is to be 
+#'     a simple Schaefer model (p=1) or approximately a Fox model 
+#'     (p=1e-08). The default is TRUE = Schaefer model
+#' @param year the column name within indat containing the years
+#' @param cats the column name within indat containing the catches
+#' @param index the column name within indat containing the cpue.
+#'
+#' @return a vector of length nyrs of log(cpue)
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'  data(abdat)
+#'  fish <- abdat$fish
+#'  param <- log(c(r=0.4,K=9400,Binit=3400,sigma=0.05))
+#'  predCE <- simpspm(pars=param,indat=fish)
+#'  cbind(fish,exp(predCE))
+#' } 
+simpspm <- function(pars, indat,schaefer=TRUE,  
+                    year="year",cats="catch",index="cpue") { 
+  nyrs <- length(indat[,year])
+  biom <- numeric(nyrs+1)
+  catch <- indat[,cats]
+  ep <- exp(pars) # par contains at least log of (r,K, and sigma)
+  biom[1] <- ep[2]  
+  if (length(pars) > 3) biom[1] <- ep[3] # Binit should be before sigma
+  #p is the location of mode parameter 1 = Schaefer, 1e-8 ~ Fox model
+  if(schaefer) p <- 1 else p <- 1e-8
+  for (yr in 1:nyrs) { # fill biom using Bt as an interim step
+    Bt <- biom[yr]  # avoid negative biomass using a max statement
+    biom[yr+1] <- max(Bt + ((ep[1]/p)*Bt*(1-(Bt/ep[2])^p)-catch[yr]),40)
+  }
+  pick <- which(indat[,index] > 0)
+  qval <- exp(mean(log(indat[pick,index]/biom[pick])))
+  return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
+} # end of simpspm generates log-predicted cpue
+
+#' @title simpspmM calculates the predicted CE for an SPM
+#'
+#' @description simpspmM calculates the predicted CPUE for an SPM model. It
+#'     assumes that there is a variable called 'p' in the global environment
+#'     and this 'p' variable determines the asymmetry of the production 
+#'     curve. If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 
+#'     it approximates the Fox model.
+#'
+#' @param par the parameters of the SPM = r, K, a q for each column of cpue,
+#'     a sigma for each cpue, and Binit if fishery depleted to start with. 
+#'     Each parameter is in log space and is transformed inside simpspmM
+#' @param indat the data which needs to include year, catch, and cpue. The
+#'    latter should have a separate column for each fleet, with a column 
+#'    name beginning with cpue or whatever name you put in index (see below) 
+#'    for example cpue1, cpue2,etc.
+#' @param schaefer a logical value determining whether the spm is to be a
+#'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
+#'     The default is TRUE
+#' @param year the column name within indat containing the years
+#' @param cats the cloumn name within indat containing the catches
+#' @param index the prefix in the column names given to the indices of 
+#'     relative abundance used, perhaps 'cpue' as in cpueTW, cpueAL, etc. 
+#'     grep is used to search for columns containing this prefix to 
+#'     identify whether there are more than one column of cpue data.
+#'
+#' @return a vector or matrix of nyrs of the predicted CPUE
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' data(dataspm)
+#' fish <- dataspm$fish
+#' fish
+#' colnames(fish) <- tolower(colnames(fish))
+#' pars <- c(r=0.242,K=5170,Binit=2840)
+#' predCE <- simpspmM(pars,fish)
+#' cbind(fish[,"year"],fish[,"cpue"],predCE)
+#' }
+simpspmM <- function(par,indat,schaefer=TRUE,
+                     year="year",cats="catch",index="cpue") {
+  
+  celoc <- grep(index,colnames(indat))
+  nce <- length(celoc)
+  npar <- 2 + nce + nce   # r + K + nce_sigma + nce_q
+  nyrs <- length(indat[,"year"])
+  biom <- numeric(nyrs+1)
+  catch <- indat[,cats]
+  predCE <- matrix(NA,nrow=nyrs,ncol=nce)
+  r <- exp(par[1])
+  K <- exp(par[2])
+  biom[1] <- K
+  if (length(par) > npar) biom[1] <- exp(par[npar+1]) 
+  if(schaefer) p <- 1 else p <- 1e-8
+  for (loc in 1:nyrs) {
+    Bt <- biom[loc]
+    biom[loc+1] <- max(Bt + ((r/p)*Bt*(1-(Bt/K)^p)-catch[loc]),40)
+  }
+  for (i in 1:nce) {
+    pick <- which(indat[,celoc[i]] > 0)
+    qval <- exp(mean(log(indat[pick,celoc[i]]/biom[pick])))
+    predCE[pick,i] <- biom[pick] * qval
+  }
+  return(predCE)
+} # end of simpspmM
 
 #' @title simpspmO simply calculates the predicted CE for an SPM
 #'
@@ -1567,36 +1690,6 @@ spmprojDet <- function(spmobj,projcatch,projyr=10,plotout=FALSE,useft=7) {
   answer <- list(biom=biom,predCE=predCE,projyear=yrsp)
   return(answer)
 } # end spmprojDet
-
-#' @title ssqL a function for summing log-transformed squared residuals
-#'
-#' @description ssqL is a generalized function for summing squared
-#'     residuals which is designed for ease of use in optim or nlm, etc.
-#'     This contrasts with ssq in that it estimates log-transformed
-#'     data and predicted values
-#'
-#' @param inp a vector of parameters used by the input function 'funk'
-#' @param indat the data set containing the 'year', 'catch', and 'cpue'
-#' @param callfun the function that calculates the predicted values from
-#'    the input data
-#' @return a single number (scaler) that is the sum of squared
-#'     residuals between the obs cpue and those calculated by infun
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' data(dataspm)
-#' fish <- dataspm$fish
-#' fish
-#' colnames(fish) <- tolower(colnames(fish))
-#' pars <- c(r=0.2,K=6000,Binit=2800)
-#' ssq(pars,fish,simpfox)  # should be 1.713938
-#' ssq(pars,fish,simpspm)  # should be 0.8856442
-#' }
-ssqL <- function(inp,indat,callfun) {  # indep=age; dep=length
-   pred <- callfun(inp,indat)  # infun will be simpspm or simpfox
-   return(sum((log(indat[,"cpue"]) - log(pred))^2,na.rm=TRUE))
-} # end of general ssqL
 
 #' @title summspm extracts critical statistics from output of plotModel
 #'

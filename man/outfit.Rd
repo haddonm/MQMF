@@ -4,17 +4,20 @@
 \alias{outfit}
 \title{outfit tidy print of output from optim, nlminb, or nlm}
 \usage{
-outfit(inopt, backtransform = TRUE, digits = 5)
+outfit(inopt, backtran = TRUE, digits = 5, title = "")
 }
 \arguments{
 \item{inopt}{the list object output by nlm, nlminb, or optim}
 
-\item{backtransform}{a logical default = TRUE If TRUE it assumes
+\item{backtran}{a logical default = TRUE If TRUE it assumes
 that the parameters have been log-transformed for stability
 and need back-transforming}
 
 \item{digits}{the number of digits to round the backtransformed 
 parameters. defaults to 5.}
+
+\item{title}{character string used to label the output if desired,
+default = empty charcter string}
 }
 \value{
 nothing but it does print the list to the console tidily

@@ -4,10 +4,10 @@
 \alias{vB}
 \title{vB calculates the predicted von Bertalanffy length at age}
 \usage{
-vB(par, ages)
+vB(p, ages)
 }
 \arguments{
-\item{par}{is a vector the first three cells of which are Linf, K, and t0
+\item{p}{is a vector the first three cells of which are Linf, K, and t0
 for the vB curve.}
 
 \item{ages}{is a vector of ages; could be a single number}

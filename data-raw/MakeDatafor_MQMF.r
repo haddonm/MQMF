@@ -209,7 +209,7 @@ filename <- "C:/Users/user/Dropbox/rcode/MQMF/data-raw/minnow.RData"
 save(minnow,file=filename)
 
 
-# abalone  tagging data
+# abalone tagging data ------------------------------------------------
 
 infile <- "C:/Users/User/Dropbox/rcode/MQMF/data-raw/blackisland.csv"
 blackisland <- read.csv(infile,header=TRUE)
@@ -219,5 +219,46 @@ colnames(blackisland) <- c("deltat","time1","len1","time2","len2",
                            "deltal")
 filename <- "C:/Users/User/Dropbox/rcode/MQMF/data-raw/blackisland.RData"
 save(blackisland,file=filename)
+
+# abalone modal progression ------------------------------------------
+# for May 18 1994
+
+infile <- "C:/Users/User/Dropbox/rcode/MQMF/data-raw/hopeisland940518.csv"
+hopeisland <- read.csv(infile,header=TRUE)
+
+ab <- trunc(hopeisland[,1]/2) * 2
+
+
+
+plotprep(cex=0.9,newdev=FALSE)
+outh <- inthist(ab,col="red",border="black",width=1.5,xaxis=TRUE,inc=2,
+                xlabel="Shell Length mm",ylabel="Frequency")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

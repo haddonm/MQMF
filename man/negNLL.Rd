@@ -4,42 +4,44 @@
 \alias{negNLL}
 \title{negNLL  -ve log-likelihood for normally distributed variables}
 \usage{
-negNLL(pars, funk, independent, observed, ...)
+negNLL(pars, funk, observed, ...)
 }
 \arguments{
-\item{pars}{a vector containing the parameters being used in funk, plus
-an extra sigma which is the standard deviation of the normal random
-likelihoods in dnorm}
+\item{pars}{a vector containing the parameters being used in funk, 
+plus the sigma, which is the standard deviation of the normal 
+random likelihoods in dnorm, an extra estimated parameter.
+Because negNLL refers explicitly to sigma, which must be the 
+last parameter in the vector, it must be listed in the arguments.}
 
-\item{funk}{the function name that calculates the predicted values from
-the independent values}
+\item{funk}{the function name that calculates the predicted values 
+from the independent values passed using the ellipsis.}
 
-\item{independent}{the x-axis variable, which in the model gives rise
-to the predicted values to compare with observed 'dependent' variable}
+\item{observed}{the observed values of the variable that the model 
+will predict to compare with each of the input observed values.}
 
-\item{observed}{the observed values of the values that the model will
-predict for each of the independent values.}
-
-\item{...}{required to allow funk to access its other parameters without
-having to explicitly declare them in negNLL}
+\item{...}{required to allow funk to access its other input data
+without having to explicitly declare them in negNLL}
 }
 \value{
 the sum of the negative log-likelihoods using a normal PDF
 }
 \description{
 negNLL - Calculates the negative log-likelihood for
-    normally distributed variables. It assumes the presence of a function
-    'funk' that will calculate predicted values of a 'dependent' variable
-    from a vector of 'independent' values.
-    Using negNL takes approximately 0.4 milliseconds less time than the
-    same analysis conducted using negNLP; this was determined using the
-    microbenchmark package.
+    normally distributed variables. It requires a function, 'funk' 
+    as an argument, that will calculate predicted values of a 
+    variable from a vector of input values. In the example below the
+    predicted values are lengths-at-age and the input data are ages.
+    Only the arguments used within negNLL are listetd explicitly, 
+    which leaves the data required to drive the funk to generate the
+    predicted values for comparison with the observed to be passed 
+    using the ..., so take care with spelling of the variable name
+    required by whatever funk is being used.
 }
 \examples{
 \dontrun{
  data(kimura)
  pars <- c(Linf=56.0,K=0.4,t0=0.2,sigma=1.5)
- negNLL(pars,vB,independent=kimura[,"age"],observed=kimura[,"length"])
+ negNLL(pars,funk=vB,observed=kimura[,"length"],ages=kimura[,"age"])
  # should be 19.20821
 }
 }

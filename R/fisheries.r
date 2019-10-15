@@ -332,12 +332,11 @@ mnnegLL <- function(obs,predf) {
 #'     observed values will be compared
 #' @param funk the function used to calculate the log-predicted values 
 #'     of whatever variable is being used (eg. cpue, catches, etc.)
-#' @param indat the data used by funk with pars to calculate the log-
-#'     predicted values.
 #' @param logobs the observed values log-transformed ready for 
 #'     comparison with the log-predicted values from funk and pars.
-#' @param ... required to allow funk to access its other parameters 
-#'     without having to explicitly declare them in negLL
+#' @param ... required to allow funk to access its other arguments 
+#'     without having to explicitly declare them in negLL. In the 
+#'     example below, indat is passed via the ...
 #'     
 #' @return the negative log-likelihood using log-normal errors.
 #' @export
@@ -347,10 +346,10 @@ mnnegLL <- function(obs,predf) {
 #' data(abdat)
 #' fish <- abdat$fish
 #' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
-#' negLL(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
+#' negLL(pars=param,funk=simpspm,logobs=log(fish[,"cpue"]),indat=fish)
 #' }
-negLL <- function(pars,funk,indat,logobs,...) {
-  logpred <- funk(pars,indat,...)
+negLL <- function(pars,funk,logobs,...) {
+  logpred <- funk(pars,...)
   pick <- which(is.na(logobs))
   if (length(pick) > 0) {
     LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(tail(pars,1)),log=T))
@@ -360,7 +359,7 @@ negLL <- function(pars,funk,indat,logobs,...) {
   return(LL)
 } # end of negLL
 
-#' @title negLL1 calculate log-normal log-likelihoods
+#' @title negLL1 calculate log-normal log-likelihoods with a penalty
 #'
 #' @description negLL1 calculates log-normal negative log-likelihoods. It
 #'     expects the input parameters to be log-transformed, so the funk used
@@ -368,15 +367,15 @@ negLL <- function(pars,funk,indat,logobs,...) {
 #'     log-transformed parameters. In addition to estimating the negative 
 #'     log-liklelihoods for log-normally distributed data it also places a 
 #'     penalty on the first parameter if that parameter approaches very 
-#'     close to zero; see the function penalty0.
+#'     close to zero; see the function penalty0. With SPM the first 
+#'     parameter is the population growth rate r, which obviously 
+#'     should never be negative. The use of penalty0 prevents this.
 #'
 #' @param pars the log-transformed parameters to be used in the funk for
 #'     calculating the log of the predicted values against which the log
 #'     observed values will be compared
 #' @param funk the function used to calculate the log-predicted values of
 #'     whatever variable is being used (eg. cpue, catches, etc.)
-#' @param indat the data used by funk with pars to calculate the log-
-#'     predicted values.
 #' @param logobs the observed values log-transformed ready for comparison
 #'     with the log-predicted values from funk and pars.
 #' @param ... required to allow funk to access its other parameters without
@@ -390,10 +389,10 @@ negLL <- function(pars,funk,indat,logobs,...) {
 #' data(abdat)
 #' fish <- abdat$fish
 #' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
-#' negLL1(pars=param,funk=simpspm,indat=fish,logobs=log(fish[,"cpue"]))
+#' negLL1(pars=param,funk=simpspm,logobs=log(fish[,"cpue"]),indat=fish)
 #' }
-negLL1 <- function(pars,funk,indat,logobs,...) {
-  logpred <- funk(pars,indat,...)
+negLL1 <- function(pars,funk,logobs,...) {
+  logpred <- funk(pars,...)
   pick <- which(is.na(logobs))
   if (length(pick) > 0) {
     LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(tail(pars,1)),log=T))
@@ -408,23 +407,27 @@ negLL1 <- function(pars,funk,indat,logobs,...) {
 #' @title negNLL  -ve log-likelihood for normally distributed variables
 #'
 #' @description negNLL - Calculates the negative log-likelihood for
-#'     normally distributed variables. It assumes the presence of a function
-#'     'funk' that will calculate predicted values of a 'dependent' variable
-#'     from a vector of 'independent' values.
-#'     Using negNL takes approximately 0.4 milliseconds less time than the
-#'     same analysis conducted using negNLP; this was determined using the
-#'     microbenchmark package.
-#' @param pars a vector containing the parameters being used in funk, plus
-#'   an extra sigma which is the standard deviation of the normal random
-#'   likelihoods in dnorm
-#' @param funk the function name that calculates the predicted values from
-#'   the independent values
-#' @param independent the x-axis variable, which in the model gives rise
-#'   to the predicted values to compare with observed 'dependent' variable
-#' @param observed the observed values of the values that the model will
-#'   predict for each of the independent values.
-#' @param ... required to allow funk to access its other parameters without
-#'     having to explicitly declare them in negNLL
+#'     normally distributed variables. It requires a function, 'funk' 
+#'     as an argument, that will calculate predicted values of a 
+#'     variable from a vector of input values. In the example below the
+#'     predicted values are lengths-at-age and the input data are ages.
+#'     Only the arguments used within negNLL are listetd explicitly, 
+#'     which leaves the data required to drive the funk to generate the
+#'     predicted values for comparison with the observed to be passed 
+#'     using the ..., so take care with spelling of the variable name
+#'     required by whatever funk is being used.
+
+#' @param pars a vector containing the parameters being used in funk, 
+#'     plus the sigma, which is the standard deviation of the normal 
+#'     random likelihoods in dnorm, an extra estimated parameter.
+#'     Because negNLL refers explicitly to sigma, which must be the 
+#'     last parameter in the vector, it must be listed in the arguments.
+#' @param funk the function name that calculates the predicted values 
+#'     from the independent values passed using the ellipsis.
+#' @param observed the observed values of the variable that the model 
+#'     will predict to compare with each of the input observed values.
+#' @param ... required to allow funk to access its other input data
+#'     without having to explicitly declare them in negNLL
 #'     
 #' @return the sum of the negative log-likelihoods using a normal PDF
 #' @export
@@ -433,14 +436,14 @@ negLL1 <- function(pars,funk,indat,logobs,...) {
 #' \dontrun{
 #'  data(kimura)
 #'  pars <- c(Linf=56.0,K=0.4,t0=0.2,sigma=1.5)
-#'  negNLL(pars,vB,independent=kimura[,"age"],observed=kimura[,"length"])
+#'  negNLL(pars,funk=vB,observed=kimura[,"length"],ages=kimura[,"age"])
 #'  # should be 19.20821
 #' }
-negNLL <- function(pars,funk,independent,observed,...) {
-  predobs <- funk(pars,independent,...)
+negNLL <- function(pars,funk,observed,...) {
+  predobs <- funk(pars,...)
   LL <- -sum(dnorm(observed,predobs,tail(pars,1),log=T))
   return(LL)
-}
+} # end of negNLL
 
 #' @title negNLP  -ve log-likelihood for normally distributed variables
 #'
@@ -614,150 +617,33 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
 } # end of negLLP
 
 
-#' @title simpspm calculates only the predicted log(CE) for an SPM
-#' 
-#' @description simpspm calculates only the predicted log(CPUE) for an SPM 
-#'     model. It sets the Polacheck et al parameter 'p' depending on the 
-#'     schaefer boolean term, and this determines the asymmetry of the 
-#'     production curve.
-#'     If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 it
-#'     approximates the Fox model. The output of log(CPUE) is to simplify
-#'     the use of log-normal residual errors or likelihoods. This function 
-#'     is designed for data consisting of only a single cpue time-series.
-#'     simpspm must have at least three parameters, including the sigma, 
-#'     even if sum-of-squared residuals is used as a minimizer, then sigma
-#'     would just float.
-#'
-#' @param pars the parameters of the SPM are either c(r, K, Binit, sigma),
-#'     or c(r, K, sigma), the sigma is required in all cases. Binit is 
-#'     required if the fishery data starts after the stock has been
-#'     depleted. Each parameter must be log-transformed for improved model
-#'     stability and is transformed inside simpspm.
-#' @param indat the data which needs to include year, catch, and cpue. 
-#' @param schaefer a logical value determining whether the spm is to be a
-#'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
-#'     The default is TRUE = Schaefer model
-#' @param year the column name within indat containing the years
-#' @param cats the column name within indat containing the catches
-#' @param index the column name within indat containing the cpue.
-#'
-#' @return a vector of length nyrs of log(cpue)
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#'  data(abdat)
-#'  fish <- abdat$fish
-#'  colnames(fish) <- tolower(colnames(fish))
-#'  param <- log(c(r=0.4,K=9400,Binit=3400,sigma=0.05))
-#'  predCE <- simpspm(pars=param,fish)
-#'  cbind(fish,exp(predCE))
-#' } 
-simpspm <- function(pars, indat,schaefer=TRUE,  
-                    year="year",cats="catch",index="cpue") { 
-  nyrs <- length(indat[,year])
-  biom <- numeric(nyrs+1)
-  catch <- indat[,cats]
-  ep <- exp(pars) # par contains at least log of (r,K, and sigma)
-  biom[1] <- ep[2]  
-  if (length(pars) > 3) biom[1] <- ep[3] # Binit should be before sigma
-  #p is the location of mode parameter 1 = Schaefer, 1e-8 ~ Fox model
-  if(schaefer) p <- 1 else p <- 1e-8
-  for (yr in 1:nyrs) { # fill biom using Bt as an interim step
-    Bt <- biom[yr]  # avoid negative biomass using a max statement
-    biom[yr+1] <- max(Bt + ((ep[1]/p)*Bt*(1-(Bt/ep[2])^p)-catch[yr]),40)
-  }
-  pick <- which(indat[,index] > 0)
-  qval <- exp(mean(log(indat[pick,index]/biom[pick])))
-  return(log(biom[1:nyrs] * qval))  # the log of predicted cpue
-} # end of simpspm generates log-predicted cpue
-
-#' @title simpspmM calculates the predicted CE for an SPM
-#'
-#' @description simpspmM calculates the predicted CPUE for an SPM model. It
-#'     assumes that there is a variable called 'p' in the global environment
-#'     and this 'p' variable determines the asymmetry of the production 
-#'     curve. If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 
-#'     it approximates the Fox model.
-#'
-#' @param par the parameters of the SPM = r, K, a q for each column of cpue,
-#'     a sigma for each cpue, and Binit if fishery depleted to start with. 
-#'     Each parameter is in log space and is transformed inside simpspmM
-#' @param indat the data which needs to include year, catch, and cpue. The
-#'    latter should have a separate column for each fleet, with a column 
-#'    name beginning with cpue or whatever name you put in index (see below) 
-#'    for example cpue1, cpue2,etc.
-#' @param schaefer a logical value determining whether the spm is to be a
-#'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
-#'     The default is TRUE
-#' @param year the column name within indat containing the years
-#' @param cats the cloumn name within indat containing the catches
-#' @param index the prefix in the column names given to the indices of 
-#'     relative abundance used, perhaps 'cpue' as in cpueTW, cpueAL, etc. 
-#'     grep is used to search for columns containing this prefix to 
-#'     identify whether there are more than one column of cpue data.
-#'
-#' @return a vector or matrix of nyrs of the predicted CPUE
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' data(dataspm)
-#' fish <- dataspm$fish
-#' fish
-#' colnames(fish) <- tolower(colnames(fish))
-#' pars <- c(r=0.242,K=5170,Binit=2840)
-#' predCE <- simpspmM(pars,fish)
-#' cbind(fish[,"year"],fish[,"cpue"],predCE)
-#' }
-simpspmM <- function(par,indat,schaefer=TRUE,
-                    year="year",cats="catch",index="cpue") {
-
-  celoc <- grep(index,colnames(indat))
-  nce <- length(celoc)
-  npar <- 2 + nce + nce   # r + K + nce_sigma + nce_q
-  nyrs <- length(indat[,"year"])
-  biom <- numeric(nyrs+1)
-  catch <- indat[,cats]
-  predCE <- matrix(NA,nrow=nyrs,ncol=nce)
-  r <- exp(par[1])
-  K <- exp(par[2])
-  biom[1] <- K
-  if (length(par) > npar) biom[1] <- exp(par[npar+1]) 
-  if(schaefer) p <- 1 else p <- 1e-8
-  for (loc in 1:nyrs) {
-    Bt <- biom[loc]
-    biom[loc+1] <- max(Bt + ((r/p)*Bt*(1-(Bt/K)^p)-catch[loc]),40)
-  }
-  for (i in 1:nce) {
-    pick <- which(indat[,celoc[i]] > 0)
-    qval <- exp(mean(log(indat[pick,celoc[i]]/biom[pick])))
-    predCE[pick,i] <- biom[pick] * qval
-  }
-  return(predCE)
-} # end of simpspmM
 
 
 #' @title ssq a generalized function for summing squared residuals
 #'
 #' @description ssq is a generalized function for summing squared
 #'     residuals which is designed for ease of use in nlm (or
-#'     optim, or nlminb). NAs are removed. It assumes the input of
-#'     a predefined function 'funk' that will calculate predicted
-#'     values of a 'dependent' variable from a vector of 'independent'
-#'     values, for which one has observations. The predicted values
-#'     are compared with the observed 'dependent data, and the
-#'     resulting SSQ returned.
+#'     optim, or nlminb). NAs are removed automatically. It assumes the 
+#'     input of a predefined function 'funk' that will calculate 
+#'     predicted values of a 'dependent' variable from a vector of 
+#'     'independent' or observed values, for which one has observations. 
+#'     The dependent or predicted values are compared with the observed 
+#'     or 'independent' data, and the resulting SSQ returned. The use 
+#'     of ... means this is a very general function but it does mean you 
+#'     need to be very careful with placement and spelling of the input 
+#'     variables required by whatever funk you are using. It is
+#'     always best to explicitly name the arguments although the correct
+#'     order will also work correctly.
 #'
-#' @param par a vector of parameters used by funk
-#' @param funk a function that uses par and indep to calculate
-#'     predicted values to compare with the dep values
-#' @param independent a vector containing the independent variable
-#'     (x-axis) upon which the observed variable is assumed to be
-#'     dependent.
+#' @param funk a function that uses a parameter vector and vector of
+#'     observations to calculate predicted values, which are compared
+#'     with the observed values to give the ssq and be returned
 #' @param observed a vector containing the observed data (y-axis)
-#' @param ...  required to allow funk to access its other parameters 
-#'     without having to explicitly declare them in ssq 
+#' @param ...  required to allow funk to access its parameters and data 
+#'     without having to explicitly declare them in ssq. Note that
+#'     this means inside the ssq function the call to funk also needs
+#'     to have the ellipsis, otherwise it will not be able to see those
+#'     other arguments.
 #'
 #' @return a single number (scaler) that is the sum of squared
 #'     residuals between the dep values and those calculated by funk
@@ -767,10 +653,11 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #' \dontrun{
 #'   data(minnow)
 #'   pars <- c(89, 0.1,-13)  # ssq = 83477.84
-#'   ssq(pars,vB,independent=minnow$week,observed=minnow$length)
+#'   # the use of ... obviously means we need to know the vB arguments
+#'   ssq(funk=vB,observed=minnow$length,p=pars,ages=minnow$week)
 #' }
-ssq <- function(par,funk,independent,observed, ...) {
-  predval <- funk(par,independent)
+ssq <- function(funk,observed, ...) {
+  predval <- funk(...)
   return(sum((observed - predval)^2,na.rm=TRUE))
 } # end of general ssq
 
@@ -779,7 +666,7 @@ ssq <- function(par,funk,independent,observed, ...) {
 #'
 #' @description vB calculates length at age for the von Bertalanffy curve.
 #'
-#' @param par is a vector the first three cells of which are Linf, K, and t0
+#' @param p is a vector the first three cells of which are Linf, K, and t0
 #'    for the vB curve.
 #' @param ages is a vector of ages; could be a single number
 #'
@@ -792,8 +679,8 @@ ssq <- function(par,funk,independent,observed, ...) {
 #' pars <- c(Linf=50,K=0.3,t0=-1.0,sigma=1.0) # Linf, K, t0, sigma
 #' cbind(ages,vB(pars,ages))
 #' }
-vB <- function(par,ages) {
-  return(par[1] * (1 - exp(-par[2]*(ages-par[3]))))
+vB <- function(p,ages) {
+  return(p[1] * (1 - exp(-p[2]*(ages-p[3]))))
 }
 
 

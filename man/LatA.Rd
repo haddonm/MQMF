@@ -6,7 +6,9 @@
 \title{LatA Length at age for 576 fish including both males and females.}
 \format{A data frame with 576 rows and 3 variables:
 \describe{
-  \item{Sex}{gender coded as 1 = males and 2 = females}
+  \item{Sex}{gender coded as 1 = males and 2 = females, this is an 
+      unusual coding as very often one finds females=1 and males=2. 
+      This shows that codes can be dangerous so watch out for them}
   \item{Length}{Fork length of the fish, in cms}
   \item{Age}{Estimated age from otolith reading}
 }}

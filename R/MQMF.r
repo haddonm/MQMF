@@ -219,8 +219,9 @@ NULL
 #' @description A dataset containing the invert data.frame as a 31 x 7
 #'     matrix. The invert data.frame has both standardized cpue as
 #'     well as the unstandardized geometric mean cpue, labelled 'geom'.
-#'     There is also columns of the catch, the standard error of the
-#'     standardized cpue (too small to be useful in stock assessments),
+#'     There are also columns of the catch, the standard error of the
+#'     standardized cpue (too small to be useful in stock assessments,
+#'     because the number of observations is large),
 #'     the number of vessels reporting each year, and the number of
 #'     records each year. Very difficult to obtain a plausible solution
 #'     when trying to apply a spm model.
@@ -282,7 +283,9 @@ NULL
 #'
 #' @format A data frame with 576 rows and 3 variables:
 #' \describe{
-#'   \item{Sex}{gender coded as 1 = males and 2 = females}
+#'   \item{Sex}{gender coded as 1 = males and 2 = females, this is an 
+#'       unusual coding as very often one finds females=1 and males=2. 
+#'       This shows that codes can be dangerous so watch out for them}
 #'   \item{Length}{Fork length of the fish, in cms}
 #'   \item{Age}{Estimated age from otolith reading}
 #' }

@@ -237,17 +237,20 @@ getname <- function(x) {
    return((deparse(substitute(x))))
 }
 
-
 #' @title getseed generates a random number seed
 #' 
-#' @description getseed generates a random number seed for use within
-#'     set.seed. It produces a 6 digit integer from the Sys.time. This
-#'     is effectively what the system does. As the help on set.seed says
-#'     Initially, there is no seed; a new one is created from the current 
-#'     time and the process ID when one is required. Here in getseed we
-#'     do not use the process ID so the process is not identical but this
-#'     at least allows the set.seed value to be stored should the need to 
-#'     repeat a set of simulations arise. 
+#' @description getseed generates a seed for use within set.seed. 
+#'     It produces up to a 6 digit integer from the Sys.time. This
+#'     Initially, at the start of a session there is no seed; a new one 
+#'     is created from the current time and the process ID when one is 
+#'     first required. Here, in getseed, we do not use the process ID so 
+#'     the process is not identical but this at least allows the 
+#'     set.seed value to be stored should the need to repeat a set of 
+#'     simulations arise. The process generates up to a six digit number
+#'     it then randomly reorders those digits and that becomes the seed.
+#'     That way, if you were to call getseed in quick succession the
+#'     seeds generated should differ even when they are generated close
+#'     together in time.
 #'
 #' @return  a 6 digits integer
 #' @export
@@ -262,8 +265,14 @@ getname <- function(x) {
 #' }
 getseed <- function() {
   begin <- as.integer(Sys.time())
-  pickseed <- begin %% 1e6
-  return(pickseed)
+  pickseed <- as.character(begin %% 1e6)
+  nc <- nchar(pickseed)
+  pseed <- unlist(strsplit(pickseed,split=character(0)))
+  pseed <- sample(pseed,nc)
+  newseed <- NULL
+  for (i in 1:nc) newseed <- paste0(newseed,pseed[i])
+  newseed <- as.numeric(newseed)
+  return(newseed)
 }
 
 #' @title getsingle extracts a single number from an input line of characters
@@ -499,11 +508,13 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #'     solution
 #'
 #' @param inopt the list object output by nlm, nlminb, or optim
-#' @param backtransform a logical default = TRUE If TRUE it assumes
+#' @param backtran a logical default = TRUE If TRUE it assumes
 #'     that the parameters have been log-transformed for stability
 #'     and need back-transforming
 #' @param digits the number of digits to round the backtransformed 
 #'     parameters. defaults to 5.
+#' @param title character string used to label the output if desired,
+#'     default = empty charcter string
 #'
 #' @return nothing but it does print the list to the console tidily
 #' @export
@@ -521,7 +532,7 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #'  best <- nlm(f=ssq,p=par,typsize=magnitude(par),indat=alldat)
 #'  outfit(best)  # a=1.3134 and b=2.2029 -veLL=571.5804
 #' }
-outfit <- function(inopt,backtransform=TRUE,digits=5){
+outfit <- function(inopt,backtran=TRUE,digits=5,title=""){
    nlmcode <- c("relative gradient close to zero, probably solution.",
                 "repeated iterates in tolerance, probably solution.",
                 paste0("nothing lower than estimate.",
@@ -530,11 +541,11 @@ outfit <- function(inopt,backtransform=TRUE,digits=5){
                 paste0("stepmax exceeded ,5 times. Unbounded or ",
                        "asymptotic below or stepmax too small."))
    if (length(grep("value",names(inopt))) > 0) { # optim
-      cat("optim solution:  \n")
+      cat("optim solution: ", title,"\n")
       cat("minimum     : ",inopt$value,"\n")
       cat("iterations  : ",inopt$counts," iterations, gradient\n")
       cat("code        : ",inopt$convergence,"\n")
-      if (backtransform) {
+      if (backtran) {
         ans <- cbind(par=inopt$par,transpar=round(exp(inopt$par),digits))
       } else {
         ans <- t(inopt$par)
@@ -544,11 +555,11 @@ outfit <- function(inopt,backtransform=TRUE,digits=5){
       cat("message     : ",inopt$message,"\n")
    } # end of optim
    if (length(grep("minimum",names(inopt))) > 0) {  # nlm - preferred
-      cat("nlm solution:  \n")
+      cat("nlm solution: ", title,"\n")
       cat("minimum     : ",inopt$minimum,"\n")
       cat("iterations  : ",inopt$iterations,"\n")
       cat("code        : ",inopt$code,"  ",nlmcode[inopt$code],"\n")
-      if (backtransform) {
+      if (backtran) {
          ans <- cbind(par=inopt$estimate,gradient=inopt$gradient,
                       transpar=round(exp(inopt$estimate),digits))
          } else {
@@ -558,7 +569,7 @@ outfit <- function(inopt,backtransform=TRUE,digits=5){
       print(ans)
    } # end of nlm
    if (length(grep("objective",names(inopt))) > 0) {
-      cat("nlminb solution:  \n")   # nlminb seems to be deprecated
+      cat("nlminb solution: ", title,"\n")   # nlminb seems to be deprecated
       cat("par        : ",inopt$par,"\n")
       cat("minimum    : ",inopt$objective,"\n")
       cat("iterations : ",inopt$iterations,"\n")
