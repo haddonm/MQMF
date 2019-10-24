@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotfuns.R
 \name{addnorm}
 \alias{addnorm}
-\title{addnorm - adds a normal distribution to a histogram of a data set.}
+\title{addnorm adds a normal distribution to a histogram of a data set.}
 \usage{
 addnorm(inhist, xdata, inc = 0.01)
 }

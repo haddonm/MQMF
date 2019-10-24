@@ -2,25 +2,25 @@
 % Please edit documentation in R/plotfuns.R
 \name{addcontours}
 \alias{addcontours}
-\title{addcontours facilitates adding ontours to an xy plot of points}
+\title{addcontours eases adding contours to an xy plot of points}
 \usage{
 addcontours(xval, yval, xrange, yrange, ngrid = 100, contval = c(0.5,
   0.9), lwd = 1, col = 1)
 }
 \arguments{
-\item{xval}{the vector of x-axis values, one halfopf the data pairs}
+\item{xval}{the vector of x-axis values, one half of the data pairs}
 
-\item{yval}{the vector of y-axis values, the other half of plotted data}
+\item{yval}{the vector of y-axis values, the other half of the data}
 
 \item{xrange}{the range of x-axis data included in the graph}
 
 \item{yrange}{the range of y-axis data included in the graph}
 
-\item{ngrid}{the number of subdivisions by hich to split the data along
-each axis; defaults to 100}
+\item{ngrid}{the number of subdivisions by which to split the data 
+along each axis; defaults to 100}
 
-\item{contval}{the contour values, defaults to those containing 50 and
-90 percent i.e. c(0.5, 0.9)}
+\item{contval}{the contour values, defaults to those containing 50 
+and 90 percent i.e. c(0.5, 0.9)}
 
 \item{lwd}{the width of the contour lines, defaults=1}
 
@@ -30,16 +30,16 @@ each axis; defaults to 100}
 nothing but it does add contours to a plot of points
 }
 \description{
-addcontours is used to add contours to a dense plot of xy
-    points such as might be generated when conducting an analysis of the
-    the uncertainty associated with a stock assessment, or other 
-    analysis using a bootstrap, a Bayesian MCMC, or even using 
+addcontours is used to add contours to a dense plot of 
+    xy points such as might be generated when conducting an analysis 
+    of the the uncertainty associated with a stock assessment, or 
+    other analysis using a bootstrap, a Bayesian MCMC, or even using 
     asymptotic errors and sampling from a muti-variate normal. 
-    addcoutours first uses the kde2d function from the MASS package to
-    translate the density of points into 2-D kernal densities, and then 
-    searches through the resulting densities for those points that would
-    identify approximate contours. Finally it calls the contour function
-    to add the identified contours to the xy plot.
+    addcoutours first uses the kde2d function from the MASS package 
+    to translate the density of points into 2-D kernal densities, and 
+    then searches through the resulting densities for those points 
+    that would identify approximate contours. Finally it calls the 
+    contour function to add the identified contours to the xy plot.
 }
 \examples{
 \dontrun{
@@ -48,8 +48,9 @@ addcontours is used to add contours to a dense plot of xy
  data(abdat)
  fish <- abdat$fish
  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
- bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=fish, hessian=TRUE,
-            logobs=log(fish$cpue),typsize=magnitude(param),iterlim=1000)
+ bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=fish, 
+                hessian=TRUE,logobs=log(fish$cpue),
+                typsize=magnitude(param),iterlim=1000)
  optpar <- bestmod$estimate
  vcov <- solve(bestmod$hessian)      # solve inverts matrices
  columns <- c("r","K","Binit","sigma")

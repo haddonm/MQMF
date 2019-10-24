@@ -5,7 +5,7 @@
 \title{plotprep: sets up a window and the par values for plotting}
 \usage{
 plotprep(width = 6, height = 3.6, usefont = 7, cex = 0.75,
-  newdev = TRUE, filename = "", resol = 300)
+  newdev = FALSE, filename = "", resol = 300)
 }
 \arguments{
 \item{width}{defaults to 6 inches = 15.24cm - width of plot}
@@ -14,15 +14,15 @@ plotprep(width = 6, height = 3.6, usefont = 7, cex = 0.75,
 
 \item{usefont}{default=7 (bold Times) 1=sans serif, 2=sans serif bold}
 
-\item{cex}{default=0.75, the size of font used for text within the plots}
+\item{cex}{default=0.75, size of font used for text within the plots}
 
-\item{newdev}{reuse a previously defined graphics device or make a new 
-one; default=TRUE}
+\item{newdev}{reuse a previously defined graphics device or make a 
+new one; default=FALSE}
 
-\item{filename}{default="" ie do not save to a filename. If a filename 
-is defined it creates that file as a png file with resolution resol}
+\item{filename}{default="" ie do not save to a filename. If filename 
+is defined it makes that file as a png file with resolution resol}
 
-\item{resol}{resolution of the png file if one is defined, default=300}
+\item{resol}{resolution of the png file, if defined, default=300}
 }
 \value{
 sets up a graphics device, if needed and sets the default 
@@ -30,17 +30,18 @@ sets up a graphics device, if needed and sets the default
 }
 \description{
 plotprep: sets up a window and the par values for plots.
-   This is simply a utility function to save typing the standard syntax.
-   Some of the defaults can be changed. Typing the name without () will
-   provide a template for modification. If different par values are 
-   wanted then just include a par statement after plotprep()
+   This is simply a utility function to save typing the standard 
+   syntax. Some of the defaults can be changed. Typing the name 
+   without () will provide a template for modification. If different 
+   par values are wanted then just include a par statement after 
+   plotprep()
 }
 \examples{
 \dontrun{
  x <- rnorm(1000,mean=0,sd=1.0)
- plotprep()
+ plotprep(newdev=TRUE)
  hist(x,breaks=30,main="",col=2)
- plotprep(width=6,height=5)
+ plotprep(width=6,height=5,newdeve=FALSE)
  par(mfrow = c(2,1))
  hist(x,breaks=20,main="",col=2)
  hist(x,breaks=30,main="",col=3)

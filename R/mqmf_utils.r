@@ -1,5 +1,55 @@
 
 
+#' @title aicbic returns the AIC and BIC for a given model
+#' 
+#' @description aicbic calculates and returns the AIC and BIC using the
+#'     standard definitions. It defaults to assuming that negative log-
+#'     likelihoods have been used in teh model fitting, but provides the
+#'     option of having used SSQ (set nLL to FALSE). If using SSQ it 
+#'     uses Burnham and Anderson (2002) definition but sets BIC to NA. 
+#'     aicbic can recognize the outputs from optim, nlm, and nlminb.
+#'
+#' @param model the optimum model fitted by either optim, nlm, or nlminb
+#' @param dat the data set used in the modelling or just n the number of
+#'     observations; it can distinguish between them
+#' @param nLL uses negative log-likelihood? default=TRUE
+#'
+#' @return a vector of three numbers, AIC first, then BIC, then negLL or 
+#'     SSQ, depending on nLL, then number of parameters p
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'  data(blackisland)
+#'  param <- c(Linf=170.0,K=0.3,sigma=4.0)
+#'  modelvb <- nlm(f=negnormL,p=param,funk=fabens,indat=blackisland)
+#'  aicbic(modelvb,blackisland)
+#' }
+aicbic <- function(model,dat,nLL=TRUE) {  # model <- modelil; dat=bi
+  if (class(dat) %in% c("matrix","data.frame")) {
+    n <- nrow(dat)
+  } else {
+    n <- dat
+    if (class(n) != "integer")
+      stop("input dat is neither the data used or the number of obs \n")
+  }
+    outputs <- c("value","minimum","objective")
+  pars <- c("par","estimate","par")
+  pick <- match(names(model),outputs)
+  pickmeth <- pick[which(pick > 0)]
+  LL <- model[[outputs[pickmeth]]]
+  npar <- length(model[[pars[pickmeth]]])
+  if (nLL) {
+     aic <- -2.0*(-LL) + (2 * npar)
+     bic <- -2.0*(-LL) + (log(n) * npar)
+     out <- c(aic=aic,bic=bic,negLL=LL,p=npar)
+  } else {
+     aic <- n * (log(LL/n)) + 2.0 * npar
+     bic <- NA
+     out <- c(aic=aic,bic=bic,ssq=LL,p=npar)
+  }
+  return(out)
+} # end of aicbic
 
 #' @title countones used in apply to count the number of ones in a vector
 #'
@@ -449,6 +499,44 @@ iscol <- function(incol="year",inmat) { # incol="ages"; inmat=dat
   if (length(grep(incol,colnames(inmat))) < 1) return(FALSE)
   else return(TRUE)
 }
+
+#' @title likeratio conducts a likelihood ratio test
+#' 
+#' @description likeratio conducts a likelihood ratio test on two
+#'     negative log-likelihoods. It produces the LR plus realted 
+#'     statistics detailing if a significant difference has been found.
+#'     The order in which the log-likelihoods are entered does not 
+#'     matter as that is checked for.
+#'
+#' @param nLL1 the first -ve log-likelihood
+#' @param nLL2 the second -ve log-likelihood 
+#' @param df the number of degrees of freedom difference between the two
+#'     model, a minimum of 1, which is the default.
+#'
+#' @return a vector of the likelihood ratio, the significance of any 
+#'     difference, the minmum difference required for significance, and
+#'     the degrees of freedom.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   one <- 291.6808
+#'   two <- 277.5662
+#'   dof <- 3
+#'   round(likeratio(one,two,dof),8)
+#' }
+likeratio <- function(nLL1,nLL2,df=1) { # nLL1=291.6808; nLL2=277.5662; df=1
+  if (!(nLL1 < nLL2)) {
+    tmp <- nLL1
+    nLL1 <- nLL2
+    nLL2 <- tmp
+  }
+  dif <- -2.0 * (nLL1 - nLL2)
+  signif <- dchisq(dif,df) 
+  mindiff <- qchisq(0.95,df)
+  ans <- c(LR=dif,P=signif,mindif=mindiff,df=df)
+  return(ans)
+} # end of likeratio
 
 #' @title magnitude returns the magnitude of numbers
 #'

@@ -236,19 +236,62 @@ outh <- inthist(ab,col="red",border="black",width=1.5,xaxis=TRUE,inc=2,
 
 
 
+# maturity data --------------------------------------------------------
+
+infile <- "C:/Users/Malcolm/Dropbox/rcode/MQMF/data-raw/tasw.csv"
+tasabd <- read.csv(infile,header=TRUE)
+head(tasabd)
+
+tasab <- tasabd[,-c(1,3,6,7,8,9)]
+head(tasabd)
+tasab <- droplevels(tasabd[-pick,])
+
+pick <- which(tasabd$sit_id == 257)
+tasabd <- droplevels(tasabd[-pick,])
+
+pick <- which(tasab$sit_id == 258)
+tasab[pick,"sit_id"] <- 1
+pick <- which(tasab$sit_id == 288)
+tasab[pick,"sit_id"] <- 2
+
+table(tasabd$sit_id)
+
+head(tasab,25)
+
+table(tasab$shlength,tasab$sex)
+
+tasab <- tasab[order(tasab$sit_id,tasab$shlength),]
+
+colnames(tasab) <- c("site","sex","length","mature")
+
+filename <- "C:/Users/Malcolm/Dropbox/rcode/MQMF/data-raw/tasab.RData"
+save(tasab,file=filename)
 
 
 
+# fit logistic ----------------------------
+p <- tapply(tasab$mature,tasab$length,mean)
+Lp <- as.numeric(names(p))
 
+plotprep(width=7,height=4,newdev=FALSE)
+plot1(Lp,p,type="p",cex=1.0,xlabel="Length mm",
+      ylabel="Proportion Mature")
 
+L <- seq(min(tasab$length),max(tasab$length),1)
 
+tasab$site <- as.factor(tasab$site)
 
-
-
-
-
-
-
+model <- glm(tasab$mature ~ tasab$length,binomial)
+summary(model)
+a <- model$coef[1]
+b <- model$coef[2]
+Lm50 <- -a/b
+interQ <- 2*log(3)/b
+cat(a,b,Lm50,interQ,"\n")
+y <- (exp(a + b * L)/(1+exp(a + b * L)))
+lines(L,y,type="l",lwd=2,col=2)
+abline(v=c(Lm50,(Lm50-interQ/2),(Lm50+interQ/2)),col=c(2,3,3),lwd=c(2,1,1))
+abline(h=c(0.25,0.5,0.75),lwd=1,col=1,lty=3)
 
 
 

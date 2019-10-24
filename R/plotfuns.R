@@ -1,25 +1,25 @@
 
-#' @title addcontours facilitates adding ontours to an xy plot of points
+#' @title addcontours eases adding contours to an xy plot of points
 #' 
-#' @description addcontours is used to add contours to a dense plot of xy
-#'     points such as might be generated when conducting an analysis of the
-#'     the uncertainty associated with a stock assessment, or other 
-#'     analysis using a bootstrap, a Bayesian MCMC, or even using 
+#' @description addcontours is used to add contours to a dense plot of 
+#'     xy points such as might be generated when conducting an analysis 
+#'     of the the uncertainty associated with a stock assessment, or 
+#'     other analysis using a bootstrap, a Bayesian MCMC, or even using 
 #'     asymptotic errors and sampling from a muti-variate normal. 
-#'     addcoutours first uses the kde2d function from the MASS package to
-#'     translate the density of points into 2-D kernal densities, and then 
-#'     searches through the resulting densities for those points that would
-#'     identify approximate contours. Finally it calls the contour function
-#'     to add the identified contours to the xy plot.
+#'     addcoutours first uses the kde2d function from the MASS package 
+#'     to translate the density of points into 2-D kernal densities, and 
+#'     then searches through the resulting densities for those points 
+#'     that would identify approximate contours. Finally it calls the 
+#'     contour function to add the identified contours to the xy plot.
 #'
-#' @param xval the vector of x-axis values, one halfopf the data pairs
-#' @param yval the vector of y-axis values, the other half of plotted data
+#' @param xval the vector of x-axis values, one half of the data pairs
+#' @param yval the vector of y-axis values, the other half of the data
 #' @param xrange the range of x-axis data included in the graph
 #' @param yrange the range of y-axis data included in the graph
-#' @param ngrid the number of subdivisions by hich to split the data along
-#'     each axis; defaults to 100
-#' @param contval the contour values, defaults to those containing 50 and
-#'     90 percent i.e. c(0.5, 0.9) 
+#' @param ngrid the number of subdivisions by which to split the data 
+#'     along each axis; defaults to 100
+#' @param contval the contour values, defaults to those containing 50 
+#'     and 90 percent i.e. c(0.5, 0.9) 
 #' @param lwd the width of the contour lines, defaults=1
 #' @param col the col of the contour lines, default=1
 #'
@@ -33,8 +33,9 @@
 #'  data(abdat)
 #'  fish <- abdat$fish
 #'  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
-#'  bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=fish, hessian=TRUE,
-#'             logobs=log(fish$cpue),typsize=magnitude(param),iterlim=1000)
+#'  bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=fish, 
+#'                 hessian=TRUE,logobs=log(fish$cpue),
+#'                 typsize=magnitude(param),iterlim=1000)
 #'  optpar <- bestmod$estimate
 #'  vcov <- solve(bestmod$hessian)      # solve inverts matrices
 #'  columns <- c("r","K","Binit","sigma")
@@ -84,7 +85,7 @@ addcontours <- function(xval,yval,xrange,yrange,ngrid=100,
 } # end of addcontour
 
 
-#' @title addnorm - adds a normal distribution to a histogram of a data set.
+#' @title addnorm adds a normal distribution to a histogram of a data set.
 #'
 #' @description  addnorm - adds a normal distribution to a histogram of a 
 #'     data set. This is generally to be used to illustrate whether 
@@ -446,20 +447,21 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
 #' @title plotprep: sets up a window and the par values for plotting
 #'
 #' @description plotprep: sets up a window and the par values for plots.
-#'    This is simply a utility function to save typing the standard syntax.
-#'    Some of the defaults can be changed. Typing the name without () will
-#'    provide a template for modification. If different par values are 
-#'    wanted then just include a par statement after plotprep()
+#'    This is simply a utility function to save typing the standard 
+#'    syntax. Some of the defaults can be changed. Typing the name 
+#'    without () will provide a template for modification. If different 
+#'    par values are wanted then just include a par statement after 
+#'    plotprep()
 #'   
 #' @param width defaults to 6 inches = 15.24cm - width of plot
 #' @param height defaults to 3 inches = 7.62cm - height of plot
 #' @param usefont default=7 (bold Times) 1=sans serif, 2=sans serif bold
-#' @param cex default=0.75, the size of font used for text within the plots
-#' @param newdev reuse a previously defined graphics device or make a new 
-#'     one; default=TRUE
-#' @param filename default="" ie do not save to a filename. If a filename 
-#'     is defined it creates that file as a png file with resolution resol
-#' @param resol resolution of the png file if one is defined, default=300
+#' @param cex default=0.75, size of font used for text within the plots
+#' @param newdev reuse a previously defined graphics device or make a 
+#'     new one; default=FALSE
+#' @param filename default="" ie do not save to a filename. If filename 
+#'     is defined it makes that file as a png file with resolution resol
+#' @param resol resolution of the png file, if defined, default=300
 #' 
 #' @return sets up a graphics device, if needed and sets the default 
 #'     plotting par values. This changes the current plotting options! 
@@ -468,15 +470,15 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
 #' @examples
 #' \dontrun{
 #'  x <- rnorm(1000,mean=0,sd=1.0)
-#'  plotprep()
+#'  plotprep(newdev=TRUE)
 #'  hist(x,breaks=30,main="",col=2)
-#'  plotprep(width=6,height=5)
+#'  plotprep(width=6,height=5,newdeve=FALSE)
 #'  par(mfrow = c(2,1))
 #'  hist(x,breaks=20,main="",col=2)
 #'  hist(x,breaks=30,main="",col=3)
 #' }
 plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
-                     newdev=TRUE,filename="",resol=300) {
+                     newdev=FALSE,filename="",resol=300) {
   if  ((names(dev.cur()) != "null device") & (newdev)) 
       suppressWarnings(dev.off())
   lenfile <- nchar(filename)

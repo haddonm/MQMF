@@ -146,15 +146,15 @@ NULL
 
 #' @title blackisland tagging data from an abalone population
 #'
-#' @description A dataset containing the time1 of tagging, the time2
-#'     of tag return (approximately 1 year between them), the shell 
-#'     length at tagging, len1, and at recapture, len2, with the time
-#'     interval, deltat, and the growth increment, deltal. This data
-#'     can be used to estimate the growth characteristics of abalone
-#'     from the Black Island site, which is on the south west coast of
-#'     Tasmania, Australia. Thanks to Dr Craig Mundy and the abalone 
-#'     team at the Institute of Marine and Antarctic Studies, of the
-#'     University of Tasmania for the use of this data. The time 
+#' @description A 108 x 6 dataset containing the time1 of tagging, the 
+#'     time2 of tag return (approximately 1 year between them), the 
+#'     shell length at tagging, len1, and at recapture, len2, with the 
+#'     time interval, deltat, and the growth increment, deltal. This 
+#'     data can be used to estimate the growth characteristics of 
+#'     abalone from the Black Island site, which is on the south west 
+#'     coast of Tasmania, Australia. Thanks to Dr Craig Mundy and the 
+#'     abalone team at the Institute of Marine and Antarctic Studies, of 
+#'     the University of Tasmania for the use of this data. The time 
 #'     interval between tagging and recapture is 1 year and 1 week,
 #'     1.02 years, which reflects the practical problems of taking a 
 #'     vessel around the bottom of Tasmania, where it is essential to
@@ -426,6 +426,31 @@ NULL
 #'  schaef
 #' }
 "schaef"
+
+#' @title tasab is a matrix of typical maturity at length data
+#'
+#' @description tasab is a 715 x 4 matrix of maturity at length data
+#'     for blacklip abalone (Haliotis rubra) from two sites along the 
+#'     Tasmanian west coast. Many thanks to the Institute of Marine and
+#'     Antarctic Science, which is part of the University of Tasmania
+#'     for permission to use this data collected in February in 1995.
+#'     Details, such as site name, accurate location, statistical block,
+#'     year, month, and other details have been omitted for brevity.
+#'
+#' @format A data.frame of maturity at length data
+#' \describe{
+#'   \item{site}{an identifier for the two different sites sampled}
+#'   \item{sex}{I = immature, M = male, F = female}
+#'   \item{length}{the shell length in mm}
+#'   \item{mature}{was the animal mature = 1 or not = 0}
+#' }
+#' @examples
+#'  \dontrun{
+#'  data(tasab)
+#'  head(tasab,20)
+#'  table(tasab$site,tasab$sex)
+#' }
+"tasab"
 
 #' @title tigers is spawning biomass and subsequent recruitment data
 #'

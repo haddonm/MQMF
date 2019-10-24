@@ -239,30 +239,31 @@ logist <- function(inL50,delta,depend,knifeedge=FALSE) {
   return(ans)
 } # end of logist
 
-#' @title MaA alternative logistic function commonly used for maturity
+#' @title mature alternative logistic function commonly used for maturity
 #'
-#' @description MaA a function 1/(1+(1/exp(a + b x depend))) which can
-#'     be expressed as exp(a + b x depend)/(1 + exp(a + b x depend)).
+#' @description mature a function 1/(1+(1/exp(a + b x sizeage))) which can
+#'     be expressed as exp(a + b x sizeage)/(1 + exp(a + b x sizeage)).
 #'     This describes a symmetric logistic curve that has the property
-#'     SM50 = -a/b and the interquartile distance is 2.Ln(3)/b.
+#'     Lm50 = -a/b and the interquartile distance is 2.log(3)/b.
 #'     
-#' @param ina is the intercept of the exponential function
-#' @param inb is the gradient of the exponential function
+#' @param a is the intercept of the exponential function usually -ve
+#' @param b is the gradient of the exponential function
 #' @param depend is a vector of lengths/ages for which the logistic 
 #'     maturity value will be calculated
-#' @return A vector of length(depend) with predicted maturity values
+#' @return A vector of predicted proportion mature for the sizeage
 #'
 #' @export
 #' @examples
 #' a <- -14.383
 #' b <- 0.146017
 #' lens <- seq(2,210,2)
-#' round(MaA(a,b,depend=lens),5) # length based
-#' round(MaA(-2.5,0.95,0:25),5)   # age based
-MaA <- function(ina,inb,depend) {
-  ans <- exp(ina + inb * depend)/(1 + exp(ina + inb * depend))
+#' round(mature(a,b,sizeage=lens),5) # length based
+#' round(mature(-2.5,0.95,0:25),5)   # age based
+mature <- function(a,b,sizeage) {
+  term <- exp(a + b * sizeage)
+  ans <- term/(1 + term)
   return(ans)
-} # end of Maturity at age
+} # end of mature
 
 #' @title mm calculates the predicted Michaelis-Menton length at age
 #'
