@@ -617,8 +617,43 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
   return(LL)
 } # end of negLLP
 
-
-
+#' @title srug is the Schnute and Richards Unified Growth Curve
+#' 
+#' @description srug implements the Schnute and Richards (1990) unified 
+#'     growth curve that can be used to describe fish growth, 
+#'     maturation, and survivorship data. It is a very general curve 
+#'     that generalizes the classical logistic model used for maturity 
+#'     as well the growth models by Gompertz (1825), von Bertalanffy 
+#'     (1938), Richards (1959), Chapman (1961), and Schnute (1981). As
+#'     with any asymmetric, multi-parameter model, it can be hard to 
+#'     obtain a stable fit of this curve to data. Here the model is
+#'     implemented to range between 0 - 1, if you want to use it to 
+#'     describe growth then re-cast the function and add a fifth
+#'     parameter to replace the 1.0 on top of the divisor.
+#'
+#' @param p a vector of four parameters begin Schnute and Richards' 
+#'     a, b, c, and alpha, in that order.
+#' @param sizeage the age or size data used to describe the maturity
+#'     transition.
+#' 
+#' @references Schnute, J.T. and L.J. Richards (1990) A unified approach 
+#'     to the analysis of fish growth, maturity, and survivorship data. 
+#'     _Canadian Journal of Fisheries and Aquatic Science_ __47__:24-40
+#'
+#' @return A vector of predicted proportion mature (proportion of 1.0) 
+#'     for the given parameters and the sizeage data
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'  L <- seq(50,160,1)
+#'  p <- c(a=0.07,b=0.2,c=1.0,alpha=100.0)
+#'  predm <- srug(p=p,sizeage=L)
+#' }
+srug <- function(p,sizeage) { # p = a, b, c, alpha
+  ans <- 1.0/((1.0 + p[4] * exp(-p[1]*sizeage^p[3]))^(1/p[2]))
+  return(ans)  
+}
 
 #' @title ssq a generalized function for summing squared residuals
 #'

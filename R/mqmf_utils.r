@@ -51,6 +51,54 @@ aicbic <- function(model,dat,nLL=TRUE) {  # model <- modelil; dat=bi
   return(out)
 } # end of aicbic
 
+#' @title bracket bounds a value on the x-axis and y-axis
+#' 
+#' @description bracket scans through a series of predicted values for
+#'     the location of a target value of the y-axis and returns the two
+#'     y values that bracket the target, perhaps finding the values 
+#'     closest to 0.5 in a vector between 0 and 1. It also returns the
+#'     x-axis values that gave rise to the two values bracketing the 
+#'     target, and finally returns the target. For example, imagine 
+#'     generating the proportion mature for a given length of fish using 
+#'     an equation for which there was no analytical solution to what 
+#'     the value of the L50 or the inter-quartile distance was. Bracket
+#'     can find the two lengths that generate proportions just below 0.5
+#'     and just above. It does not matter if, by chance, the target is
+#'     one of those y-axis values. 
+#'
+#' @param x the target predicted value of interest
+#' @param yaxis the predicted values reflecting the xaxis values 
+#' @param indep the series of values used to generate the predicted 
+#'     values
+#'
+#' @seealso linter
+#'
+#' @return a vector of five values, left, right, bottom, top and 
+#'     target
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'  L = seq(60,160,1)
+#'  p=c(a=0.075,b=0.075,c=1.0,alpha=100)
+#'  asym <- srug(p=p,sizeage=L)
+#'  L25 <- linter(bracket(0.25,asym,L)) 
+#'  L50 <- linter(bracket(0.5,asym,L)) 
+#'  L75 <- linter(bracket(0.75,asym,L)) 
+#'  ans <- c(L25,L50,L75,L50-L25,L75-L50)
+#'  {cat("   L25    L50      L75   L50-L25 L75-L50 \n")
+#'  cat(round(ans,4),"\n")} 
+#' }
+bracket <- function(x,yaxis,xaxis) {
+  pick <- which(yaxis < x) 
+  bot <- max(pick)
+  bottom<- yaxis[bot]
+  top <- yaxis[bot+1]
+  ans <- c(xaxis[bot], xaxis[bot+1],bottom, top,x )
+  names(ans) <- c("left","right","bottom","top","target")
+  return(ans)
+} # end of bracket
+
 #' @title countones used in apply to count the number of ones in a vector
 #'
 #' @description countones used in apply to count the number of ones in a vector
@@ -537,6 +585,62 @@ likeratio <- function(nLL1,nLL2,df=1) { # nLL1=291.6808; nLL2=277.5662; df=1
   ans <- c(LR=dif,P=signif,mindif=mindiff,df=df)
   return(ans)
 } # end of likeratio
+
+#' @title linter finds a value in a series using its location in another
+#' 
+#' @description linter is a tool for linearly interpolating in a 2-D
+#'     cartesian space to search out an unknown value between two known
+#'     points on the x-axis, based on a known value between two known 
+#'     points on the y-axis. This might be wanswering the question of
+#'     what would be the length at 50% maturity for a curve with no 
+#'     analytical solution. We could find two points in a series of
+#'     proportion values on the y-axis that bracketed the 50% value 
+#'     using the function bracket. They would be associated with the two 
+#'     length values on the x-axis used to generate the predicted 
+#'     proportion values. If we assume the various points in the 2-D 
+#'     space to be approximated by linear relations then the location 
+#'     between the two known x-axis length values corresponding to the 
+#'     L50 would have the same ratio as the 50% value has to the two
+#'     points on the y-axis. See the example for details. The input
+#'     arguments include five values, left, right, bottom, top, and 
+#'     target. So, left and right are sequential values on the x-axis, 
+#'     bottom and top are the corresponding sequential values on the 
+#'     y-axis, and target is the value we are looking for on the y-axis.
+#'     
+#'
+#' @param pars a vector of five values, left, right, bottom, top and 
+#'     target
+#'     
+#' @seealso bracket
+#'     
+#' @return a single value being the x-axis value between left and right
+#'     corresponding to the target on the x-axis 
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'  L = seq(60,160,1)
+#'  p=c(a=0.075,b=0.075,c=1.0,alpha=100)
+#'  asym <- srug(p=p,sizeage=L)
+#'  L25 <- linter(bracket(0.25,asym,L)) 
+#'  L50 <- linter(bracket(0.5,asym,L)) 
+#'  L75 <- linter(bracket(0.75,asym,L)) 
+#'  ans <- c(L25,L50,L75,L50-L25,L75-L50)
+#'  {cat("   L25    L50      L75   L50-L25 L75-L50 \n")
+#'  cat(round(ans,4),"\n")} 
+#' }
+linter <- function(pars) {
+  # pars= "left","right","bottom","top","target"
+  rge <- pars[4] - pars[3]
+  tarrge <- pars[5] - pars[3]
+  ratio <- tarrge/rge  
+  deprge <- pars[2] - pars[1]
+  ans <- pars[1] + ratio * deprge  
+  names(ans) <- "target"
+  return(ans)
+} # end of linter
+
+
 
 #' @title magnitude returns the magnitude of numbers
 #'
