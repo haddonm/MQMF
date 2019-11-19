@@ -1,20 +1,20 @@
 Package: MQMF
-Title: Provides R Functions that run the Examples in MQMF
-Version: 0.0.10
-Date: 2019-10-24
-Authors@R: person("Malcolm", "Haddon", email = "malcolm@haddon.net.au", role = c("aut", "cre"))
-Maintainer: Malcolm Haddon <malcolm@haddon.net.au>
-Description: Provides R functions that enable the abbreviated and translated
-    version of the book Modelling and Quantative Methods in Fisheries 
-    (Haddon, 2011) to be run in R. The new book will be called 
-    Modelling and Quantitative Methods in Fisheries using R. 
-    The package provides numerous 
-    functions and data-sets required to either run or support the 
-    practical examples.  The integral help for each function describes 
-    how those functions can be used to implement the MQMF examples. 
-    MQMF often goes beyond the examples in the original book, but does 
-    not include the chapters on the more advanced subjects, such as 
-    age-structured models and length-based models.
+Title: Using R for Modelling and Quantitative Methods in Fisheries
+Version: 0.0.12
+Date: 2019-11-08
+Authors@R: person("Malcolm", "Haddon", role = c("aut", "cre"), 
+                  email = "malcolm.haddon@gmail.com")
+Maintainer: Malcolm Haddon <malcolm.haddon@gmail.com>
+Description: Provides R functions for use with the book "Using R for 
+    Modelling and Quantative Methods in Fisheries" (URMQMF).  The 
+    package provides numerous functions and data-sets required to either 
+    run or support the practical examples presented in the book. The 
+    integral help for each function describes how those functions can be 
+    used to implement the URMQMF examples. There are many similarities 
+    between this new book and "Modelling and Quantitative Methods in 
+    Fisheries" Haddon (2011) <ISBN: 9781584885610>, however, URMQMF 
+    often goes beyond the examples in that original book, although does 
+    not include details on age-structured models or length-based models. 
 Depends: R (>= 3.5.0)
 License: GPL-3
 Encoding: UTF-8
@@ -25,3 +25,4 @@ Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
+BugReports: https://github.com/haddonm/MQMF

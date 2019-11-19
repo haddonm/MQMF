@@ -49,6 +49,32 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
   return(ans)
 }
 
+#' @title bh represents one version of Beverton-Holt recruitment
+#' 
+#' @description bh implements the Beverton-Holt stock recruitment
+#'    equation where R = aB/(b + B), where R is the recruitment, a and
+#'    b are the parameters and B is the spawning biomass. a is the 
+#'    maximum recruitment level and b is the biomass required to
+#'    generate 0.5 x maximum recruitment 
+#'
+#' @param p a vector of the a and b parameters
+#' @param B a vector, possibly of length 1, of spawning biomass levels
+#'
+#' @return a vector equal in length to B or the predicted recruitments
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   B <- 1:3000
+#'   rec <- bh(c(1000,200),B)
+#'   plot1(B,rec,xlabel="SpB",ylabel="Recruitment")
+#' }
+bh <- function(p,B) {
+  rec <- (p[1] * B)/(p[2] + B)
+  return(rec)
+} # end of Beverton-Holt
+
+
 #' @title discretelogistic example box 2.2 Discrete logistic model
 #'
 #' @description discretelogistic is an implementation of example box 2.2 

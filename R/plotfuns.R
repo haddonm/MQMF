@@ -5,7 +5,7 @@
 #'     xy points such as might be generated when conducting an analysis 
 #'     of the the uncertainty associated with a stock assessment, or 
 #'     other analysis using a bootstrap, a Bayesian MCMC, or even using 
-#'     asymptotic errors and sampling from a muti-variate normal. 
+#'     asymptotic errors and sampling from a multi-variate normal. 
 #'     addcoutours first uses the kde2d function from the MASS package 
 #'     to translate the density of points into 2-D kernal densities, and 
 #'     then searches through the resulting densities for those points 
