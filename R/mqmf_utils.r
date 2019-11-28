@@ -725,13 +725,11 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #'  outfit(best)  # a=1.3134 and b=2.2029 -veLL=571.5804
 #' }
 outfit <- function(inopt,backtran=TRUE,digits=5,title=""){
-   nlmcode <- c("relative gradient close to zero, probably solution.",
-                "repeated iterates in tolerance, probably solution.",
-                paste0("nothing lower than estimate.",
-                       "Either ~local min or steptol too small."),
+   nlmcode <- c("gradient close to 0, probably solution.",
+                "iterates in tolerance, probably solution.",
+                "Either ~local min or steptol too small.",
                 "iteration limit exceeded.",
-                paste0("stepmax exceeded ,5 times. Unbounded or ",
-                       "asymptotic below or stepmax too small."))
+                "stepmax exceeded ,5 times.")
    if (length(grep("value",names(inopt))) > 0) { # optim
       cat("optim solution: ", title,"\n")
       cat("minimum     : ",inopt$value,"\n")

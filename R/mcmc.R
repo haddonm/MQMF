@@ -104,13 +104,17 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #'  plot1(1:N,out[,1],ylabel="r",defpar=FALSE)
 #'  plot1(1:N,out[,2],ylabel="K",defpar=FALSE)
 #' }
+# chains=1;burnin=100;N=2000;thinstep=128;inpar=param
+# infunk=negLL1;calcpred=simpspmC;calcdat=as.matrix(fish)
+# obsdat=log(fish$cpue);priorcalc=calcprior
+# scales=setscale;schaefer=TRUE
 # chains=chains;burnin=0;N=50;thinstep=8;inpar=inpar;infunk=negLL;calcpred=simpspm
 # calcdat=fish;obsdat=log(fish$cpue);priorcalc=calcprior;scales=scales
 do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
                     obsdat,priorcalc,scales,...) {
    totN <- N + burnin   # total number of replicate steps
    result <- vector("list",chains) # to store all results
-   for (ch in 1:chains) { 
+   for (ch in 1:chains) { # ch=1
       param <- inpar # initiate the chain from here to next for loop
       np <- length(param)  # Number of parameters
       if (ch > 1) param <- param + (rnorm(np) * scales) #change start pt
@@ -120,7 +124,7 @@ do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
       posterior <- matrix(0,nrow=totN,ncol=(np+1))
       colnames(posterior) <- c("r","K","Binit","sigma","Post")
       arate <- numeric(np) # to store acceptance rate
-      func0 <- exp(-infunk(param,calcpred,calcdat,obsdat,...) 
+      func0 <- exp(-infunk(param,calcpred,indat=calcdat,obsdat,...) 
                    + priorcalc(np,N)) #back transform log-likelihoods 
       posterior[1,] <- c(exp(param),func0) # start the chain
       for (iter in 2:totN) {  # Generate the Markov Chain
@@ -131,7 +135,7 @@ do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
             for (i in 1:np) {      # loop through parameters
                oldpar <- param[i]  # incrementing them one a at time
                param[i] <- param[i] + randinc[st,i]
-               func1 <- exp(-infunk(param,calcpred,calcdat,obsdat,...) 
+               func1 <- exp(-infunk(param,calcpred,indat=calcdat,obsdat,...) 
                             + priorcalc(np,N)) 
                if (func1/func0 > uniform[i]) { # Accept 
                   func0 = func1

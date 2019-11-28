@@ -11,7 +11,7 @@
 #'     It is invariably better to use the Baranov Catch Equation.
 #'
 #' @param M instantaneous rate of natural mortality, assumed constant
-#' @param Ft a vector of age-specific instantaneous rates of fishing
+#' @param Fat a vector of age-specific instantaneous rates of fishing
 #'     mortality over the time period t, this is usually estimated by
 #'     multiplying the fully selected F by the selectivity/availability
 #'     at age.
@@ -28,13 +28,16 @@
 #' Nt <- 1000
 #' bce(M,Ft,Nt)   # should give 188.8862
 #' }
-bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
+bce <- function(M,Fat,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
   nage <- length(ages)
-  if (length(Ft) < nage) {
-    Ft <- rep(Ft[1],nage)
-    warning("Ft contains fewer values than number of ages  \n")
+  lFat <- length(Fat)
+  if (lFat < nage) {
+    lastF <- tail(Fat,1)
+    fill <- rep(lastF,(nage - lFat))
+    Fat <- c(Fat,fill)
+    warning("Fat contains fewer values than number of ages  \n")
   }
-  Z <- (M + Ft)
+  Z <- (M + Fat)
   columns <- c("Nt","N-Dying","Catch")
   ans <- matrix(0,nrow=nage,ncol=length(columns),
                 dimnames=list(ages,columns))
@@ -42,7 +45,7 @@ bce <- function(M,Ft,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
   for (a in 2:nage) {  # a=2
     Na <- ans[(a-1),"Nt"]
     newN <- Na * exp(-Z[a])
-    catch <- (Ft[a]/(M + Ft[a])) * Na * (1 - exp(-(Z[a])))
+    catch <- (Fat[a]/(M + Fat[a])) * Na * (1 - exp(-(Z[a])))
     mort <- Na - (newN + catch)
     ans[a,] <- c(newN,mort,catch)
   }

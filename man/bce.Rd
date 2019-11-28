@@ -4,12 +4,12 @@
 \alias{bce}
 \title{bce Baranov catch equation}
 \usage{
-bce(M, Ft, Nt, ages)
+bce(M, Fat, Nt, ages)
 }
 \arguments{
 \item{M}{instantaneous rate of natural mortality, assumed constant}
 
-\item{Ft}{a vector of age-specific instantaneous rates of fishing
+\item{Fat}{a vector of age-specific instantaneous rates of fishing
 mortality over the time period t, this is usually estimated by
 multiplying the fully selected F by the selectivity/availability
 at age.}
