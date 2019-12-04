@@ -68,7 +68,7 @@ aicbic <- function(model,dat,nLL=TRUE) {  # model <- modelil; dat=bi
 #'
 #' @param x the target predicted value of interest
 #' @param yaxis the predicted values reflecting the xaxis values 
-#' @param indep the series of values used to generate the predicted 
+#' @param xaxis the series of values used to generate the predicted 
 #'     values
 #'
 #' @seealso linter
@@ -367,8 +367,7 @@ getseed <- function() {
   nc <- nchar(pickseed)
   pseed <- unlist(strsplit(pickseed,split=character(0)))
   pseed <- sample(pseed,nc)
-  newseed <- NULL
-  for (i in 1:nc) newseed <- paste0(newseed,pseed[i])
+  newseed <- paste(pseed,collapse="")
   newseed <- as.numeric(newseed)
   return(newseed)
 }
@@ -725,11 +724,11 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #'  outfit(best)  # a=1.3134 and b=2.2029 -veLL=571.5804
 #' }
 outfit <- function(inopt,backtran=TRUE,digits=5,title=""){
-   nlmcode <- c("gradient close to 0, probably solution.",
-                "iterates in tolerance, probably solution.",
-                "Either ~local min or steptol too small.",
-                "iteration limit exceeded.",
-                "stepmax exceeded ,5 times.")
+   nlmcode <- c("gradient close to 0, probably solution",
+                ">1 iterates in tolerance, probably solution",
+                "Either ~local min or steptol too small",
+                "iteration limit exceeded",
+                "stepmax exceeded ,5 times")
    if (length(grep("value",names(inopt))) > 0) { # optim
       cat("optim solution: ", title,"\n")
       cat("minimum     : ",inopt$value,"\n")
@@ -748,7 +747,7 @@ outfit <- function(inopt,backtran=TRUE,digits=5,title=""){
       cat("nlm solution: ", title,"\n")
       cat("minimum     : ",inopt$minimum,"\n")
       cat("iterations  : ",inopt$iterations,"\n")
-      cat("code        : ",inopt$code,"  ",nlmcode[inopt$code],"\n")
+      cat("code        : ",inopt$code,nlmcode[inopt$code],"\n")
       if (backtran) {
          ans <- cbind(par=inopt$estimate,gradient=inopt$gradient,
                       transpar=round(exp(inopt$estimate),digits))

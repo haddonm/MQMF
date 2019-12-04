@@ -11,7 +11,7 @@ mature(a, b, sizeage)
 
 \item{b}{is the gradient of the exponential function}
 
-\item{depend}{is a vector of lengths/ages for which the logistic 
+\item{sizeage}{is a vector of lengths/ages for which the logistic 
 maturity value will be calculated}
 }
 \value{

@@ -277,7 +277,7 @@ logist <- function(inL50,delta,depend,knifeedge=FALSE) {
 #'     
 #' @param a is the intercept of the exponential function usually -ve
 #' @param b is the gradient of the exponential function
-#' @param depend is a vector of lengths/ages for which the logistic 
+#' @param sizeage is a vector of lengths/ages for which the logistic 
 #'     maturity value will be calculated
 #' @return A vector of predicted proportion mature for the sizeage
 #'

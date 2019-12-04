@@ -11,7 +11,7 @@ bracket(x, yaxis, xaxis)
 
 \item{yaxis}{the predicted values reflecting the xaxis values}
 
-\item{indep}{the series of values used to generate the predicted 
+\item{xaxis}{the series of values used to generate the predicted 
 values}
 }
 \value{

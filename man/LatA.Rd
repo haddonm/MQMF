@@ -8,7 +8,8 @@
 \describe{
   \item{Sex}{gender coded as 1 = males and 2 = females, this is an 
       unusual coding as very often one finds females=1 and males=2. 
-      This shows that codes can be dangerous so watch out for them}
+      This shows that simple codes cannot be taken for granted and
+      can therefore be dangerous so watch out for them}
   \item{Length}{Fork length of the fish, in cms}
   \item{Age}{Estimated age from otolith reading}
 }}
