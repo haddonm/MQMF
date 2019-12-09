@@ -706,6 +706,9 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #'     parameters. defaults to 5.
 #' @param title character string used to label the output if desired,
 #'     default = empty charcter string
+#' @param parnames default="" which means the estimated parameters
+#'     will merely be numbered. If a vector of names is given 
+#'     then this will be used instead, at least, for nlm and optim.
 #'
 #' @return nothing but it does print the list to the console tidily
 #' @export
@@ -723,7 +726,9 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #'  best <- nlm(f=ssq,p=par,typsize=magnitude(par),indat=alldat)
 #'  outfit(best)  # a=1.3134 and b=2.2029 -veLL=571.5804
 #' }
-outfit <- function(inopt,backtran=TRUE,digits=5,title=""){
+outfit <- function(inopt,backtran=TRUE,digits=5,title="",
+                   parnames=""){
+#  inopt=bestvB; backtran = FALSE; digits=5; title=""; parnames=""
    nlmcode <- c("gradient close to 0, probably solution",
                 ">1 iterates in tolerance, probably solution",
                 "Either ~local min or steptol too small",
@@ -736,10 +741,14 @@ outfit <- function(inopt,backtran=TRUE,digits=5,title=""){
       cat("code        : ",inopt$convergence,"\n")
       if (backtran) {
         ans <- cbind(par=inopt$par,transpar=round(exp(inopt$par),digits))
-      } else {
+       } else {
         ans <- t(inopt$par)
       }
-      rownames(ans) <- 1:length(inopt$par)
+      if ((length(parnames) > 1) & (length(parnames) == length(inopt$par))) {
+         rownames(ans) <- parnames
+       } else {
+         rownames(ans) <- 1:length(inopt$par)
+      }
       print(ans)
       cat("message     : ",inopt$message,"\n")
    } # end of optim
@@ -754,7 +763,12 @@ outfit <- function(inopt,backtran=TRUE,digits=5,title=""){
          } else {
          ans <- cbind(par=inopt$estimate,gradient=inopt$gradient)
       }
-      rownames(ans) <- 1:length(inopt$estimate)
+      if ((length(parnames) > 1) & 
+          (length(parnames) == length(inopt$estimate))) {
+        rownames(ans) <- parnames
+      } else {
+        rownames(ans) <- 1:length(inopt$estimate)
+      }
       print(ans)
    } # end of nlm
    if (length(grep("objective",names(inopt))) > 0) {
@@ -862,6 +876,67 @@ plotfishM <- function(fish,glb,ce=TRUE,title=TRUE,fnt=7,both=TRUE,
   }
 } # end of plotfishM
 
+#' @title predfreq is used for modal analysis of count data
+#' 
+#' @description predfreq is used to calculate the expected 
+#'     frequencies (counts) from a series of Normal distributions
+#'     that are combined to describe observed counts from a 
+#'     sample of the size distribution of a population,
+#'     which may, or may not be made up of a number of cohorts.
+#'     When used with a negative log-likelihood from a
+#'     multinomial this can lead to estimates of the mean and
+#'     standard deviation of the size of each cohort. Two 
+#'     approaches are possible. An approximate method that 
+#'     calculates the likelihood at the center of each size-class
+#'     and a more precise analytical method that subtracts the
+#'     cumulative probability of the bottom bound from each size-
+#'     class from the upper bound. Usually the two are very 
+#'     close.
+#'
+#' @param pars a vector of parameters, with the means first,
+#'     followed by the standard deviations, followed by the
+#'     proportion of total observations in each cohort expect
+#'     the last, which is obtained through subtraction. 
+#' @param n the sum of counts observed from nature
+#' @param sizecl a representation of the sizeclasses used, these 
+#'     can be the nid-points of each size-class or the lower and
+#'     upper bounds of each class.
+#' @param midval if TRUE, the default, the approximate analytical
+#'     approach will be used.
+#'
+#' @return a vector of expected frequencies
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' cw <- 2
+#' mids <- seq(6,56,cw) #size classes = 2 mm as in 5-7, 7-9,...
+#' av <- c(18.0,34.5)   # the means
+#' stdev <- c(2.75,5.5)  # the standard deviations
+#' prop1 <- 0.55  # the proportion of observations in cohort 1
+#' pars <-c(av,stdev,prop1)  # combine parameters into a vector
+#' predfreq(pars,n=262,sizecl=sizecl,midval=TRUE)
+#' }
+predfreq <- function(pars,n,sizecl,midval=TRUE) { 
+  cw <- sizecl[2] - sizecl[1]
+  c <- (length(pars) + 1)/3 # number of normal cohorts
+  props <- tail(pars,(c-1)) # input c-1 proportions, 
+  props <- c(props,(1-sum(props))) #the last prop is difference
+  nval <- length(sizecl)
+  if (midval) { # use approximation
+    freqs <- numeric(nval) #nval zero vector hold freqs
+    for (i in 1:c) # step through the cohorts
+      freqs <- freqs+(n*props[i]*cw)*dnorm(sizecl,
+                                           pars[i],pars[i+c])
+  } else { #use cumulative probablities
+    freqs <- numeric(nval-1) #nval-1 zero vector to hold freqs
+    for (i in 1:c) { # step through the cohorts  i=1
+      tmpcump <- (n*props[i])*pnorm(sizecl,pars[i],pars[i+c])
+      freqs <- freqs + (tmpcump[2:nval] - tmpcump[1:(nval-1)]) 
+    } 
+  } # end of if(midval) statement
+  return(freqs)
+} # end of predfreq
 
 #' @title printV returns a vector cbinded to 1:length(invect)
 #'
@@ -1110,6 +1185,45 @@ removeEmpty <- function(invect) {
   return(tmp)
 }
 
+#' @title setpalette is a shortcut for altering the palette to R4
+#' 
+#' @description setpalette is a shortcut for changing the 
+#'     default color palette to the new R version 4.0.0 version
+#'     before it comes out. The new palette was described in a
+#'     blog post at developer.r-project.org and provides less 
+#'     garish and a more visible set of default colours that can
+#'     be called using the numbers 1 - 8. An important point is 
+#'     that this alters the default colours for all sessions
+#'     until a restart of R.     
+#'     
+#' @param x either "default", "R3", or "R4", with R4 as the 
+#'     default value. Use "default" or "R3" to revert back to the
+#'     standard R version 3. values.
+#'
+#' @return nothing but it does alter the base palette
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'    setpalette("R3")
+#'    plot(1:8,rep(0.25,8),type="p",pch=16,cex=5,col=c(1:8))
+#'    setpalette("R4")
+#'    points(1:8,rep(0.3,8),pch=16,cex=5,col=c(1:8))
+#' }
+setpalette <- function(x="R4") { # x="R4"
+  choice <- c("default","R3","R4")
+  if (x %in% choice) {
+    if ((x == "R3") | (x == "default")) {
+       palette("default")
+    }
+    if (x == "R4") {
+      palette(c("#000000", "#DF536B", "#61D04F", "#2297E6",
+                "#28E2E5", "#CD0BBC", "#EEC21F", "#9E9E9E"))
+    }
+  } else {
+    cat("Currently options are default, R3, or R4 \n")
+  }
+} # end of setpalette
 
 #' @title quants used in apply to estimate quantiles across a vector
 #'

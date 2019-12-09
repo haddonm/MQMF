@@ -21,7 +21,7 @@ minnow is a dataset derived from Pitcher & Macdonald
     been read off the graphs within the paper as it is not reported 
     explicitly and are therefore only approximate, but will do for
     our purposes (but expect different parameters to those shown 
-    in the original paper.
+    in the original paper).
 }
 \examples{
  \dontrun{

@@ -4,7 +4,8 @@
 \alias{outfit}
 \title{outfit tidy print of output from optim, nlminb, or nlm}
 \usage{
-outfit(inopt, backtran = TRUE, digits = 5, title = "")
+outfit(inopt, backtran = TRUE, digits = 5, title = "",
+  parnames = "")
 }
 \arguments{
 \item{inopt}{the list object output by nlm, nlminb, or optim}
@@ -18,6 +19,10 @@ parameters. defaults to 5.}
 
 \item{title}{character string used to label the output if desired,
 default = empty charcter string}
+
+\item{parnames}{default="" which means the estimated parameters
+will merely be numbered. If a vector of names is given 
+then this will be used instead, at least, for nlm and optim.}
 }
 \value{
 nothing but it does print the list to the console tidily

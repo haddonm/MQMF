@@ -1,15 +1,15 @@
 
-#' @importFrom grDevices dev.new dev.cur dev.off png
+#' @importFrom grDevices dev.new dev.cur dev.off png palette
 #' @importFrom graphics lines mtext par plot points grid title abline
 #' @importFrom graphics arrows axis legend polygon segments layout text
 #' @importFrom graphics contour
 #' @importFrom stats qnorm rnorm dnorm runif sd quantile optim loess
 #' @importFrom stats dmultinom anova ccf lm median nlm dchisq qchisq
+#' @importFrom stats pnorm
 #' @importFrom utils tail head
 #' @importFrom MASS kde2d
 #' @importFrom mvtnorm rmvnorm
 NULL
-
 
 
 #' @title MQMF R functions for the New Book
@@ -302,7 +302,7 @@ NULL
 #'     been read off the graphs within the paper as it is not reported 
 #'     explicitly and are therefore only approximate, but will do for
 #'     our purposes (but expect different parameters to those shown 
-#'     in the original paper.
+#'     in the original paper).
 #'
 #' @format A data.frame of length-at-age data
 #' \describe{
@@ -473,5 +473,4 @@ NULL
 #'  tigers
 #' }
 "tigers"
-
 

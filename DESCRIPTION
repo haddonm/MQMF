@@ -1,7 +1,7 @@
 Package: MQMF
 Title: Using R for Modelling and Quantitative Methods in Fisheries
-Version: 0.0.12
-Date: 2019-11-08
+Version: 0.0.14
+Date: 2019-12-09
 Authors@R: person("Malcolm", "Haddon", role = c("aut", "cre"), 
                   email = "malcolm.haddon@gmail.com")
 Maintainer: Malcolm Haddon <malcolm.haddon@gmail.com>
