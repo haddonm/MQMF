@@ -646,6 +646,34 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
   return(LL)
 } # end of negLLP
 
+
+#' @title ricker one version of the Ricker stock recruitment
+#' 
+#' @description ricker implements the Ricker stock recruitment
+#'    equation where R = aBexp(-bxB), where R is the recruitment, 
+#'    a and b are the parameters and B is the spawning biomass. 
+#'    a is recruits-per-spawner at low stock levels, and b
+#'    relates to the decline in recruitment as spawning biomass
+#'    increases.
+#'
+#' @param p a vector of the a and b parameters
+#' @param B a vector, possibly of length 1, of spawning biomass 
+#'     levels
+#'
+#' @return a vector of length = to B of predicted recruitments
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   B <- 1:10000
+#'   rec <- ricker(c(10,0.0002,B)
+#'   plot1(B,rec,xlabel="SpB",ylabel="Recruitment")
+#' }
+ricker <- function(p,B) {
+  R <- p[1] * B * exp(-p[2] * B)
+  return(R)
+} # end of ricker
+
 #' @title srug is the Schnute and Richards Unified Growth Curve
 #' 
 #' @description srug implements the Schnute and Richards (1990) unified 
