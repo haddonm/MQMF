@@ -324,7 +324,8 @@ NULL
 #' @title npf fishery catch data from Northern Prawn Fishery 1970-1992
 #'
 #' @description npf is fishery catch data from Australia's Northern 
-#'     Prawn Fishery from 1970 to 1992. It contains the catches, in 
+#'     Prawn Fishery from 1970 to 1992 summarized from Robins and
+#'     Somers, 1994. It contains the catches, in 
 #'     tonnes, of banana prawns (Penaeus merguiensis and P. indicus), 
 #'     tiger prawns (brown - P. esculentus) and (grooved - P. 
 #'     semisulcatus), endeavour prawns, (Metapenaeus endevaouri and M.

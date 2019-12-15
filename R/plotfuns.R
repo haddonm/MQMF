@@ -529,6 +529,7 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
 #'     defaults to TRUE, so only one plot will be produced. If part of 
 #'     a multiple plot define the formatting before calling and set this
 #'     to FALSE
+#' @param ... used for any other graphic parameters used.     
 #'
 #' @return nothing but this does generate a plot.
 #' @export
@@ -556,8 +557,9 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
 #' }
 plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
                          ylabel="-ve Log-Likelihood",like="-veLL",
-                         defpar=TRUE) {
-  plot1(prof[,var],prof[,like],xlabel=xlabel,ylabel=ylabel,defpar=defpar)
+                         defpar=TRUE,...) {
+  plot1(prof[,var],prof[,like],xlabel=xlabel,ylabel=ylabel,
+        defpar=defpar,...)
   ntrial <- dim(prof)[1]
   minimLL <- min(prof[,like],na.rm=TRUE)
   upper <- (minimLL+1.92)

@@ -137,6 +137,50 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
   return(invisible(out))
 } # End of discretelogistic generating class dlpop
 
+
+#' @title domed calculates domed selectivity curves
+#' 
+#' @description domed uses 6 parameters and a set of mean size or
+#'     age classes to calculate a domed selectivity curve with a 
+#'     maximum of 1.0 but has parameters for the selectivity of
+#'     the initial and final size/age classes. There is an 
+#'     ascending limb and a descending limb with the potential 
+#'     of a plateau in between. The six parameters are 1) the
+#'     age/size where selectivity first becomes 1.0, 2) the size/
+#'     age where selectivity first begins to decline, 3) the 
+#'     steepness of the ascending limb, 4) the steepness of the
+#'     descending limb, 5) the selectivity of the first age/size
+#'     class, and 6) the selectivity of the last age/size class.
+#'
+#' @param p a vector of six parameters.
+#' @param L a vector of the mean of nL age/size classes
+#'
+#' @return a vector of selectivities
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   L <- seq(1,30,1)
+#'   p <- c(10,11,16,33,-5,-2)
+#'   sel <- domed(p,L)
+#'   print(round(sel,6))
+#' }
+domed <- function(p,L) {
+  nL <- length(L)
+  comp1 <- 1/(1 + exp(-p[5]))
+  comp2 <- exp((-(L - p[1])^2)/p[3])
+  comp3 <- exp((-(L[1] - p[1])^2)/p[3])
+  asc <- comp1 + (1 - comp1) * ((comp2 - comp3)/(1 - comp3))
+  comp4 <- 1/(1 + exp(-p[6]))
+  comp5 <- exp((-(L - p[2])^2)/p[4])
+  comp6 <- exp((-(L[nL] - p[2])^2)/(p[4]-1))
+  dsc <- 1 + (comp4 - 1) * ((comp5 - 1)/(comp6 - 1))
+  J1 <- 1/(1 + exp(-(20*(L - p[1])/(1 + abs(L - p[1])))))
+  J2 <- 1/(1 + exp(-20*((L - p[2])/(1 + abs(L - p[2])))))
+  sel <- (asc * (1 - J1)) + J1 * (1 - J2 + dsc * J2)
+  return(sel)
+} # end of domed
+
 #' @title fabens calculates predicted growth increment for tagging data
 #' 
 #' @description fabens requires at least two parameters, Linf and K from
@@ -568,21 +612,23 @@ negnormL <- function(par,funk,indat,obs="deltal",...) {
 #'
 #' @description negLLP calculates the negative log-likelihood for normally
 #'     distributed variables. It assumes the presence of a function 'funk'
-#'     that will calculate predicted values of a dependent variable from a
-#'     vector of independent values. By having a separate vector of
-#'     parameters in 'initpar' and a vector of the indices of those 
-#'     parameters that will be fitted it is possible to fit only a subset 
-#'     of parameters. This is useful if generating a likelihood profile, or 
+#'     that will calculate predicted values of a dependent 
+#'     variable from a vector of independent values (logobs). 
+#'     By having a separate vector of parameters in 'initpar' and a vector 
+#'     of the indices of those parameters that will be fitted (notfixed) 
+#'     it is possible to fit only a subset of parameters. This is useful 
+#'     if generating a likelihood profile, or 
 #'     setting up a likelihood ratio test. With more complex models it is 
 #'     often a useful strategy to estimate the full number of parameters in 
 #'     a series of phases, increasing the number being estimated each time 
 #'     while keeping the rest fixed. 'negLLP' makes such phasing of the 
 #'     fitting of a model to data possible.
 #'     This function can be applied directly to log-transformed data for 
-#'     log-normally distributed data but also to normally distributed 
-#'     data, in which case one would not log-transform the data being 
-#'     input to the logobs argument and funk would not be generated the
-#'     log-transformed rpedicted values.
+#'     log-normally distributed data, in which case funk would need to 
+#'     generate log-transformed values. But can also be applied to 
+#'     normally distributed data, in which case one would not 
+#'     log-transform the data being input to the logobs argument and funk 
+#'     would generated the linear-space predicted values.
 #'     
 #'     The selection of which parameters to vary is simply implemented 
 #'     through repeatedly copying the original input values from initpar

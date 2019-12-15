@@ -37,21 +37,23 @@ the sum of the negative log-likelihoods using a normal PDF
 \description{
 negLLP calculates the negative log-likelihood for normally
     distributed variables. It assumes the presence of a function 'funk'
-    that will calculate predicted values of a dependent variable from a
-    vector of independent values. By having a separate vector of
-    parameters in 'initpar' and a vector of the indices of those 
-    parameters that will be fitted it is possible to fit only a subset 
-    of parameters. This is useful if generating a likelihood profile, or 
+    that will calculate predicted values of a dependent 
+    variable from a vector of independent values (logobs). 
+    By having a separate vector of parameters in 'initpar' and a vector 
+    of the indices of those parameters that will be fitted (notfixed) 
+    it is possible to fit only a subset of parameters. This is useful 
+    if generating a likelihood profile, or 
     setting up a likelihood ratio test. With more complex models it is 
     often a useful strategy to estimate the full number of parameters in 
     a series of phases, increasing the number being estimated each time 
     while keeping the rest fixed. 'negLLP' makes such phasing of the 
     fitting of a model to data possible.
     This function can be applied directly to log-transformed data for 
-    log-normally distributed data but also to normally distributed 
-    data, in which case one would not log-transform the data being 
-    input to the logobs argument and funk would not be generated the
-    log-transformed rpedicted values.
+    log-normally distributed data, in which case funk would need to 
+    generate log-transformed values. But can also be applied to 
+    normally distributed data, in which case one would not 
+    log-transform the data being input to the logobs argument and funk 
+    would generated the linear-space predicted values.
     
     The selection of which parameters to vary is simply implemented 
     through repeatedly copying the original input values from initpar

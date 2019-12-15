@@ -5,7 +5,7 @@
 \title{plotprofile simplifies plotting single likelihood profiles}
 \usage{
 plotprofile(prof, var, digit = c(3, 3, 3), xlabel = var,
-  ylabel = "-ve Log-Likelihood", like = "-veLL", defpar = TRUE)
+  ylabel = "-ve Log-Likelihood", like = "-veLL", defpar = TRUE, ...)
 }
 \arguments{
 \item{prof}{the results from the likelihood profile calculations. 
@@ -32,6 +32,8 @@ log-likelihood}
 defaults to TRUE, so only one plot will be produced. If part of 
 a multiple plot define the formatting before calling and set this
 to FALSE}
+
+\item{...}{used for any other graphic parameters used.}
 }
 \value{
 nothing but this does generate a plot.
