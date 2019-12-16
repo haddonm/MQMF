@@ -5,7 +5,8 @@
 \title{robustSPM doess a robustness test on quality of fit of an SPM}
 \usage{
 robustSPM(inpar, fish, N = 10, scaler = 40, console = TRUE,
-  schaefer = TRUE, funk = simpspm, funkone = FALSE)
+  schaefer = TRUE, funk = simpspm, funkone = FALSE,
+  steptol = 1e-06)
 }
 \arguments{
 \item{inpar}{the parameter set to begin the trials with}
@@ -28,6 +29,9 @@ Schaefer model. setting it to FALSE applies the Fox model}
 \item{funkone}{defaults=FALSE; use negLL or negLL1, with FALSE 
 robustSPM will use negLL, with TRUE it will use negLL1
 which has a constraint on the first parameter to keep it > 0}
+
+\item{steptol}{is the steptol from nlm as used in fitSPM, the 
+default value is 1e-06, as usual.}
 }
 \value{
 a list of results from each run, the range of values across 

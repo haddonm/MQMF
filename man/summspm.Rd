@@ -2,12 +2,12 @@
 % Please edit documentation in R/spm.r
 \name{summspm}
 \alias{summspm}
-\title{summspm extracts critical statistics from output of plotModel}
+\title{summspm extracts critical statistics from output of plotmodel}
 \usage{
 summspm(ans)
 }
 \arguments{
-\item{ans}{the object output from the function plotModel used to plot
+\item{ans}{the object output from the function plotmodel used to plot
 the output of a surplus production analysis}
 }
 \value{
@@ -16,7 +16,7 @@ a matrix of statistics relating to MSY, expected yields, and
 }
 \description{
 summspm extracts critical statistics from output of 
-    plotModel. In particular it pulls out the catchability q, the MSY, 
+    plotmodel. In particular it pulls out the catchability q, the MSY, 
     Bmsy, Dmsy, Blim, Btarg, Ctarg. and Dcurr.
 }
 \examples{
@@ -26,11 +26,11 @@ fish <- dataspm$fish
 glb <- dataspm$glb
 plotfishM(fish,glb)
 pars <- c(0.264,4740,3064)
-ans <- plotModel(pars,fish,schaefer=FALSE)
+ans <- plotmodel(pars,fish,schaefer=FALSE)
 bestSP <- optim(par=pars,fn=negLLM,callfun=simpspm,indat=fish,
                 schaefer=FALSE)
 outfit(bestSP)
-ans <- plotModel(bestSP$par,fish,schaefer=FALSE)
+ans <- plotmodel(bestSP$par,fish,schaefer=FALSE)
 summspm(ans)
 }
 }

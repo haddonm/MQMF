@@ -8,7 +8,7 @@ spmphaseplot(answer, Blim = 0.2, Btarg = 0.5, filename = "",
   resol = 200, fnt = 7)
 }
 \arguments{
-\item{answer}{the object output by the function plotModel, containing the
+\item{answer}{the object output by the function plotmodel, containing the
 production curve, the fishery dynamics (predicted harvest rate and
 biomass through time).}
 
@@ -29,7 +29,7 @@ Using 6 gives Times, 1 will give SansSerif, 2 = bold Sans}
 an invisible list of B0, Bmsy, Hmsy, and Hlim.
 }
 \description{
-spmphaseplot uses the output from plotModel to plot up
+spmphaseplot uses the output from plotmodel to plot up
     the phase plot of harvest rate vs Biomass, marked with the limit and
     default targets. It identifies the start and end years (green and red
     dots) and permits the stock status to be determined visually. It also
@@ -42,7 +42,7 @@ spmphaseplot uses the output from plotModel to plot up
   fish <- dataspm$fish
   pars <- c(0.164,6740,3564)
   bestSP <- optim(par=pars,fn=negLLM,callfun=simpspm,indat=fish)
-  ans <- plotModel(bestSP$par,fish,schaefer=TRUE,addrmse=TRUE)
+  ans <- plotmodel(bestSP$par,fish,schaefer=TRUE,addrmse=TRUE)
   str(ans)
   outs <- spmphaseplot(ans,fnt=7)
   str(outs)

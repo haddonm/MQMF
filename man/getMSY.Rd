@@ -4,12 +4,13 @@
 \alias{getMSY}
 \title{getMSY calculates the MSY for the Polacheck et al 1993 equation}
 \usage{
-getMSY(pars, p)
+getMSY(pars, p = 1)
 }
 \arguments{
 \item{pars}{the model parameters r, K, Binit, sigma; p is separate}
 
-\item{p}{the asymmetry parameter for the polacheck et al 1993 equation}
+\item{p}{asymmetry parameter for the polacheck et al 1993 equation,
+default=1.0 = Schaefer}
 }
 \value{
 the MSY
