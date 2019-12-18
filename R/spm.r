@@ -31,42 +31,6 @@ altnegLL <- function(inp,indat) {  #inp=pars; indat=fish
 } # end of altnegLL
 
 
-#' @title checkspmdata ensures the input data contains the necessary columns
-#'
-#' @description checkspmdata ensures the input fishery data contains the
-#'     year, catch, and cpue columns necessary for a SPM analysis.
-#'
-#' @param infish the data.frame containing columns of data
-#'
-#' @return a 3 x 2 matrix with vaiable and true or false for presence
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' data(fishdat)
-#' fish <- fishdat$fish
-#' checkspmdata(fish)
-#' }
-checkspmdata <- function(infish) { # infish=fish
-   colnames(infish) <- tolower(colnames(infish))
-   columns <- colnames(infish)
-   existvec <- function(pattern,x) {
-      a1 <- grep(pattern,columns)
-      if (length(a1) > 0) return(TRUE) else return(FALSE)
-   }
-   rows <- c("year","catch","cpue")
-   ans <- as.data.frame(matrix(0,nrow=length(rows),ncol=2,
-                               dimnames=list(rows,c("Variable","Present"))))
-   ans[,1] <- rows; ans[,2] <- FALSE
-   #  check the required columns are present
-   if (existvec("year",columns)) ans[1,"Present"] <- TRUE
-   if (existvec("catch",columns)) ans[2,"Present"] <- TRUE
-   if (existvec("cpue",columns)) ans[3,"Present"] <- TRUE
-   return(ans)
-} # end of checkspmdata
-
-
-
 #' @title fitSPM fits a surplus production model
 #'
 #' @description fitSPM fits a surplus production model (either Schaefer or 
@@ -247,61 +211,6 @@ getrmse <- function(indat,invar="cpue",inyr="year"){
 } # end of getrmseCE
 
 
-#' @title makespmdata puts together data formatted for SPM analysis
-#'
-#' @description makespmdata takes an input data set and out of it puts 
-#'     together the three vectors of the years, the catch, and the CPUE, 
-#'     in that order, to be analysed using surplus production modelling. 
-#'     The output matrixc is put into a suitable format, having column 
-#'     headings 'year', 'catch', and 'cpue' and gives it the class spmdat 
-#'     (which has a plot method).
-#'
-#' @param indata either the list obtained from readdata or the data.frame 
-#'     'fish' from with the list obtained from readdata. Alternatively a 
-#'     simple matrix containing at least vectors of year, catch, and cpue 
-#'     with those column headings.
-#' @param year the column name of the column containng the years
-#' @param catch the column name of the column containng the catch data
-#' @param cpue the column name of the column containng the cpue data
-#'
-#' @return a matrix of class 'spmdat', which has the correct formatting for
-#'     use with the spm related functions in simpleSA
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' yrs <- 2000:2010
-#' catches <- rnorm(length(yrs),mean=150,sd=5)
-#' ce <- rnorm(length(yrs),mean=20,sd=1)
-#' makemat <- cbind(year=yrs,catch=catches,cpue=ce)
-#' dat <- makespmdata(makemat)
-#' dat
-#' }    # indata=schaef1; yearcol="YEAR";catchcol="CATCH";cpuecol="CPUE"
-makespmdata <- function(indata,year="year",catch="catch",
-                        cpue="cpue") {
-   if (is.list(indata)) {
-      if (!is.null(indata$fish)) work <- indata$fish
-   } else {
-      work <- indata
-   }
-   colnames(work[,c(year,catch,cpue)]) <- c("year","catch","cpue")
-   ans <- checkspmdata(work)
-   if (all(ans[,"Present"])) {
-      colnames(work) <- tolower(colnames(work))
-      spmdat <- as.matrix(cbind(work[,year],work[,catch],work[,cpue]))
-      rownames(spmdat) <- work[,year]
-      colnames(spmdat) <- c("year","catch","cpue")
-      class(spmdat) <- "spmdat"
-      return(spmdat)
-   } else {
-      label <- paste0("The fish data.frame appears to be missing ",
-                      "from data set input to makespmdata.")
-      warning(label)
-      return(NULL)
-   }
-} # end of makespmdata
-
-
 #' @title negLLM  -ve log-likelihood for normally distributed variables
 #'
 #' @description A generalized functions for calculating the negative
@@ -358,9 +267,9 @@ negLLM <- function(inp,indat,callfun,init=inp,
    return(LL)
 } # end of negLLM
 
-#' @title parsasympt generates N vectors from a multi-variate normal
+#' @title parasympt generates N vectors from a multi-variate normal
 #' 
-#' @description parsasympt generates N vectors from a multi-variate normal
+#' @description parasympt generates N vectors from a multi-variate normal
 #'     distribution. This can be used when estimating the uncertainty 
 #'     around a model fit, or when conducting projections from a model fit
 #'     while attempting to account for uncertainty.
@@ -384,24 +293,21 @@ negLLM <- function(inp,indat,callfun,init=inp,
 #'                  indat=fish,typsize=magnitude(param),iterlim=1000,
 #'                  schaefer=schf,hessian = TRUE)
 #'   out <- spm(bestmod$estimate,indat=fish,schaefer=schf)
-#'   matpar <- parsasympt(bestmod,1000)
+#'   matpar <- parasympt(bestmod,1000)
 #'   head(matpar,15)
 #' }
-parsasympt <- function(bestmod,N) {
+parasympt <- function(bestmod,N) {
   optpar <- bestmod$estimate
   if (is.null(dim(bestmod$hessian))) 
     stop(cat("The input bestmod must include a Hessian estimate!  \n"))
   vcov <- solve(bestmod$hessian)
   numpar <- length(optpar)
-  if (numpar == 3) {
-    columns <- c("r","K","Sigma")
-  } else {
-    columns <- c("r","K","Binit","Sigma")
-  }
+  columns <- c("r","K","Sigma")  
+  if (length(optpar) == 4) columns <- c(columns,"Sigma")
   mvnpar <- matrix(exp(rmvnorm(N,mean=optpar,sigma=vcov)),nrow=N,
                    ncol=numpar,dimnames=list(1:N,columns))
   return(mvnpar)
-} # parsasympt
+} # parasympt
 
 
 #' @title plotlag plots the effect of a lag between two variables
@@ -720,7 +626,8 @@ plotmodel <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
 #'     reference points
 #' @param fnt the font to use in the figure, default = 7 = bold Times
 #'
-#' @return This plots a graph and returns the requested quantiles
+#' @return This plots a graph and returns, invisibly, the requested 
+#'     quantiles and the proportion less than the limit reference point.
 #' @export
 #'
 #' @examples
@@ -733,9 +640,8 @@ plotmodel <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
 #'                  indat=fish,typsize=magnitude(param),iterlim=1000,
 #'                  schaefer=schf,hessian = TRUE)
 #'   out <- spm(bestmod$estimate,indat=fish,schaefer=schf)
-#'   matpar <- parsasympt(bestmod,1000)
+#'   matpar <- parasympt(bestmod,1000)
 #'   projs <- spmproj(matpar,fish,projyr=10,constC=900)
-#'   plotprep(width=6,height=3.5,newdev = FALSE)
 #'   plotproj(projs,out,qprob=c(0.1,0.5),refpts=c(0.2,0.4))
 #' }
 plotproj <- function(projs,spmout,qprob=c(0.1,0.5,0.9),
@@ -762,9 +668,15 @@ plotproj <- function(projs,spmout,qprob=c(0.1,0.5,0.9),
     }
   }
   lines(dyn[,"Year"],dyn[,"ModelB"],lwd=2,col=1)
+  ltLRP <- NULL
   abline(v=(lastyr+0.5),col=4)
-  if (length(refpts) > 0) abline(h=refpts*Bzero,lwd=2,col=1,lty=2)
-  return(invisible(qts))
+  nyr <- length(yrs)
+  if (length(refpts) > 0) {
+     abline(h=refpts*Bzero,lwd=2,col=1,lty=2)
+     ltLRP <- length(which(projs[,nyr] < refpts[1]*Bzero))
+  }
+  ans <- list(qts=qts,ltLRP=ltLRP/N)
+  return(invisible(ans))
 } # end of plotproj
 
 #' @title plotspmdat plots the fish data containing catches and cpue
@@ -1574,7 +1486,7 @@ spmMult <- function(inp,indat,schaefer=TRUE) {
 #'     optimum future catch levels.
 #'
 #' @param parmat a matrix of N parameter vectors obtained from either 
-#'     asymptotic errors (parsasympt), bootstraps (parsboot), or from a
+#'     asymptotic errors (parasympt), bootstraps (parsboot), or from a
 #'     Bayesian analysis (parsbayes).
 #' @param indat the fisheries data used during model fitting
 #' @param constC the constant catch level imposed in the projection years
@@ -1597,7 +1509,7 @@ spmMult <- function(inp,indat,schaefer=TRUE) {
 #'                  indat=fish,typsize=magnitude(param),iterlim=1000,
 #'                  schaefer=schf,hessian = TRUE)
 #'   out <- spm(bestmod$estimate,indat=fish,schaefer=schf)
-#'   matpar <- parsasympt(bestmod,1000)
+#'   matpar <- parasympt(bestmod,1000)
 #'   projs <- spmproj(matpar,fish,projyr=10,constC=900)
 #'   head(projs)
 #' }  

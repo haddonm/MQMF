@@ -5,7 +5,7 @@
 #' @importFrom graphics contour
 #' @importFrom stats qnorm rnorm dnorm runif sd quantile optim loess
 #' @importFrom stats dmultinom anova ccf lm median nlm dchisq qchisq
-#' @importFrom stats pnorm
+#' @importFrom stats pnorm cor
 #' @importFrom utils tail head
 #' @importFrom MASS kde2d
 #' @importFrom mvtnorm rmvnorm

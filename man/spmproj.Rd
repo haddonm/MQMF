@@ -9,7 +9,7 @@ spmproj(parmat, indat, constC, projyr = 10, year = "year",
 }
 \arguments{
 \item{parmat}{a matrix of N parameter vectors obtained from either 
-asymptotic errors (parsasympt), bootstraps (parsboot), or from a
+asymptotic errors (parasympt), bootstraps (parsboot), or from a
 Bayesian analysis (parsbayes).}
 
 \item{indat}{the fisheries data used during model fitting}
@@ -45,7 +45,7 @@ spmproj uses a matrix of parameter vectors to project
                  indat=fish,typsize=magnitude(param),iterlim=1000,
                  schaefer=schf,hessian = TRUE)
   out <- spm(bestmod$estimate,indat=fish,schaefer=schf)
-  matpar <- parsasympt(bestmod,1000)
+  matpar <- parasympt(bestmod,1000)
   projs <- spmproj(matpar,fish,projyr=10,constC=900)
   head(projs)
 }  

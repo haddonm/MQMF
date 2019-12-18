@@ -20,7 +20,8 @@ reference points}
 \item{fnt}{the font to use in the figure, default = 7 = bold Times}
 }
 \value{
-This plots a graph and returns the requested quantiles
+This plots a graph and returns, invisibly, the requested 
+    quantiles and the proportion less than the limit reference point.
 }
 \description{
 plotproj generate a plot of a matrix of biomass projections
@@ -37,9 +38,8 @@ plotproj generate a plot of a matrix of biomass projections
                  indat=fish,typsize=magnitude(param),iterlim=1000,
                  schaefer=schf,hessian = TRUE)
   out <- spm(bestmod$estimate,indat=fish,schaefer=schf)
-  matpar <- parsasympt(bestmod,1000)
+  matpar <- parasympt(bestmod,1000)
   projs <- spmproj(matpar,fish,projyr=10,constC=900)
-  plotprep(width=6,height=3.5,newdev = FALSE)
   plotproj(projs,out,qprob=c(0.1,0.5),refpts=c(0.2,0.4))
 }
 }

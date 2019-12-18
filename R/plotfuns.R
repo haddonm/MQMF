@@ -289,6 +289,37 @@ newplot <- function(width=5,height=3.15,newdev=TRUE) {
   par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)
 } # end of new_plot
 
+
+#' @title panel.cor is a version of that given in the pairs help
+#' 
+#' @description panel.cor is a panel function modified from that 
+#'     described in the help file for the pairs function from the 
+#'     graphics package. This has been customized to show that 
+#'     one can, and is used to calculate the correlations between 
+#'     the variables included in a pairs plot.
+#'
+#' @param x the first variable - provided by pairs
+#' @param y the second variable, provided by pairs, see examples
+#' @param digits how many digits to use on the pairs plot for the 
+#'     correlations
+#' @param ... any other graphics parameters to be passed to pairs.
+#'
+#' @return this prints the correlations in a square of the pairs plot
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   dat <- matrix(rnorm(900,mean=5,sd=0.5),nrow=300,ncol=3)
+#'   pairs(dat[,1:3],lower.panel=panel.smooth,
+#'         upper.panel=panel.cor,gap=0.25,lwd=2) 
+#' }
+panel.cor <- function(x, y, digits = 3, ...) {
+  usr <- par("usr"); on.exit(par(usr)) #store par values
+  par(usr = c(0, 1, 0, 1))
+  r <- (cor(x, y))
+  text(0.5, 0.5, round(r,digits), cex = 1.5)
+}
+
 #' @title parset alters the current base graphics par settings
 #'
 #' @description parset alters the current base graphics par settings
