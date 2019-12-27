@@ -32,9 +32,11 @@ bce the Baranov Catch Equation. The total kill is made
 }
 \examples{
 \dontrun{
+age <- 0:25
 Ft <- -log(1 - 0.2) # harvest rate of 0.2
+Faa <- rep(Ft,length(age))
 M <- 0.12
 Nt <- 1000
-bce(M,Ft,Nt)   # should give 188.8862
+bce(M,Fat,Nt,ages=age)   # should give 188.8862
 }
 }

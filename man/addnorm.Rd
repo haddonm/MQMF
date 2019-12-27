@@ -29,7 +29,7 @@ addnorm - adds a normal distribution to a histogram of a
 \examples{
 \dontrun{
  x <- rnorm(1000,mean=5,sd=1)
- dev.new(height=6,width=4,noRStudioGD = TRUE)
+ #plotprep(height=6,width=4,newdev=FALSE)
  par(mfrow= c(1,1),mai=c(0.5,0.5,0.3,0.05))
  par(cex=0.75, mgp=c(1.5,0.35,0), font.axis=7)
  outH <- hist(x,breaks=25,col=3,main="")

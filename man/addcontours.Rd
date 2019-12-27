@@ -46,10 +46,9 @@ addcontours is used to add contours to a dense plot of
 # library(mvtnorm)
 # library(MASS)
  data(abdat)
- fish <- abdat$fish
  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
- bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=fish, 
-                hessian=TRUE,logobs=log(fish$cpue),
+ bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=abdat, 
+                hessian=TRUE,logobs=log(abdat$cpue),
                 typsize=magnitude(param),iterlim=1000)
  optpar <- bestmod$estimate
  vcov <- solve(bestmod$hessian)      # solve inverts matrices
@@ -59,7 +58,7 @@ addcontours is used to add contours to a dense plot of
                   nrow=N,ncol=4,dimnames=list(1:N,columns))
  xv <- mvnpar[,"K"]
  yv <- mvnpar[,"r"]
- plotprep(width=6,height=5,newdev = FALSE)
+ # plotprep(width=6,height=5,newdev = FALSE)
  plot(xv,yv,type="p")
  addcontours(xv,yv,range(xv),range(yv),lwd=2,col=2)
  points(mean(xv),mean(yv),pch=16,cex=1.5,col=2)

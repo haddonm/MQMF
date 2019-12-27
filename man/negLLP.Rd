@@ -62,10 +62,9 @@ negLLP calculates the negative log-likelihood for normally
 \examples{
 \dontrun{
  data(abdat)
- fish <- abdat$fish 
  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
  optmod <- nlm(f=negLLP,p=param,funk=simpspm,initpar=param,
-              notfixed=c(1,2,3,4),indat=fish,logobs=log(fish$cpue),
+              notfixed=c(1,2,3,4),indat=abdat,logobs=log(abdat$cpue),
               typsize=magnitude(param),iterlim=1000)
  outfit(optmod,backtransform = TRUE)
   
@@ -77,7 +76,7 @@ negLLP calculates the negative log-likelihood for normally
    param <- log(c(rval[i],profest[2:4])) #recycle the profest values to
    parinit <- param                # improve the stability of nlm as  
    bestmodP <- nlm(f=negLLP,p=param,funk=simpspm,initpar=parinit,#the r
-               indat=fish,logobs=log(fish$cpue),notfixed=c(2:4), #value
+               indat=abdat,logobs=log(abdat$cpue),notfixed=c(2:4), #value
                typsize=magnitude(param),iterlim=1000)       # changes
    bestest <- exp(bestmodP$estimate)     
    result[i,] <- c(bestest,bestmodP$minimum)  # store each result

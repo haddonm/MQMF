@@ -23,7 +23,7 @@
 #'  data(blackisland)
 #'  param <- c(Linf=170.0,K=0.3,sigma=4.0)
 #'  modelvb <- nlm(f=negnormL,p=param,funk=fabens,indat=blackisland)
-#'  aicbic(modelvb,blackisland)
+#'  aicbic(modelvb,blackisland)  # 589.3615 597.4097 291.6808 3
 #' }
 aicbic <- function(model,dat,nLL=TRUE) {  # model <- modelil; dat=bi
   if (class(dat) %in% c("matrix","data.frame")) {
@@ -170,11 +170,11 @@ countNAs <- function(invect) {
    return(length(pick))
 }
 
-#' @title countgtOne used in apply to count the number > 1 in a vector
+#' @title countgtone used in apply to count the number > 1 in a vector
 #'
-#' @description countgtOne used in apply to count the number > 1 in a vector
+#' @description countgtone used in apply to count the number > 1 in a vector
 #' @param invect vector of values
-#' @return A single value of zero or the number of NAs
+#' @return A single value of zero or the number of ones
 #' @export countgtOne
 #' @examples
 #' \dontrun{
@@ -182,9 +182,9 @@ countNAs <- function(invect) {
 #' print(x)
 #' apply(x,1,countgtone)
 #' }
-countgtOne <- function(invect) {
+countgtone <- function(invect) {
    pick1 <- which(invect > 1.0)
-   return(length(pick1)/length(invect))
+   return(length(pick1))
 }
 
 #' @title facttonum converts a vector of numeric factors into numbers
@@ -206,7 +206,7 @@ countgtOne <- function(invect) {
 #'  as.numeric(levels(DepCat))  # #only converts the levels not the replicates
 #'  DepCat <- facttonum(DepCat)
 #'  5 * DepCat[3]
-#'  x <- factor(letters)
+#'  x <- factor(letters) # don't be silly, characters are not numbers
 #'  facttonum(x)
 #' }
 facttonum <- function(invect){
@@ -812,11 +812,11 @@ penalty0 <- function(x){
   return(ans)
 } # end of penalty0
 
-#' @title plotfishM plots the catch and optionally the cpue from fish
+#' @title plotfishM plots the catch and optionally the cpue
 #'
-#' @description plotfishM uses the matrix of fishery data used in the
-#'     simpleSA standard data format. It requires the matrix or data.frame
-#'     to contain the columns 'year', 'catch', and optionally 'cpue'.
+#' @description plotfishM uses a matrix of fishery data. It requires 
+#'     the matrix or data.frame to contain the columns 'year', 
+#'     'catch', and optionally 'cpue'.
 #'
 #' @param fish the matrix or data.frame containing year, catch, and cpue.
 #' @param glb the list of biologicals potentially containing the spsname
@@ -831,6 +831,9 @@ penalty0 <- function(x){
 #' @param maxy a vector of two zeros. These define the maximum y-axis value
 #'     for each plot. If it remains zero then getmax will be used to find
 #'     the maximum.
+#' @param year the name of the column containing the years, default="year"
+#' @param catch the name of the column containing catches, default="catch"
+#' @param catch the name of the column containing cpue, default="cpue"
 #'
 #' @return plots a graph but returns nothing to the console
 #' @export
@@ -838,29 +841,26 @@ penalty0 <- function(x){
 #' @examples
 #' \dontrun{
 #'   data(dataspm)
-#'   plotfishM(dataspm$fish,dataspm$glb,ce=TRUE)
-#' }   # fish=fish; glb=glb; ce=TRUE; title=FALSE; fnt=7;both=TRUE;maxy=c(0,124.5)
-plotfishM <- function(fish,glb,ce=TRUE,title=TRUE,fnt=7,both=TRUE,
-                      maxy=c(0,0)) {
+#'   plotfishM(fish=dataspm,spsname="Pink Ling",ce=TRUE)
+#' }
+plotfishM <- function(fish,spsname="",ce=TRUE,title=TRUE,fnt=7,both=TRUE,
+                      maxy=c(0,0),year="year",catch="catch",cpue="cpue") {
   colnames(fish) <- tolower(colnames(fish))
   rows <- 1
   if (ce) rows <- 2
-  yrs <- fish[,"year"]
+  yrs <- fish[,year]
   par(mfrow=c(rows,1),mai=c(0.5,0.45,0.025,0.05))
-  if (title) {
-    par(oma=c(0.0,0,1.0,0.0))
-  } else {
-    par(oma=c(0.0,0,0.0,0.0))
-  }
+  if (title) par(oma=c(0.0,0,1.0,0.0))
+      else   par(oma=c(0.0,0,0.0,0.0))
   par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=fnt,font=fnt,font.lab=fnt)
   ymax <- maxy[1]
-  if (maxy[1] == 0) ymax <- getmax(fish[,"catch"])
-  plot(yrs,fish[,"catch"],type="l",lwd=2,ylab="Catch",xlab="Year",
+  if (maxy[1] == 0) ymax <- getmax(fish[,catch])
+  plot(yrs,fish[,catch],type="l",lwd=2,ylab="Catch",xlab="Year",
        ylim=c(0,ymax),yaxs="i",panel.first = grid())
   if (title)
-    mtext(glb$spsname,side=3,cex=1.0,line=0,font=fnt,outer=TRUE)
+    mtext(spsname,side=3,cex=1.0,line=0,font=fnt,outer=TRUE)
   if (ce) {
-    pickI <- grep("cpue",colnames(fish))
+    pickI <- grep(cpue,colnames(fish))
     nce <- length(pickI)
     ymax <- maxy[2]
     if (maxy[2] == 0) ymax <- getmax(fish[,pickI])
@@ -985,7 +985,7 @@ printV <- function(invect,label=c("index","value")) {
 #' @examples
 #' \dontrun{
 #' data(abdat)
-#' properties(abdat$fish)
+#' properties(abdat)
 #' }
 properties <- function(indat,dimout=FALSE) {
   if(dimout) print(dim(indat))

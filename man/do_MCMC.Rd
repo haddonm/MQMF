@@ -75,20 +75,19 @@ do_MCMC conducts a Gibbs within Metropolis algorithm. One
 \examples{
 \dontrun{
 data(abdat)
-fish <- abdat$fish
  param <- log(c(0.4,9400,3400,0.05))
  N <- 10000  
  result <- do_MCMC(chains=1,burnin=20,N=N,thinstep=16,inpar=param,
-                   infunk=negLL,calcpred=simpspm,calcdat=fish,
-                   obsdat=log(fish$cpue),priorcalc=calcprior,
-                   scales=c(0.06,0.05,0.06,0.325))
+                   infunk=negLL,calcpred=simpspm,calcdat=abdat,
+                   obsdat=log(abdat$cpue),priorcalc=calcprior,
+                   scales=c(0.06,0.05,0.06,0.35))
  cat("Acceptance Rate = ",result[[2]],"\\n")
  cat("Failure Rate    = ",result[[3]],"\\n")
- plotprep(width=6,height=5,newdev=FALSE)
+ #plotprep(width=6,height=5,newdev=FALSE)
  out <- result[[1]][[1]] # get the list containing the matrix
  pairs(out[,1:4],col=rgb(1,0,0,1/20))
  
- plot2(titleY=TRUE,newdev=FALSE)
+ parset(plots=c(1,2))
  plot1(1:N,out[,1],ylabel="r",defpar=FALSE)
  plot1(1:N,out[,2],ylabel="K",defpar=FALSE)
 }

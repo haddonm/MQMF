@@ -17,8 +17,9 @@ the MSY
 }
 \description{
 getMSY calculates the MSY for the Polacheck et al 1993 
-    equation. This simplifies to rK/4 when p = 1.0. But this is a 
-    general equation that covers off for all values of p.
+    generalized surplus production equation. This simplifies to rK/4 
+    when p = 1.0. But this is a general equation that covers off for 
+    all values of p.
 }
 \examples{
 \dontrun{
@@ -26,4 +27,10 @@ param <- c(r=1.1,K=1000.0,Binit=800.0,sigma=0.075)
 getMSY(param,p=1.0)
 getMSY(param,p=1e-08)
 }
+}
+\references{
+Polacheck, T., Hilborn, R., and A.E. Punt (1993) Fitting 
+    surplus production models: Comparing methods and measuring uncertainty. 
+    \emph{Canadian Journal of Fisheries and Aquatic Sciences}, 
+    50: 2597-2607.
 }

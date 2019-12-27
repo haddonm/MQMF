@@ -8,6 +8,132 @@ options("show.signif.stars"=FALSE,"stringsAsFactors"=FALSE,
 #              title="Western Orange Roughy Data")
 #     listFunctions("C:/A_Mal/A_Book/rcode/agestruct/age_utils.r")
 
+# abdat abalone fishery data-------------------------------------
+
+year <- 1985:2008
+catch <- c(1020,743,867,724,586,532,567,609,548,498,480,424,655,
+494,644,960,938,911,955,936,941,954,1027,980)
+cpue <- c(1.0000,1.0957,1.1303,1.1466,1.1873,1.2018,1.2652,1.3199,
+          1.4284,1.4772,1.6853,1.9195,2.0515,2.1244,2.2148,2.2531,
+          2.1051,2.0820,2.0087,1.9226,1.8703,1.8776,1.8496,1.7271)           
+
+abdat <- as.data.frame(cbind(year,catch,cpue))
+save(abdat,file="data-raw/abdat.RData")
+
+# blackisland abalone tagging data ------------------------------
+
+infile <- "C:/Users/User/Dropbox/rcode/MQMF/data-raw/blackisland.csv"
+blackisland <- read.csv(infile,header=TRUE)
+blackisland <- droplevels(blackisland[,-c(1,2,3,5,7)])
+
+colnames(blackisland) <- c("deltat","len1","len2","deltal")
+filename <- "C:/Users/User/Dropbox/rcode/MQMF/data-raw/blackisland.RData"
+save(blackisland,file=filename)
+
+# dataspm pink ling west data -----------------------------------
+
+filename <- "data-raw/dataspm.csv"
+dataspm <- read.csv(filename,header=TRUE)
+str(dataspm)
+save(dataspm,file="data-raw/dataspm.RData")
+
+# LatA redfish length-at-age data--------------------------------
+filenameLAA <- "data-raw/LatA.csv"
+#' This is a copy of REDCAF.csv from
+#' 'C:/A_CSIRO/Rcode/SESSF/adhoc/redfish/' and contains all redfish
+#' ageing data by zone and port of landing/area of capture
+
+LatA <- read.csv(filenameLAA,header=TRUE)
+dim(LatA)
+head(LatA,20)
+save(LatA,file="data-raw/LatA.RData")
+
+
+# minnow seasonal growth data Pitcher and Macdonald 1973 --------
+getfile <- filename <- "C:/Users/user/Dropbox/rcode/MQMF/data-raw/minnow.csv"
+minnow <- read.csv(getfile,header=TRUE)
+minnow
+class(minnow)
+
+filename <- "C:/Users/user/Dropbox/rcode/MQMF/data-raw/minnow.RData"
+
+save(minnow,file=filename)
+
+
+# npf prawn catch data-------------------------------------------
+
+filename <- "C:/Users/Malcolm/Dropbox/rcode/MQMF/data-raw/npf.csv"
+npf <- read.csv(filename,header=TRUE)
+class(npf)
+npf
+
+save(npf,file="C:/Users/User/Dropbox/rcode/MQMF/data-raw/npf.RData")
+
+
+
+# Schaef  Schaefer  Yellowfin Tuna ------------------------------
+
+filename <- "C:/Users/user/Dropbox/rcode/MQMF/data-raw/schaef.csv"
+schaef <- read.csv(filename,header=TRUE)
+class(schaef)
+schaef
+
+ data(schaef)
+ pars <- log(c(r=0.2,K=2.1e06,Binit=2.2e06,sigma=0.2))
+ answer <- fitSPM(pars,schaef,schaefer=TRUE,maxiter=1000)
+ outfit(answer,title="Schaefer, 1957 Data",digits=4)
+
+save(schaef,file="C:/Users/user/Dropbox/rcode/MQMF/data-raw/schaef.RData")
+
+# tasab maturity data -------------------------------------------
+
+infile <- "C:/Users/user/Dropbox/rcode/MQMF/data-raw/tasw.csv"
+tasab <- read.csv(infile,header=TRUE)
+head(tasab)
+
+tasab <- tasab[order(tasab$site,tasab$length),]
+
+colnames(tasab) <- c("site","sex","length","mature")
+
+filename <- "C:/Users/user/Dropbox/rcode/MQMF/data-raw/tasab.RData"
+save(tasab,file=filename)
+
+
+# tigers  prawn stock recruitment data --------------------------
+Spawn <- c(2.4,3.2,3.9,5.7,6.0,7.4,8.2,10.0,10.1,10.4,11.3,
+           12.8,18.0,24.0)
+Recruit <- c(11.6,7.1,14.3,19.1,12.4,19.7,37.5,18.4,22.1,26.9,
+             19.2,21.0,9.9,26.8)
+tigers <- as.data.frame(cbind(Spawn=Spawn,Recruit=Recruit))
+rownames(tigers) <- 1:14
+tigers
+
+save(tigers,file="data-raw/tigers.RData")
+
+# pellatomlinson alternative yellowfin tuna data ----------------
+filename <- "C:/Users/Malcolm/Dropbox/rcode/MQMF/data-raw/pellatomlinson.csv"
+pttuna <- read.csv(filename,header=TRUE)
+
+plotprep(width=7,height=5,newdev=FALSE)
+plot1(pttuna$year,pttuna$cpue)
+
+
+ pars <- log(c(r=0.25,K=2.1e06,Binit=2.2e06,sigma=0.2))
+ answer <- fitSPM(pars,pttuna,schaefer=TRUE,maxiter=1000,steptol = 1e-05)
+ outfit(answer,title="Pella-Tomlinson Data",digits=4)
+ 
+ ans <- plotmodel(inp=answer$estimate,indat=pttuna,addrmse=TRUE)
+
+ save(pttuna,file="C:/Users/Malcolm/Dropbox/rcode/MQMF/data-raw/pttuna.RData")
+ 
+ 
+# check and re-store data ---------------------------------------
+tools::checkRdaFiles(paths="C:/Users/Malcolm/DropBox/rcode/MQMF/data-raw")
+tools::resaveRdaFiles(paths="C:/Users/Malcolm/DropBox/rcode/MQMF/data-raw",compress="auto")
+tools::checkRdaFiles(paths="C:/Users/Malcolm/DropBox/rcode/MQMF/data-raw")
+
+# l---------------------------------------------------------------
+
 # Orange Roughy West -----------
 # now called trawldeep_scalefish
 filename="westroughy.csv"
@@ -41,17 +167,6 @@ kimura
 filename <- "data/kimura.RData"
 save(kimura,file=filename)
 
-# tigers ------------
-Spawn <- c(2.4,3.2,3.9,5.7,6.0,7.4,8.2,10.0,10.1,10.4,11.3,
-           12.8,18.0,24.0)
-Recruit <- c(11.6,7.1,14.3,19.1,12.4,19.7,37.5,18.4,22.1,26.9,
-             19.2,21.0,9.9,26.8)
-tigers <- as.data.frame(cbind(Spawn=Spawn,Recruit=Recruit))
-rownames(tigers) <- 1:14
-tigers
-
-save(tigers,file="data/tigers.RData")
-
 # LatA -------------
 filenameLAA <- "data-raw/redfish_LAA_data_from_CAF_forFMR.csv"
 #' This is a copy of REDCAF.csv from
@@ -63,23 +178,6 @@ head(dat,20)
 
 table(dat$AreaCapture,dat$Zone)
 
-# label <- sort(unique(dat$AreaCapture))
-# dat$AreaCapture <- as.character(dat$AreaCapture)
-# duplicates <- c("GreenwellPoint","Greenwellpoint","GreenwellPoint,NSW")
-# pick <- which(dat$AreaCapture %in% duplicates)
-# if (length(pick) > 0) dat$AreaCapture[pick] <- "GreenwellPoint"
-# duplicates <- c("Eden","Eden,NSW")
-# pick <- which(dat$AreaCapture %in% duplicates)
-# if (length(pick) > 0) dat$AreaCapture[pick] <- "Eden"
-# duplicates <- c("Bermagui","Bermagui,NSW")
-# pick <- which(dat$AreaCapture %in% duplicates)
-# if (length(pick) > 0) dat$AreaCapture[pick] <- "Bermagui"
-# duplicates <- c("NewSouthWales","NSW")
-# pick <- which(dat$AreaCapture %in% duplicates)
-# if (length(pick) > 0) dat$AreaCapture[pick] <- "NSW"
-# duplicates <- c("Tathra","Tathra,NSW")
-# pick <- which(dat$AreaCapture %in% duplicates)
-# if (length(pick) > 0) dat$AreaCapture[pick] <- "Tathra"
 duplicates <- c("Ulladulla","Ulladulla,NSW")
 pick <- which(dat$AreaCapture %in% duplicates)
 if (length(pick) > 0) dat$AreaCapture[pick] <- "Ulladulla"
@@ -108,26 +206,6 @@ LatA <- laa[order(laa$Sex,laa$Age),]
 
 
 save(LatA,file="data/LatA.RData")
-
-
-# Schaefer Yellowfin Tuna --------------------------------------------------
-
-filename <- "C:/A_Mal/Rcode/MQMF/data-raw/schaef.csv"
-schaef <- read.csv(filename,header=TRUE)
-class(schaef)
-schaef
-
-save(schaef,file="C:/A_Mal/Rcode/MQMF/data-raw/schaef.RData")
-
-# npfprawn -----------------------------------------------------------------
-
-filename <- "C:/Users/Malcolm/Dropbox/rcode/MQMF/data-raw/npf.csv"
-npf <- read.csv(filename,header=TRUE)
-class(npf)
-npf
-
-save(npf,file="C:/Users/Malcolm/Dropbox/rcode/MQMF/data-raw/npf.RData")
-
 
 
 
@@ -172,7 +250,7 @@ tot <- rowSums(caa)
 pickN <- which(tot > 200)
 cbind(caa[pickN,],tot[pickN])
 
-filename <- "C:/Users/had06a/Dropbox/rcode/simpleSA_use/makedatasimpleSA/PinkLingW_Report.sso"
+filename <- "C:/Users/user/Dropbox/rcode/simpleSA_use/makedatasimpleSA/PinkLingW_Report.sso"
 dat <- readLines(filename)
 pick <- grep("X",dat)
 dat[pick[1:56]]
@@ -198,15 +276,6 @@ timeser[18:49,c("Yr","obs_cat:_1","obs_cat:_2")]
 
 
 
-# seasonal growth data Pitcher and Macdonald 1973 ----------------------
-getfile <- filename <- "C:/Users/user/Dropbox/rcode/MQMF/data-raw/minnow.csv"
-minnow <- read.csv(getfile,header=TRUE)
-minnow
-class(minnow)
-
-filename <- "C:/Users/user/Dropbox/rcode/MQMF/data-raw/minnow.RData"
-
-save(minnow,file=filename)
 
 
 # abalone tagging data ------------------------------------------------
@@ -234,38 +303,6 @@ plotprep(cex=0.9,newdev=FALSE)
 outh <- inthist(ab,col="red",border="black",width=1.5,xaxis=TRUE,inc=2,
                 xlabel="Shell Length mm",ylabel="Frequency")
 
-
-
-# maturity data --------------------------------------------------------
-
-infile <- "C:/Users/Malcolm/Dropbox/rcode/MQMF/data-raw/tasw.csv"
-tasabd <- read.csv(infile,header=TRUE)
-head(tasabd)
-
-tasab <- tasabd[,-c(1,3,6,7,8,9)]
-head(tasabd)
-tasab <- droplevels(tasabd[-pick,])
-
-pick <- which(tasabd$sit_id == 257)
-tasabd <- droplevels(tasabd[-pick,])
-
-pick <- which(tasab$sit_id == 258)
-tasab[pick,"sit_id"] <- 1
-pick <- which(tasab$sit_id == 288)
-tasab[pick,"sit_id"] <- 2
-
-table(tasabd$sit_id)
-
-head(tasab,25)
-
-table(tasab$shlength,tasab$sex)
-
-tasab <- tasab[order(tasab$sit_id,tasab$shlength),]
-
-colnames(tasab) <- c("site","sex","length","mature")
-
-filename <- "C:/Users/Malcolm/Dropbox/rcode/MQMF/data-raw/tasab.RData"
-save(tasab,file=filename)
 
 
 

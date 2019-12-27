@@ -41,7 +41,7 @@ fitSPM fits a surplus production model (either Schaefer or
     trial and error). It uses negLL to apply a negative log-likelihood, 
     assuming log-normal residual errors. The output object is the usual 
     object output from nlm, which can be neatly printed using outfit.
-    The $estimate values can be used in plotmodel to plot the 
+    The $estimate values can be used in plotspmmod to plot the 
     outcome, or in spmboot to conduct bootstrap sampling of the residuals 
     from the CPUE model fit to gain an appreciation of any uncertainty 
     in the analysis. It uses the magnitude function to set the values of 
@@ -51,9 +51,9 @@ fitSPM fits a surplus production model (either Schaefer or
 \dontrun{
  data(dataspm)
  pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
- ans <- fitSPM(pars,dataspm$fish,schaefer=TRUE,maxiter=1000)
+ ans <- fitSPM(pars,fish=dataspm,schaefer=TRUE,maxiter=1000)
  outfit(ans)
- ansF <- fitSPM(pars,dataspm$fish,schaefer=FALSE,maxiter=1000)
+ ansF <- fitSPM(pars,dataspm,schaefer=FALSE,maxiter=1000)
  outfit(ansF)
 }  
 }

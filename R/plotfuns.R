@@ -31,10 +31,9 @@
 #' # library(mvtnorm)
 #' # library(MASS)
 #'  data(abdat)
-#'  fish <- abdat$fish
 #'  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
-#'  bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=fish, 
-#'                 hessian=TRUE,logobs=log(fish$cpue),
+#'  bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=abdat, 
+#'                 hessian=TRUE,logobs=log(abdat$cpue),
 #'                 typsize=magnitude(param),iterlim=1000)
 #'  optpar <- bestmod$estimate
 #'  vcov <- solve(bestmod$hessian)      # solve inverts matrices
@@ -44,7 +43,7 @@
 #'                   nrow=N,ncol=4,dimnames=list(1:N,columns))
 #'  xv <- mvnpar[,"K"]
 #'  yv <- mvnpar[,"r"]
-#'  plotprep(width=6,height=5,newdev = FALSE)
+#'  # plotprep(width=6,height=5,newdev = FALSE)
 #'  plot(xv,yv,type="p")
 #'  addcontours(xv,yv,range(xv),range(yv),lwd=2,col=2)
 #'  points(mean(xv),mean(yv),pch=16,cex=1.5,col=2)
@@ -103,7 +102,7 @@ addcontours <- function(xval,yval,xrange,yrange,ngrid=100,
 #' @examples
 #' \dontrun{
 #'  x <- rnorm(1000,mean=5,sd=1)
-#'  dev.new(height=6,width=4,noRStudioGD = TRUE)
+#'  #plotprep(height=6,width=4,newdev=FALSE)
 #'  par(mfrow= c(1,1),mai=c(0.5,0.5,0.3,0.05))
 #'  par(cex=0.75, mgp=c(1.5,0.35,0), font.axis=7)
 #'  outH <- hist(x,breaks=25,col=3,main="")
@@ -424,7 +423,7 @@ plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
        ylab=ylabel,xlab=xlabel,cex=cex,panel.first=grid(),...)
 } # end of plot1
 
-#' @title plot.dynpop an S3 method for plotting dlpop objects
+#' @title plot.dynpop an S3 method for plotting dynpop objects
 #' 
 #' @description plot.dynpop an S3 method for plotting dynpop objects
 #'
@@ -449,7 +448,6 @@ plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
 #'                        "  p=",p),cex=0.85,font=7)
 #' }
 plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) { 
- # NextMethod("plot")
   colnames(x) <- tolower(colnames(x))
   ymax <- getmax(x[,"nt"])
   xl <- c(0,ymax)

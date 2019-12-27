@@ -35,12 +35,11 @@ spmprojDet conducts deterministic forward projections of the
 \examples{
 \dontrun{
  data(abdat)
- fish <- abdat$fish 
  param <- log(c(r=0.3,K=11500,Binit=3300,sigma=0.05))
- bestmod <- nlm(f=negLL1,p=param,funk=simpspm,logobs=log(fish$cpue),
-                indat=fish,typsize=magnitude(param),iterlim=1000,
+ bestmod <- nlm(f=negLL1,p=param,funk=simpspm,logobs=log(abdat$cpue),
+                indat=abdat,typsize=magnitude(param),iterlim=1000,
                 schaefer=FALSE)
- out <- spm(bestmod$estimate,indat=fish,schaefer=FALSE)
+ out <- spm(bestmod$estimate,indat=abdat,schaefer=FALSE)
  catches <- seq(700,1000,50)
  spmprojDet(spmobj = out,projcatch=catches,projyr=10,plotout=FALSE)
 }

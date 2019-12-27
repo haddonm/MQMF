@@ -25,7 +25,7 @@ facttonum converts a vector of numeric factors into numbers.
  as.numeric(levels(DepCat))  # #only converts the levels not the replicates
  DepCat <- facttonum(DepCat)
  5 * DepCat[3]
- x <- factor(letters)
+ x <- factor(letters) # don't be silly, characters are not numbers
  facttonum(x)
 }
 }

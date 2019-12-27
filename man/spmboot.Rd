@@ -39,8 +39,8 @@ spmboot conducts a bootstrap analysis on a spm model. It
 \dontrun{
  data(dataspm)
  pars <- c(r=0.2,K=6000,Binit=2800)
- ans <- fitSPM(pars,dataspm$fish,schaefer=TRUE,maxiter=1000)
- boots <- spmboot(ans$par,fishery=dataspm$fish,iter=500,schaefer=TRUE)
+ ans <- fitSPM(pars,dataspm,schaefer=TRUE,maxiter=1000)
+ boots <- spmboot(ans$par,fishery=dataspm,iter=500,schaefer=TRUE)
  dynam <- boots$dynam
  bootpar <- boots$bootpar
  MSY <- bootpar[,"r"]*bootpar[,"K"]/4

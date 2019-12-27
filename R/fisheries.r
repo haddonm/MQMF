@@ -23,12 +23,14 @@
 #'
 #' @examples
 #' \dontrun{
+#' age <- 0:25
 #' Ft <- -log(1 - 0.2) # harvest rate of 0.2
+#' Faa <- rep(Ft,length(age))
 #' M <- 0.12
 #' Nt <- 1000
-#' bce(M,Ft,Nt)   # should give 188.8862
+#' bce(M,Fat,Nt,ages=age)   # should give 188.8862
 #' }
-bce <- function(M,Fat,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
+bce <- function(M,Fat,Nt,ages) {
   nage <- length(ages)
   lFat <- length(Fat)
   if (lFat < nage) {
@@ -70,7 +72,7 @@ bce <- function(M,Fat,Nt,ages) {  # M=M; Ft=Ft; Nt=N0; ages=age
 #' \dontrun{
 #'   B <- 1:3000
 #'   rec <- bh(c(1000,200),B)
-#'   plot1(B,rec,xlabel="SpB",ylabel="Recruitment")
+#'   plot1(B,rec,xlabel="SpB",ylabel="Recruitment",lwd=2)
 #' }
 bh <- function(p,B) {
   rec <- (p[1] * B)/(p[2] + B)
@@ -117,8 +119,7 @@ bh <- function(p,B) {
 #'   discretelogistic(0.5,1000.0,25,0.0,50) # asymptotic
 #'   discretelogistic(2.5,1000.0,25,0.0,50) # 4-phase stable limit
 #'   ans <- discretelogistic(r=2.55,K=1000.0,N0=100,Ct=95.0,Yrs=100)
-#'   head(ans,20)
-#'   plot(ans)
+#'   plot(ans)  # uses an S3 plot method for dynpop objects
 #' }
 discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
   yr1 <- Yrs + 1
@@ -163,7 +164,7 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
 #'   L <- seq(1,30,1)
 #'   p <- c(10,11,16,33,-5,-2)
 #'   sel <- domed(p,L)
-#'   print(round(sel,6))
+#'   plot1(L,sel,xlabel="Age",ylabel="Selectivity",lwd=2)
 #' }
 domed <- function(p,L) {
   nL <- length(L)
@@ -201,10 +202,14 @@ domed <- function(p,L) {
 #'
 #' @examples
 #' \dontrun{
-#'   data(blackisland)
-#'   param <- c(170, 0.3, 4.0) # Linf, K, sigma
-#'   predDL <- fabens(param,blackisland,initL="len1",delT="deltat")
-#'   cbind(blackisland[1:15,"deltal"],predDl[1:15])
+#'  data(blackisland)
+#'  plot(blackisland$len1,blackisland$deltal,type="p",pch=16,
+#'  xlab="Initial Length mm",ylab="Growth Increment mm",
+#'  panel.first=grid())
+#'  abline(h=0)
+#'  param <- c(170, 0.3, 4.0) # Linf, K, sigma
+#'  predDL <- fabens(param,blackisland,initL="len1",delT="deltat")
+#'  lines(blackisland$len1,predDL,col=2,lwd=2)   
 #' }
 fabens <- function(par,indat,initL="len1",delT="deltat") {
   preddL <- (par[1] - indat[,initL])*(1 - exp(-(par[2] * indat[,delT])))
@@ -418,9 +423,8 @@ mnnegLL <- function(obs,predf) {
 #' @examples
 #' \dontrun{
 #' data(abdat)
-#' fish <- abdat$fish
 #' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
-#' negLL(pars=param,funk=simpspm,logobs=log(fish[,"cpue"]),indat=fish)
+#' negLL(pars=param,funk=simpspm,logobs=log(abdat[,"cpue"]),indat=abdat)
 #' }
 negLL <- function(pars,funk,logobs,...) {
   logpred <- funk(pars,...)
@@ -461,9 +465,8 @@ negLL <- function(pars,funk,logobs,...) {
 #' @examples
 #' \dontrun{
 #' data(abdat)
-#' fish <- abdat$fish
 #' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
-#' negLL1(pars=param,funk=simpspm,logobs=log(fish[,"cpue"]),indat=fish)
+#' negLL1(pars=param,funk=simpspm,logobs=log(abdat[,"cpue"]),indat=abdat)
 #' }
 negLL1 <- function(pars,funk,logobs,...) {
   logpred <- funk(pars,...)
@@ -656,10 +659,9 @@ negnormL <- function(par,funk,indat,obs="deltal",...) {
 #' @examples
 #' \dontrun{
 #'  data(abdat)
-#'  fish <- abdat$fish 
 #'  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
 #'  optmod <- nlm(f=negLLP,p=param,funk=simpspm,initpar=param,
-#'               notfixed=c(1,2,3,4),indat=fish,logobs=log(fish$cpue),
+#'               notfixed=c(1,2,3,4),indat=abdat,logobs=log(abdat$cpue),
 #'               typsize=magnitude(param),iterlim=1000)
 #'  outfit(optmod,backtransform = TRUE)
 #'   
@@ -671,7 +673,7 @@ negnormL <- function(par,funk,indat,obs="deltal",...) {
 #'    param <- log(c(rval[i],profest[2:4])) #recycle the profest values to
 #'    parinit <- param                # improve the stability of nlm as  
 #'    bestmodP <- nlm(f=negLLP,p=param,funk=simpspm,initpar=parinit,#the r
-#'                indat=fish,logobs=log(fish$cpue),notfixed=c(2:4), #value
+#'                indat=abdat,logobs=log(abdat$cpue),notfixed=c(2:4), #value
 #'                typsize=magnitude(param),iterlim=1000)       # changes
 #'    bestest <- exp(bestmodP$estimate)     
 #'    result[i,] <- c(bestest,bestmodP$minimum)  # store each result

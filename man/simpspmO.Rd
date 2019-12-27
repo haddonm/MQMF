@@ -43,11 +43,10 @@ simpspmO calculates the predicted CPUE for an SPM model. It
 \examples{
 \dontrun{
 data(dataspm)
-fish <- dataspm$fish
-fish
-colnames(fish) <- tolower(colnames(fish))
+dataspm
+colnames(dataspm) <- tolower(colnames(dataspm))
 pars <- c(r=0.242,K=5170,Binit=2840)
-predCE <- simpspmO(pars,fish)
-cbind(fish[,"year"],fish[,"cpue"],predCE)
+predCE <- simpspmO(pars,dataspm)
+cbind(dataspm[,"year"],dataspm[,"cpue"],predCE)
 }
 }

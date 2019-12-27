@@ -11,27 +11,6 @@ The MQMF package provides a set of functions that
     Modelling and Quantitative Methods in Fisheries 2nd edition.
     Try \code{browseVignettes("MQMF")}
 }
-\section{Fisheries functions}{
-
-\describe{
-  \item{bce}{ the Baranov Catch Equation}
-  \item{discretelogistic}{ surplus production model, either Schaefer or
-     Fox models. Option to plot the outcomes.}
-  \item{logist}{ calculates a logistic curve that can be used for 
-     selectivity, maturity, etc. Uses L50 and delta = L95 - L50}
-  \item{MaA}{ an alternative logistic curve using a and b L50 = -a/b and
-     interquartile = 2.Ln(3).b}
-  \item{negNLL}{ negative log-likelihood for normally distributed 
-     variables}
-  \item{negNLP}{ negative log-likelihood for normally distributed 
-     variables with the option of fixing some parameters, which is 
-     useful when generating likelihood profiles}
-  \item{simpspm}{ calculates only the predicted cpue for an SPM}
-  \item{spm}{ calculates and returns the full dynamics of an SPM}
-  \item{vB}{ calculates the length-at-age for the von Bertalanffy curve}
-}
-}
-
 \section{Utility functions}{
 
 \describe{
@@ -114,13 +93,6 @@ The MQMF package provides a set of functions that
   \item{minnow}{a dataset of weeks vs lengths of minnows for use with
       fitting seasonal growth curves and growth curves}
 }
-}
-
-\section{Vignettes}{
-
-To learn more about MQMF, start with the still to be written vignette:
-\code{browseVignettes(package = "MQMF")} or
-\code{browseVignettes("MQMF")}
 }
 
 \references{

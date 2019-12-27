@@ -38,7 +38,7 @@ spmCE calculates the dynamics using a Schaefer of Fox model.
     and simpfox when fitting a Fox model
     as those functions are designed to generate only the predicted cpue
     required by the functions ssq and negLLM, but the example shows how 
-    it could be used. the function spm is used inside 'plotmodel'
+    it could be used. the function spm is used inside 'plotspmmod'
     and could be used alone, to generate a fullist of model outputs
     after the model has been fitted.
 }
@@ -52,10 +52,10 @@ cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,0.8582,
           1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)
 dat <- makespmdata(cbind(year,catch,cpue))
 pars <- c(0.35,7800,3500)
-ans <- plotmodel(pars,dat)
+ans <- plotspmmod(pars,dat)
 bestSP <- optim(par=pars,fn=ssq,callfun=simpspm,indat=dat)
 bestSP
-ans <- plotmodel(bestSP$par,dat,schaefer=TRUE)
+ans <- plotspmmod(bestSP$par,dat,schaefer=TRUE)
 str(ans)
 }
 }

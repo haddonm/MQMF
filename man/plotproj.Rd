@@ -31,15 +31,14 @@ plotproj generate a plot of a matrix of biomass projections
 \examples{
 \dontrun{
   data(abdat)
-  fish <- abdat$fish 
   schf <- FALSE
   param <- log(c(r=0.3,K=11500,Binit=3300,sigma=0.05))
-  bestmod <- nlm(f=negLL1,p=param,funk=simpspm,logobs=log(fish$cpue),
-                 indat=fish,typsize=magnitude(param),iterlim=1000,
+  bestmod <- nlm(f=negLL1,p=param,funk=simpspm,logobs=log(abdat$cpue),
+                 indat=abdat,typsize=magnitude(param),iterlim=1000,
                  schaefer=schf,hessian = TRUE)
-  out <- spm(bestmod$estimate,indat=fish,schaefer=schf)
+  out <- spm(bestmod$estimate,indat=abdat,schaefer=schf)
   matpar <- parasympt(bestmod,1000)
-  projs <- spmproj(matpar,fish,projyr=10,constC=900)
+  projs <- spmproj(matpar,abdat,projyr=10,constC=900)
   plotproj(projs,out,qprob=c(0.1,0.5),refpts=c(0.2,0.4))
 }
 }

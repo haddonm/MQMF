@@ -2,15 +2,14 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{plotfishM}
 \alias{plotfishM}
-\title{plotfishM plots the catch and optionally the cpue from fish}
+\title{plotfishM plots the catch and optionally the cpue}
 \usage{
-plotfishM(fish, glb, ce = TRUE, title = TRUE, fnt = 7, both = TRUE,
-  maxy = c(0, 0))
+plotfishM(fish, spsname = "", ce = TRUE, title = TRUE, fnt = 7,
+  both = TRUE, maxy = c(0, 0), year = "year", catch = "catch",
+  cpue = "cpue")
 }
 \arguments{
 \item{fish}{the matrix or data.frame containing year, catch, and cpue.}
-
-\item{glb}{the list of biologicals potentially containing the spsname}
 
 \item{ce}{a logical parameter determining whether to plot the cpue or not.
 the default = TRUE}
@@ -27,18 +26,26 @@ given to the title to the plot.}
 \item{maxy}{a vector of two zeros. These define the maximum y-axis value
 for each plot. If it remains zero then getmax will be used to find
 the maximum.}
+
+\item{year}{the name of the column containing the years, default="year"}
+
+\item{catch}{the name of the column containing catches, default="catch"}
+
+\item{glb}{the list of biologicals potentially containing the spsname}
+
+\item{catch}{the name of the column containing cpue, default="cpue"}
 }
 \value{
 plots a graph but returns nothing to the console
 }
 \description{
-plotfishM uses the matrix of fishery data used in the
-    simpleSA standard data format. It requires the matrix or data.frame
-    to contain the columns 'year', 'catch', and optionally 'cpue'.
+plotfishM uses a matrix of fishery data. It requires 
+    the matrix or data.frame to contain the columns 'year', 
+    'catch', and optionally 'cpue'.
 }
 \examples{
 \dontrun{
   data(dataspm)
-  plotfishM(dataspm$fish,dataspm$glb,ce=TRUE)
-}   # fish=fish; glb=glb; ce=TRUE; title=FALSE; fnt=7;both=TRUE;maxy=c(0,124.5)
+  plotfishM(fish=dataspm,spsname="Pink Ling",ce=TRUE)
+}
 }

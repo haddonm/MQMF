@@ -29,9 +29,13 @@ fabens requires at least two parameters, Linf and K from
 }
 \examples{
 \dontrun{
-  data(blackisland)
-  param <- c(170, 0.3, 4.0) # Linf, K, sigma
-  predDL <- fabens(param,blackisland,initL="len1",delT="deltat")
-  cbind(blackisland[1:15,"deltal"],predDl[1:15])
+ data(blackisland)
+ plot(blackisland$len1,blackisland$deltal,type="p",pch=16,
+ xlab="Initial Length mm",ylab="Growth Increment mm",
+ panel.first=grid())
+ abline(h=0)
+ param <- c(170, 0.3, 4.0) # Linf, K, sigma
+ predDL <- fabens(param,blackisland,initL="len1",delT="deltat")
+ lines(blackisland$len1,predDL,col=2,lwd=2)   
 }
 }

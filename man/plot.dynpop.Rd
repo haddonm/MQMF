@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotfuns.R
 \name{plot.dynpop}
 \alias{plot.dynpop}
-\title{plot.dynpop an S3 method for plotting dlpop objects}
+\title{plot.dynpop an S3 method for plotting dynpop objects}
 \usage{
 \method{plot}{dynpop}(x, y = NULL, main = "", cex = 0.9, font = 7,
   ...)

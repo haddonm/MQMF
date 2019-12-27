@@ -51,7 +51,6 @@ discretelogistic is an implementation of example box 2.2
   discretelogistic(0.5,1000.0,25,0.0,50) # asymptotic
   discretelogistic(2.5,1000.0,25,0.0,50) # 4-phase stable limit
   ans <- discretelogistic(r=2.55,K=1000.0,N0=100,Ct=95.0,Yrs=100)
-  head(ans,20)
-  plot(ans)
+  plot(ans)  # uses an S3 plot method for dynpop objects
 }
 }

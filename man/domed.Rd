@@ -32,6 +32,6 @@ domed uses 6 parameters and a set of mean size or
   L <- seq(1,30,1)
   p <- c(10,11,16,33,-5,-2)
   sel <- domed(p,L)
-  print(round(sel,6))
+  plot1(L,sel,xlabel="Age",ylabel="Selectivity",lwd=2)
 }
 }

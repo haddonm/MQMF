@@ -31,6 +31,6 @@ aicbic calculates and returns the AIC and BIC using the
  data(blackisland)
  param <- c(Linf=170.0,K=0.3,sigma=4.0)
  modelvb <- nlm(f=negnormL,p=param,funk=fabens,indat=blackisland)
- aicbic(modelvb,blackisland)
+ aicbic(modelvb,blackisland)  # 589.3615 597.4097 291.6808 3
 }
 }

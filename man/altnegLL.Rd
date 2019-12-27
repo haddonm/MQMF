@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm.r
 \name{altnegLL}
 \alias{altnegLL}
-\title{altnegLL calculate the normal negative log-likelihood}
+\title{altnegLL calculate the Normal negative log-likelihood}
 \usage{
 altnegLL(inp, indat)
 }
@@ -12,7 +12,7 @@ altnegLL(inp, indat)
 \item{indat}{a matrix with at least columns 'year', 'catch', and 'cpue'}
 }
 \value{
-a single value the negative log-likelihood
+a single value, the negative log-likelihood
 }
 \description{
 altnegLL calculates negLLM using the simplification
@@ -21,11 +21,10 @@ altnegLL calculates negLLM using the simplification
 }
 \examples{
 \dontrun{
-data(dataspm)
-fish <- dataspm$fish
-head(fish,15)
-colnames(fish) <- tolower(colnames(fish))
-pars <- c(r=0.242,K=5170,Binit=2840)
-altnegLL(pars,fish)  # should be -12.1249
+ data(dataspm)
+ pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
+ ans <- fitSPM(pars,fish=dataspm,schaefer=TRUE,maxiter=1000)
+ outfit(ans)
+ altnegLL(ans$estimate,dataspm) 
 }
 }

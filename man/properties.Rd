@@ -27,6 +27,6 @@ properties - used to check a data.frame before
 \examples{
 \dontrun{
 data(abdat)
-properties(abdat$fish)
+properties(abdat)
 }
 }

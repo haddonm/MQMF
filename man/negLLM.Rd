@@ -40,11 +40,10 @@ A generalized functions for calculating the negative
 \examples{
 \dontrun{
 data(dataspm)
-fish <- dataspm$fish
-fish
-colnames(fish) <- tolower(colnames(fish))
+dataspm
+colnames(dataspm) <- tolower(colnames(dataspm))
 pars <- c(r=0.2,K=6000,Binit=2800)
-negLLM(pars,fish,simpspm,schaefer=FALSE)  # should be -0.8884016
-negLLM(pars,fish,simpspm)  # should be -11.12203
+negLLM(pars,dataspm,simpspm,schaefer=FALSE)  # = -0.8884016
+negLLM(pars,dataspm,simpspm)  # should be -11.12203
 }
 }

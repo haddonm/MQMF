@@ -47,9 +47,8 @@ simpspm calculates only the predicted log(CPUE) for a
 \examples{
 \dontrun{
  data(abdat)
- fish <- abdat$fish
  param <- log(c(r=0.4,K=9400,Binit=3400,sigma=0.05))
- predCE <- simpspm(pars=param,indat=fish)
- cbind(fish,exp(predCE))
+ predCE <- simpspm(pars=param,indat=abdat)
+ cbind(abdat,exp(predCE))
 } 
 }
