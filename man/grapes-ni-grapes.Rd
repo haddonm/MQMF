@@ -14,3 +14,11 @@ x \%ni\% y
 \description{
 '\%ni\%' identifies which element in x is NOT in y
 }
+\examples{
+\dontrun{
+   x <- 1:10
+   y <- 6:15
+   pick <- (x \%ni\% y)
+   x[pick]   # are not in y
+}
+}

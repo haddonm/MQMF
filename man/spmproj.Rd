@@ -46,6 +46,6 @@ spmproj uses a matrix of parameter vectors to project
   out <- spm(bestmod$estimate,indat=abdat,schaefer=schf)
   matpar <- parasympt(bestmod,1000)
   projs <- spmproj(matpar,abdat,projyr=10,constC=900)
-  head(projs)
+  plotproj(projs,out)
 }  
 }

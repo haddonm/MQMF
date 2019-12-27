@@ -42,12 +42,12 @@ predfreq is used to calculate the expected
 }
 \examples{
 \dontrun{
-cw <- 2
-mids <- seq(6,56,cw) #size classes = 2 mm as in 5-7, 7-9,...
+mids <- seq(6,56,2) #size classes = 2 mm as in 5-7, 7-9,...
 av <- c(18.0,34.5)   # the means
 stdev <- c(2.75,5.5)  # the standard deviations
 prop1 <- 0.55  # the proportion of observations in cohort 1
 pars <-c(av,stdev,prop1)  # combine parameters into a vector
-predfreq(pars,n=262,sizecl=sizecl,midval=TRUE)
+predf <- predfreq(pars,n=262,sizecl=mids,midval=TRUE)
+plot1(mids,predf,xlabel="Sizes",ylabel="Predicted Frequency",lwd=2)
 }
 }

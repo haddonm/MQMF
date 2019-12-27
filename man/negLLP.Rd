@@ -66,7 +66,7 @@ negLLP calculates the negative log-likelihood for normally
  optmod <- nlm(f=negLLP,p=param,funk=simpspm,initpar=param,
               notfixed=c(1,2,3,4),indat=abdat,logobs=log(abdat$cpue),
               typsize=magnitude(param),iterlim=1000)
- outfit(optmod,backtransform = TRUE)
+ outfit(optmod,backtran= TRUE) #backtran=TRUE is default anyway
   
  rval <- seq(0.325,0.45,0.0125)  # set up the test sequence
  columns <- c("r","K","Binit","sigma","-veLL")

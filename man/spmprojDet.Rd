@@ -41,6 +41,6 @@ spmprojDet conducts deterministic forward projections of the
                 schaefer=FALSE)
  out <- spm(bestmod$estimate,indat=abdat,schaefer=FALSE)
  catches <- seq(700,1000,50)
- spmprojDet(spmobj = out,projcatch=catches,projyr=10,plotout=FALSE)
+ spmprojDet(spmobj = out,projcatch=catches,projyr=10,plotout=TRUE)
 }
 }

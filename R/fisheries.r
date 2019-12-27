@@ -231,9 +231,9 @@ fabens <- function(par,indat,initL="len1",delT="deltat") {
 #'
 #' @examples
 #' \dontrun{
-#' ages <- seq(0,20,1)   # sigma is ignored here
-#' pars <- c(a=26.0,b=0.7,c=-0.5,sigma=1.0) # a, b, c, sigma; 
-#' cbind(ages,Gz(pars,ages))
+#'  ages <- seq(0,20,1)   # sigma is ignored here
+#'  pars <- c(a=26.0,b=2.8,c=-0.65,sigma=1.0) # a, b, c, sigma;
+#'  plot1(ages,Gz(pars,ages),xlabel="Age",ylabel="Length",lwd=2)
 #' }
 Gz <- function(p, ages) {
   return(p[1]*exp(-p[2]*exp(p[3]*ages)))
@@ -266,10 +266,13 @@ Gz <- function(p, ages) {
 #'
 #' @examples
 #' \dontrun{
-#'   data(blackisland)
-#'   param <- c(25, 130, 35, 3) # MaxDL, L50, delta, sigma
-#'   predDL <- fabens(param,blackisland,initL="len1",delT="deltat")
-#'   cbind(blackisland[1:15,"deltal"],predDl[1:15])
+#'  data(blackisland)
+#'  plot(blackisland$len1,blackisland$deltal,type="p",pch=16,
+#'  xlab="Initial Length mm",ylab="Growth Increment mm",panel.first=grid())
+#'  abline(h=0)
+#'  param <- c(25, 130, 35, 3) # MaxDL, L50, delta, sigma
+#'  predDL <- invl(param,blackisland,initL="len1",delT="deltat")
+#'  lines(blackisland$len1,predDL,col=2,lwd=2) 
 #' }
 invl <- function(par,indat,initL="len1",delT="deltat") {
   preddl <- (par[1] * indat[,delT])/
@@ -357,9 +360,9 @@ mature <- function(a,b,sizeage) {
 #'
 #' @examples
 #' \dontrun{
-#' ages <- seq(0,20,1)    # sigma is ignored here
-#' pars <- c(a=23.0,b=1.0,c=1.0,sigma=1.0) # a, b, c, sigma
-#' cbind(ages,mm(pars,ages))
+#'  ages <- seq(0,20,1)    # sigma is ignored here
+#'  pars <- c(a=23.0,b=1.0,c=1.0,sigma=1.0) # a, b, c, sigma
+#'  plot1(ages,mm(pars,ages),xlabel="Age",ylabel="Length",lwd=2)
 #' }
 mm <- function(p, ages) {
   return((p[1]*ages)/(p[2] + ages^p[3]))
@@ -422,7 +425,7 @@ mnnegLL <- function(obs,predf) {
 #'
 #' @examples
 #' \dontrun{
-#' data(abdat)
+#' data(abdat)  #expect an answer of -31.65035
 #' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
 #' negLL(pars=param,funk=simpspm,logobs=log(abdat[,"cpue"]),indat=abdat)
 #' }
@@ -464,7 +467,7 @@ negLL <- function(pars,funk,logobs,...) {
 #'
 #' @examples
 #' \dontrun{
-#' data(abdat)
+#' data(abdat)  #expect an answer of -31.65035
 #' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
 #' negLL1(pars=param,funk=simpspm,logobs=log(abdat[,"cpue"]),indat=abdat)
 #' }
@@ -511,10 +514,13 @@ negLL1 <- function(pars,funk,logobs,...) {
 #'
 #' @examples
 #' \dontrun{
-#'  data(kimura)
-#'  pars <- c(Linf=56.0,K=0.4,t0=0.2,sigma=1.5)
-#'  negNLL(pars,funk=vB,observed=kimura[,"length"],ages=kimura[,"age"])
-#'  # should be 19.20821
+#'  data(minnow)
+#'  pars <- c(89, 0.01,-15,3.75)  # ssq    = 785.6183
+#'  age <- minnow$week            # negNLL = 151.1713
+#'  ssq(funk=vB,observed=minnow$length,p=pars,ages=age)
+#'  negNLL(pars,funk=vB,observed=minnow$length,ages=age)
+#'  plot1(age,vB(pars,age),xlabel="Age",ylabel="Length",lwd=2)
+#'  points(age,minnow$length,pch=16,cex=1.2)
 #' }
 negNLL <- function(pars,funk,observed,...) {
   predobs <- funk(pars,...)
@@ -522,61 +528,11 @@ negNLL <- function(pars,funk,observed,...) {
   return(LL)
 } # end of negNLL
 
-#' @title negNLP  -ve log-likelihood for normally distributed variables
-#'
-#' @description negNLP Calculates the negative log-likelihood for normally
-#'     distributed variables. It assumes the presence of a function 'funk'
-#'     that will calculate predicted values of a dependent variable from a
-#'     vector of independent values. By having a separate vector of
-#'     parameters in 'initpar' and a vector of the indices of those 
-#'     parameters that will be fitted it is possible to fit only a subset 
-#'     of parameters. This is useful if generating a likelihood profile, or 
-#'     setting up a likelihood ratio test. With more complex models it is 
-#'     often a useful strategy to estimate the full number of parameters in 
-#'     a series of phases, increasing the number being estimated each time 
-#'     while keeping the rest fixed. 'negNLP' makes such phasing of the 
-#'     fitting of a model to data possible. This function can be applied 
-#'     directly to normally distributed data or to log-transformed data for 
-#'     log-normally distributed data. There is a slight cost in terms of 
-#'     time such that using negNLP takes approximate 0.4 milliseconds 
-#'     longer than when using negNL; and that is with either 13 or 1300 
-#'     observations.
-#'
-#' @param pars a vector containing the parameters being used in funk, 
-#'     plus an extra sigma which is the standard deviation of the normal 
-#'     random likelihoods in dnorm
-#' @param funk the function name that calculates the predicted values 
-#'     from the independent values
-#' @param independent the x-axis variable, that which in the model gives 
-#'     rise to the predicted values of the dependent variable
-#' @param dependent the observed values for comparison with the values 
-#'     that the model will predict for each of the independent values.
-#' @param initpar this defaults to the same as pars using all parameters
-#' @param notfixed a vector identifying the indices of the parameters to 
-#'     be fitted, which also defines those that will be fixed; defaults
-#'     to all parameters. If some need to be kept constant so as to 
-#'     generate a likelihood profile then omit their index from 
-#'     'notfixed'.
-#' @param ... required to allow funk to access its other parameters if
-#'     required without having to explicitly declare them in negNLP
-#'     
-#' @return the sum of the negative log-likelihoods using a normal PDF
-#' @export
-#' @examples
-#' \dontrun{
-#'   txt1 <- 'all example code should be able to run'
-#' }
-negNLP <- function(pars,funk,independent,dependent,initpar=pars,
-                   notfixed=c(1:length(pars)),...) {
-  predobs <- funk(pars,independent,initpar,notfixed,...)
-  LL <- -sum(dnorm(dependent,predobs,tail(pars,1),log=T))
-  return(LL)
-}
 
 #' @title negnormL an alternative -log-likelihood for normal errors
 #' 
 #' @description negnormL is an alternative to negNLL to produce
-#'     -ve log-likelihoods for nromal random errors. The two functions
+#'     -ve log-likelihoods for normal random errors. The two functions
 #'     differ by how they reference the independent and dependent 
 #'     variables. In negnormL only the observed (for comparison with the
 #'     predicted) is identified. This is to allow for different column
@@ -663,7 +619,7 @@ negnormL <- function(par,funk,indat,obs="deltal",...) {
 #'  optmod <- nlm(f=negLLP,p=param,funk=simpspm,initpar=param,
 #'               notfixed=c(1,2,3,4),indat=abdat,logobs=log(abdat$cpue),
 #'               typsize=magnitude(param),iterlim=1000)
-#'  outfit(optmod,backtransform = TRUE)
+#'  outfit(optmod,backtran= TRUE) #backtran=TRUE is default anyway
 #'   
 #'  rval <- seq(0.325,0.45,0.0125)  # set up the test sequence
 #'  columns <- c("r","K","Binit","sigma","-veLL")
@@ -714,8 +670,8 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
 #' @examples
 #' \dontrun{
 #'   B <- 1:10000
-#'   rec <- ricker(c(10,0.0002,B)
-#'   plot1(B,rec,xlabel="SpB",ylabel="Recruitment")
+#'   rec <- ricker(c(10,0.0002),B)
+#'   plot1(B,rec,xlabel="SpB",ylabel="Recruitment",lwd=2)
 #' }
 ricker <- function(p,B) {
   R <- p[1] * B * exp(-p[2] * B)
@@ -753,7 +709,9 @@ ricker <- function(p,B) {
 #' \dontrun{
 #'  L <- seq(50,160,1)
 #'  p <- c(a=0.07,b=0.2,c=1.0,alpha=100.0)
-#'  predm <- srug(p=p,sizeage=L)
+#'  predR <- srug(p=p,sizeage=L) # proportion of total
+#'  plot1(L,predR,xlabel="Length",ylabel="Prop of Recruitment")
+#'  abline(h=0.5) #visually confirm asymmetry
 #' }
 srug <- function(p,sizeage) { # p = a, b, c, alpha
   ans <- 1.0/((1.0 + p[4] * exp(-p[1]*sizeage^p[3]))^(1/p[2]))
@@ -792,9 +750,8 @@ srug <- function(p,sizeage) { # p = a, b, c, alpha
 #'
 #' @examples
 #' \dontrun{
-#'   data(minnow)
+#'   data(minnow)  # remember -13 is only 3+ months
 #'   pars <- c(89, 0.1,-13)  # ssq = 83477.84
-#'   # the use of ... obviously means we need to know the vB arguments
 #'   ssq(funk=vB,observed=minnow$length,p=pars,ages=minnow$week)
 #' }
 ssq <- function(funk,observed, ...) {
@@ -818,7 +775,7 @@ ssq <- function(funk,observed, ...) {
 #' \dontrun{
 #' ages <- seq(0,20,1)   # sigma is ignored here
 #' pars <- c(Linf=50,K=0.3,t0=-1.0,sigma=1.0) # Linf, K, t0, sigma
-#' cbind(ages,vB(pars,ages))
+#' plot1(ages,vB(pars,ages),xlabel="Age",ylabel="Length",lwd=2)
 #' }
 vB <- function(p,ages) {
   return(p[1] * (1 - exp(-p[2]*(ages-p[3]))))

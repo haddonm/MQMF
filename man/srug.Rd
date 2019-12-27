@@ -34,7 +34,9 @@ srug implements the Schnute and Richards (1990) unified
 \dontrun{
  L <- seq(50,160,1)
  p <- c(a=0.07,b=0.2,c=1.0,alpha=100.0)
- predm <- srug(p=p,sizeage=L)
+ predR <- srug(p=p,sizeage=L) # proportion of total
+ plot1(L,predR,xlabel="Length",ylabel="Prop of Recruitment")
+ abline(h=0.5) #visually confirm asymmetry
 }
 }
 \references{

@@ -26,7 +26,7 @@ tigers is a dataset of only 14 rows of
 
  \itemize{
    \item Stock-recruitment curves
-   \item Beverton-Holt
+   \item Beverton-Holt and Ricker Models
    \item Static model fitting
  }
 }
@@ -35,5 +35,6 @@ tigers is a dataset of only 14 rows of
  \dontrun{
  data(tigers)
  tigers
+ plot1(tigers$Spawn,tigers$Recruit,type="p",pch=16,cex=1.25)
 }
 }

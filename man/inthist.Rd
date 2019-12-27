@@ -58,7 +58,7 @@ inthist a replacement for the hist function for use with
 \examples{
 \dontrun{
  x <- trunc(runif(1000)*10) + 1
- plotprep(width=6,height=4,plots=c(1,1))
+ #plotprep(width=6,height=4)
  inthist(x,col="grey",border=3,width=0.75,xlabel="Random Uniform",
          ylabel="Frequency")
 }

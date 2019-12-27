@@ -39,9 +39,9 @@ spmphaseplot uses the output from plotspmmod to plot up
 \examples{
 \dontrun{
   data(dataspm)
-  pars <- c(0.164,6740,3564)
-  bestSP <- optim(par=pars,fn=negLLM,callfun=simpspm,indat=dataspm)
-  ans <- plotspmmod(bestSP$par,dataspm,schaefer=TRUE,addrmse=TRUE)
+  pars <- log(c(0.164,6740,3564,0.05))
+  bestSP <- fitSPM(pars,fish=dataspm,funkone=TRUE)
+  ans <- plotspmmod(bestSP$estimate,dataspm,schaefer=TRUE,addrmse=TRUE)
   str(ans)
   outs <- spmphaseplot(ans,fnt=7)
   str(outs)

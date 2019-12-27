@@ -76,17 +76,11 @@ The MQMF package provides a set of functions that
 \describe{
   \item{abdat}{a fisheries dataset with a fish data.frame, resilience,
        and a spsname.}
-  \item{fishdat}{A fisheries data set containing fisheries dependent
-      data, biological parameters and biological properties}
-  \item{invert}{ Fisheris dependent data, catches, cpue, etc}
-  \item{kimura}{ Simplified length-at-age data}
+  \item{dataspm}{A fisheries data set containing fisheries dependent
+      data for pink ling}
   \item{LatA}{ A dataset containing the sex, the length and the
       estimated age for 576 redfish, (Centroberyx affinis) from
       eastern Australia sampled in 1997.}
-  \item{plaice}{ A dataset containing the fish, glb, props, agedata,
-      and lendata for North sea plaice. Data taken from Beverton and
-      Holt (1957). The primary use of this data set is to illustrate
-      the use of catch curves.}
   \item{tigers}{ A dataset from Penn and Caputi, 1986, containing the
       stock recruitment data for the fiurst example of fitting a
       model to data using Log-Normal Likelihoods}

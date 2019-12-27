@@ -34,5 +34,6 @@ parasympt generates N vectors from a multi-variate normal
   out <- spm(bestmod$estimate,indat=abdat,schaefer=schf)
   matpar <- parasympt(bestmod,1000)
   head(matpar,15)
+  pairs(matpar)
 }
 }

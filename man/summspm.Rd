@@ -23,12 +23,11 @@ summspm extracts critical statistics from output of
 \dontrun{
 data(dataspm)
 plotfishM(dataspm,spsname="Pink Ling")
-pars <- c(0.264,4740,3064)
+pars <- log(c(0.264,4740,3064,0.05))
 ans <- plotspmmod(pars,dataspm,schaefer=FALSE)
-bestSP <- optim(par=pars,fn=negLLM,callfun=simpspm,indat=dataspm,
-                schaefer=FALSE)
+bestSP <- fitSPM(pars,dataspm,schaefer=FALSE,maxiter=1000)
 outfit(bestSP)
-ans <- plotspmmod(bestSP$par,dataspm,schaefer=FALSE)
+ans <- plotspmmod(bestSP$estimate,dataspm,schaefer=FALSE)
 summspm(ans)
 }
 }

@@ -49,18 +49,12 @@ spm calculates the dynamics using a Schaefer of Fox
 }
 \examples{
 \dontrun{
-year <- 1985:2008
-catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,
-           645,961,940,912,955,935,940,952,1030,985)
-cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,
-          0.8582,0.8876,1.0126,1.1533,1.2326,1.2764,1.3307,1.3538,
-          1.2648,1.2510,1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)
-dat <- makespmdata(cbind(year,catch,cpue))
-pars <- c(0.35,7800,3500)
-ans <- plotspmmod(pars,dat)
-bestSP <- optim(par=pars,fn=ssq,callfun=simpspm,indat=dat)
-bestSP
-ans <- plotspmmod(bestSP$par,dat,schaefer=TRUE)
-str(ans)
+ data(abdat)   # spm is used inside plotspmmod
+ pars <- log(c(0.35,7800,3500,0.05))
+ ans <- plotspmmod(pars,abdat) #not fitted, just guessed
+ bestSP <- fitSPM(par=pars,fish=abdat,funk=simpspm)
+ outfit(bestSP)  # best fitting estimates
+ ans <- plotspmmod(bestSP$estimate,abdat,schaefer=TRUE)
+ str(ans)
 }
 }

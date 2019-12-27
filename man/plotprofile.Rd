@@ -52,7 +52,6 @@ plotprofile simplifies plotting out the likelihood
 \examples{
 \dontrun{
  data(abdat)
- fish <- abdat$fish
  rval <- seq(0.325,0.45,0.001)
  ntrial <- length(rval)
  columns <- c("r","K","Binit","sigma","-veLL")
@@ -62,12 +61,12 @@ plotprofile simplifies plotting out the likelihood
  for (i in 1:ntrial) {  #i <- 1
    param <- log(c(rval[i],bestest[2:4])) 
    parinit <- param    
-   bestmodP <- nlm(f=negLLP,p=param,funk=simpspmP,initpar=parinit,
-                  indat=fish,logobs=log(fish$cpue),notfixed=c(2:4),
+   bestmodP <- nlm(f=negLLP,p=param,funk=simpspm,initpar=parinit,
+                  indat=abdat,logobs=log(abdat$cpue),notfixed=c(2:4),
                   typsize=magnitude(param),iterlim=1000)
    bestest <- exp(bestmodP$estimate)
    result[i,] <- c(bestest,bestmodP$minimum)
  }
- plotprofile(result,var="r",defpar=TRUE)
+ plotprofile(result,var="r",defpar=TRUE,lwd=2)
 }
 }

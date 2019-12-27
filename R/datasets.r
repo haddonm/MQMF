@@ -221,7 +221,8 @@ NULL
 #' @examples
 #'  \dontrun{
 #'  data(minnow)
-#'  minnow
+#'  plot1(minnow$week,minnow$length,type="p",pch=16,cex=1.2,
+#'        xlabel="Week",ylabel="Length mm")
 #' }
 NULL
 
@@ -268,6 +269,10 @@ NULL
 #'  \dontrun{
 #'  data(npf)
 #'  npf
+#'  plot1(npf$year,npf$tiger,xlabel="Year",ylabel="Tonnes",lwd=2)
+#'  lines(npf$year,npf$endeavour,col=2,lwd=2)
+#'  legend("topleft",c("Tiger","Endeavour"),col=c(1,2),lwd=3,
+#'         bty="n",cex=1.5)
 #' }
 NULL
 
@@ -374,7 +379,9 @@ NULL
 #'     along the Tasmanian west coast. All data was collected in 
 #'     February 1995, but details, such as site name, accurate 
 #'     location, statistical block, year, month, and other 
-#'     details have been omitted for brevity.
+#'     details have been omitted for brevity. See section on maturity
+#'     within the Static Models chapter for detailed use of this
+#'     data-set.
 #'
 #' @name tasab
 #' 
@@ -428,7 +435,7 @@ NULL
 #' @section Subjects:
 #'  \itemize{
 #'    \item Stock-recruitment curves
-#'    \item Beverton-Holt
+#'    \item Beverton-Holt and Ricker Models
 #'    \item Static model fitting
 #'  }
 #'  
@@ -442,6 +449,7 @@ NULL
 #'  \dontrun{
 #'  data(tigers)
 #'  tigers
+#'  plot1(tigers$Spawn,tigers$Recruit,type="p",pch=16,cex=1.25)
 #' }
 NULL
 

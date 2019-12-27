@@ -26,7 +26,7 @@ the negative log-likelihood, for use in an optimizer, eg nlm
 }
 \description{
 negnormL is an alternative to negNLL to produce
-    -ve log-likelihoods for nromal random errors. The two functions
+    -ve log-likelihoods for normal random errors. The two functions
     differ by how they reference the independent and dependent 
     variables. In negnormL only the observed (for comparison with the
     predicted) is identified. This is to allow for different column

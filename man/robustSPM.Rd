@@ -54,9 +54,10 @@ robustSPM conducts a robustness test on the quality of
   data(dataspm)
   param <- log(c(r=0.24,K=5174,Binit=2846,sigma=0.164))
   ans <- fitSPM(pars=param,fish=dataspm,schaefer=TRUE,maxiter=1000)
-  out <- robustSPM(ans$estimate,dataspm,N=10,scaler=40,console=TRUE,
+  out <- robustSPM(ans$estimate,dataspm,N=50,scaler=40,console=TRUE,
                    schaefer=TRUE)
   str(out)
-  print(out$results)
+  print(out$results[40:50,])
+  pairs(out$results[,c(6:8,11)])
 } 
 }

@@ -189,7 +189,7 @@ addlnorm <- function(inhist,xdata,inc=0.01) {
 #' @examples
 #' \dontrun{
 #'  x <- trunc(runif(1000)*10) + 1
-#'  plotprep(width=6,height=4,plots=c(1,1))
+#'  #plotprep(width=6,height=4)
 #'  inthist(x,col="grey",border=3,width=0.75,xlabel="Random Uniform",
 #'          ylabel="Frequency")
 #' }
@@ -260,42 +260,14 @@ inthist <- function(x,col=1,border=NULL,width=1,xlabel="",ylabel="",
 }  # end of inthist
 
 
-#' @title newplot simple floating window setup a plot
-#'
-#' @description newplot is a bare-bones setup routine to generate a plot in
-#'     RStudio using a floating window. If you want to alter the default par
-#'     settings then you can use either setplot to get suitable syntax or,
-#'     more simply, use parsyn which only give a template for the par syntax
-#' @param width defaults to 6 inches = 15.24cm - width of plot
-#' @param height defaults to 3.6 inches = 9.144cm - height of plot
-#' @param newdev reuse a previously defined graphics device or make a new 
-#'     one; defaults to TRUE
-#' @return Checks for and sets up a graphics device and sets the default 
-#'     plotting par values. This changes the current plotting options!
-#' @export
-#' @examples
-#' \dontrun{
-#'  x <- rnorm(1000,mean=0,sd=1.0)
-#'  plotprep()
-#'  hist(x,breaks=30,main="",col=2)
-#' }
-newplot <- function(width=5,height=3.15,newdev=TRUE) {
-  if  ((names(dev.cur()) != "null device") & (newdev)) 
-    suppressWarnings(dev.off())
-  if (names(dev.cur()) %in% c("null device","RStudioGD"))
-    dev.new(width=width,height=height,noRStudioGD = TRUE)
-  par(mfrow=c(1,1),mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))
-  par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)
-} # end of new_plot
-
-
 #' @title panel.cor is a version of that given in the pairs help
 #' 
 #' @description panel.cor is a panel function modified from that 
 #'     described in the help file for the pairs function from the 
 #'     graphics package. This has been customized to show that 
-#'     one can, and is used to calculate the correlations between 
-#'     the variables included in a pairs plot.
+#'     one can make such customizations, and this one is used to 
+#'     calculate the correlations between the variables included 
+#'     in a pairs plot.
 #'
 #' @param x the first variable - provided by pairs
 #' @param y the second variable, provided by pairs, see examples
@@ -309,8 +281,8 @@ newplot <- function(width=5,height=3.15,newdev=TRUE) {
 #' @examples
 #' \dontrun{
 #'   dat <- matrix(rnorm(900,mean=5,sd=0.5),nrow=300,ncol=3)
-#'   pairs(dat[,1:3],lower.panel=panel.smooth,
-#'         upper.panel=panel.cor,gap=0.25,lwd=2) 
+#'   pairs(dat[,1:3],lower.panel=panel.smooth,  # all should be
+#'         upper.panel=panel.cor,gap=0.25,lwd=2) #low correlations
 #' }
 panel.cor <- function(x, y, digits = 3, ...) {
   usr <- par("usr"); on.exit(par(usr)) #store par values
@@ -346,7 +318,11 @@ panel.cor <- function(x, y, digits = 3, ...) {
 #'
 #' @examples
 #' \dontrun{
-#'  parset()
+#'  x <- rnorm(100,mean=5,sd=0.5)
+#'  y <- rnorm(100,mean=5,sd=0.5)
+#'  parset(plots=c(1,2))
+#'  plot1(x,y,defpar=FALSE)
+#'  plot1(y,x,defpar=FALSE)
 #'  parsyn()
 #' }
 parset <- function(plots=c(1,1),cex=0.75,font=7,outmargin=c(0,0,0,0),
@@ -566,7 +542,6 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
 #' @examples
 #' \dontrun{
 #'  data(abdat)
-#'  fish <- abdat$fish
 #'  rval <- seq(0.325,0.45,0.001)
 #'  ntrial <- length(rval)
 #'  columns <- c("r","K","Binit","sigma","-veLL")
@@ -576,13 +551,13 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
 #'  for (i in 1:ntrial) {  #i <- 1
 #'    param <- log(c(rval[i],bestest[2:4])) 
 #'    parinit <- param    
-#'    bestmodP <- nlm(f=negLLP,p=param,funk=simpspmP,initpar=parinit,
-#'                   indat=fish,logobs=log(fish$cpue),notfixed=c(2:4),
+#'    bestmodP <- nlm(f=negLLP,p=param,funk=simpspm,initpar=parinit,
+#'                   indat=abdat,logobs=log(abdat$cpue),notfixed=c(2:4),
 #'                   typsize=magnitude(param),iterlim=1000)
 #'    bestest <- exp(bestmodP$estimate)
 #'    result[i,] <- c(bestest,bestmodP$minimum)
 #'  }
-#'  plotprofile(result,var="r",defpar=TRUE)
+#'  plotprofile(result,var="r",defpar=TRUE,lwd=2)
 #' }
 plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
                          ylabel="-ve Log-Likelihood",like="-veLL",
@@ -602,3 +577,43 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
                   round(prof[(mid+right-1),var],digit[3]))
   mtext(label,side=3,outer=FALSE,line=-1.1,cex=0.9,font=7)
 } # end of plotpreofile
+
+#' @title setpalette is a shortcut for altering the palette to R4
+#' 
+#' @description setpalette is a shortcut for changing the 
+#'     default color palette to the new R version 4.0.0 version
+#'     before it comes out. The new palette was described in a
+#'     blog post at developer.r-project.org and provides less 
+#'     garish and a more visible set of default colours that can
+#'     be called using the numbers 1 - 8. An important point is 
+#'     that this alters the default colours for all sessions
+#'     until a restart of R.     
+#'     
+#' @param x either "default", "R3", or "R4", with R4 as the 
+#'     default value. Use "default" or "R3" to revert back to the
+#'     standard R version 3. values.
+#'
+#' @return nothing but it does alter the base palette
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'    setpalette("R3")
+#'    plot(1:8,rep(0.25,8),type="p",pch=16,cex=5,col=c(1:8))
+#'    setpalette("R4")
+#'    points(1:8,rep(0.3,8),pch=16,cex=5,col=c(1:8))
+#' }
+setpalette <- function(x="R4") { # x="R4"
+  choice <- c("default","R3","R4")
+  if (x %in% choice) {
+    if ((x == "R3") | (x == "default")) {
+      palette("default")
+    }
+    if (x == "R4") {
+      palette(c("#000000", "#DF536B", "#61D04F", "#2297E6",
+                "#28E2E5", "#CD0BBC", "#EEC21F", "#9E9E9E"))
+    }
+  } else {
+    cat("Currently options are default, R3, or R4 \n")
+  }
+} # end of setpalette

@@ -163,8 +163,8 @@ getlag <- function(fish,maxlag=10,plotout=TRUE,indexI=1) {
 #' getMSY(param,p=1e-08)
 #' }
 getMSY <- function(pars,p=1.0) {
-  msy <- (pars[1]*pars[2]/((p+1)^((p+1)/p)))
-  return(msy=msy)
+  msy <- (pars[1]*pars[2])/((p+1)^((p+1)/p))
+  return(msy)
 } # end of getMSY
 
 #' @title getrmse calculates the rmse of the input 'invar' series
@@ -217,60 +217,6 @@ getrmse <- function(indat,invar="cpue",inyr="year"){
 } # end of getrmseCE
 
 
-#' @title negLLM  -ve log-likelihood for normally distributed variables
-#'
-#' @description A generalized functions for calculating the negative
-#'    log-likelihood for normally distributed variables. It uses an input
-#'    function 'funk' that will calculate predicted values of a dependent
-#'    variable from a vector of independent values. A penalty is placed on
-#'    the r parameter to prevent it becoming negative.
-#' @param inp a vector containing the parameters being used in funk, plus
-#'    an extra sigma which is the standard deviation of the normal random
-#'    likelihoods in dnorm
-#' @param callfun the function that calculates the predicted values from
-#'    the input data
-#' @param indat the data set containing the 'year', 'catch', and 'cpue'
-#' @param init this defaults to the same as pars - using all parameters
-#' @param pickparam a vector identifying the parameters to be fitted; 
-#'     defaults to all parameters. If some need to be kept constant omit 
-#'     their index from pickparam.
-#' @param schaefer a boolean that determines whether a Schaefer model (p=1)
-#'     is used or if FALSE the Fox model (p=1e-08).
-#'
-#' @return sum of the negative log-likelihoods using a normal PDF appled
-#'     to the log transformed CPUE.
-#' @export
-#' 
-#' @examples
-#' \dontrun{
-#' data(dataspm)
-#' dataspm
-#' colnames(dataspm) <- tolower(colnames(dataspm))
-#' pars <- c(r=0.2,K=6000,Binit=2800)
-#' negLLM(pars,dataspm,simpspm,schaefer=FALSE)  # = -0.8884016
-#' negLLM(pars,dataspm,simpspm)  # should be -11.12203
-#' }
-negLLM <- function(inp,indat,callfun,init=inp,
-                  pickparam=c(1:length(inp)),schaefer=TRUE) {
-   celoc <- grep("cpue",colnames(indat))
-   nce <- length(celoc)
-   param=init
-   param[pickparam] <- inp[pickparam]
-   predobs <- callfun(param,indat,schaefer=schaefer)
-   pick <- which(indat[,celoc[1]] > 0)
-   LLI <- -sum(dnorm(log(indat[pick,celoc[1]]),log(predobs[pick,1]),
-                     exp(inp[2+nce+1]),log=TRUE));
-   if (nce > 1) {
-      for (i in 2:nce) {
-         pick <- which(indat[,celoc[i]] > 0)
-         LLI <-  LLI + -sum(dnorm(log(indat[pick,celoc[i]]),
-                                  log(predobs[pick,i]),
-                                  exp(inp[2+nce+i]), log=TRUE));
-      }
-   }
-   LL <- LLI + penalty0(exp(inp[1]))
-   return(LL)
-} # end of negLLM
 
 #' @title parasympt generates N vectors from a multi-variate normal
 #' 
@@ -299,6 +245,7 @@ negLLM <- function(inp,indat,callfun,init=inp,
 #'   out <- spm(bestmod$estimate,indat=abdat,schaefer=schf)
 #'   matpar <- parasympt(bestmod,1000)
 #'   head(matpar,15)
+#'   pairs(matpar)
 #' }
 parasympt <- function(bestmod,N) {
   optpar <- bestmod$estimate
@@ -409,8 +356,6 @@ plotlag <- function(x, driver="catch",react="cpue",lag=0,interval="year",
 #' @param indat a matrix with at least columns 'year', 'catch', and 'cpue'
 #' @param schaefer if TRUE, the default, then the Schaefer SPM is used. 
 #'     If FALSE then an approximate Fox SPM would be used
-#' @param extern defaults to FALSE, determines whether to plot the graphs
-#'     in a separate window rather than within RStudio or an Rmd file
 #' @param limit defaults to the Commonwealth limit of 0.2B0.
 #' @param target defaults to the Commonwealth target of 0.48B0. Determines
 #'     the green line plotted on the exploitable biomass plot.
@@ -435,7 +380,7 @@ plotlag <- function(x, driver="catch",react="cpue",lag=0,interval="year",
 #' \dontrun{
 #' data(dataspm)
 #' pars <- log(c(0.264,4740,3064,0.2))
-#' ans <- plotspmmod(pars,dataspm,schaefer=TRUE,extern=TRUE,plotprod=TRUE)
+#' ans <- plotspmmod(pars,dataspm,schaefer=TRUE,plotprod=TRUE)
 #' best <- nlm(negLL,pars,funk=simpspm,indat=dataspm,
 #'        logobs=log(dataspm[,"cpue"]),steptol=1e-05)
 #' outfit(best,backtransform = TRUE)
@@ -443,7 +388,7 @@ plotlag <- function(x, driver="catch",react="cpue",lag=0,interval="year",
 #'                  plotprod=FALSE,addrmse=TRUE)
 #' str(ans)
 #' }
-plotspmmod <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
+plotspmmod <- function(inp,indat,schaefer=TRUE,limit=0.2,
                       target=0.48,addrmse=FALSE,fnt=7,plotout=TRUE,
                       vline=0,plotprod=TRUE,maxy=0) {
   if(schaefer) p <- 1 else p <- 1e-8
@@ -482,15 +427,6 @@ plotspmmod <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
   Dmsy <- xd[pick]
   Dcurr <- tail(depl,1)
   if (plotout) {
-    if (extern) { # plot to a window external to RStudio
-      if (names(dev.cur()) %in% c("null device", "RStudioGD")) {
-        if (plotprod) {
-          dev.new(width = 6.5, height = 6.5, noRStudioGD = TRUE)
-        } else {
-          dev.new(width = 6.5, height = 4.5, noRStudioGD = TRUE)
-        }
-      }
-    }
     if (plotprod) par(mfcol= c(3,2)) else par(mfcol= c(2,2))
     par(mai=c(0.35,0.4,0.1,0.05),oma=c(0.0,0.0,0,0))
     par(cex=0.75, mgp=c(1.25,0.35,0), font.axis=7,font.lab=7,font=fnt)
@@ -591,11 +527,6 @@ plotspmmod <- function(inp,indat,schaefer=TRUE,extern=FALSE,limit=0.2,
       abline(h=c(Ctarg,msy),col=c(3,2),lty=2)
       title(ylab=list("Surplus Production(t)", cex=1.0, col=1, font=fnt),
             xlab=list("Depletion", cex=1.0, col=1, font=fnt))
-    }
-    if (lenfile > 0) {
-      outfile <- paste0(getwd(),"/",filename)
-      print(outfile)
-      dev.off()
     }
   }
   result <- list(out,cbind(x,y),rmseresid,msy,Bmsy,Dmsy,Blim,Btarg,Ctarg,
@@ -743,10 +674,11 @@ plotspmdat <- function(x, ...){
 #'   data(dataspm)
 #'   param <- log(c(r=0.24,K=5174,Binit=2846,sigma=0.164))
 #'   ans <- fitSPM(pars=param,fish=dataspm,schaefer=TRUE,maxiter=1000)
-#'   out <- robustSPM(ans$estimate,dataspm,N=10,scaler=40,console=TRUE,
+#'   out <- robustSPM(ans$estimate,dataspm,N=50,scaler=40,console=TRUE,
 #'                    schaefer=TRUE)
 #'   str(out)
-#'   print(out$results)
+#'   print(out$results[40:50,])
+#'   pairs(out$results[,c(6:8,11)])
 #' } 
 robustSPM <- function(inpar,fish,N=10,scaler=40,console=TRUE,
                       schaefer=TRUE,funk=simpspm,funkone=FALSE,
@@ -1017,19 +949,13 @@ simpspmO <- function(par,indat,schaefer=TRUE,
 #'
 #' @examples
 #' \dontrun{
-#' year <- 1985:2008
-#' catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,
-#'            645,961,940,912,955,935,940,952,1030,985)
-#' cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,
-#'           0.8582,0.8876,1.0126,1.1533,1.2326,1.2764,1.3307,1.3538,
-#'           1.2648,1.2510,1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)
-#' dat <- makespmdata(cbind(year,catch,cpue))
-#' pars <- c(0.35,7800,3500)
-#' ans <- plotspmmod(pars,dat)
-#' bestSP <- optim(par=pars,fn=ssq,callfun=simpspm,indat=dat)
-#' bestSP
-#' ans <- plotspmmod(bestSP$par,dat,schaefer=TRUE)
-#' str(ans)
+#'  data(abdat)   # spm is used inside plotspmmod
+#'  pars <- log(c(0.35,7800,3500,0.05))
+#'  ans <- plotspmmod(pars,abdat) #not fitted, just guessed
+#'  bestSP <- fitSPM(par=pars,fish=abdat,funk=simpspm)
+#'  outfit(bestSP)  # best fitting estimates
+#'  ans <- plotspmmod(bestSP$estimate,abdat,schaefer=TRUE)
+#'  str(ans)
 #' }
 spm <- function(inp,indat,schaefer=TRUE,
                 year="year",cats="catch",index="cpue") {
@@ -1109,13 +1035,13 @@ spm <- function(inp,indat,schaefer=TRUE,
 #' @examples
 #' \dontrun{
 #'  data(dataspm)
-#'  pars <- c(r=0.2,K=6000,Binit=2800)
+#'  pars <- log(c(r=0.2,K=6000,Binit=2800))
 #'  ans <- fitSPM(pars,dataspm,schaefer=TRUE,maxiter=1000)
-#'  boots <- spmboot(ans$par,fishery=dataspm,iter=500,schaefer=TRUE)
+#'  boots <- spmboot(ans$estimate,fishery=dataspm,iter=500,schaefer=TRUE)
 #'  dynam <- boots$dynam
 #'  bootpar <- boots$bootpar
 #'  MSY <- bootpar[,"r"]*bootpar[,"K"]/4
-#'  Depl <- dynam[,length(fish[,"year"]),"Depletion"] # pick the last year
+#'  Depl <- dynam[,length(fish[,"year"]),"Depletion"] #pick final year
 #'  bootpar <- cbind(bootpar,MSY,Depl)
 #'  rows <- colnames(bootpar)
 #'  columns <- c(c(0.025,0.05,0.5,0.95,0.975),"Mean")
@@ -1168,7 +1094,8 @@ spmboot <- function(optpar,fishery,iter=100,schaefer=TRUE) {
 
 #' @title spmCE - calculates the dynamics using a Schaefer or Fox model
 #'
-#' @description spmCE calculates the dynamics using a Schaefer of Fox model.
+#' @description spmCE calculates the dynamics using a Schaefer of Fox model
+#'     and is used instead of simpspm whenthere are multiple indeex vectors.
 #'     The outputs include  predicted Biomass, year, catch, cpue, predicted
 #'     cpue, contributions to q, ssq, and depletion levels. Generally it
 #'     would be more sensible to use simpspm when fitting a Schaefer model 
@@ -1198,24 +1125,16 @@ spmboot <- function(optpar,fishery,iter=100,schaefer=TRUE) {
 #'
 #' @examples
 #' \dontrun{
-#' year <- 1985:2008
-#' catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,
-#'            645,961,940,912,955,935,940,952,1030,985)
-#' cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,0.8582,
-#'           0.8876,1.0126,1.1533,1.2326,1.2764,1.3307,1.3538,1.2648,1.2510,
-#'           1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)
-#' dat <- makespmdata(cbind(year,catch,cpue))
-#' pars <- c(0.35,7800,3500)
+#' data(abdat)
+#' pars <- log(c(0.35,7800,3500))
 #' ans <- plotspmmod(pars,dat)
-#' bestSP <- optim(par=pars,fn=ssq,callfun=simpspm,indat=dat)
-#' bestSP
-#' ans <- plotspmmod(bestSP$par,dat,schaefer=TRUE)
-#' str(ans)
+#'  bestSP <- fitSPM(par=pars,fish=abdat,funk=simpspm)
+#'  outfit(bestSP)  # best fitting estimates
+#'  ans <- plotspmmod(bestSP$estimate,abdat,schaefer=TRUE)
+#'  str(ans)
 #' }
 spmCE <- function(inp,indat,schaefer=TRUE,
                   year="year",cats="catch",index="cpue") {
-  #  inp=param; indat=schaef; schaefer=TRUE;
-  #  index="cpue"; year="year";cats="catch"
   celoc <- grep(index,colnames(indat))
   nce <- length(celoc)
   npar <- 2 + nce + nce   # r + K + nce_q + nce_sigma
@@ -1302,9 +1221,9 @@ spmCE <- function(inp,indat,schaefer=TRUE,
 #' @examples
 #' \dontrun{
 #'   data(dataspm)
-#'   pars <- c(0.164,6740,3564)
-#'   bestSP <- optim(par=pars,fn=negLLM,callfun=simpspm,indat=dataspm)
-#'   ans <- plotspmmod(bestSP$par,dataspm,schaefer=TRUE,addrmse=TRUE)
+#'   pars <- log(c(0.164,6740,3564,0.05))
+#'   bestSP <- fitSPM(pars,fish=dataspm,funkone=TRUE)
+#'   ans <- plotspmmod(bestSP$estimate,dataspm,schaefer=TRUE,addrmse=TRUE)
 #'   str(ans)
 #'   outs <- spmphaseplot(ans,fnt=7)
 #'   str(outs)
@@ -1369,96 +1288,6 @@ spmphaseplot <- function(answer,Blim=0.2,Btarg=0.5,filename="",resol=200,
    return(invisible(result))
 } # end of spmphaseplot
 
-#' @title spmMult - calculates the dynamics using a Schaefer or Fox model
-#'
-#' @description spmMult calculates the dynamics using a Schaefer or Fox 
-#'     model. The outputs include  predicted Biomass, year, catch, cpue, 
-#'     predicted cpue, contributions to q, ssq, and depletion levels. 
-#'     Generally it would be more sensible to use simpspm when fitting a 
-#'     Schaefer model and simpfox when fitting a Fox model as those 
-#'     functions are designed to generate only the predicted cpue required
-#'     by the functions ssq and negLLM, but the example shows how it
-#'     could be used. the function spm is used inside 'plotspmmod'
-#'     and could be used alone, to generate a fullist of model outputs
-#'     after the model has been fitted.
-#'
-#' @param inp a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), you
-#'     would use the latter if it was suspected that the fishery data 
-#'     started after some initial depletion had occurred.
-#' @param indat a matrix with at least columns 'year', 'catch', and 'cpue'
-#' @param schaefer a logical value determining whether the spm is to be a
-#'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
-#'     The default=TRUE
-#'
-#' @return a list of five objects; outmat the matrix with the dynamics 
-#'     results, q catchability, msy the maximum sustainable yield, the 
-#'     parameter values, and sumout, which contains r, K, B0, msy, p, q, 
-#'     Depl, FinalB, and InitDepl
-#'
-#' @examples
-#' \dontrun{
-#' year <- 1985:2008
-#' catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,645,
-#'            961,940,912,955,935,940,952,1030,985)
-#' cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,0.8582,
-#'           0.8876,1.0126,1.1533,1.2326,1.2764,1.3307,1.3538,1.2648,1.2510,
-#'           1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)
-#' dat <- makespmdata(cbind(year,catch,cpue))
-#' pars <- c(0.35,7800,3500)
-#' ans <- plotspmmod(pars,dat)
-#' bestSP <- optim(par=pars,fn=ssq,callfun=simpspm,indat=dat)
-#' bestSP
-#' ans <- plotspmmod(bestSP$par,dat,schaefer=TRUE)
-#' str(ans)
-#' }
-spmMult <- function(inp,indat,schaefer=TRUE) {
-   celoc <- grep("cpue",colnames(indat))
-   nce <- length(celoc)
-   years <- indat[,"year"]
-   catch <- indat[,"catch"]
-   nyrs <- length(years)
-   biom <- numeric(nyrs)
-   predCE <- matrix(NA,nrow=nyrs,ncol=nce)
-   qs <- numeric(nce)
-   columns <- c(c("ModelB","Catch"),paste0("CPUE",1:nce),paste0("PredCE",1:nce),
-                "Harvest","Depletion")
-   answer <- matrix(0,nrow=nyrs,ncol=length(columns),dimnames=list(years,columns))
-   answer[,"Catch"] <- indat[,"catch"]
-   r <- max(inp[1],0.01)
-   K <- inp[2]
-   biom[1] <- inp[2]
-   if (length(inp) > 3) biom[1] <- inp[3]
-   if(schaefer) p <- 1 else p <- 1e-8
-   for (index in 2:nyrs) {
-      Bt <- biom[index-1]
-      biom[index] <- max(Bt + ((r/p)*Bt*(1-(Bt/K)^p)-catch[index-1]),40)
-   }
-   for (i in 1:nce) {
-      pick <- which(indat[,celoc[i]] > 0)
-      qcontrib <- log(indat[pick,celoc[i]]/biom[pick]) 
-      qs[i] <- exp(mean(qcontrib,na.rm=TRUE))
-      predCE[pick,i] <- biom[pick] * qs[i]
-   }
-   answer[,"ModelB"] <- biom
-   answer[,"Depletion"] <- biom/K
-   answer[,"Harvest"] <- catch/biom
-   for (i in 1:nce) {
-      answer[,(2 + i)] <- indat[,celoc[i]]
-      answer[,(2 + nce + i)] <- predCE[,i]
-   }
-   msy <- r*K/((p+1)^((p+1)/p))
-   if (length(inp) == 2) { copyp <- c(inp,inp[2])
-   } else { copyp <-  inp
-   }
-   sumout <- c(copyp,msy,p,qs,answer[nyrs,"Depletion"],
-               answer[1,"Depletion"], answer[nyrs,"ModelB"])
-   names(sumout) <- c("r","K","B0","msy","p","q","FinalDepl","InitDepl",
-                      "FinalB")
-   output <- list(answer,qs,msy,inp,sumout)
-   names(output) <- c("outmat","qs","msy","parameters","sumout")
-   return(output)
-} # End of spmMult
-
 #' @title spmproj calculates biomass trajectories for replicate parameters
 #' 
 #' @description spmproj uses a matrix of parameter vectors to project 
@@ -1492,7 +1321,7 @@ spmMult <- function(inp,indat,schaefer=TRUE) {
 #'   out <- spm(bestmod$estimate,indat=abdat,schaefer=schf)
 #'   matpar <- parasympt(bestmod,1000)
 #'   projs <- spmproj(matpar,abdat,projyr=10,constC=900)
-#'   head(projs)
+#'   plotproj(projs,out)
 #' }  
 spmproj <- function(parmat,indat,constC,projyr=10,
                     year="year",cats="catch",index="cpue") {
@@ -1543,7 +1372,7 @@ spmproj <- function(parmat,indat,constC,projyr=10,
 #'                 schaefer=FALSE)
 #'  out <- spm(bestmod$estimate,indat=abdat,schaefer=FALSE)
 #'  catches <- seq(700,1000,50)
-#'  spmprojDet(spmobj = out,projcatch=catches,projyr=10,plotout=FALSE)
+#'  spmprojDet(spmobj = out,projcatch=catches,projyr=10,plotout=TRUE)
 #' }
 spmprojDet <- function(spmobj,projcatch,projyr=10,plotout=FALSE,useft=7) {
   if (spmobj$schaefer) p <- 1.0 else p <- 1e-08
@@ -1602,12 +1431,11 @@ spmprojDet <- function(spmobj,projcatch,projyr=10,plotout=FALSE,useft=7) {
 #' \dontrun{
 #' data(dataspm)
 #' plotfishM(dataspm,spsname="Pink Ling")
-#' pars <- c(0.264,4740,3064)
+#' pars <- log(c(0.264,4740,3064,0.05))
 #' ans <- plotspmmod(pars,dataspm,schaefer=FALSE)
-#' bestSP <- optim(par=pars,fn=negLLM,callfun=simpspm,indat=dataspm,
-#'                 schaefer=FALSE)
+#' bestSP <- fitSPM(pars,dataspm,schaefer=FALSE,maxiter=1000)
 #' outfit(bestSP)
-#' ans <- plotspmmod(bestSP$par,dataspm,schaefer=FALSE)
+#' ans <- plotspmmod(bestSP$estimate,dataspm,schaefer=FALSE)
 #' summspm(ans)
 #' }
 summspm <- function(ans) {

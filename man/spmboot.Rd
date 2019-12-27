@@ -38,13 +38,13 @@ spmboot conducts a bootstrap analysis on a spm model. It
 \examples{
 \dontrun{
  data(dataspm)
- pars <- c(r=0.2,K=6000,Binit=2800)
+ pars <- log(c(r=0.2,K=6000,Binit=2800))
  ans <- fitSPM(pars,dataspm,schaefer=TRUE,maxiter=1000)
- boots <- spmboot(ans$par,fishery=dataspm,iter=500,schaefer=TRUE)
+ boots <- spmboot(ans$estimate,fishery=dataspm,iter=500,schaefer=TRUE)
  dynam <- boots$dynam
  bootpar <- boots$bootpar
  MSY <- bootpar[,"r"]*bootpar[,"K"]/4
- Depl <- dynam[,length(fish[,"year"]),"Depletion"] # pick the last year
+ Depl <- dynam[,length(fish[,"year"]),"Depletion"] #pick final year
  bootpar <- cbind(bootpar,MSY,Depl)
  rows <- colnames(bootpar)
  columns <- c(c(0.025,0.05,0.5,0.95,0.975),"Mean")

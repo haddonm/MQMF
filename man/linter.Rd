@@ -18,16 +18,16 @@ a single value being the x-axis value between left and right
 linter is a tool for linearly interpolating in a 2-D
     cartesian space to search out an unknown value between two known
     points on the x-axis, based on a known value between two known 
-    points on the y-axis. This might be wanswering the question of
-    what would be the length at 50% maturity for a curve with no 
+    points on the y-axis. This might be answering the question of
+    what would be the length at 50 percent maturity for a curve with no 
     analytical solution. We could find two points in a series of
-    proportion values on the y-axis that bracketed the 50% value 
+    proportion values on the y-axis that bracketed the 50 percent value 
     using the function bracket. They would be associated with the two 
     length values on the x-axis used to generate the predicted 
     proportion values. If we assume the various points in the 2-D 
     space to be approximated by linear relations then the location 
     between the two known x-axis length values corresponding to the 
-    L50 would have the same ratio as the 50% value has to the two
+    L50 would have the same ratio as the 50 percent value has to the two
     points on the y-axis. See the example for details. The input
     arguments include five values, left, right, bottom, top, and 
     target. So, left and right are sequential values on the x-axis, 

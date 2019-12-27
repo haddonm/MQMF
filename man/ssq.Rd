@@ -40,9 +40,8 @@ ssq is a generalized function for summing squared
 }
 \examples{
 \dontrun{
-  data(minnow)
+  data(minnow)  # remember -13 is only 3+ months
   pars <- c(89, 0.1,-13)  # ssq = 83477.84
-  # the use of ... obviously means we need to know the vB arguments
   ssq(funk=vB,observed=minnow$length,p=pars,ages=minnow$week)
 }
 }

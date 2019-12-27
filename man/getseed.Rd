@@ -25,10 +25,10 @@ getseed generates a seed for use within set.seed.
 }
 \examples{
 \dontrun{
-seed <- getseed()
-set.seed(seed)
+useseed <- getseed()
+set.seed(useseed)
 rnorm(5)
-set.seed(seed)
+set.seed(useseed)
 rnorm(5)
 }
 }

@@ -41,8 +41,7 @@ outfit takes in the output list from either optim,
  pow <- function(par,x) return(par[1] * x ^ par[2])
  ssq <- function(par,indat) {
     return(sum((indat[,"y"] - pow(par,indat[,"x"]))^2))
- }
- par=c(2,2)
+ }  # fit a power curve using normal random errors
  best <- nlm(f=ssq,p=par,typsize=magnitude(par),indat=alldat)
  outfit(best)  # a=1.3134 and b=2.2029 -veLL=571.5804
 }

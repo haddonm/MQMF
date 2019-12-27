@@ -4,17 +4,21 @@
 \alias{quants}
 \title{quants used in apply to estimate quantiles across a vector}
 \usage{
-quants(invect)
+quants(invect, probs = c(0.025, 0.05, 0.5, 0.95, 0.975))
 }
 \arguments{
 \item{invect}{vector of values}
+
+\item{probs}{a vector of quantile, default=c(0.025,0.05,0.5,0.95,0.975)}
 }
 \value{
-a vector of the c(0.025,0.05,0.5,0.95,0.975) quantiles
+a vector of the probs quantiles
 }
 \description{
 quants used in 'apply' to estimate quantiles across a vector
 }
 \examples{
-cat("Example still be made /n")
+x <- matrix(rnorm(1000),ncol=10,nrow=100)
+apply(x,2,quants)
+apply(x,2,quants,probs=c(0.1,0.5,0.9))
 }

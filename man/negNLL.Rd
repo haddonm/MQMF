@@ -39,9 +39,12 @@ negNLL - Calculates the negative log-likelihood for
 }
 \examples{
 \dontrun{
- data(kimura)
- pars <- c(Linf=56.0,K=0.4,t0=0.2,sigma=1.5)
- negNLL(pars,funk=vB,observed=kimura[,"length"],ages=kimura[,"age"])
- # should be 19.20821
+ data(minnow)
+ pars <- c(89, 0.01,-15,3.75)  # ssq    = 785.6183
+ age <- minnow$week            # negNLL = 151.1713
+ ssq(funk=vB,observed=minnow$length,p=pars,ages=age)
+ negNLL(pars,funk=vB,observed=minnow$length,ages=age)
+ plot1(age,vB(pars,age),xlabel="Age",ylabel="Length",lwd=2)
+ points(age,minnow$length,pch=16,cex=1.2)
 }
 }

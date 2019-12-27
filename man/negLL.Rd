@@ -35,7 +35,7 @@ negLL calculates log-normal negative log-likelihoods. It
 }
 \examples{
 \dontrun{
-data(abdat)
+data(abdat)  #expect an answer of -31.65035
 param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
 negLL(pars=param,funk=simpspm,logobs=log(abdat[,"cpue"]),indat=abdat)
 }

@@ -11,6 +11,8 @@ plotfishM(fish, spsname = "", ce = TRUE, title = TRUE, fnt = 7,
 \arguments{
 \item{fish}{the matrix or data.frame containing year, catch, and cpue.}
 
+\item{spsname}{the name of the species concerned}
+
 \item{ce}{a logical parameter determining whether to plot the cpue or not.
 the default = TRUE}
 
@@ -31,9 +33,7 @@ the maximum.}
 
 \item{catch}{the name of the column containing catches, default="catch"}
 
-\item{glb}{the list of biologicals potentially containing the spsname}
-
-\item{catch}{the name of the column containing cpue, default="cpue"}
+\item{cpue}{the name of the column containing cpue, default="cpue"}
 }
 \value{
 plots a graph but returns nothing to the console

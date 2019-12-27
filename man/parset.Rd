@@ -38,7 +38,11 @@ parset alters the current base graphics par settings
 }
 \examples{
 \dontrun{
- parset()
+ x <- rnorm(100,mean=5,sd=0.5)
+ y <- rnorm(100,mean=5,sd=0.5)
+ parset(plots=c(1,2))
+ plot1(x,y,defpar=FALSE)
+ plot1(y,x,defpar=FALSE)
  parsyn()
 }
 }

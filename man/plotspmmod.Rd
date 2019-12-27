@@ -4,9 +4,9 @@
 \alias{plotspmmod}
 \title{plotspmmod plots an spm model fit given parameters and data}
 \usage{
-plotspmmod(inp, indat, schaefer = TRUE, extern = FALSE, limit = 0.2,
-  target = 0.48, addrmse = FALSE, fnt = 7, plotout = TRUE,
-  vline = 0, plotprod = TRUE, maxy = 0)
+plotspmmod(inp, indat, schaefer = TRUE, limit = 0.2, target = 0.48,
+  addrmse = FALSE, fnt = 7, plotout = TRUE, vline = 0,
+  plotprod = TRUE, maxy = 0)
 }
 \arguments{
 \item{inp}{a vector of model parameters at least (r,K,B0)}
@@ -15,9 +15,6 @@ plotspmmod(inp, indat, schaefer = TRUE, extern = FALSE, limit = 0.2,
 
 \item{schaefer}{if TRUE, the default, then the Schaefer SPM is used. 
 If FALSE then an approximate Fox SPM would be used}
-
-\item{extern}{defaults to FALSE, determines whether to plot the graphs
-in a separate window rather than within RStudio or an Rmd file}
 
 \item{limit}{defaults to the Commonwealth limit of 0.2B0.}
 
@@ -56,7 +53,7 @@ plotspmmod takes a parameter set and the spmdat matrix
 \dontrun{
 data(dataspm)
 pars <- log(c(0.264,4740,3064,0.2))
-ans <- plotspmmod(pars,dataspm,schaefer=TRUE,extern=TRUE,plotprod=TRUE)
+ans <- plotspmmod(pars,dataspm,schaefer=TRUE,plotprod=TRUE)
 best <- nlm(negLL,pars,funk=simpspm,indat=dataspm,
        logobs=log(dataspm[,"cpue"]),steptol=1e-05)
 outfit(best,backtransform = TRUE)

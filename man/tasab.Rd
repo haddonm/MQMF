@@ -23,7 +23,9 @@ tasab is a 715 x 4 matrix of maturity-at-length data
     along the Tasmanian west coast. All data was collected in 
     February 1995, but details, such as site name, accurate 
     location, statistical block, year, month, and other 
-    details have been omitted for brevity.
+    details have been omitted for brevity. See section on maturity
+    within the Static Models chapter for detailed use of this
+    data-set.
 }
 \section{Subjects}{
 

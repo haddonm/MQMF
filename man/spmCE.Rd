@@ -31,7 +31,8 @@ a list of five objects; outmat the matrix with the dynamics
     Depl, FinalB, and InitDepl
 }
 \description{
-spmCE calculates the dynamics using a Schaefer of Fox model.
+spmCE calculates the dynamics using a Schaefer of Fox model
+    and is used instead of simpspm whenthere are multiple indeex vectors.
     The outputs include  predicted Biomass, year, catch, cpue, predicted
     cpue, contributions to q, ssq, and depletion levels. Generally it
     would be more sensible to use simpspm when fitting a Schaefer model 
@@ -44,18 +45,12 @@ spmCE calculates the dynamics using a Schaefer of Fox model.
 }
 \examples{
 \dontrun{
-year <- 1985:2008
-catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,
-           645,961,940,912,955,935,940,952,1030,985)
-cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,0.8582,
-          0.8876,1.0126,1.1533,1.2326,1.2764,1.3307,1.3538,1.2648,1.2510,
-          1.2069,1.1552,1.1238,1.1281,1.1113,1.0377)
-dat <- makespmdata(cbind(year,catch,cpue))
-pars <- c(0.35,7800,3500)
+data(abdat)
+pars <- log(c(0.35,7800,3500))
 ans <- plotspmmod(pars,dat)
-bestSP <- optim(par=pars,fn=ssq,callfun=simpspm,indat=dat)
-bestSP
-ans <- plotspmmod(bestSP$par,dat,schaefer=TRUE)
-str(ans)
+ bestSP <- fitSPM(par=pars,fish=abdat,funk=simpspm)
+ outfit(bestSP)  # best fitting estimates
+ ans <- plotspmmod(bestSP$estimate,abdat,schaefer=TRUE)
+ str(ans)
 }
 }

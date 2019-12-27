@@ -23,8 +23,8 @@ which.closest finds either the number in a vector which is
 }
 \examples{
 vals <- rnorm(100,mean=5,sd=2)
-pick <- which.closest(5.0,vals,index=TRUE)
-pick
-vals[pick]
-which.closest(5.0,vals,index=FALSE)
+pick <- which.closest(5.0,vals,index=TRUE) #closest to 5?
+pick        # the index of the closest
+vals[pick]  # its value
+which.closest(5.0,vals,index=FALSE) # straight to the value
 }
