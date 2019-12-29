@@ -28,7 +28,7 @@
 #' Faa <- rep(Ft,length(age))
 #' M <- 0.12
 #' Nt <- 1000
-#' bce(M,Fat,Nt,ages=age)   # should give 188.8862
+#' bce(M,Fat=Faa,Nt,ages=age)   # should give 188.8862
 #' }
 bce <- function(M,Fat,Nt,ages) {
   nage <- length(ages)

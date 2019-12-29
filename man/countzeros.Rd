@@ -19,6 +19,7 @@ countzeros used in apply to count the number of zeros in a vector
 \dontrun{
 x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 print(x)
-apply(x,1,countzeros)
+apply(x,1,countzeros) # count by rows
+apply(x,2,countzeros) # count by columns
 }
 }

@@ -61,5 +61,6 @@ inthist a replacement for the hist function for use with
  #plotprep(width=6,height=4)
  inthist(x,col="grey",border=3,width=0.75,xlabel="Random Uniform",
          ylabel="Frequency")
+ abline(h=100)
 }
 }

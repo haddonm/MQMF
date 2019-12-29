@@ -41,7 +41,7 @@ plotprep: sets up a window and the par values for plots.
  x <- rnorm(1000,mean=0,sd=1.0)
  plotprep(newdev=TRUE)
  hist(x,breaks=30,main="",col=2)
- plotprep(width=6,height=5,newdeve=FALSE)
+ plotprep(width=6,height=5,newdev=FALSE)
  par(mfrow = c(2,1))
  hist(x,breaks=20,main="",col=2)
  hist(x,breaks=30,main="",col=3)

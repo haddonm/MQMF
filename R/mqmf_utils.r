@@ -126,7 +126,8 @@ countones <- function(invect) {
 #' \dontrun{
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 #' print(x)
-#' apply(x,1,countzeros)
+#' apply(x,1,countzeros) # count by rows
+#' apply(x,2,countzeros) # count by columns
 #' }
 countzeros <- function(invect) {
    pick <- which(invect == 0.0)
@@ -145,7 +146,8 @@ countzeros <- function(invect) {
 #' \dontrun{
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 #' print(x)
-#' apply(x,1,countgtzero)
+#' apply(x,1,countgtzero) # count by rows
+#' apply(x,2,countgtzero) # count by columns
 #' }
 countgtzero <- function(invect) {
    pick <- which(invect > 0)
@@ -205,7 +207,7 @@ countgtone <- function(invect) {
 #'  5 * DepCat[3]
 #'  as.numeric(levels(DepCat))  # #only converts the levels not the replicates
 #'  DepCat <- facttonum(DepCat)
-#'  5 * DepCat[3]
+#'  DepCat / 2.0
 #'  x <- factor(letters) # don't be silly, characters are not numbers
 #'  facttonum(x)
 #' }
@@ -390,7 +392,7 @@ getseed <- function() {
 #' y <- "21.3 # 22.3 # here are two numbers"
 #' getsingle(x)
 #' getsingle(y,sep="#")
-#' getsingle(y) # get the separator correct
+#' getsingle(y) # be sure to get the separator correct
 #' }
 getsingle <- function(inline,sep=",") {  # inline=dat[41]
   tmp <- unlist(strsplit(inline,sep))
@@ -443,7 +445,7 @@ gettime <- function() {
 #' \dontrun{
 #' x <- "12.3, 15.1, 8.7,10.3,  # this is a vector of numbers"
 #' y <- "21.3 # 22.3 # 8.7 # 10.3 # here are four numbers"
-#' getvector(x)
+#' getvector(x)    # uses default separator
 #' getvector(y,sep="#")
 #' }
 getvector <- function(indat,locate,sep=",") { # indat=dat; locate=pick+2;sep=","
@@ -719,12 +721,13 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #'  x <- 1:10  # generate power function data from c(2,2) + random
 #'  y <- c(2.07,8.2,19.28,40.4,37.8,64.68,100.2,129.11,151.77,218.94)
 #'  alldat <- cbind(x=x,y=y)
-#'  pow <- function(par,x) return(par[1] * x ^ par[2])
-#'  ssq <- function(par,indat) {
-#'     return(sum((indat[,"y"] - pow(par,indat[,"x"]))^2))
+#'  pow <- function(pars,x) return(pars[1] * x ^ pars[2])
+#'  ssq <- function(pars,indat) {
+#'     return(sum((indat[,"y"] - pow(pars,indat[,"x"]))^2))
 #'  }  # fit a power curve using normal random errors
-#'  best <- nlm(f=ssq,p=par,typsize=magnitude(par),indat=alldat)
-#'  outfit(best)  # a=1.3134 and b=2.2029 -veLL=571.5804
+#'  pars <- c(2,2)
+#'  best <- nlm(f=ssq,p=pars,typsize=magnitude(pars),indat=alldat)
+#'  outfit(best,backtran=FALSE) #a=1.3134, b=2.2029 ssq=571.5804
 #' }
 outfit <- function(inopt,backtran=TRUE,digits=5,title="",
                    parnames=""){
@@ -1095,8 +1098,9 @@ which.closest <- function(x,invect,index=T) {
 #' \dontrun{
 #'    x <- 1:10
 #'    y <- 6:15
-#'    pick <- (x %ni% y)
-#'    x[pick]   # are not in y
+#'    x
+#'    y
+#'    x[(x %ni% y)]   # are not in y
 #' }
 `%ni%` <- function(x,y) {  
   !(x %in% y)

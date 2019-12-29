@@ -68,9 +68,9 @@ altnegLL <- function(inp,indat) { # inp=pars; indat=dataspm
 #'  data(dataspm)
 #'  pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
 #'  ans <- fitSPM(pars,fish=dataspm,schaefer=TRUE,maxiter=1000)
-#'  outfit(ans)
+#'  outfit(ans)   # Schaefer model
 #'  ansF <- fitSPM(pars,dataspm,schaefer=FALSE,maxiter=1000)
-#'  outfit(ansF)
+#'  outfit(ansF)  # Fox model
 #' }  
 fitSPM <- function(pars,fish,schaefer=TRUE,maxiter=1000,
                    funk=simpspm,funkone=FALSE,hess=FALSE,steptol=1e-06) { 
@@ -126,6 +126,7 @@ fitSPM <- function(pars,fish,schaefer=TRUE,maxiter=1000,
 #' dat <- as.data.frame(cbind(year,catch,cpue))
 #' out <- getlag(dat,plotout=FALSE)
 #' plot(out,lwd=3,col=2)
+#' str(out)
 #' }
 getlag <- function(fish,maxlag=10,plotout=TRUE,indexI=1) {
    pickI <- grep("cpue",colnames(fish))
@@ -159,8 +160,8 @@ getlag <- function(fish,maxlag=10,plotout=TRUE,indexI=1) {
 #' @examples
 #' \dontrun{
 #' param <- c(r=1.1,K=1000.0,Binit=800.0,sigma=0.075)
-#' getMSY(param,p=1.0)
-#' getMSY(param,p=1e-08)
+#' getMSY(param,p=1.0)     #  275       Schaefer equivalent
+#' getMSY(param,p=1e-08)   #  404.6674  Fox equivalent
 #' }
 getMSY <- function(pars,p=1.0) {
   msy <- (pars[1]*pars[2])/((p+1)^((p+1)/p))
@@ -223,7 +224,8 @@ getrmse <- function(indat,invar="cpue",inyr="year"){
 #' @description parasympt generates N vectors from a multi-variate normal
 #'     distribution. This can be used when estimating the uncertainty 
 #'     around a model fit, or when conducting projections from a model fit
-#'     while attempting to account for uncertainty.
+#'     while attempting to account for uncertainty. Use of this function
+#'     requires the mvnnorm package.
 #'
 #' @param bestmod the output from nlm containing the optimal parameters in
 #'     log-space, and the hessian
@@ -231,7 +233,7 @@ getrmse <- function(indat,invar="cpue",inyr="year"){
 #'     variate normal defined by the optimal parameters and the inverse of
 #'     the hessian (the variance covariance matrix).
 #'
-#' @return an N x numpar matrix of parameter vvectors
+#' @return an N x numpar matrix of parameter vectors
 #' @export
 #'
 #' @examples
@@ -819,9 +821,10 @@ simpspm <- function(pars, indat,schaefer=TRUE,
 #' data(dataspm)
 #' dataspm
 #' colnames(dataspm) <- tolower(colnames(dataspm))
-#' pars <- c(r=0.242,K=5170,Binit=2840)
+#' pars <- log(c(r=0.242,K=5170,Binit=2840))
 #' predCE <- simpspmM(pars,dataspm)
-#' cbind(dataspm[,"year"],dataspm[,"cpue"],predCE)
+#' predCE2 <- exp(simpspm(pars,dataspm))
+#' cbind(dataspm[,"year"],dataspm[,"cpue"],predCE,predCE2)
 #' }
 simpspmM <- function(par,indat,schaefer=TRUE,
                      year="year",cats="catch",index="cpue") {
@@ -883,7 +886,7 @@ simpspmM <- function(par,indat,schaefer=TRUE,
 #' data(dataspm)
 #' dataspm
 #' colnames(dataspm) <- tolower(colnames(dataspm))
-#' pars <- c(r=0.242,K=5170,Binit=2840)
+#' pars <- log(c(r=0.242,K=5170,Binit=2840,q=0.0002))
 #' predCE <- simpspmO(pars,dataspm)
 #' cbind(dataspm[,"year"],dataspm[,"cpue"],predCE)
 #' }
@@ -907,7 +910,7 @@ simpspmO <- function(par,indat,schaefer=TRUE,
    }
    for (i in 1:nce) {
       pick <- which(indat[,celoc[i]] > 0)
-      predCE[pick,i] <- biom[pick] * exp(par[2+i])
+      predCE[pick,i] <- biom[pick] * exp(par[npar])
    }
    return(predCE)
 } # end of simpspmO
@@ -1126,7 +1129,7 @@ spmboot <- function(optpar,fishery,iter=100,schaefer=TRUE) {
 #' @examples
 #' \dontrun{
 #' data(abdat)
-#' pars <- log(c(0.35,7800,3500))
+#' pars <- log(c(0.35,7800,3500,0.05))
 #' ans <- plotspmmod(pars,dat)
 #'  bestSP <- fitSPM(par=pars,fish=abdat,funk=simpspm)
 #'  outfit(bestSP)  # best fitting estimates

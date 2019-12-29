@@ -22,13 +22,14 @@ setpalette is a shortcut for changing the
     garish and a more visible set of default colours that can
     be called using the numbers 1 - 8. An important point is 
     that this alters the default colours for all sessions
-    until a restart of R.
+    until a restart of R. Using something similar you can 
+    define your own preferred palettes should you wish to.
 }
 \examples{
 \dontrun{
    setpalette("R3")
    plot(1:8,rep(0.25,8),type="p",pch=16,cex=5,col=c(1:8))
    setpalette("R4")
-   points(1:8,rep(0.3,8),pch=16,cex=5,col=c(1:8))
+   points(1:8,rep(0.3,8),pch=16,cex=5,col=c(1:8)) #toprow
 }
 }

@@ -192,6 +192,7 @@ addlnorm <- function(inhist,xdata,inc=0.01) {
 #'  #plotprep(width=6,height=4)
 #'  inthist(x,col="grey",border=3,width=0.75,xlabel="Random Uniform",
 #'          ylabel="Frequency")
+#'  abline(h=100)
 #' }
 inthist <- function(x,col=1,border=NULL,width=1,xlabel="",ylabel="",
                     main="",lwd=1,xmin=NA,xmax=NA,ymax=NA,plotout=TRUE,
@@ -385,6 +386,7 @@ parsyn <- function() {
 #' \dontrun{
 #'  x <- rnorm(20,mean=5,sd=1)
 #'  plot1(x,x,xlabel="x-values",ylabel="yvalues")
+#'  points(x,x,pch=16,cex=1.5)
 #' }
 plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
                   maxy=0,defpar=TRUE,...){
@@ -477,7 +479,7 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
 #'  x <- rnorm(1000,mean=0,sd=1.0)
 #'  plotprep(newdev=TRUE)
 #'  hist(x,breaks=30,main="",col=2)
-#'  plotprep(width=6,height=5,newdeve=FALSE)
+#'  plotprep(width=6,height=5,newdev=FALSE)
 #'  par(mfrow = c(2,1))
 #'  hist(x,breaks=20,main="",col=2)
 #'  hist(x,breaks=30,main="",col=3)
@@ -587,7 +589,8 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
 #'     garish and a more visible set of default colours that can
 #'     be called using the numbers 1 - 8. An important point is 
 #'     that this alters the default colours for all sessions
-#'     until a restart of R.     
+#'     until a restart of R. Using something similar you can 
+#'     define your own preferred palettes should you wish to.     
 #'     
 #' @param x either "default", "R3", or "R4", with R4 as the 
 #'     default value. Use "default" or "R3" to revert back to the
@@ -601,7 +604,7 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
 #'    setpalette("R3")
 #'    plot(1:8,rep(0.25,8),type="p",pch=16,cex=5,col=c(1:8))
 #'    setpalette("R4")
-#'    points(1:8,rep(0.3,8),pch=16,cex=5,col=c(1:8))
+#'    points(1:8,rep(0.3,8),pch=16,cex=5,col=c(1:8)) #toprow
 #' }
 setpalette <- function(x="R4") { # x="R4"
   choice <- c("default","R3","R4")

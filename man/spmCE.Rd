@@ -46,7 +46,7 @@ spmCE calculates the dynamics using a Schaefer of Fox model
 \examples{
 \dontrun{
 data(abdat)
-pars <- log(c(0.35,7800,3500))
+pars <- log(c(0.35,7800,3500,0.05))
 ans <- plotspmmod(pars,dat)
  bestSP <- fitSPM(par=pars,fish=abdat,funk=simpspm)
  outfit(bestSP)  # best fitting estimates

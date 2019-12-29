@@ -25,6 +25,6 @@ x <- "12.3 , this is a number"
 y <- "21.3 # 22.3 # here are two numbers"
 getsingle(x)
 getsingle(y,sep="#")
-getsingle(y) # get the separator correct
+getsingle(y) # be sure to get the separator correct
 }
 }

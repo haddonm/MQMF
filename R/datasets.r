@@ -128,7 +128,8 @@ NULL
 #'     fishery 2016 and 2017.} 837 pp. ISBN 978-1-4863-1012-8 data extracted 
 #'     from Table 7.96 PinkLing4050 page 216.
 #' 
-#' @examples \dontrun{
+#' @examples 
+#' \dontrun{
 #'  data(dataspm)
 #'  plot(dataspm$year,dataspm$geom,type="l",lwd=2,xlab="Year",
 #'  ylab="CPUE",panel.first=grid())

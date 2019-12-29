@@ -51,5 +51,6 @@ cpue <- c(0.6008,0.6583,0.6791,0.6889,0.7134,0.7221,0.7602,0.7931,0.8582,
 dat <- as.data.frame(cbind(year,catch,cpue))
 out <- getlag(dat,plotout=FALSE)
 plot(out,lwd=3,col=2)
+str(out)
 }
 }

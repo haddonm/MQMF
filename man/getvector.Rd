@@ -27,7 +27,7 @@ getvector when reading in a csv file using readLines,
 \dontrun{
 x <- "12.3, 15.1, 8.7,10.3,  # this is a vector of numbers"
 y <- "21.3 # 22.3 # 8.7 # 10.3 # here are four numbers"
-getvector(x)
+getvector(x)    # uses default separator
 getvector(y,sep="#")
 }
 }

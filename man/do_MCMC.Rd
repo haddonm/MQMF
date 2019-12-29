@@ -80,7 +80,7 @@ data(abdat)
  result <- do_MCMC(chains=1,burnin=20,N=N,thinstep=16,inpar=param,
                    infunk=negLL,calcpred=simpspm,calcdat=abdat,
                    obsdat=log(abdat$cpue),priorcalc=calcprior,
-                   scales=c(0.06,0.05,0.06,0.35))
+                   scales=c(0.06,0.05,0.06,0.42))
  cat("Acceptance Rate = ",result[[2]],"\\n")
  cat("Failure Rate    = ",result[[3]],"\\n")
  #plotprep(width=6,height=5,newdev=FALSE)

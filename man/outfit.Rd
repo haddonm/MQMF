@@ -38,11 +38,12 @@ outfit takes in the output list from either optim,
  x <- 1:10  # generate power function data from c(2,2) + random
  y <- c(2.07,8.2,19.28,40.4,37.8,64.68,100.2,129.11,151.77,218.94)
  alldat <- cbind(x=x,y=y)
- pow <- function(par,x) return(par[1] * x ^ par[2])
- ssq <- function(par,indat) {
-    return(sum((indat[,"y"] - pow(par,indat[,"x"]))^2))
+ pow <- function(pars,x) return(pars[1] * x ^ pars[2])
+ ssq <- function(pars,indat) {
+    return(sum((indat[,"y"] - pow(pars,indat[,"x"]))^2))
  }  # fit a power curve using normal random errors
- best <- nlm(f=ssq,p=par,typsize=magnitude(par),indat=alldat)
- outfit(best)  # a=1.3134 and b=2.2029 -veLL=571.5804
+ pars <- c(2,2)
+ best <- nlm(f=ssq,p=pars,typsize=magnitude(pars),indat=alldat)
+ outfit(best,backtran=FALSE) #a=1.3134, b=2.2029 ssq=571.5804
 }
 }

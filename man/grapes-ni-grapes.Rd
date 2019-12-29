@@ -18,7 +18,8 @@ x \%ni\% y
 \dontrun{
    x <- 1:10
    y <- 6:15
-   pick <- (x \%ni\% y)
-   x[pick]   # are not in y
+   x
+   y
+   x[(x \%ni\% y)]   # are not in y
 }
 }

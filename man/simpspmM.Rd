@@ -45,8 +45,9 @@ simpspmM calculates the predicted CPUE for an SPM model. It
 data(dataspm)
 dataspm
 colnames(dataspm) <- tolower(colnames(dataspm))
-pars <- c(r=0.242,K=5170,Binit=2840)
+pars <- log(c(r=0.242,K=5170,Binit=2840))
 predCE <- simpspmM(pars,dataspm)
-cbind(dataspm[,"year"],dataspm[,"cpue"],predCE)
+predCE2 <- exp(simpspm(pars,dataspm))
+cbind(dataspm[,"year"],dataspm[,"cpue"],predCE,predCE2)
 }
 }

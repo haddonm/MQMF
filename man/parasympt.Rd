@@ -15,13 +15,14 @@ variate normal defined by the optimal parameters and the inverse of
 the hessian (the variance covariance matrix).}
 }
 \value{
-an N x numpar matrix of parameter vvectors
+an N x numpar matrix of parameter vectors
 }
 \description{
 parasympt generates N vectors from a multi-variate normal
     distribution. This can be used when estimating the uncertainty 
     around a model fit, or when conducting projections from a model fit
-    while attempting to account for uncertainty.
+    while attempting to account for uncertainty. Use of this function
+    requires the mvnnorm package.
 }
 \examples{
 \dontrun{
