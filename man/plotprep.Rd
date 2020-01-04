@@ -5,7 +5,7 @@
 \title{plotprep: sets up a window and the par values for plotting}
 \usage{
 plotprep(width = 6, height = 3.6, usefont = 7, cex = 0.75,
-  newdev = FALSE, filename = "", resol = 300)
+  newdev = FALSE, filename = "", resol = 300, reminder = TRUE)
 }
 \arguments{
 \item{width}{defaults to 6 inches = 15.24cm - width of plot}
@@ -23,6 +23,9 @@ new one; default=FALSE}
 is defined it makes that file as a png file with resolution resol}
 
 \item{resol}{resolution of the png file, if defined, default=300}
+
+\item{reminder}{set to FALSE to turn off the reminder to include a
+graphics.off() command after the plot}
 }
 \value{
 sets up a graphics device, if needed and sets the default 

@@ -99,40 +99,24 @@ bracket <- function(x,yaxis,xaxis) {
   return(ans)
 } # end of bracket
 
-#' @title countones used in apply to count the number of ones in a vector
+#' @title countgtone used in apply to count the number > 1 in a vector
 #'
-#' @description countones used in apply to count the number of ones in a vector
+#' @description countgtone used in apply to count the number > 1 in a vector
+#' 
 #' @param invect vector of values
+#' 
 #' @return A single value of zero or the number of ones
-#' @export countones
+#' @export
 #' @examples
 #' \dontrun{
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 #' print(x)
-#' apply(x,1,countones)
+#' apply(x,1,countgtone)
 #' }
-countones <- function(invect) {
-   pick <- which(invect == 1)
-   return(length(pick))
-}
-
-#' @title countzeros used in apply to count the number of zeros in a vector
-#'
-#' @description countzeros used in apply to count the number of zeros in a vector
-#' @param invect vector of values
-#' @return A single value of zero or the number of zeros
-#' @export countzeros
-#' @examples
-#' \dontrun{
-#' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
-#' print(x)
-#' apply(x,1,countzeros) # count by rows
-#' apply(x,2,countzeros) # count by columns
-#' }
-countzeros <- function(invect) {
-   pick <- which(invect == 0.0)
-   return(length(pick))
-}
+countgtone <- function(invect) {
+  pick1 <- which(invect > 1.0)
+  return(length(pick1))
+} # end of countgtone
 
 #' @title countgtzero used in apply to count how many numbers are
 #'     greater than zero in a vector
@@ -150,8 +134,8 @@ countzeros <- function(invect) {
 #' apply(x,2,countgtzero) # count by columns
 #' }
 countgtzero <- function(invect) {
-   pick <- which(invect > 0)
-   return(length(pick))
+  pick <- which(invect > 0)
+  return(length(pick))
 }
 
 #' @title countNAs used in apply to count the number of NAs in a vector
@@ -159,7 +143,7 @@ countgtzero <- function(invect) {
 #' @description countNAs used in apply to count the number of NAs in a vector
 #' @param invect vector of values
 #' @return A single value of zero or the number of NAs
-#' @export countNAs
+#' @export
 #' @examples
 #' \dontrun{
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
@@ -168,27 +152,44 @@ countgtzero <- function(invect) {
 #' apply(x,1,countNAs)
 #' }
 countNAs <- function(invect) {
-   pick <- which(is.na(invect))
-   return(length(pick))
+  pick <- which(is.na(invect))
+  return(length(pick))
 }
 
-#' @title countgtone used in apply to count the number > 1 in a vector
+#' @title countones used in apply to count the number of ones in a vector
 #'
-#' @description countgtone used in apply to count the number > 1 in a vector
+#' @description countones used in apply to count the number of ones in a vector
 #' @param invect vector of values
 #' @return A single value of zero or the number of ones
-#' @export countgtone
+#' @export
 #' @examples
 #' \dontrun{
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 #' print(x)
-#' apply(x,1,countgtone)
+#' apply(x,1,countones)
 #' }
-countgtone <- function(invect) {
-   pick1 <- which(invect > 1.0)
-   return(length(pick1))
+countones <- function(invect) {
+   pick <- which(invect == 1)
+   return(length(pick))
 }
 
+#' @title countzeros used in apply to count the number of zeros in a vector
+#'
+#' @description countzeros used in apply to count the number of zeros in a vector
+#' @param invect vector of values
+#' @return A single value of zero or the number of zeros
+#' @export
+#' @examples
+#' \dontrun{
+#' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
+#' print(x)
+#' apply(x,1,countzeros) # count by rows
+#' apply(x,2,countzeros) # count by columns
+#' }
+countzeros <- function(invect) {
+   pick <- which(invect == 0.0)
+   return(length(pick))
+}
 #' @title facttonum converts a vector of numeric factors into numbers
 #'
 #' @description facttonum converts a vector of numeric factors into numbers.
@@ -352,7 +353,7 @@ getname <- function(x) {
 #'     seeds generated should differ even when they are generated close
 #'     together in time.
 #'
-#' @return  a 6 digits integer
+#' @return  an integer up to 7 digits long
 #' @export
 #'
 #' @examples
@@ -360,21 +361,24 @@ getname <- function(x) {
 #' useseed <- getseed()
 #' set.seed(useseed)
 #' rnorm(5)
+#' set.seed(12345)
+#' rnorm(5)
 #' set.seed(useseed)
 #' rnorm(5)
 #' }
 getseed <- function() {
-  begin <- as.integer(Sys.time())
-  pickseed <- as.character(begin %% 1e6)
+  pickseed <- as.character(as.integer(Sys.time()))
   nc <- nchar(pickseed)
+  if (nc > 7) pickseed <- substr(pickseed,(nc-6),nc)
+  nc <- nchar(pickseed)  
   pseed <- unlist(strsplit(pickseed,split=character(0)))
   pseed <- sample(pseed,nc)
   newseed <- paste(pseed,collapse="")
   newseed <- as.numeric(newseed)
   return(newseed)
-}
+} # end of getseed
 
-#' @title getsingle extracts a single number from an input line of characters
+#' @title getsingle extracts one number from an input line of characters
 #'
 #' @description getsingle splits up a text line and translates the first non-
 #'     empty character string into a number.

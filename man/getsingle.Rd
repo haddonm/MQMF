@@ -2,7 +2,7 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{getsingle}
 \alias{getsingle}
-\title{getsingle extracts a single number from an input line of characters}
+\title{getsingle extracts one number from an input line of characters}
 \usage{
 getsingle(inline, sep = ",")
 }

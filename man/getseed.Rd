@@ -7,7 +7,7 @@
 getseed()
 }
 \value{
-a 6 digits integer
+an integer up to 7 digits long
 }
 \description{
 getseed generates a seed for use within set.seed. 
@@ -27,6 +27,8 @@ getseed generates a seed for use within set.seed.
 \dontrun{
 useseed <- getseed()
 set.seed(useseed)
+rnorm(5)
+set.seed(12345)
 rnorm(5)
 set.seed(useseed)
 rnorm(5)

@@ -469,6 +469,8 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
 #' @param filename default="" ie do not save to a filename. If filename 
 #'     is defined it makes that file as a png file with resolution resol
 #' @param resol resolution of the png file, if defined, default=300
+#' @param reminder set to FALSE to turn off the reminder to include a
+#'     graphics.off() command after the plot
 #' 
 #' @return sets up a graphics device, if needed and sets the default 
 #'     plotting par values. This changes the current plotting options! 
@@ -485,7 +487,8 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
 #'  hist(x,breaks=30,main="",col=3)
 #' }
 plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
-                     newdev=FALSE,filename="",resol=300) {
+                     newdev=FALSE,filename="",resol=300,
+                     reminder=TRUE) {
   if  ((names(dev.cur()) != "null device") & (newdev)) 
       suppressWarnings(dev.off())
   lenfile <- nchar(filename)
@@ -500,11 +503,9 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
   par(mfrow = c(1,1),mai=c(0.45,0.45,0.1,0.05), oma=c(0,0,0,0))
   par(cex=cex,mgp=c(1.35,0.35,0),font.axis=usefont,font=usefont, 
       font.lab=usefont)
-  if (lenfile > 0) 
+  if ((lenfile > 0) & (reminder))
       cat("\n Remember to place 'graphics.off()' after plot \n")
 } # end of plot_prep
-
-
 
 #' @title plotprofile simplifies plotting single likelihood profiles
 #' 
