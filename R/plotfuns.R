@@ -364,8 +364,8 @@ parsyn <- function() {
 #' @param x The single vector of x data
 #' @param y the single vector of y data. If more are required they can
 #'     be added spearately after calling plot1.
-#' @param xlabel the label fot the x-axis, defaults to empty
-#' @param ylabel the label fot the y-axis, defaults to empty
+#' @param xlab the label fot the x-axis, defaults to empty
+#' @param ylab the label fot the y-axis, defaults to empty
 #' @param type the type of plot "l" is for line, the default, "p" is
 #'     points. If you want both plot a line and add points afterwards.
 #' @param usefont which font to use, defaults to 7 which is Times bold
@@ -388,7 +388,7 @@ parsyn <- function() {
 #'  plot1(x,x,xlabel="x-values",ylabel="yvalues")
 #'  points(x,x,pch=16,cex=1.5)
 #' }
-plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
+plot1 <- function(x,y,xlab="",ylab="",type="l",usefont=7,cex=0.75,
                   maxy=0,defpar=TRUE,...){
   if (defpar) {
     par(mfrow = c(1,1), mai = c(0.45,0.45,0.1,0.05),oma = c(0,0,0,0))
@@ -398,7 +398,7 @@ plot1 <- function(x,y,xlabel="",ylabel="",type="l",usefont=7,cex=0.75,
   if (maxy > 0) ymax <- maxy  else ymax <- getmax(y)
   if (min(y,na.rm=TRUE) < 0.0) ymin <- getmin(y) else ymin <- 0.0
   plot(x,y,type=type,ylim=c(ymin,ymax),yaxs="i",
-       ylab=ylabel,xlab=xlabel,cex=cex,panel.first=grid(),...)
+       ylab=ylab,xlab=xlab,cex=cex,panel.first=grid(),...)
 } # end of plot1
 
 #' @title plot.dynpop an S3 method for plotting dynpop objects

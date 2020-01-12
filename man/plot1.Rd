@@ -4,7 +4,7 @@
 \alias{plot1}
 \title{plot1 a simple way to plot an xy line plot}
 \usage{
-plot1(x, y, xlabel = "", ylabel = "", type = "l", usefont = 7,
+plot1(x, y, xlab = "", ylab = "", type = "l", usefont = 7,
   cex = 0.75, maxy = 0, defpar = TRUE, ...)
 }
 \arguments{
@@ -13,9 +13,9 @@ plot1(x, y, xlabel = "", ylabel = "", type = "l", usefont = 7,
 \item{y}{the single vector of y data. If more are required they can
 be added spearately after calling plot1.}
 
-\item{xlabel}{the label fot the x-axis, defaults to empty}
+\item{xlab}{the label fot the x-axis, defaults to empty}
 
-\item{ylabel}{the label fot the y-axis, defaults to empty}
+\item{ylab}{the label fot the y-axis, defaults to empty}
 
 \item{type}{the type of plot "l" is for line, the default, "p" is
 points. If you want both plot a line and add points afterwards.}

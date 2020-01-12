@@ -624,9 +624,16 @@ plotproj <- function(projs,spmout,qprob=c(0.1,0.5,0.9),
 #' plotspmdat(fish)
 #' }   # x=dat
 plotspmdat <- function(x, ...){
+  colnames(x) <- tolower(colnames(x)) 
+  tmp <- match(c("year","catch","cpue"), colnames(x))
+  if (countgtzero(tmp) != 3) {
+    label <- paste0("Input data to plotspmdat must, at least, ",
+                    "contain year, catch, and cpue")
+    stop(label)
+  }
   par(mfrow = c(2,1),mai = c(0.25, 0.45, 0.1, 0.05), oma = c(0,0,0,0))
   par(cex = 0.85, mgp = c(1.35,0.35,0),font.axis=7,font=7, font.lab=7)
-  colnames(x) <- tolower(colnames(x))
+
   ymax <- max(x[,"catch"],na.rm=TRUE) * 1.025
   plot(x[,"year"],x[,"catch"],type="l",lwd=2,xlab="",ylab="Catch (t)",
       ylim=c(0,ymax),yaxs="i",panel.first=grid())
