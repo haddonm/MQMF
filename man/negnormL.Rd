@@ -4,10 +4,10 @@
 \alias{negnormL}
 \title{negnormL an alternative -log-likelihood for normal errors}
 \usage{
-negnormL(par, funk, indat, obs = "deltal", ...)
+negnormL(pars, funk, funksig, indat, obs = "dl", ...)
 }
 \arguments{
-\item{par}{the vector of parameters, with sigma, the standard
+\item{pars}{the vector of parameters, with sigma, the standard
 deviation of the normal random deviates at the end.}
 
 \item{funk}{the funk needed to generate the predicted values}
@@ -16,7 +16,8 @@ deviation of the normal random deviates at the end.}
 independent variable used by funk}
 
 \item{obs}{identifies the column name or column number that contains 
-the observed data for comparison with the predicted from funk}
+the observed data for comparison with the predicted from funk,
+the default="dl"}
 
 \item{...}{the standard R for including extra parameters needed by
 funk but without having to be explicitly defined.}
@@ -26,20 +27,23 @@ the negative log-likelihood, for use in an optimizer, eg nlm
 }
 \description{
 negnormL is an alternative to negNLL to produce
-    -ve log-likelihoods for normal random errors. The two functions
-    differ by how they reference the independent and dependent 
-    variables. In negnormL only the observed (for comparison with the
-    predicted) is identified. This is to allow for different column
-    headings in one's data.frames
+    -ve log-likelihoods for normal random errors, allowing for the
+    sigma parameter to vary with the predicted value. In negnormL 
+    only one needs both a funk and a funksig, the former to 
+    calculate the predicted values using funk, and funksig to
+    calculate the changing sigma values relative to the predicted
+    values. The example code illustrates an example funksig that
+    does nothing to the sigma value.
 }
 \examples{
 \dontrun{
  data(blackisland)
  param <- c(Linf=173.65,K=0.2666,sigma=3.6)
- negnormL(par=param,funk=fabens,indat=blackisland,obs="deltal",
-          initL="len1",delT="deltat")   # should be 291.6809
+ sigfunk <- function(pars,predobs) return(tail(pars,1))
+ negnormL(par=param,funk=fabens,funksig=sigfunk,indat=blackisland,
+          obs="dl",initL="l1",delT="dt")   # should be 291.1757
  param2 <- c(21.03,130.94,40.65,3.162)  
- negnormL(par=param2,funk=invl,indat=blackisland,obs="deltal",
-          initL="len1",delT="deltat")  # should be 277.5663 
+ negnormL(par=param2,funk=invl,funksig=sigfunk,indat=blackisland,
+           obs="dl",initL="l1",delT="dt")  # should be 277.0186
 }
 }

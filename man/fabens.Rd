@@ -4,7 +4,7 @@
 \alias{fabens}
 \title{fabens calculates predicted growth increment for tagging data}
 \usage{
-fabens(par, indat, initL = "len1", delT = "deltat")
+fabens(par, indat, initL = "l1", delT = "dt")
 }
 \arguments{
 \item{par}{a vector of at least Linf, and K from teh von Bertalanffy 
@@ -14,9 +14,11 @@ growth curve}
 least the initial lengths and the deltaT, time intervals between
 tag release and recapture.}
 
-\item{initL}{column name of the initial lengths within indat}
+\item{initL}{column name of the initial lengths within indat, 
+default="l1"}
 
-\item{delT}{column name of the time interval, deltaT, within indat}
+\item{delT}{column name of the time interval, deltaT, within indat,
+default="dt"}
 }
 \value{
 a vector of predicted growth increments
@@ -35,7 +37,7 @@ fabens requires at least two parameters, Linf and K from
  panel.first=grid())
  abline(h=0)
  param <- c(170, 0.3, 4.0) # Linf, K, sigma
- predDL <- fabens(param,blackisland,initL="len1",delT="deltat")
+ predDL <- fabens(param,blackisland,initL="l1",delT="dt")
  lines(blackisland$len1,predDL,col=2,lwd=2)   
 }
 }

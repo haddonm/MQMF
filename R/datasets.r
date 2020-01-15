@@ -43,13 +43,13 @@ NULL
 
 #' @title blackisland tagging data from a blacklip abalone population
 #'
-#' @description A 108 x 4 data.frame containing deltat, the time
-#'     in years between tagging and recapture, len1 the shell length 
-#'     at tagging, and len2, the length at recapture, with the growth 
-#'     increment, deltal as the last column. This data can be used to 
+#' @description A 108 x 4 data.frame containing dt, the time
+#'     in years between tagging and recapture, l1 the shell length 
+#'     at tagging, and l2, the length at recapture, with the growth 
+#'     increment, dl as the last column. This data can be used to 
 #'     estimate the growth characteristics of 
 #'     abalone from the Black Island site, which is on the south west 
-#'     coast of Tasmania, Australia.  The time 
+#'     coast of Tasmania, Australia.  The mean time 
 #'     interval between tagging and recapture is 1 year and 1 week,
 #'     1.02 years, which reflects the practical problems of taking a 
 #'     vessel around the bottom of Tasmania, where it is essential to
@@ -59,15 +59,13 @@ NULL
 #' 
 #' @docType data
 #' 
-#' @format A data.frame of six columns
+#' @format A data.frame of four columns
 #' \describe{
-#'   \item{deltat}{the time between tagging and recapture, in years}
-#'   \item{time1}{the date at tagging}
-#'   \item{len1}{the shell length when tagged in mm}
-#'   \item{time2}{the date of recapture}
-#'   \item{len2}{the shell length at recapture in mm}
-#'   \item{deltal}{the growth increment between tagging and recapture
-#'                 in mm; there are a few negative values.}
+#'   \item{dt}{the time between tagging and recapture, in years}
+#'   \item{l1}{the shell length when tagged in mm}
+#'   \item{l2}{the shell length at recapture in mm}
+#'   \item{dl}{the growth increment between tagging and recapture
+#'                 in mm; there are zero values.}
 #' }
 #' 
 #' @section Subjects:

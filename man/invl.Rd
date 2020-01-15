@@ -4,7 +4,7 @@
 \alias{invl}
 \title{invl calculates growth increments for the inverse logistic}
 \usage{
-invl(par, indat, initL = "len1", delT = "deltat")
+invl(par, indat, initL = "l1", delT = "dt")
 }
 \arguments{
 \item{par}{a vector of at least Linf, and K from teh von Bertalanffy 
@@ -14,9 +14,11 @@ growth curve}
 least the initial lengths and the deltaT, time intervals between
 tag release and recapture.}
 
-\item{initL}{column name of the initial lengths within indat}
+\item{initL}{column name of the initial lengths within indat, 
+default="l1"}
 
-\item{delT}{column name of the time interval, deltaT, within indat
+\item{delT}{column name of the time interval, deltaT, within indat, 
+    default="dt"
 
 #' @references Haddon, M., Mundy, C., and D. Tarbath (2008) Using an 
    inverse-logistic model to describe growth increments of blacklip 
@@ -41,7 +43,7 @@ invl requires at least three parameters, MaxDL, L50, and
  xlab="Initial Length mm",ylab="Growth Increment mm",panel.first=grid())
  abline(h=0)
  param <- c(25, 130, 35, 3) # MaxDL, L50, delta, sigma
- predDL <- invl(param,blackisland,initL="len1",delT="deltat")
+ predDL <- invl(param,blackisland,initL="l1",delT="dt")
  lines(blackisland$len1,predDL,col=2,lwd=2) 
 }
 }

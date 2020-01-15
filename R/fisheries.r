@@ -195,8 +195,10 @@ domed <- function(p,L) {
 #' @param indat the matrix or data.frame of data columns containing at
 #'     least the initial lengths and the deltaT, time intervals between
 #'     tag release and recapture.
-#' @param initL column name of the initial lengths within indat
-#' @param delT column name of the time interval, deltaT, within indat
+#' @param initL column name of the initial lengths within indat, 
+#'     default="l1"
+#' @param delT column name of the time interval, deltaT, within indat,
+#'     default="dt"
 #'
 #' @return a vector of predicted growth increments 
 #' @export
@@ -209,10 +211,10 @@ domed <- function(p,L) {
 #'  panel.first=grid())
 #'  abline(h=0)
 #'  param <- c(170, 0.3, 4.0) # Linf, K, sigma
-#'  predDL <- fabens(param,blackisland,initL="len1",delT="deltat")
+#'  predDL <- fabens(param,blackisland,initL="l1",delT="dt")
 #'  lines(blackisland$len1,predDL,col=2,lwd=2)   
 #' }
-fabens <- function(par,indat,initL="len1",delT="deltat") {
+fabens <- function(par,indat,initL="l1",delT="dt") {
   preddL <- (par[1] - indat[,initL])*(1 - exp(-(par[2] * indat[,delT])))
   return(preddL)
 }
@@ -255,8 +257,10 @@ Gz <- function(p, ages) {
 #' @param indat the matrix or data.frame of data columns containing at
 #'     least the initial lengths and the deltaT, time intervals between
 #'     tag release and recapture.
-#' @param initL column name of the initial lengths within indat
-#' @param delT column name of the time interval, deltaT, within indat
+#' @param initL column name of the initial lengths within indat, 
+#'     default="l1"
+#' @param delT column name of the time interval, deltaT, within indat, 
+#'     default="dt"
 #'
 #'#' @references Haddon, M., Mundy, C., and D. Tarbath (2008) Using an 
 #'    inverse-logistic model to describe growth increments of blacklip 
@@ -272,10 +276,10 @@ Gz <- function(p, ages) {
 #'  xlab="Initial Length mm",ylab="Growth Increment mm",panel.first=grid())
 #'  abline(h=0)
 #'  param <- c(25, 130, 35, 3) # MaxDL, L50, delta, sigma
-#'  predDL <- invl(param,blackisland,initL="len1",delT="deltat")
+#'  predDL <- invl(param,blackisland,initL="l1",delT="dt")
 #'  lines(blackisland$len1,predDL,col=2,lwd=2) 
 #' }
-invl <- function(par,indat,initL="len1",delT="deltat") {
+invl <- function(par,indat,initL="l1",delT="dt") {
   preddl <- (par[1] * indat[,delT])/
     (1 + exp(log(19) * (indat[,initL] - par[2])/par[3]))
   return(preddl)
@@ -529,23 +533,25 @@ negNLL <- function(pars,funk,observed,...) {
   return(LL)
 } # end of negNLL
 
-
 #' @title negnormL an alternative -log-likelihood for normal errors
 #' 
 #' @description negnormL is an alternative to negNLL to produce
-#'     -ve log-likelihoods for normal random errors. The two functions
-#'     differ by how they reference the independent and dependent 
-#'     variables. In negnormL only the observed (for comparison with the
-#'     predicted) is identified. This is to allow for different column
-#'     headings in one's data.frames
+#'     -ve log-likelihoods for normal random errors, allowing for the
+#'     sigma parameter to vary with the predicted value. In negnormL 
+#'     only one needs both a funk and a funksig, the former to 
+#'     calculate the predicted values using funk, and funksig to
+#'     calculate the changing sigma values relative to the predicted
+#'     values. The example code illustrates an example funksig that
+#'     does nothing to the sigma value.
 #'
-#' @param par  the vector of parameters, with sigma, the standard
+#' @param pars  the vector of parameters, with sigma, the standard
 #'     deviation of the normal random deviates at the end.
 #' @param funk the funk needed to generate the predicted values
 #' @param indat the data.frame or matrix containing the obs and the 
 #'     independent variable used by funk
 #' @param obs identifies the column name or column number that contains 
-#'     the observed data for comparison with the predicted from funk
+#'     the observed data for comparison with the predicted from funk,
+#'     the default="dl"
 #' @param ... the standard R for including extra parameters needed by
 #'     funk but without having to be explicitly defined.
 #'
@@ -556,17 +562,19 @@ negNLL <- function(pars,funk,observed,...) {
 #' \dontrun{
 #'  data(blackisland)
 #'  param <- c(Linf=173.65,K=0.2666,sigma=3.6)
-#'  negnormL(par=param,funk=fabens,indat=blackisland,obs="deltal",
-#'           initL="len1",delT="deltat")   # should be 291.6809
+#'  sigfunk <- function(pars,predobs) return(tail(pars,1))
+#'  negnormL(par=param,funk=fabens,funksig=sigfunk,indat=blackisland,
+#'           obs="dl",initL="l1",delT="dt")   # should be 291.1757
 #'  param2 <- c(21.03,130.94,40.65,3.162)  
-#'  negnormL(par=param2,funk=invl,indat=blackisland,obs="deltal",
-#'           initL="len1",delT="deltat")  # should be 277.5663 
+#'  negnormL(par=param2,funk=invl,funksig=sigfunk,indat=blackisland,
+#'            obs="dl",initL="l1",delT="dt")  # should be 277.0186
 #' }
-negnormL <- function(par,funk,indat,obs="deltal",...) {
-  predobs <- funk(par,indat,...)
-  LL <- -sum(dnorm(indat[,obs],predobs,tail(par,1),log=T))
+negnormL <- function(pars,funk,funksig,indat,obs="dl",...){
+  predobs <- funk(pars,indat,...) #if sigma not a constant then
+  sigma <- funksig(pars,predobs) #funksig produces a vector
+  LL <- -sum(dnorm(indat[,obs],predobs,sigma,log=T))
   return(LL)
-}
+} # end of negnormL
 
 #' @title negLLP  -ve log-likelihood for normally distributed variables
 #'
