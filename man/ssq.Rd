@@ -17,7 +17,9 @@ with the observed values to give the ssq and be returned}
 without having to explicitly declare them in ssq. Note that
 this means inside the ssq function the call to funk also needs
 to have the ellipsis, otherwise it will not be able to see those
-other arguments.}
+other arguments. It is vital to spell the names of funk's
+arguments correctly as errors are not always announced and 
+will obviously lead to misleading outputs.}
 }
 \value{
 a single number (scaler) that is the sum of squared

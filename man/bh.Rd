@@ -25,6 +25,6 @@ bh implements the Beverton-Holt stock recruitment
 \dontrun{
   B <- 1:3000
   rec <- bh(c(1000,200),B)
-  plot1(B,rec,xlabel="SpB",ylabel="Recruitment",lwd=2)
+  plot1(B,rec,xlab="SpB",ylab="Recruitment",lwd=2)
 }
 }

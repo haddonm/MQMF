@@ -3,7 +3,7 @@
 \docType{data}
 \name{schaef}
 \alias{schaef}
-\title{schaef is the yellowfin tuna fishery data from Schaefer 1957}
+\title{schaef is yellowfin tuna fishery data from Schaefer 1957}
 \format{A data.frame of fisheries data
 \describe{
   \item{year}{the fishing year from 1934 - 1955}

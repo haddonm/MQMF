@@ -223,7 +223,7 @@ NULL
 #'  \dontrun{
 #'  data(minnow)
 #'  plot1(minnow$week,minnow$length,type="p",pch=16,cex=1.2,
-#'        xlabel="Week",ylabel="Length mm")
+#'        xlab="Week",ylab="Length mm")
 #' }
 NULL
 
@@ -270,14 +270,14 @@ NULL
 #'  \dontrun{
 #'  data(npf)
 #'  npf
-#'  plot1(npf$year,npf$tiger,xlabel="Year",ylabel="Tonnes",lwd=2)
+#'  plot1(npf$year,npf$tiger,xlab="Year",ylab="Tonnes",lwd=2)
 #'  lines(npf$year,npf$endeavour,col=2,lwd=2)
 #'  legend("topleft",c("Tiger","Endeavour"),col=c(1,2),lwd=3,
 #'         bty="n",cex=1.5)
 #' }
 NULL
 
-#' @title pttuna is the yellowfin tuna fishery data from Pella-Tomlinson 1969
+#' @title pttuna is yellowfin tuna fishery data from Pella-Tomlinson 1969
 #'
 #' @description pttuna is yellowfin tuna fishery data from Pella-Tomlinson's
 #'     (1969) classical paper describing their generalized surplsu production 
@@ -324,7 +324,7 @@ NULL
 NULL
 
 
-#' @title schaef is the yellowfin tuna fishery data from Schaefer 1957
+#' @title schaef is yellowfin tuna fishery data from Schaefer 1957
 #'
 #' @description schaef is yellowfin tuna fishery data from Schaefer
 #'     (1957) It contains the year, the catch, the effort, and the cpue 
@@ -416,12 +416,12 @@ NULL
 #' }
 NULL
 
-#' @title tigers is spawning biomass and subsequent recruitment data
+#' @title tigers is tiger prawn recruitment data from Penn & Caputi 1986
 #'
-#' @description tigers is a dataset of only 14 rows of
-#'     data with a column of Spawning index and Recruitment index, 
-#'     as a data.frame. The timing of the recruitment index is up to 
-#'     half a year after the spawning index.
+#' @description tigers is a dataset of only 14 rows of data with a 
+#'     column of Spawning index and Recruitment index, as a data.frame. 
+#'     The timing of the recruitment index is up to half a year after 
+#'     the spawning index.
 #'
 #' @name tigers
 #' 

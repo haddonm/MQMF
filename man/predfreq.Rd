@@ -48,6 +48,6 @@ stdev <- c(2.75,5.5)  # the standard deviations
 prop1 <- 0.55  # the proportion of observations in cohort 1
 pars <-c(av,stdev,prop1)  # combine parameters into a vector
 predf <- predfreq(pars,n=262,sizecl=mids,midval=TRUE)
-plot1(mids,predf,xlabel="Sizes",ylabel="Predicted Frequency",lwd=2)
+plot1(mids,predf,xlab="Sizes",ylab="Predicted Frequency",lwd=2)
 }
 }

@@ -25,8 +25,14 @@ save(abdat,file="data-raw/abdat.RData")
 infile <- "C:/Users/User/Dropbox/rcode/MQMF/data-raw/blackisland.csv"
 blackisland <- read.csv(infile,header=TRUE)
 blackisland <- droplevels(blackisland[,-c(1,2,3,5,7)])
+colnames(blackisland) <- c("dt","l1","l2","dl")
 
-colnames(blackisland) <- c("deltat","len1","len2","deltal")
+pick <- which(blackisland$dl < 0)
+blackisland[pick,]
+blackisland[pick[1],"l2"] <- 155; blackisland[pick[1],"dl"] <- 0
+blackisland[pick[2],"l2"] <- 169; blackisland[pick[2],"dl"] <- 0
+blackisland[pick,]
+
 filename <- "C:/Users/User/Dropbox/rcode/MQMF/data-raw/blackisland.RData"
 save(blackisland,file=filename)
 
@@ -128,9 +134,9 @@ plot1(pttuna$year,pttuna$cpue)
  
  
 # check and re-store data ---------------------------------------
-tools::checkRdaFiles(paths="C:/Users/Malcolm/DropBox/rcode/MQMF/data-raw")
-tools::resaveRdaFiles(paths="C:/Users/Malcolm/DropBox/rcode/MQMF/data-raw",compress="auto")
-tools::checkRdaFiles(paths="C:/Users/Malcolm/DropBox/rcode/MQMF/data-raw")
+tools::checkRdaFiles(paths="C:/Users/user/DropBox/rcode/MQMF/data-raw")
+tools::resaveRdaFiles(paths="C:/Users/User/DropBox/rcode/MQMF/data-raw",compress="auto")
+tools::checkRdaFiles(paths="C:/Users/User/DropBox/rcode/MQMF/data-raw")
 
 # l---------------------------------------------------------------
 

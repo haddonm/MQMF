@@ -22,6 +22,6 @@ vB calculates length at age for the von Bertalanffy curve.
 \dontrun{
 ages <- seq(0,20,1)   # sigma is ignored here
 pars <- c(Linf=50,K=0.3,t0=-1.0,sigma=1.0) # Linf, K, t0, sigma
-plot1(ages,vB(pars,ages),xlabel="Age",ylabel="Length",lwd=2)
+plot1(ages,vB(pars,ages),xlab="Age",ylab="Length",lwd=2)
 }
 }

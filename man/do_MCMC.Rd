@@ -88,7 +88,7 @@ data(abdat)
  pairs(out[,1:4],col=rgb(1,0,0,1/20))
  
  parset(plots=c(1,2))
- plot1(1:N,out[,1],ylabel="r",defpar=FALSE)
- plot1(1:N,out[,2],ylabel="K",defpar=FALSE)
+ plot1(1:N,out[,1],ylab="r",defpar=FALSE)
+ plot1(1:N,out[,2],ylab="K",defpar=FALSE)
 }
 }

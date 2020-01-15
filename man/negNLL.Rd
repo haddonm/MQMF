@@ -44,7 +44,7 @@ negNLL - Calculates the negative log-likelihood for
  age <- minnow$week            # negNLL = 151.1713
  ssq(funk=vB,observed=minnow$length,p=pars,ages=age)
  negNLL(pars,funk=vB,observed=minnow$length,ages=age)
- plot1(age,vB(pars,age),xlabel="Age",ylabel="Length",lwd=2)
+ plot1(age,vB(pars,age),xlab="Age",ylab="Length",lwd=2)
  points(age,minnow$length,pch=16,cex=1.2)
 }
 }

@@ -12,29 +12,30 @@ discretelogistic(r = 0.5, K = 1000, N0 = 50, Ct = 0, Yrs = 50,
 
 \item{K}{carrying capacity; default = 1000}
 
-\item{N0}{Initial population size; default = 50}
+\item{N0}{Initial population size; default=50 = 5 percent depletion}
 
 \item{Ct}{annual catch default = 0.0}
 
-\item{Yrs}{years of population growth}
+\item{Yrs}{years of population growth, default=50}
 
-\item{p}{the asymmetry parameter. the default value of 1.0 leads
-to the classical Schaefer model. A value of 1e-08 approximates
-the Fox model where the mode is skewed to the left of centre.}
+\item{p}{the production curve asymmetry parameter. the default 
+value of 1.0 gives the classical Schaefer model. A value of 
+1e-08 approximates the Fox model where the mode is skewed to 
+the left of centre.}
 }
 \value{
 invisibly returns a matrix of year, nt, and nt1
 }
 \description{
-discretelogistic is an implementation of example box 2.2 
-    from the the Excel version of MQMF. It enables the exploration of 
-    the dynamics of the Discrete logistic model, based around the 
-    classical Schaefer model. 
+discretelogistic is an implementation of equation 3.1
+    in teh Simple Population Models chapter. It enables the 
+    exploration of the dynamics of the Discrete logistic model, 
+    based around the classical Schaefer model. 
     
-    The time series nature of population growth is clear from 
-    the fatc that Nt+1 is a function of Nt. One can expect serial
-    correlation. Setting the r parameter to <= 1.0,
-    would generate monotonically damped equilibria. r values between 
+    The time-series nature of population growth is clear from 
+    the fact that Nt+1 is a function of Nt. One can expect serial
+    correlation. Setting the r parameter to <= 1.0, would 
+    generate monotonically damped equilibria. r values between 
     1 < r < 2.03 would generate damped oscillatory equilibria, r 
     values from 2.03 < r < 2.43 should generate stable limit cycles 
     on a cycle of 2., 2.43 < r < 2.54 gives stable limit cycles of 

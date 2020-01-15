@@ -51,7 +51,7 @@ plot1 provides a quick way to plot out a single xy
 \examples{
 \dontrun{
  x <- rnorm(20,mean=5,sd=1)
- plot1(x,x,xlabel="x-values",ylabel="yvalues")
+ plot1(x,x,xlab="x-values",ylab="yvalues")
  points(x,x,pch=16,cex=1.5)
 }
 }

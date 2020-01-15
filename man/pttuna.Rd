@@ -3,7 +3,7 @@
 \docType{data}
 \name{pttuna}
 \alias{pttuna}
-\title{pttuna is the yellowfin tuna fishery data from Pella-Tomlinson 1969}
+\title{pttuna is yellowfin tuna fishery data from Pella-Tomlinson 1969}
 \format{A data.frame of fisheries data
 \describe{
   \item{year}{the fishing year from 1934 - 1955}

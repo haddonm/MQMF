@@ -3,7 +3,7 @@
 \docType{data}
 \name{tigers}
 \alias{tigers}
-\title{tigers is spawning biomass and subsequent recruitment data}
+\title{tigers is tiger prawn recruitment data from Penn & Caputi 1986}
 \format{A data.frame of spawning recruitment data
 \describe{
   \item{Spawn}{the estimated spawning biomass index in a year (Aug - Oct)}
@@ -17,10 +17,10 @@ Extracted from Table 2, page 496 of Penn, J.W. and N. Caputi
     Marine and Freshwater Research} 37: 491-505. Sorted on spawning index.
 }
 \description{
-tigers is a dataset of only 14 rows of
-    data with a column of Spawning index and Recruitment index, 
-    as a data.frame. The timing of the recruitment index is up to 
-    half a year after the spawning index.
+tigers is a dataset of only 14 rows of data with a 
+    column of Spawning index and Recruitment index, as a data.frame. 
+    The timing of the recruitment index is up to half a year after 
+    the spawning index.
 }
 \section{Subjects}{
 

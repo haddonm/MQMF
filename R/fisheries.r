@@ -72,7 +72,7 @@ bce <- function(M,Fat,Nt,ages) {
 #' \dontrun{
 #'   B <- 1:3000
 #'   rec <- bh(c(1000,200),B)
-#'   plot1(B,rec,xlabel="SpB",ylabel="Recruitment",lwd=2)
+#'   plot1(B,rec,xlab="SpB",ylab="Recruitment",lwd=2)
 #' }
 bh <- function(p,B) {
   rec <- (p[1] * B)/(p[2] + B)
@@ -82,15 +82,15 @@ bh <- function(p,B) {
 
 #' @title discretelogistic example box 2.2 Discrete logistic model
 #'
-#' @description discretelogistic is an implementation of example box 2.2 
-#'     from the the Excel version of MQMF. It enables the exploration of 
-#'     the dynamics of the Discrete logistic model, based around the 
-#'     classical Schaefer model. 
+#' @description discretelogistic is an implementation of equation 3.1
+#'     in teh Simple Population Models chapter. It enables the 
+#'     exploration of the dynamics of the Discrete logistic model, 
+#'     based around the classical Schaefer model. 
 #'     
-#'     The time series nature of population growth is clear from 
-#'     the fatc that Nt+1 is a function of Nt. One can expect serial
-#'     correlation. Setting the r parameter to <= 1.0,
-#'     would generate monotonically damped equilibria. r values between 
+#'     The time-series nature of population growth is clear from 
+#'     the fact that Nt+1 is a function of Nt. One can expect serial
+#'     correlation. Setting the r parameter to <= 1.0, would 
+#'     generate monotonically damped equilibria. r values between 
 #'     1 < r < 2.03 would generate damped oscillatory equilibria, r 
 #'     values from 2.03 < r < 2.43 should generate stable limit cycles 
 #'     on a cycle of 2., 2.43 < r < 2.54 gives stable limit cycles of 
@@ -100,16 +100,17 @@ bh <- function(p,B) {
 #'     plot, for which an S3 method has been defined plot.dynpop. As the
 #'     dynamics are obviously sequential (i.e. n at t+1 is dependent 
 #'     upon n at t) the last line of the dynamics is removed to avoid 
-#'     an empty nt1 row.
+#'     an empty nt1 row. 
 #'
 #' @param r intrinsic rate of population increase; default = 0.5
 #' @param K carrying capacity; default = 1000
-#' @param N0 Initial population size; default = 50
+#' @param N0 Initial population size; default=50 = 5 percent depletion
 #' @param Ct annual catch default = 0.0
-#' @param Yrs years of population growth
-#' @param p the asymmetry parameter. the default value of 1.0 leads
-#'     to the classical Schaefer model. A value of 1e-08 approximates
-#'     the Fox model where the mode is skewed to the left of centre.
+#' @param Yrs years of population growth, default=50
+#' @param p the production curve asymmetry parameter. the default 
+#'     value of 1.0 gives the classical Schaefer model. A value of 
+#'     1e-08 approximates the Fox model where the mode is skewed to 
+#'     the left of centre.
 #'
 #' @return invisibly returns a matrix of year, nt, and nt1
 #' @export
@@ -164,7 +165,7 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
 #'   L <- seq(1,30,1)
 #'   p <- c(10,11,16,33,-5,-2)
 #'   sel <- domed(p,L)
-#'   plot1(L,sel,xlabel="Age",ylabel="Selectivity",lwd=2)
+#'   plot1(L,sel,xlab="Age",ylab="Selectivity",lwd=2)
 #' }
 domed <- function(p,L) {
   nL <- length(L)
@@ -233,7 +234,7 @@ fabens <- function(par,indat,initL="len1",delT="deltat") {
 #' \dontrun{
 #'  ages <- seq(0,20,1)   # sigma is ignored here
 #'  pars <- c(a=26.0,b=2.8,c=-0.65,sigma=1.0) # a, b, c, sigma;
-#'  plot1(ages,Gz(pars,ages),xlabel="Age",ylabel="Length",lwd=2)
+#'  plot1(ages,Gz(pars,ages),xlab="Age",ylab="Length",lwd=2)
 #' }
 Gz <- function(p, ages) {
   return(p[1]*exp(-p[2]*exp(p[3]*ages)))
@@ -362,7 +363,7 @@ mature <- function(a,b,sizeage) {
 #' \dontrun{
 #'  ages <- seq(0,20,1)    # sigma is ignored here
 #'  pars <- c(a=23.0,b=1.0,c=1.0,sigma=1.0) # a, b, c, sigma
-#'  plot1(ages,mm(pars,ages),xlabel="Age",ylabel="Length",lwd=2)
+#'  plot1(ages,mm(pars,ages),xlab="Age",ylab="Length",lwd=2)
 #' }
 mm <- function(p, ages) {
   return((p[1]*ages)/(p[2] + ages^p[3]))
@@ -519,7 +520,7 @@ negLL1 <- function(pars,funk,logobs,...) {
 #'  age <- minnow$week            # negNLL = 151.1713
 #'  ssq(funk=vB,observed=minnow$length,p=pars,ages=age)
 #'  negNLL(pars,funk=vB,observed=minnow$length,ages=age)
-#'  plot1(age,vB(pars,age),xlabel="Age",ylabel="Length",lwd=2)
+#'  plot1(age,vB(pars,age),xlab="Age",ylab="Length",lwd=2)
 #'  points(age,minnow$length,pch=16,cex=1.2)
 #' }
 negNLL <- function(pars,funk,observed,...) {
@@ -671,7 +672,7 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
 #' \dontrun{
 #'   B <- 1:10000
 #'   rec <- ricker(c(10,0.0002),B)
-#'   plot1(B,rec,xlabel="SpB",ylabel="Recruitment",lwd=2)
+#'   plot1(B,rec,xlab="SpB",ylab="Recruitment",lwd=2)
 #' }
 ricker <- function(p,B) {
   R <- p[1] * B * exp(-p[2] * B)
@@ -710,7 +711,7 @@ ricker <- function(p,B) {
 #'  L <- seq(50,160,1)
 #'  p <- c(a=0.07,b=0.2,c=1.0,alpha=100.0)
 #'  predR <- srug(p=p,sizeage=L) # proportion of total
-#'  plot1(L,predR,xlabel="Length",ylabel="Prop of Recruitment")
+#'  plot1(L,predR,xlab="Length",ylab="Prop of Recruitment")
 #'  abline(h=0.5) #visually confirm asymmetry
 #' }
 srug <- function(p,sizeage) { # p = a, b, c, alpha
@@ -742,7 +743,9 @@ srug <- function(p,sizeage) { # p = a, b, c, alpha
 #'     without having to explicitly declare them in ssq. Note that
 #'     this means inside the ssq function the call to funk also needs
 #'     to have the ellipsis, otherwise it will not be able to see those
-#'     other arguments.
+#'     other arguments. It is vital to spell the names of funk's
+#'     arguments correctly as errors are not always announced and 
+#'     will obviously lead to misleading outputs.
 #'
 #' @return a single number (scaler) that is the sum of squared
 #'     residuals between the dep values and those calculated by funk
@@ -775,7 +778,7 @@ ssq <- function(funk,observed, ...) {
 #' \dontrun{
 #' ages <- seq(0,20,1)   # sigma is ignored here
 #' pars <- c(Linf=50,K=0.3,t0=-1.0,sigma=1.0) # Linf, K, t0, sigma
-#' plot1(ages,vB(pars,ages),xlabel="Age",ylabel="Length",lwd=2)
+#' plot1(ages,vB(pars,ages),xlab="Age",ylab="Length",lwd=2)
 #' }
 vB <- function(p,ages) {
   return(p[1] * (1 - exp(-p[2]*(ages-p[3]))))
