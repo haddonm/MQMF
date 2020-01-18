@@ -4,8 +4,16 @@
 \alias{plotlag}
 \title{plotlag plots the effect of a lag between two variables}
 \usage{
-plotlag(x, driver = "catch", react = "cpue", lag = 0,
-  interval = "year", filename = "", resol = 200, fnt = 7)
+plotlag(
+  x,
+  driver = "catch",
+  react = "cpue",
+  lag = 0,
+  interval = "year",
+  filename = "",
+  resol = 200,
+  fnt = 7
+)
 }
 \arguments{
 \item{x}{the matrix containing columns of the named variables. It must

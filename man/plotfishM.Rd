@@ -4,9 +4,18 @@
 \alias{plotfishM}
 \title{plotfishM plots the catch and optionally the cpue}
 \usage{
-plotfishM(fish, spsname = "", ce = TRUE, title = TRUE, fnt = 7,
-  both = TRUE, maxy = c(0, 0), year = "year", catch = "catch",
-  cpue = "cpue")
+plotfishM(
+  fish,
+  spsname = "",
+  ce = TRUE,
+  title = TRUE,
+  fnt = 7,
+  both = TRUE,
+  maxy = c(0, 0),
+  year = "year",
+  catch = "catch",
+  cpue = "cpue"
+)
 }
 \arguments{
 \item{fish}{the matrix or data.frame containing year, catch, and cpue.}

@@ -41,8 +41,8 @@ bracket scans through a series of predicted values for
  L50 <- linter(bracket(0.5,asym,L)) 
  L75 <- linter(bracket(0.75,asym,L)) 
  ans <- c(L25,L50,L75,L50-L25,L75-L50)
- {cat("   L25    L50      L75   L50-L25 L75-L50 \\n")
- cat(round(ans,4),"\\n")} 
+ {cat("   L25    L50      L75   L50-L25 L75-L50 \n")
+ cat(round(ans,4),"\n")} 
 }
 }
 \seealso{

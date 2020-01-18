@@ -4,8 +4,14 @@
 \alias{spmCE}
 \title{spmCE - calculates the dynamics using a Schaefer or Fox model}
 \usage{
-spmCE(inp, indat, schaefer = TRUE, year = "year", cats = "catch",
-  index = "cpue")
+spmCE(
+  inp,
+  indat,
+  schaefer = TRUE,
+  year = "year",
+  cats = "catch",
+  index = "cpue"
+)
 }
 \arguments{
 \item{inp}{a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), you

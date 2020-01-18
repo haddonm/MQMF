@@ -4,8 +4,16 @@
 \alias{plotprep}
 \title{plotprep: sets up a window and the par values for plotting}
 \usage{
-plotprep(width = 6, height = 3.6, usefont = 7, cex = 0.75,
-  newdev = FALSE, filename = "", resol = 300, reminder = TRUE)
+plotprep(
+  width = 6,
+  height = 3.6,
+  usefont = 7,
+  cex = 0.75,
+  newdev = FALSE,
+  filename = "",
+  resol = 300,
+  reminder = TRUE
+)
 }
 \arguments{
 \item{width}{defaults to 6 inches = 15.24cm - width of plot}

@@ -4,8 +4,16 @@
 \alias{fitSPM}
 \title{fitSPM fits a surplus production model}
 \usage{
-fitSPM(pars, fish, schaefer = TRUE, maxiter = 1000, funk = simpspm,
-  funkone = FALSE, hess = FALSE, steptol = 1e-06)
+fitSPM(
+  pars,
+  fish,
+  schaefer = TRUE,
+  maxiter = 1000,
+  funk = simpspm,
+  funkone = FALSE,
+  hess = FALSE,
+  steptol = 1e-06
+)
 }
 \arguments{
 \item{pars}{the initial parameter values to start the search for the 

@@ -21,16 +21,17 @@ a vector of the likelihood ratio, the significance of any
 }
 \description{
 likeratio conducts a likelihood ratio test on two
-    negative log-likelihoods. It produces the LR plus realted 
+    negative log-likelihoods. It produces the LR plus related 
     statistics detailing if a significant difference has been found.
     The order in which the log-likelihoods are entered does not 
-    matter as that is checked for.
+    matter as that is checked for so a positive likelihood ratio
+    is always generated.
 }
 \examples{
 \dontrun{
-  one <- 291.6808
-  two <- 277.5662
-  dof <- 3
+  one <- 291.1691
+  two <- 277.0122
+  dof <- 1
   round(likeratio(one,two,dof),8)
 }
 }

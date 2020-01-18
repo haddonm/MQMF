@@ -4,8 +4,7 @@
 \alias{spm}
 \title{spm - calculates the dynamics of a Schaefer or Fox model}
 \usage{
-spm(inp, indat, schaefer = TRUE, year = "year", cats = "catch",
-  index = "cpue")
+spm(inp, indat, schaefer = TRUE, year = "year", cats = "catch", index = "cpue")
 }
 \arguments{
 \item{inp}{a vector of 3 or 4 model parameters (r,K,sigma) or (r, K,

@@ -34,7 +34,7 @@ bce <- function(M,Fat,Nt,ages) {
   nage <- length(ages)
   lFat <- length(Fat)
   if (lFat < nage) {
-    lastF <- tail(Fat,1)
+    lastF <- Fat[lFat]
     fill <- rep(lastF,(nage - lFat))
     Fat <- c(Fat,fill)
     warning("Fat contains fewer values than number of ages  \n")
@@ -435,12 +435,13 @@ mnnegLL <- function(obs,predf) {
 #' negLL(pars=param,funk=simpspm,logobs=log(abdat[,"cpue"]),indat=abdat)
 #' }
 negLL <- function(pars,funk,logobs,...) {
+  npar <- length(pars)
   logpred <- funk(pars,...)
   pick <- which(is.na(logobs))
   if (length(pick) > 0) {
-    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(tail(pars,1)),log=T))
+    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(pars[npar]),log=T))
   } else {
-    LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+    LL <- -sum(dnorm(logobs,logpred,exp(pars[npar]),log=T))
   }
   return(LL)
 } # end of negLL
@@ -477,12 +478,13 @@ negLL <- function(pars,funk,logobs,...) {
 #' negLL1(pars=param,funk=simpspm,logobs=log(abdat[,"cpue"]),indat=abdat)
 #' }
 negLL1 <- function(pars,funk,logobs,...) {
+  npar <- length(pars)
   logpred <- funk(pars,...)
   pick <- which(is.na(logobs))
   if (length(pick) > 0) {
-    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(tail(pars,1)),log=T))
+    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(pars[npar]),log=T))
   } else {
-    LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+    LL <- -sum(dnorm(logobs,logpred,exp(pars[npar]),log=T))
   }
   LL <- LL + penalty0(exp(pars[1]))
   return(LL)
@@ -528,8 +530,9 @@ negLL1 <- function(pars,funk,logobs,...) {
 #'  points(age,minnow$length,pch=16,cex=1.2)
 #' }
 negNLL <- function(pars,funk,observed,...) {
+  npar <- length(pars)
   predobs <- funk(pars,...)
-  LL <- -sum(dnorm(observed,predobs,tail(pars,1),log=T))
+  LL <- -sum(dnorm(observed,predobs,pars[npar],log=T))
   return(LL)
 } # end of negNLL
 
@@ -537,9 +540,9 @@ negNLL <- function(pars,funk,observed,...) {
 #' 
 #' @description negnormL is an alternative to negNLL to produce
 #'     -ve log-likelihoods for normal random errors, allowing for the
-#'     sigma parameter to vary with the predicted value. In negnormL 
-#'     only one needs both a funk and a funksig, the former to 
-#'     calculate the predicted values using funk, and funksig to
+#'     sigma parameter to vary as a function of the predicted value. 
+#'     In negnormL only one needs both a funk and a funksig, the former 
+#'     to calculate the predicted values using funk, and funksig to
 #'     calculate the changing sigma values relative to the predicted
 #'     values. The example code illustrates an example funksig that
 #'     does nothing to the sigma value.
@@ -547,6 +550,8 @@ negNLL <- function(pars,funk,observed,...) {
 #' @param pars  the vector of parameters, with sigma, the standard
 #'     deviation of the normal random deviates at the end.
 #' @param funk the funk needed to generate the predicted values
+#' @param funksig the function used to calculate the sigma value based
+#'     on the last parameter (=constant sigma) and the predicted values
 #' @param indat the data.frame or matrix containing the obs and the 
 #'     independent variable used by funk
 #' @param obs identifies the column name or column number that contains 
@@ -649,12 +654,13 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
                    notfixed=c(1:length(pars)),...) {
   usepar <- initpar
   usepar[notfixed] <- pars[notfixed]
+  npar <- length(usepar)
   logpred <- funk(usepar,indat,...)
   pick <- which(is.na(logobs))
   if (length(pick) > 0) {
-    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(tail(pars,1)),log=T))
+    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(pars[npar]),log=T))
   } else {
-    LL <- -sum(dnorm(logobs,logpred,exp(tail(pars,1)),log=T))
+    LL <- -sum(dnorm(logobs,logpred,exp(pars[npar]),log=T))
   }
   return(LL)
 } # end of negLLP

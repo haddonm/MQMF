@@ -4,8 +4,14 @@
 \alias{simpspmO}
 \title{simpspmO simply calculates the predicted CE for an SPM}
 \usage{
-simpspmO(par, indat, schaefer = TRUE, year = "year", cats = "catch",
-  index = "cpue")
+simpspmO(
+  par,
+  indat,
+  schaefer = TRUE,
+  year = "year",
+  cats = "catch",
+  index = "cpue"
+)
 }
 \arguments{
 \item{par}{the parameters of the SPM = r, K, a q for each column of cpue,

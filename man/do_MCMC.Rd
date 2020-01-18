@@ -4,8 +4,20 @@
 \alias{do_MCMC}
 \title{do_MCMC conducts an MCMC using Gibbs within Metropolis}
 \usage{
-do_MCMC(chains, burnin, N, thinstep, inpar, infunk, calcpred, calcdat,
-  obsdat, priorcalc, scales, ...)
+do_MCMC(
+  chains,
+  burnin,
+  N,
+  thinstep,
+  inpar,
+  infunk,
+  calcpred,
+  calcdat,
+  obsdat,
+  priorcalc,
+  scales,
+  ...
+)
 }
 \arguments{
 \item{chains}{the number of independent MCMC chains produced}
@@ -81,8 +93,8 @@ data(abdat)
                    infunk=negLL,calcpred=simpspm,calcdat=abdat,
                    obsdat=log(abdat$cpue),priorcalc=calcprior,
                    scales=c(0.06,0.05,0.06,0.42))
- cat("Acceptance Rate = ",result[[2]],"\\n")
- cat("Failure Rate    = ",result[[3]],"\\n")
+ cat("Acceptance Rate = ",result[[2]],"\n")
+ cat("Failure Rate    = ",result[[3]],"\n")
  #plotprep(width=6,height=5,newdev=FALSE)
  out <- result[[1]][[1]] # get the list containing the matrix
  pairs(out[,1:4],col=rgb(1,0,0,1/20))

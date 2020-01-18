@@ -4,9 +4,19 @@
 \alias{plotspmmod}
 \title{plotspmmod plots an spm model fit given parameters and data}
 \usage{
-plotspmmod(inp, indat, schaefer = TRUE, limit = 0.2, target = 0.48,
-  addrmse = FALSE, fnt = 7, plotout = TRUE, vline = 0,
-  plotprod = TRUE, maxy = 0)
+plotspmmod(
+  inp,
+  indat,
+  schaefer = TRUE,
+  limit = 0.2,
+  target = 0.48,
+  addrmse = FALSE,
+  fnt = 7,
+  plotout = TRUE,
+  vline = 0,
+  plotprod = TRUE,
+  maxy = 0
+)
 }
 \arguments{
 \item{inp}{a vector of model parameters at least (r,K,B0)}

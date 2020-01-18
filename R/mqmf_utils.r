@@ -557,10 +557,11 @@ iscol <- function(incol="year",inmat) { # incol="ages"; inmat=dat
 #' @title likeratio conducts a likelihood ratio test
 #' 
 #' @description likeratio conducts a likelihood ratio test on two
-#'     negative log-likelihoods. It produces the LR plus realted 
+#'     negative log-likelihoods. It produces the LR plus related 
 #'     statistics detailing if a significant difference has been found.
 #'     The order in which the log-likelihoods are entered does not 
-#'     matter as that is checked for.
+#'     matter as that is checked for so a positive likelihood ratio
+#'     is always generated.
 #'
 #' @param nLL1 the first -ve log-likelihood
 #' @param nLL2 the second -ve log-likelihood 
@@ -574,12 +575,12 @@ iscol <- function(incol="year",inmat) { # incol="ages"; inmat=dat
 #'
 #' @examples
 #' \dontrun{
-#'   one <- 291.6808
-#'   two <- 277.5662
-#'   dof <- 3
+#'   one <- 291.1691
+#'   two <- 277.0122
+#'   dof <- 1
 #'   round(likeratio(one,two,dof),8)
 #' }
-likeratio <- function(nLL1,nLL2,df=1) { # nLL1=291.6808; nLL2=277.5662; df=1
+likeratio <- function(nLL1,nLL2,df=1) {
   if (!(nLL1 < nLL2)) {
     tmp <- nLL1
     nLL1 <- nLL2

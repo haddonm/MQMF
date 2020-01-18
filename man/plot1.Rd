@@ -4,8 +4,18 @@
 \alias{plot1}
 \title{plot1 a simple way to plot an xy line plot}
 \usage{
-plot1(x, y, xlab = "", ylab = "", type = "l", usefont = 7,
-  cex = 0.75, maxy = 0, defpar = TRUE, ...)
+plot1(
+  x,
+  y,
+  xlab = "",
+  ylab = "",
+  type = "l",
+  usefont = 7,
+  cex = 0.75,
+  maxy = 0,
+  defpar = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{The single vector of x data}

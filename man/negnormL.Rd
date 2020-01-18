@@ -12,6 +12,9 @@ deviation of the normal random deviates at the end.}
 
 \item{funk}{the funk needed to generate the predicted values}
 
+\item{funksig}{the function used to calculate the sigma value based
+on the last parameter (=constant sigma) and the predicted values}
+
 \item{indat}{the data.frame or matrix containing the obs and the 
 independent variable used by funk}
 
@@ -28,9 +31,9 @@ the negative log-likelihood, for use in an optimizer, eg nlm
 \description{
 negnormL is an alternative to negNLL to produce
     -ve log-likelihoods for normal random errors, allowing for the
-    sigma parameter to vary with the predicted value. In negnormL 
-    only one needs both a funk and a funksig, the former to 
-    calculate the predicted values using funk, and funksig to
+    sigma parameter to vary as a function of the predicted value. 
+    In negnormL only one needs both a funk and a funksig, the former 
+    to calculate the predicted values using funk, and funksig to
     calculate the changing sigma values relative to the predicted
     values. The example code illustrates an example funksig that
     does nothing to the sigma value.

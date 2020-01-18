@@ -4,8 +4,7 @@
 \alias{plotproj}
 \title{plotproj generate a plot of a matrix of biomass projections}
 \usage{
-plotproj(projs, spmout, qprob = c(0.1, 0.5, 0.9), refpts = NULL,
-  fnt = 7)
+plotproj(projs, spmout, qprob = c(0.1, 0.5, 0.9), refpts = NULL, fnt = 7)
 }
 \arguments{
 \item{projs}{the N x yrs matrix of biomass trajectories}

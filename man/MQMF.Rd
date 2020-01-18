@@ -3,7 +3,6 @@
 \docType{package}
 \name{MQMF}
 \alias{MQMF}
-\alias{MQMF-package}
 \title{MQMF R functions for the New Book}
 \description{
 The MQMF package provides a set of functions that

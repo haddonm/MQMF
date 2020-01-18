@@ -4,8 +4,14 @@
 \alias{simpspm}
 \title{simpspm calculates only the predicted log(CE) for an SPM}
 \usage{
-simpspm(pars, indat, schaefer = TRUE, year = "year", cats = "catch",
-  index = "cpue")
+simpspm(
+  pars,
+  indat,
+  schaefer = TRUE,
+  year = "year",
+  cats = "catch",
+  index = "cpue"
+)
 }
 \arguments{
 \item{pars}{the parameters of the SPM are either c(r,K,Binit,sigma),

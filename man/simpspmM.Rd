@@ -4,8 +4,14 @@
 \alias{simpspmM}
 \title{simpspmM calculates the predicted CE for an SPM}
 \usage{
-simpspmM(par, indat, schaefer = TRUE, year = "year", cats = "catch",
-  index = "cpue")
+simpspmM(
+  par,
+  indat,
+  schaefer = TRUE,
+  year = "year",
+  cats = "catch",
+  index = "cpue"
+)
 }
 \arguments{
 \item{par}{the parameters of the SPM = r, K, a q for each column of cpue,

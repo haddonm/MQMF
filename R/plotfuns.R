@@ -573,7 +573,7 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
 plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
                          ylabel="-ve Log-Likelihood",like="-veLL",
                          defpar=TRUE,...) {
-  plot1(prof[,var],prof[,like],xlabel=xlabel,ylabel=ylabel,
+  plot1(prof[,var],prof[,like],xlab=xlabel,ylab=ylabel,
         defpar=defpar,...)
   ntrial <- dim(prof)[1]
   minimLL <- min(prof[,like],na.rm=TRUE)

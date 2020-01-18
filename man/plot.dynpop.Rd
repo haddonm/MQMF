@@ -4,8 +4,7 @@
 \alias{plot.dynpop}
 \title{plot.dynpop an S3 method for plotting dynpop objects}
 \usage{
-\method{plot}{dynpop}(x, y = NULL, main = "", cex = 0.9, font = 7,
-  ...)
+\method{plot}{dynpop}(x, y = NULL, main = "", cex = 0.9, font = 7, ...)
 }
 \arguments{
 \item{x}{a dynpop matrix containing at least year, nt, and nt1 as

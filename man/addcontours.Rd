@@ -4,8 +4,16 @@
 \alias{addcontours}
 \title{addcontours eases adding contours to an xy plot of points}
 \usage{
-addcontours(xval, yval, xrange, yrange, ngrid = 100, contval = c(0.5,
-  0.9), lwd = 1, col = 1)
+addcontours(
+  xval,
+  yval,
+  xrange,
+  yrange,
+  ngrid = 100,
+  contval = c(0.5, 0.9),
+  lwd = 1,
+  col = 1
+)
 }
 \arguments{
 \item{xval}{the vector of x-axis values, one half of the data pairs}

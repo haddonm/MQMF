@@ -4,8 +4,7 @@
 \alias{outfit}
 \title{outfit tidy print of output from optim, nlminb, or nlm}
 \usage{
-outfit(inopt, backtran = TRUE, digits = 5, title = "",
-  parnames = "")
+outfit(inopt, backtran = TRUE, digits = 5, title = "", parnames = "")
 }
 \arguments{
 \item{inopt}{the list object output by nlm, nlminb, or optim}

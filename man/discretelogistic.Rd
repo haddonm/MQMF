@@ -4,8 +4,7 @@
 \alias{discretelogistic}
 \title{discretelogistic example box 2.2 Discrete logistic model}
 \usage{
-discretelogistic(r = 0.5, K = 1000, N0 = 50, Ct = 0, Yrs = 50,
-  p = 1)
+discretelogistic(r = 0.5, K = 1000, N0 = 50, Ct = 0, Yrs = 50, p = 1)
 }
 \arguments{
 \item{r}{intrinsic rate of population increase; default = 0.5}

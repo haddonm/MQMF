@@ -4,8 +4,14 @@
 \alias{spmphaseplot}
 \title{spmphaseplot - plots the phase plot of harvest rate vs biomass}
 \usage{
-spmphaseplot(answer, Blim = 0.2, Btarg = 0.5, filename = "",
-  resol = 200, fnt = 7)
+spmphaseplot(
+  answer,
+  Blim = 0.2,
+  Btarg = 0.5,
+  filename = "",
+  resol = 200,
+  fnt = 7
+)
 }
 \arguments{
 \item{answer}{the object output by the function plotspmmod, containing the

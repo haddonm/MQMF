@@ -4,8 +4,16 @@
 \alias{plotprofile}
 \title{plotprofile simplifies plotting single likelihood profiles}
 \usage{
-plotprofile(prof, var, digit = c(3, 3, 3), xlabel = var,
-  ylabel = "-ve Log-Likelihood", like = "-veLL", defpar = TRUE, ...)
+plotprofile(
+  prof,
+  var,
+  digit = c(3, 3, 3),
+  xlabel = var,
+  ylabel = "-ve Log-Likelihood",
+  like = "-veLL",
+  defpar = TRUE,
+  ...
+)
 }
 \arguments{
 \item{prof}{the results from the likelihood profile calculations. 

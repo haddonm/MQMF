@@ -4,8 +4,15 @@
 \alias{spmproj}
 \title{spmproj calculates biomass trajectories for replicate parameters}
 \usage{
-spmproj(parmat, indat, constC, projyr = 10, year = "year",
-  cats = "catch", index = "cpue")
+spmproj(
+  parmat,
+  indat,
+  constC,
+  projyr = 10,
+  year = "year",
+  cats = "catch",
+  index = "cpue"
+)
 }
 \arguments{
 \item{parmat}{a matrix of N parameter vectors obtained from either 

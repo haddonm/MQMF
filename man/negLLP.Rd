@@ -4,8 +4,15 @@
 \alias{negLLP}
 \title{negLLP  -ve log-likelihood for normally distributed variables}
 \usage{
-negLLP(pars, funk, indat, logobs, initpar = pars,
-  notfixed = c(1:length(pars)), ...)
+negLLP(
+  pars,
+  funk,
+  indat,
+  logobs,
+  initpar = pars,
+  notfixed = c(1:length(pars)),
+  ...
+)
 }
 \arguments{
 \item{pars}{a vector containing the log-transformed parameters being 

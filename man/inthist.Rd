@@ -4,9 +4,23 @@
 \alias{inthist}
 \title{inthist a replacement for the hist function for use with integers}
 \usage{
-inthist(x, col = 1, border = NULL, width = 1, xlabel = "",
-  ylabel = "", main = "", lwd = 1, xmin = NA, xmax = NA,
-  ymax = NA, plotout = TRUE, prop = FALSE, inc = 1, xaxis = TRUE)
+inthist(
+  x,
+  col = 1,
+  border = NULL,
+  width = 1,
+  xlabel = "",
+  ylabel = "",
+  main = "",
+  lwd = 1,
+  xmin = NA,
+  xmax = NA,
+  ymax = NA,
+  plotout = TRUE,
+  prop = FALSE,
+  inc = 1,
+  xaxis = TRUE
+)
 }
 \arguments{
 \item{x}{- the vector of integers to be counted and plotted OR a matrix 
