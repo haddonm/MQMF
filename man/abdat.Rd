@@ -11,16 +11,16 @@
   \item{cpue}{the standardized catch-per-unit-effort for this dive fishery}
 }}
 \source{
-Catch data from Mundy, C. and J. McAllister (2019) Tasmanian abalone fishery assessment 2018, Institute for Marine and Antarctic Studies, University of Tasmania, 190p. ISBN: 978-1-925646-46-7. The cpue data is unpublished but
+Catch data from Mundy, C. and J. McAllister (2019) Tasmanian abalone fishery assessment 2018, Institute for Marine and Antarctic Studies, University of Tasmania, 190p. ISBN: 978-1-925646-46-7. The cpue data is an unpublished early attempt at standardizing the cpue data with respect to month, block, and diver. Many more details are now included.
 }
 \description{
 A dataset of fishery data for blacklip abalone 
-    (\emph{Haliotis rubra})from part of the Tasmanian west coast 
+    (\emph{Haliotis rubra}) from part of the Tasmanian west coast 
     for the years 1985 - 2008. It contains a data.frame containing
-    the year, teh catch, and the standardizaed CPUE for four 
-    statistical blocks of Tasmania's west coast. In particular, 
-    it can be used when fitting a surplus production model. 
-    Workable initial parameter values, before log-transformation 
+    the year, the catch, and the standardized CPUE from four 
+    statistical blocks of Tasmania's west coast combined. In 
+    particular, it can be used when fitting a surplus production 
+    model. Workable initial parameter values, before log-transformation 
     might be: r= 0.4, K=9400, Binit=3400, sigma=0.05 for the 
     Schaefer version, while these also work for the Fox model 
     one could use r=0.3, K=12000, Binit=4000, sigma=0.05.
