@@ -40,11 +40,8 @@ identify whether there are more than one column of cpue data.}
 a vector or matrix of nyrs of the predicted CPUE
 }
 \description{
-simpspmO calculates the predicted CPUE for an SPM model. It
-    assumes that there is a variable called 'p' in the global environment
-    and this 'p' variable determines the asymmetry of the production 
-    curve. If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 
-    it approximates the Fox model.
+simpspmO calculates the predicted CPUE for an SPM 
+    model. It generates the predicted cpue without log-transformatio
 }
 \examples{
 \dontrun{

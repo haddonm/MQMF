@@ -38,13 +38,13 @@ spm calculates the dynamics using a Schaefer of Fox
     predicted cpue, contributions to q, ssq, and depletion levels. 
     Generally it would be more sensible to use simpspm when fitting 
     a Schaefer model or a Fox model as those functions are designed 
-    to generate only the predicted cpue required by the functions 
-    ssq and negLL, but the example shows how it could be used. 
-    The function spm is used inside 'plotspmmod' and could be 
-    used alone, to generate a fullist of model outputs after the 
-    model has been fitted. spm is designed when working with a
-    single vector of an index of relative abudnance. If there are 
-    multiple vectors then use spmCE
+    to generate only the log of predicted cpue as required by the 
+    functions ssq and negLL, but the example shows how it could be 
+    used. The function spm is used inside 'plotspmmod' and could be 
+    used alone, to generate a full list of model outputs after the 
+    model has been fitted. spm is designed for working with a
+    single vector of an index of relative abundance. If there are 
+    multiple vectors of the index then use simpspmM and spmCE.
 }
 \examples{
 \dontrun{

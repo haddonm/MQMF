@@ -10,7 +10,7 @@ fitSPM(
   schaefer = TRUE,
   maxiter = 1000,
   funk = simpspm,
-  funkone = FALSE,
+  funkone = TRUE,
   hess = FALSE,
   steptol = 1e-06
 )
@@ -30,8 +30,9 @@ parameter to 1e-08 inside simpspm.}
 
 \item{funk}{the function used to generate the predicted cpue}
 
-\item{funkone}{default = FALSE. Means use negLL. If TRUE then use negLL1
-which is identical to negLL but constrains the first parameter > 0}
+\item{funkone}{default = TRUE. Means use negLL1, which constrains the
+first parameter (r) to be greater than 0. If FALSE then use negLL
+which is identical to negLL1 but lacks the constraint.}
 
 \item{hess}{default is FALSE; should one calculate the hessian matrix?}
 
@@ -57,7 +58,8 @@ fitSPM fits a surplus production model (either Schaefer or
 }
 \examples{
 \dontrun{
- data(dataspm)
+ data(dataspm) 
+ dataspm <- as.matrix(dataspm) # faster than a data.frame
  pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
  ans <- fitSPM(pars,fish=dataspm,schaefer=TRUE,maxiter=1000)
  outfit(ans)   # Schaefer model

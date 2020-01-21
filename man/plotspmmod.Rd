@@ -14,7 +14,7 @@ plotspmmod(
   fnt = 7,
   plotout = TRUE,
   vline = 0,
-  plotprod = TRUE,
+  plotprod = FALSE,
   maxy = 0
 )
 }
@@ -45,8 +45,8 @@ which should generally be between two years to designate some
 change in the time-series between two years, then a vertical line
 will be added on year-based plots}
 
-\item{plotprod}{if TRUE, the default, the productivity curves are also
-plotted.}
+\item{plotprod}{if FALSE, the default, the productivity curves are 
+not plotted. If TRUE, two extra plots are produced.}
 
 \item{maxy}{defaults to 0, if > 0 then that value will be used in the
 plot of CPUE}

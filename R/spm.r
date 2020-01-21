@@ -54,8 +54,9 @@ altnegLL <- function(inp,indat) { # inp=pars; indat=dataspm
 #'     parameter to 1e-08 inside simpspm.
 #' @param maxiter the maximum number of iterations to be used nlm
 #' @param funk the function used to generate the predicted cpue
-#' @param funkone default = FALSE. Means use negLL. If TRUE then use negLL1
-#'     which is identical to negLL but constrains the first parameter > 0
+#' @param funkone default = TRUE. Means use negLL1, which constrains the
+#'     first parameter (r) to be greater than 0. If FALSE then use negLL
+#'     which is identical to negLL1 but lacks the constraint.
 #' @param hess default is FALSE; should one calculate the hessian matrix?
 #' @param steptol the internal step tolerance, required in case nlm reports
 #'     the steptol as being too small. defaults to 1e-06
@@ -65,7 +66,8 @@ altnegLL <- function(inp,indat) { # inp=pars; indat=dataspm
 #'
 #' @examples
 #' \dontrun{
-#'  data(dataspm)
+#'  data(dataspm) 
+#'  dataspm <- as.matrix(dataspm) # faster than a data.frame
 #'  pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
 #'  ans <- fitSPM(pars,fish=dataspm,schaefer=TRUE,maxiter=1000)
 #'  outfit(ans)   # Schaefer model
@@ -73,14 +75,14 @@ altnegLL <- function(inp,indat) { # inp=pars; indat=dataspm
 #'  outfit(ansF)  # Fox model
 #' }  
 fitSPM <- function(pars,fish,schaefer=TRUE,maxiter=1000,
-                   funk=simpspm,funkone=FALSE,hess=FALSE,steptol=1e-06) { 
+                   funk=simpspm,funkone=TRUE,hess=FALSE,steptol=1e-06) { 
    if (funkone) minim=negLL1 else minim=negLL
    best <- optim(par=pars,fn=minim,funk=funk,indat=fish,schaefer=schaefer,
            logobs=log(fish[,"cpue"]),method="Nelder-Mead",
-                 control=list(parscale=magnitude(pars),maxit=maxiter))
+                 control=list(maxit=maxiter))
    best2 <- nlm(f=minim,p=best$par,funk=funk,indat=fish,schaefer=schaefer,
                 logobs=log(fish[,"cpue"]),steptol=steptol,
-                typsize=magnitude(pars),iterlim=maxiter,hessian=hess)
+                iterlim=maxiter,hessian=hess)
    return(best2)
 } # end of fitSPM
 
@@ -371,8 +373,8 @@ plotlag <- function(x, driver="catch",react="cpue",lag=0,interval="year",
 #'     which should generally be between two years to designate some
 #'     change in the time-series between two years, then a vertical line
 #'     will be added on year-based plots
-#' @param plotprod if TRUE, the default, the productivity curves are also
-#'     plotted.
+#' @param plotprod if FALSE, the default, the productivity curves are 
+#'     not plotted. If TRUE, two extra plots are produced.
 #' @param maxy defaults to 0, if > 0 then that value will be used in the
 #'     plot of CPUE
 #' @return invisibly a list of dynamics, production curve, MSY, and Bmsy
@@ -392,7 +394,7 @@ plotlag <- function(x, driver="catch",react="cpue",lag=0,interval="year",
 #' }
 plotspmmod <- function(inp,indat,schaefer=TRUE,limit=0.2,
                       target=0.48,addrmse=FALSE,fnt=7,plotout=TRUE,
-                      vline=0,plotprod=TRUE,maxy=0) {
+                      vline=0,plotprod=FALSE,maxy=0) {
   if(schaefer) p <- 1 else p <- 1e-8
   out <- spm(inp=inp,indat=indat,schaefer = schaefer)
   ans <- out$outmat
@@ -855,18 +857,15 @@ simpspmM <- function(par,indat,schaefer=TRUE,
   for (i in 1:nce) {
     pick <- which(indat[,celoc[i]] > 0)
     qval <- exp(mean(log(indat[pick,celoc[i]]/biom[pick])))
-    predCE[pick,i] <- biom[pick] * qval
+    predCE[pick,i] <- log(biom[pick] * qval)
   }
   return(predCE)
 } # end of simpspmM
 
 #' @title simpspmO simply calculates the predicted CE for an SPM
 #'
-#' @description simpspmO calculates the predicted CPUE for an SPM model. It
-#'     assumes that there is a variable called 'p' in the global environment
-#'     and this 'p' variable determines the asymmetry of the production 
-#'     curve. If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 
-#'     it approximates the Fox model.
+#' @description simpspmO calculates the predicted CPUE for an SPM 
+#'     model. It generates the predicted cpue without log-transformatio
 #'
 #' @param par the parameters of the SPM = r, K, a q for each column of cpue,
 #'     a sigma for each cpue, and Binit if fishery depleted to start with. 
@@ -929,13 +928,13 @@ simpspmO <- function(par,indat,schaefer=TRUE,
 #'     predicted cpue, contributions to q, ssq, and depletion levels. 
 #'     Generally it would be more sensible to use simpspm when fitting 
 #'     a Schaefer model or a Fox model as those functions are designed 
-#'     to generate only the predicted cpue required by the functions 
-#'     ssq and negLL, but the example shows how it could be used. 
-#'     The function spm is used inside 'plotspmmod' and could be 
-#'     used alone, to generate a fullist of model outputs after the 
-#'     model has been fitted. spm is designed when working with a
-#'     single vector of an index of relative abudnance. If there are 
-#'     multiple vectors then use spmCE
+#'     to generate only the log of predicted cpue as required by the 
+#'     functions ssq and negLL, but the example shows how it could be 
+#'     used. The function spm is used inside 'plotspmmod' and could be 
+#'     used alone, to generate a full list of model outputs after the 
+#'     model has been fitted. spm is designed for working with a
+#'     single vector of an index of relative abundance. If there are 
+#'     multiple vectors of the index then use simpspmM and spmCE.
 #'
 #' @param inp a vector of 3 or 4 model parameters (r,K,sigma) or (r, K,
 #'     Binit,sigma), you would use the latter if it was suspected that 
