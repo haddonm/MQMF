@@ -629,3 +629,41 @@ setpalette <- function(x="R4") { # x="R4"
     cat("Currently options are default, R3, or R4 \n")
   }
 } # end of setpalette
+
+
+#' @title uphist a histogram with an upper limit on the x-axis
+#' 
+#' @description uphist is merely a wrapper around the base hist
+#'     function, which adds the ability to limit the upper value on
+#'     the x-axis. With fisheries data it is surprisingly common to 
+#'     have data that has a very few extreme values that can obscure
+#'     a standard plot of the data. The data are only truncated 
+#'     within the function so any other analyses will be on all 
+#'     available data. If a maximum value is selected which 
+#'     accidently eliminates all available data the script stops with
+#'     an appropriate warning. 
+#'
+#' @param x the vector of values to be plotted as a histogram
+#' @param maxval the maximum value to be retained in the plotted data
+#' @param ... all the other arguments used by the base hist function
+#'
+#' @return nothing, but it does plot a histogram
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'   x <- rlnorm(5000, meanlog=2, sdlog=1)
+#'   hist(x,breaks=30,main="",xlab="log-normal values")
+#'   uphist(x,breaks=30,main="",xlab="log-normal values",maxval=100)
+#' }
+uphist <- function(x,maxval=NA,...) {
+  if (is.numeric(maxval)) {
+    pick <- which(x > maxval)
+    if (length(pick) > 0) x <- x[-pick]
+  }
+  if (length(x) > 0){
+    hist(x,...)
+  } else {
+    stop("maxval in uphist too small and no data remaining. \n")
+  }
+} #end of uphist

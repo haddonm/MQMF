@@ -2,7 +2,7 @@
 #' @importFrom grDevices dev.new dev.cur dev.off png palette
 #' @importFrom graphics lines mtext par plot points grid title abline
 #' @importFrom graphics arrows axis legend polygon segments layout text
-#' @importFrom graphics contour
+#' @importFrom graphics contour hist
 #' @importFrom stats qnorm rnorm dnorm runif sd quantile optim loess
 #' @importFrom stats dmultinom anova ccf lm median nlm dchisq qchisq
 #' @importFrom stats pnorm cor
