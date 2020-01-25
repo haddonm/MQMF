@@ -71,8 +71,7 @@ negLLP calculates the negative log-likelihood for normally
  data(abdat)
  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
  optmod <- nlm(f=negLLP,p=param,funk=simpspm,initpar=param,
-              notfixed=c(1,2,3,4),indat=abdat,logobs=log(abdat$cpue),
-              typsize=magnitude(param),iterlim=1000)
+              notfixed=c(1,2,3,4),indat=abdat,logobs=log(abdat$cpue))
  outfit(optmod,backtran= TRUE) #backtran=TRUE is default anyway
   
  rval <- seq(0.325,0.45,0.0125)  # set up the test sequence
@@ -81,10 +80,9 @@ negLLP calculates the negative log-likelihood for normally
  profest <- c(r= 0.32,K=11500,Binit=4250,sigma=0.05) # end of sequence
  for (i in 1:11) { 
    param <- log(c(rval[i],profest[2:4])) #recycle the profest values to
-   parinit <- param                # improve the stability of nlm as  
-   bestmodP <- nlm(f=negLLP,p=param,funk=simpspm,initpar=parinit,#the r
-               indat=abdat,logobs=log(abdat$cpue),notfixed=c(2:4), #value
-               typsize=magnitude(param),iterlim=1000)       # changes
+   parinit <- param    # improve the stability of nlm as the r value
+   bestmodP <- nlm(f=negLLP,p=param,funk=simpspm,initpar=parinit, #changes
+                   indat=abdat,logobs=log(abdat$cpue),notfixed=c(2:4))
    bestest <- exp(bestmodP$estimate)     
    result[i,] <- c(bestest,bestmodP$minimum)  # store each result
  }

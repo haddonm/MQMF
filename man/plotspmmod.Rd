@@ -66,8 +66,8 @@ pars <- log(c(0.264,4740,3064,0.2))
 ans <- plotspmmod(pars,dataspm,schaefer=TRUE,plotprod=TRUE)
 best <- nlm(negLL,pars,funk=simpspm,indat=dataspm,
        logobs=log(dataspm[,"cpue"]),steptol=1e-05)
-outfit(best,backtransform = TRUE)
-ans <- plotspmmod(best$estimate,dataspm,schaefer=TRUE,extern=TRUE,
+outfit(best,backtran = TRUE)
+ans <- plotspmmod(best$estimate,dataspm,schaefer=TRUE,plotout=TRUE,
                  plotprod=FALSE,addrmse=TRUE)
 str(ans)
 }

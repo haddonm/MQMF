@@ -39,11 +39,11 @@ invl requires at least three parameters, MaxDL, L50, and
 \examples{
 \dontrun{
  data(blackisland)
- plot(blackisland$len1,blackisland$deltal,type="p",pch=16,
+ plot(blackisland$l1,blackisland$dl,type="p",pch=16,
  xlab="Initial Length mm",ylab="Growth Increment mm",panel.first=grid())
  abline(h=0)
  param <- c(25, 130, 35, 3) # MaxDL, L50, delta, sigma
  predDL <- invl(param,blackisland,initL="l1",delT="dt")
- lines(blackisland$len1,predDL,col=2,lwd=2) 
+ lines(blackisland$l1,predDL,col=2,lwd=2) 
 }
 }

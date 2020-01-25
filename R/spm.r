@@ -2,11 +2,12 @@
 #' @title altnegLL calculate the Normal negative log-likelihood
 #'
 #' @description altnegLL calculates negLLM using the simplification
-#'    from Haddon (2011) using the ssq calculated within the function
-#'    spm
+#'     from Haddon (2011) using the ssq calculated within the function
+#'     spm
 #'
 #' @param inp a vector of model parameters (r,K,Binit)
-#' @param indat a matrix with at least columns 'year', 'catch', and 'cpue'
+#' @param indat a matrix with at least columns 'year', 'catch', and 
+#'     'cpue'
 #'
 #' @return a single value, the negative log-likelihood
 #' @export
@@ -17,7 +18,7 @@
 #'  pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
 #'  ans <- fitSPM(pars,fish=dataspm,schaefer=TRUE,maxiter=1000)
 #'  outfit(ans)
-#'  altnegLL(ans$estimate,dataspm) 
+#'  altnegLL(ans$estimate,dataspm) # should be -12.12879
 #' }
 altnegLL <- function(inp,indat) { # inp=pars; indat=dataspm
    out <- spm(inp,indat)$outmat
@@ -36,23 +37,27 @@ altnegLL <- function(inp,indat) { # inp=pars; indat=dataspm
 #'     Fox) by applying first optim (using Nelder-Mead) and then nlm. Being 
 #'     automated it is recommended that this only be used once plausible 
 #'     initial parameters have been identified (through rules of thumb or 
-#'     trial and error). It uses negLL to apply a negative log-likelihood, 
-#'     assuming log-normal residual errors. The output object is the usual 
-#'     object output from nlm, which can be neatly printed using outfit.
+#'     trial and error). It uses negLL1 to apply a negative log-likelihood, 
+#'     assuming log-normal residual errors and uses a penalty to prevent 
+#'     the first parameter from becoming < 0.0. If that is not wanted then
+#'     set funkone to FALSE, which would then use negLL by itself.
+#'     The output object is the usual object output from nlm, which can 
+#'     be neatly printed using outfit.
 #'     The $estimate values can be used in plotspmmod to plot the 
 #'     outcome, or in spmboot to conduct bootstrap sampling of the residuals 
 #'     from the CPUE model fit to gain an appreciation of any uncertainty 
-#'     in the analysis. It uses the magnitude function to set the values of 
-#'     the parscale parameters.
+#'     in the analysis. Because it requires log(parametrs) it does not 
+#'     use the magnitude function to set the values of the parscale 
+#'     parameters.
 #'
 #' @param pars the initial parameter values to start the search for the 
 #'     optimum. These need to be on the log-scale (log-transformed)
 #' @param fish the matrix containing the fishery data 'year', 'catch', and
-#'     'cpue' as a minimum.
+#'     'cpue' as a minimum. These exact headings are required.
 #' @param schaefer if TRUE, the default, then simpspm is used to fit the
-#'     Schaefer model. If FALSE then the Fox model is fitted setting the p
-#'     parameter to 1e-08 inside simpspm.
-#' @param maxiter the maximum number of iterations to be used nlm
+#'     Schaefer model. If FALSE then the approximate Fox model is fitted 
+#'     by setting the p parameter to 1e-08 inside simpspm.
+#' @param maxiter the maximum number of iterations to be used by nlm
 #' @param funk the function used to generate the predicted cpue
 #' @param funkone default = TRUE. Means use negLL1, which constrains the
 #'     first parameter (r) to be greater than 0. If FALSE then use negLL
@@ -70,9 +75,9 @@ altnegLL <- function(inp,indat) { # inp=pars; indat=dataspm
 #'  dataspm <- as.matrix(dataspm) # faster than a data.frame
 #'  pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
 #'  ans <- fitSPM(pars,fish=dataspm,schaefer=TRUE,maxiter=1000)
-#'  outfit(ans)   # Schaefer model
+#'  outfit(ans)   # Schaefer model  -12.12879
 #'  ansF <- fitSPM(pars,dataspm,schaefer=FALSE,maxiter=1000)
-#'  outfit(ansF)  # Fox model
+#'  outfit(ansF)  # Fox model       -12.35283 
 #' }  
 fitSPM <- function(pars,fish,schaefer=TRUE,maxiter=1000,
                    funk=simpspm,funkone=TRUE,hess=FALSE,steptol=1e-06) { 
@@ -89,21 +94,22 @@ fitSPM <- function(pars,fish,schaefer=TRUE,maxiter=1000,
 #' @title getlag used to look for the response of cpue to previous catches
 #'
 #' @description getlag is a wrapper for the ccf function (cross correlation)
-#'     that is used within the spm and aspm analyses to determine at what
+#'     that is used within the spm analyses to determine at what
 #'     negative lag, if any, cpue data is informative about the stock 
 #'     dynamics beyond any information already available in the catch data.
 #'     If the cpue is directly correlated with catches (lag=0 has a strong
 #'     correlation) then cpue will not add much more information to an 
 #'     analysis. Only if there is a significant negative correlation is it 
 #'     likely that the cpue will increase the information available and 
-#'     make it more likely that a spm or aspm may be able to be fitted 
+#'     make it more likely that an assessment model may be able to be fitted 
 #'     meaningfully to the available data. If there is no significant 
-#'     negative correlations then it becomes much more unlikely than a 
-#'     valid model fit will be possible. The getlag function first finds 
-#'     those rows for which both catch and cpue have values and then it 
-#'     runs the analysis. Thus, you cannot have gaps in your cpue data 
-#'     although there can be catches at the start or end or both for which
-#'     there are no cpue data.
+#'     negative correlations then it becomes much more unlikely that a 
+#'     useful model fit to the cpue will be possible. The getlag function 
+#'     first finds those rows for which both catch and cpue have values 
+#'     and then it runs the cross-correlation analysis. Thus, you cannot 
+#'     have gaps in your cpue data although there can be catches at the 
+#'     start or end of the time-series, or both, for which there are no 
+#'     cpue data.
 #'
 #' @param fish the matrix or data.frame containing the fishery data 
 #'     (year, catch, and cpue)
@@ -224,10 +230,11 @@ getrmse <- function(indat,invar="cpue",inyr="year"){
 #' @title parasympt generates N vectors from a multi-variate normal
 #' 
 #' @description parasympt generates N vectors from a multi-variate normal
-#'     distribution. This can be used when estimating the uncertainty 
-#'     around a model fit, or when conducting projections from a model fit
-#'     while attempting to account for uncertainty. Use of this function
-#'     requires the mvnnorm package.
+#'     distribution for a surplus production model. This can be used 
+#'     when estimating the uncertainty around an spm fit, or when 
+#'     conducting projections from a model fit while attempting to 
+#'     account for uncertainty. Use of this function requires the 
+#'     mvnnorm package. It could be generalized to suit any model.
 #'
 #' @param bestmod the output from nlm containing the optimal parameters in
 #'     log-space, and the hessian
@@ -387,8 +394,8 @@ plotlag <- function(x, driver="catch",react="cpue",lag=0,interval="year",
 #' ans <- plotspmmod(pars,dataspm,schaefer=TRUE,plotprod=TRUE)
 #' best <- nlm(negLL,pars,funk=simpspm,indat=dataspm,
 #'        logobs=log(dataspm[,"cpue"]),steptol=1e-05)
-#' outfit(best,backtransform = TRUE)
-#' ans <- plotspmmod(best$estimate,dataspm,schaefer=TRUE,extern=TRUE,
+#' outfit(best,backtran = TRUE)
+#' ans <- plotspmmod(best$estimate,dataspm,schaefer=TRUE,plotout=TRUE,
 #'                  plotprod=FALSE,addrmse=TRUE)
 #' str(ans)
 #' }
@@ -396,10 +403,15 @@ plotspmmod <- function(inp,indat,schaefer=TRUE,limit=0.2,
                       target=0.48,addrmse=FALSE,fnt=7,plotout=TRUE,
                       vline=0,plotprod=FALSE,maxy=0) {
   if(schaefer) p <- 1 else p <- 1e-8
-  out <- spm(inp=inp,indat=indat,schaefer = schaefer)
+  celoc <- grep("cpue",colnames(indat))
+  if (length(celoc) > 1){
+    out <- spmCE(inp=inp,indat=indat,schaefer = schaefer)
+  } else {
+    out <- spm(inp=inp,indat=indat,schaefer = schaefer)
+  }
   ans <- out$outmat
   # calc sigmaCE by cpue column
-  predloc <- grep("PredCE",colnames(ans))
+  predloc <- grep("predCE",colnames(ans))
   celoc <- grep("CPUE",colnames(ans))
   nce <- length(celoc)
   sigmaCE <- numeric(nce)
@@ -452,7 +464,7 @@ plotspmmod <- function(inp,indat,schaefer=TRUE,limit=0.2,
           xlab=list("Years", cex=1.0, col=1, font=fnt))
     # Plot 3 CPUE
     celoc <- grep("CPUE",colnames(ans))
-    predloc <- grep("PredCE",colnames(ans))
+    predloc <- grep("predCE",colnames(ans))
     nce <- length(celoc)
     if (nce > 1) {
       obsce <- rep(NA,nyr)
@@ -469,7 +481,7 @@ plotspmmod <- function(inp,indat,schaefer=TRUE,limit=0.2,
     plot(yrs,ans[,celoc[1]],type="p",pch=16,col=1,cex=1.0,ylab="",xlab="",
          ylim=c(0,ymax),yaxs="i",xlim=range(yrs),panel.first = grid())
     if (vline > 0) abline(v=vline,col=1,lty=2)
-    lines(yrs[pickCE],ans[pickCE,predloc[1]],col=2,lwd=2)
+    lines(yrs[pickCE],ans[pickCE,predloc[1]],col=1,lwd=2)
     if (nce > 1) {
       for (i in 2:nce) {
         pickCE <- which(ans[,celoc[i]] > 0)
@@ -803,11 +815,14 @@ simpspm <- function(pars, indat,schaefer=TRUE,
 #'     assumes that there is a variable called 'p' in the global environment
 #'     and this 'p' variable determines the asymmetry of the production 
 #'     curve. If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 
-#'     it approximates the Fox model.
+#'     it approximates the Fox model. It is designed for when there are 
+#'     mthan one time-series of an index of relative abundance.
 #'
-#' @param par the parameters of the SPM = r, K, a q for each column of cpue,
-#'     a sigma for each cpue, and Binit if fishery depleted to start with. 
-#'     Each parameter is in log space and is transformed inside simpspmM
+#' @param pars the parameters of the SPM = r, K, Binit if fishery is 
+#'     depleted to start with (omit otherwise), and a sigma for each 
+#'      cpue series. Each parameter is in log space and is 
+#'      back-transformed inside simpspmM. sigmas are not used in this
+#'      funciton but should still be in the parameter vector
 #' @param indat the data which needs to include year, catch, and cpue. The
 #'    latter should have a separate column for each fleet, with a column 
 #'    name beginning with cpue or whatever name you put in index (see below) 
@@ -827,28 +842,28 @@ simpspm <- function(pars, indat,schaefer=TRUE,
 #'
 #' @examples
 #' \dontrun{
-#' data(dataspm)
-#' dataspm
-#' colnames(dataspm) <- tolower(colnames(dataspm))
-#' pars <- log(c(r=0.242,K=5170,Binit=2840))
-#' predCE <- simpspmM(pars,dataspm)
-#' predCE2 <- exp(simpspm(pars,dataspm))
-#' cbind(dataspm[,"year"],dataspm[,"cpue"],predCE,predCE2)
+#'  data(twoindex)
+#'  fish <- as.matrix(twoindex)
+#'  pars <- log(c(0.04,155000,0.4,0.3))
+#'  bestSP <- nlm(f=negLLM,p=pars,funk=simpspmM,indat=fish,
+#'              schaefer=TRUE,logobs=log(fish[,c("cpue1","cpue2")]),
+#'              steptol=1e-06,harvpen=TRUE)
+#'  outfit(bestSP)  # best fitting estimates
+#'  simpspmM(bestSP$estimate,fish) # the two log(predicted cpue)
 #' }
-simpspmM <- function(par,indat,schaefer=TRUE,
+simpspmM <- function(pars,indat,schaefer=TRUE,
                      year="year",cats="catch",index="cpue") {
-  
   celoc <- grep(index,colnames(indat))
   nce <- length(celoc)
-  npar <- 2 + nce + nce   # r + K + nce_sigma + nce_q
+  npar <- 2 + nce
   nyrs <- length(indat[,"year"])
   biom <- numeric(nyrs+1)
   catch <- indat[,cats]
   predCE <- matrix(NA,nrow=nyrs,ncol=nce)
-  r <- exp(par[1])
-  K <- exp(par[2])
+  r <- exp(pars[1])
+  K <- exp(pars[2])
   biom[1] <- K
-  if (length(par) > npar) biom[1] <- exp(par[npar+1]) 
+  if (length(pars) > npar) biom[1] <- exp(pars[3])
   if(schaefer) p <- 1 else p <- 1e-8
   for (loc in 1:nyrs) {
     Bt <- biom[loc]
@@ -861,65 +876,6 @@ simpspmM <- function(par,indat,schaefer=TRUE,
   }
   return(predCE)
 } # end of simpspmM
-
-#' @title simpspmO simply calculates the predicted CE for an SPM
-#'
-#' @description simpspmO calculates the predicted CPUE for an SPM 
-#'     model. It generates the predicted cpue without log-transformatio
-#'
-#' @param par the parameters of the SPM = r, K, a q for each column of cpue,
-#'     a sigma for each cpue, and Binit if fishery depleted to start with. 
-#'     Each parameter is in log space and is transformed inside simpspm
-#' @param indat the data which needs to include year, catch, and cpue. The
-#'    latter should have a separate column for each fleet, with a column 
-#'    name beginning with cpue or whatever name you put in index (see below)
-#'    for example cpue1, cpue2,etc.
-#' @param schaefer a logical value determining whether the spm is to be a
-#'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
-#'     The default is TRUE
-#' @param year the column name within indat containing the years
-#' @param cats the cloumn name within indat containing the catches
-#' @param index the prefix in the column names given to the indices of 
-#'     relative abundance used, perhaps 'cpue' as in cpueTW, cpueAL, etc. 
-#'     grep is used to search for columns containing this prefix to 
-#'     identify whether there are more than one column of cpue data.
-#'
-#' @return a vector or matrix of nyrs of the predicted CPUE
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' data(dataspm)
-#' dataspm
-#' colnames(dataspm) <- tolower(colnames(dataspm))
-#' pars <- log(c(r=0.242,K=5170,Binit=2840,q=0.0002))
-#' predCE <- simpspmO(pars,dataspm)
-#' cbind(dataspm[,"year"],dataspm[,"cpue"],predCE)
-#' }
-simpspmO <- function(par,indat,schaefer=TRUE,
-                    year="year",cats="catch",index="cpue") {
-   celoc <- grep(index,colnames(indat))
-   nce <- length(celoc)
-   npar <- 2 + nce + nce   # r + K + nce_sigma + nce_q
-   nyrs <- length(indat[,"year"])
-   biom <- numeric(nyrs+1)
-   catch <- indat[,cats]
-   predCE <- matrix(NA,nrow=nyrs,ncol=nce)
-   r <- exp(par[1])
-   K <- exp(par[2])
-   biom[1] <- K
-   if (length(par) > npar) biom[1] <- exp(par[npar+1]) 
-   if(schaefer) p <- 1 else p <- 1e-8
-   for (loc in 1:nyrs) {
-      Bt <- biom[loc]
-      biom[loc+1] <- max(Bt + ((r/p)*Bt*(1-(Bt/K)^p)-catch[loc]),40)
-   }
-   for (i in 1:nce) {
-      pick <- which(indat[,celoc[i]] > 0)
-      predCE[pick,i] <- biom[pick] * exp(par[npar])
-   }
-   return(predCE)
-} # end of simpspmO
 
 #' @title spm - calculates the dynamics of a Schaefer or Fox model
 #'
@@ -961,7 +917,7 @@ simpspmO <- function(par,indat,schaefer=TRUE,
 #'  data(abdat)   # spm is used inside plotspmmod
 #'  pars <- log(c(0.35,7800,3500,0.05))
 #'  ans <- plotspmmod(pars,abdat) #not fitted, just guessed
-#'  bestSP <- fitSPM(par=pars,fish=abdat,funk=simpspm)
+#'  bestSP <- fitSPM(pars=pars,fish=abdat,funk=simpspm)
 #'  outfit(bestSP)  # best fitting estimates
 #'  ans <- plotspmmod(bestSP$estimate,abdat,schaefer=TRUE)
 #'  str(ans)
@@ -975,7 +931,7 @@ spm <- function(inp,indat,schaefer=TRUE,
   biom <- numeric(nyrs+1)
   predCE <- matrix(NA,nrow=nyrs,ncol=1)
   columns <- c("Year","ModelB","Catch","Depletion","Harvest")
-  addtxt <- c("CPUE","PredCE")
+  addtxt <- c("CPUE","predCE")
   columns <- c(columns,addtxt)
   extendyrs <- c(years,(years[nyrs]+1))
   answer <- matrix(NA,nrow=(nyrs+1),ncol=length(columns),
@@ -998,7 +954,7 @@ spm <- function(inp,indat,schaefer=TRUE,
   answer[,"Harvest"] <- c(catch/biom[1:nyrs],NA)
   answer[,"CPUE"] <- c(cpue,NA)
   predCE <- biom * qval # apply same catchability across all years
-  answer[,"PredCE"] <- predCE
+  answer[,"predCE"] <- predCE
   msy <- r*K/((p+1)^((p+1)/p))
   params <- c(exp(inp),qval)
   if (length(params) == 4) {
@@ -1043,15 +999,12 @@ spm <- function(inp,indat,schaefer=TRUE,
 #'
 #' @examples
 #' \dontrun{
-#'  data(dataspm)
-#'  pars <- log(c(r=0.2,K=6000,Binit=2800))
+#'  data(dataspm); fish <- as.matrix(dataspm)
+#'  pars <- log(c(r=0.24,K=5150,Binit=2800,0.15))
 #'  ans <- fitSPM(pars,dataspm,schaefer=TRUE,maxiter=1000)
-#'  boots <- spmboot(ans$estimate,fishery=dataspm,iter=500,schaefer=TRUE)
+#'  boots <- spmboot(ans$estimate,fishery=fish,iter=500,schaefer=TRUE)
 #'  dynam <- boots$dynam
 #'  bootpar <- boots$bootpar
-#'  MSY <- bootpar[,"r"]*bootpar[,"K"]/4
-#'  Depl <- dynam[,length(fish[,"year"]),"Depletion"] #pick final year
-#'  bootpar <- cbind(bootpar,MSY,Depl)
 #'  rows <- colnames(bootpar)
 #'  columns <- c(c(0.025,0.05,0.5,0.95,0.975),"Mean")
 #'  bootCI <- matrix(NA,nrow=length(rows),ncol=length(columns),
@@ -1062,6 +1015,7 @@ spm <- function(inp,indat,schaefer=TRUE,
 #'    bootCI[i,] <- c(qtil,mean(tmp,na.rm=TRUE))
 #'  }
 #'  round(bootCI,3)
+#'  pairs(bootpar[,c("r","K","Binit","MSY")])
 #' }
 spmboot <- function(optpar,fishery,iter=100,schaefer=TRUE) {
   out <- spm(inp=optpar,indat=fishery,schaefer=schaefer)
@@ -1101,23 +1055,22 @@ spmboot <- function(optpar,fishery,iter=100,schaefer=TRUE) {
   return(list(dynam=dynam,bootpar=bootpar))
 } # end of spmboot
 
-#' @title spmCE - calculates the dynamics using a Schaefer or Fox model
+#' @title spmCE - calculates the dynamics for nultiple cpue time-series
 #'
 #' @description spmCE calculates the dynamics using a Schaefer of Fox model
-#'     and is used instead of simpspm whenthere are multiple indeex vectors.
+#'     and is used instead of spm when there are multiple index vectors.
 #'     The outputs include  predicted Biomass, year, catch, cpue, predicted
 #'     cpue, contributions to q, ssq, and depletion levels. Generally it
 #'     would be more sensible to use simpspm when fitting a Schaefer model 
 #'     and simpfox when fitting a Fox model
 #'     as those functions are designed to generate only the predicted cpue
 #'     required by the functions ssq and negLLM, but the example shows how 
-#'     it could be used. the function spm is used inside 'plotspmmod'
-#'     and could be used alone, to generate a fullist of model outputs
-#'     after the model has been fitted.
+#'     it could be used. 
 #'
 #' @param inp a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), you
 #'     would use the latter if it was suspected that the fishery data 
-#'     started after some initial depletion had occurred.
+#'     started after some initial depletion had occurred. Then there should 
+#'     be the same number of sigma values as tehre are cpue time-series
 #' @param indat a matrix with at least columns 'year', 'catch', and 'cpue'
 #' @param schaefer a logical value determining whether the spm is to be a
 #'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
@@ -1134,24 +1087,26 @@ spmboot <- function(optpar,fishery,iter=100,schaefer=TRUE) {
 #'
 #' @examples
 #' \dontrun{
-#' data(abdat)
-#' pars <- log(c(0.35,7800,3500,0.05))
-#' ans <- plotspmmod(pars,dat)
-#'  bestSP <- fitSPM(par=pars,fish=abdat,funk=simpspm)
+#'  data(twoindex)
+#'  fish <- as.matrix(twoindex)
+#'  pars <- log(c(0.04,155000,0.4,0.3))
+#'  bestSP <- nlm(f=negLLM,p=pars,funk=simpspmM,indat=fish,
+#'              schaefer=TRUE,logobs=log(fish[,c("cpue1","cpue2")]),
+#'              steptol=1e-06,harvpen=TRUE)
 #'  outfit(bestSP)  # best fitting estimates
-#'  ans <- plotspmmod(bestSP$estimate,abdat,schaefer=TRUE)
-#'  str(ans)
+#'  getMSY(exp(bestSP$estimate))
 #' }
 spmCE <- function(inp,indat,schaefer=TRUE,
                   year="year",cats="catch",index="cpue") {
   celoc <- grep(index,colnames(indat))
   nce <- length(celoc)
-  npar <- 2 + nce + nce   # r + K + nce_q + nce_sigma
+  npar <- 2 + nce   # r + K + nce_sigma
   years <- indat[,year]
   catch <- indat[,cats]
   cpue <- as.matrix(indat[,celoc])
   nyrs <- length(years)
   biom <- numeric(nyrs+1)
+  qval <- numeric(nce)
   predCE <- matrix(NA,nrow=nyrs,ncol=nce)
   columns <- c("Year","ModelB","Catch","Depletion","Harvest")
   addtxt <- c("CPUE","PredCE")
@@ -1167,7 +1122,7 @@ spmCE <- function(inp,indat,schaefer=TRUE,
   r <- exp(inp[1])
   K <- exp(inp[2])
   biom[1] <-K
-  if (length(inp) > npar) biom[1] <- exp(inp[npar+1])
+  if (length(inp) > npar) biom[1] <- exp(inp[3])
   if(schaefer) p <- 1 else p <- 1e-8
   for (index in 1:nyrs) {
     Bt <- biom[index]
@@ -1177,11 +1132,15 @@ spmCE <- function(inp,indat,schaefer=TRUE,
   answer[,"Depletion"] <- biom/K
   answer[,"Harvest"] <- c(catch/biom[1:nyrs],NA)
   answer[,(5+1)] <- c(cpue[,1],NA)
-  predCE <- biom * exp(inp[2+1]) # apply same catchability across all years
+  pick <- which(indat[,celoc[1]] > 0)
+  qval[1] <- exp(mean(log(indat[pick,celoc[1]]/biom[pick])))
+  predCE <- biom *qval[1] # apply same catchability across all years
   answer[,(5+nce+1)] <- predCE
   if (nce > 1) {
     for (i in 2:nce) {
-      predCE <- biom * exp(inp[2+i])
+      pick <- which(indat[,celoc[i]] > 0)
+      qval[i] <- exp(mean(log(indat[pick,celoc[i]]/biom[pick])))
+      predCE <- biom * qval[i]
       answer[,(5+i)] <- c(cpue[,i],NA)
       answer[,(5+nce+i)] <- predCE
     }
@@ -1191,11 +1150,10 @@ spmCE <- function(inp,indat,schaefer=TRUE,
   } else { copyp <- inp
   }
   params <- exp(copyp)
-  names(params) <- c("r","K",paste0("Sigma",1:nce),paste0("q",1:nce),
-                     "Binit")
+  names(params) <- c("r","K","Binit",paste0("Sigma",1:nce))
   sumout <- c(msy,p,answer[(nyrs+1),"Depletion"],answer[1,"Depletion"],
-              answer[(nyrs+1),"ModelB"])
-  names(sumout) <- c("msy","p","FinalDepl","InitDepl","FinalB")
+              answer[(nyrs+1),"ModelB"],qval)
+  names(sumout) <- c("msy","p","FinalDepl","InitDepl","FinalB","qs")
   output <- list(params,answer,msy,sumout)
   names(output) <- c("parameters","outmat","msy","sumout")
   return(output)

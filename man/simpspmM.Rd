@@ -5,7 +5,7 @@
 \title{simpspmM calculates the predicted CE for an SPM}
 \usage{
 simpspmM(
-  par,
+  pars,
   indat,
   schaefer = TRUE,
   year = "year",
@@ -14,9 +14,11 @@ simpspmM(
 )
 }
 \arguments{
-\item{par}{the parameters of the SPM = r, K, a q for each column of cpue,
-a sigma for each cpue, and Binit if fishery depleted to start with. 
-Each parameter is in log space and is transformed inside simpspmM}
+\item{pars}{the parameters of the SPM = r, K, Binit if fishery is 
+depleted to start with (omit otherwise), and a sigma for each 
+ cpue series. Each parameter is in log space and is 
+ back-transformed inside simpspmM. sigmas are not used in this
+ funciton but should still be in the parameter vector}
 
 \item{indat}{the data which needs to include year, catch, and cpue. The
 latter should have a separate column for each fleet, with a column 
@@ -44,16 +46,18 @@ simpspmM calculates the predicted CPUE for an SPM model. It
     assumes that there is a variable called 'p' in the global environment
     and this 'p' variable determines the asymmetry of the production 
     curve. If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 
-    it approximates the Fox model.
+    it approximates the Fox model. It is designed for when there are 
+    mthan one time-series of an index of relative abundance.
 }
 \examples{
 \dontrun{
-data(dataspm)
-dataspm
-colnames(dataspm) <- tolower(colnames(dataspm))
-pars <- log(c(r=0.242,K=5170,Binit=2840))
-predCE <- simpspmM(pars,dataspm)
-predCE2 <- exp(simpspm(pars,dataspm))
-cbind(dataspm[,"year"],dataspm[,"cpue"],predCE,predCE2)
+ data(twoindex)
+ fish <- as.matrix(twoindex)
+ pars <- log(c(0.04,155000,0.4,0.3))
+ bestSP <- nlm(f=negLLM,p=pars,funk=simpspmM,indat=fish,
+             schaefer=TRUE,logobs=log(fish[,c("cpue1","cpue2")]),
+             steptol=1e-06,harvpen=TRUE)
+ outfit(bestSP)  # best fitting estimates
+ simpspmM(bestSP$estimate,fish) # the two log(predicted cpue)
 }
 }

@@ -19,10 +19,11 @@ an N x numpar matrix of parameter vectors
 }
 \description{
 parasympt generates N vectors from a multi-variate normal
-    distribution. This can be used when estimating the uncertainty 
-    around a model fit, or when conducting projections from a model fit
-    while attempting to account for uncertainty. Use of this function
-    requires the mvnnorm package.
+    distribution for a surplus production model. This can be used 
+    when estimating the uncertainty around an spm fit, or when 
+    conducting projections from a model fit while attempting to 
+    account for uncertainty. Use of this function requires the 
+    mvnnorm package. It could be generalized to suit any model.
 }
 \examples{
 \dontrun{

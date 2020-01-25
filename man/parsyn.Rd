@@ -15,6 +15,6 @@ parsyn types the standard par command syntax to the console
 }
 \examples{
 \dontrun{
- parsyn()
+  parsyn()
 }
 }

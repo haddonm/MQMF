@@ -51,7 +51,7 @@ spm calculates the dynamics using a Schaefer of Fox
  data(abdat)   # spm is used inside plotspmmod
  pars <- log(c(0.35,7800,3500,0.05))
  ans <- plotspmmod(pars,abdat) #not fitted, just guessed
- bestSP <- fitSPM(par=pars,fish=abdat,funk=simpspm)
+ bestSP <- fitSPM(pars=pars,fish=abdat,funk=simpspm)
  outfit(bestSP)  # best fitting estimates
  ans <- plotspmmod(bestSP$estimate,abdat,schaefer=TRUE)
  str(ans)

@@ -206,13 +206,13 @@ domed <- function(p,L) {
 #' @examples
 #' \dontrun{
 #'  data(blackisland)
-#'  plot(blackisland$len1,blackisland$deltal,type="p",pch=16,
+#'  plot(blackisland$l1,blackisland$dl,type="p",pch=16,
 #'  xlab="Initial Length mm",ylab="Growth Increment mm",
 #'  panel.first=grid())
 #'  abline(h=0)
 #'  param <- c(170, 0.3, 4.0) # Linf, K, sigma
 #'  predDL <- fabens(param,blackisland,initL="l1",delT="dt")
-#'  lines(blackisland$len1,predDL,col=2,lwd=2)   
+#'  lines(blackisland$l1,predDL,col=2,lwd=2)   
 #' }
 fabens <- function(par,indat,initL="l1",delT="dt") {
   preddL <- (par[1] - indat[,initL])*(1 - exp(-(par[2] * indat[,delT])))
@@ -272,12 +272,12 @@ Gz <- function(p, ages) {
 #' @examples
 #' \dontrun{
 #'  data(blackisland)
-#'  plot(blackisland$len1,blackisland$deltal,type="p",pch=16,
+#'  plot(blackisland$l1,blackisland$dl,type="p",pch=16,
 #'  xlab="Initial Length mm",ylab="Growth Increment mm",panel.first=grid())
 #'  abline(h=0)
 #'  param <- c(25, 130, 35, 3) # MaxDL, L50, delta, sigma
 #'  predDL <- invl(param,blackisland,initL="l1",delT="dt")
-#'  lines(blackisland$len1,predDL,col=2,lwd=2) 
+#'  lines(blackisland$l1,predDL,col=2,lwd=2) 
 #' }
 invl <- function(par,indat,initL="l1",delT="dt") {
   preddl <- (par[1] * indat[,delT])/
@@ -490,6 +490,70 @@ negLL1 <- function(pars,funk,logobs,...) {
   return(LL)
 } # end of negLL1
 
+#' @title negLLM -ve log-normal likelihoods for multiple index time-series
+#' 
+#' @description negLLM we have negLL and negLL1 for use when using -ve
+#'     log-likelihoods to fit surplus production models that only have 
+#'     a single index of relative abundance, but there are many fisheries
+#'     that have more than one index of relative abundance. negLLM is
+#'     for those cases that have multiple (M) time-series of indices. It
+#'     is used in conjunction with simpspmM and spmCE.
+#'
+#' @param pars the log-transformed parameter starting points. For a 
+#'     surplus production model these are r, K, Binit (if initial 
+#'     depletion is likely, otherwise omit this and it will be set =K
+#'     inside the function), then as many sigma values as there are 
+#'     time-series of indices; these are the associated standard 
+#'     deviations of the log-normal residuals.
+#' @param funk the function that generates the predicted cpue values.
+#'     for multiple time-series in a SPM use simpspmM
+#' @param logobs the log-transformed observed cpue columns in indat,
+#'     the data needed by funk tranferred inside the ...
+#' @param indat the fisheries data used in the analysis 
+#' @param index the prefix of the columns of each of the indices, 
+#'     defaults to cpue
+#' @param harvpen default = TRUE, which sets a penalty1 on each of the 
+#'     implied harvest rates to ensure we do not get harvest rates > 1.0
+#' @param ... the continuation ellisis to allow the transfer of other
+#'     arguments required by funk
+#'
+#' @return a single scalar as the -ve log-likelihood of the input data
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'  data(twoindex)
+#'  fish <- as.matrix(twoindex)
+#'  pars <- log(c(0.04,155000,0.4,0.3))
+#'  bestSP <- nlm(f=negLLM,p=pars,funk=simpspmM,indat=fish,
+#'              schaefer=TRUE,logobs=log(fish[,c("cpue1","cpue2")]),
+#'              steptol=1e-06,harvpen=TRUE)
+#'  outfit(bestSP)  # best fitting estimates
+#'  answer <- plotspmmod(bestSP$estimate,indat=fish,
+#'                       plotprod=TRUE,maxy=3.4)
+#' }
+negLLM <- function(pars,funk,logobs,indat,index="cpue",harvpen=TRUE,...) {
+  npar <- length(pars)
+  logpred <- funk(pars,indat)
+  nce <- ncol(logobs)
+  sig <- pars[(npar- nce + 1):npar]
+  LL <- 0
+  for (i in 1:nce) {  #  i=1
+    pick <- which(is.na(logobs[,i]))
+    if (length(pick) > 0) {
+      LL <- LL + (-sum(dnorm(logobs[-pick,i],logpred[-pick,i],exp(sig[i]),log=T)))
+    } else {
+      LL <- LL + (-sum(dnorm(logobs[,i],logpred[,i],exp(sig[i]),log=T)))
+    }
+  }
+  hpen <- 0.0
+  if (harvpen) # apply a penalty on harvest rates that approach 1.0
+    hpen <- sum(penalty1(spmCE(pars,indat)$outmat[,"Harvest"]),na.rm=TRUE)
+  LL <- LL + penalty0(exp(pars[1])) + hpen
+  return(LL)
+} # end of negLLM
+
+
 
 #' @title negNLL  -ve log-likelihood for normally distributed variables
 #'
@@ -631,8 +695,7 @@ negnormL <- function(pars,funk,funksig,indat,obs="dl",...){
 #'  data(abdat)
 #'  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
 #'  optmod <- nlm(f=negLLP,p=param,funk=simpspm,initpar=param,
-#'               notfixed=c(1,2,3,4),indat=abdat,logobs=log(abdat$cpue),
-#'               typsize=magnitude(param),iterlim=1000)
+#'               notfixed=c(1,2,3,4),indat=abdat,logobs=log(abdat$cpue))
 #'  outfit(optmod,backtran= TRUE) #backtran=TRUE is default anyway
 #'   
 #'  rval <- seq(0.325,0.45,0.0125)  # set up the test sequence
@@ -641,10 +704,9 @@ negnormL <- function(pars,funk,funksig,indat,obs="dl",...){
 #'  profest <- c(r= 0.32,K=11500,Binit=4250,sigma=0.05) # end of sequence
 #'  for (i in 1:11) { 
 #'    param <- log(c(rval[i],profest[2:4])) #recycle the profest values to
-#'    parinit <- param                # improve the stability of nlm as  
-#'    bestmodP <- nlm(f=negLLP,p=param,funk=simpspm,initpar=parinit,#the r
-#'                indat=abdat,logobs=log(abdat$cpue),notfixed=c(2:4), #value
-#'                typsize=magnitude(param),iterlim=1000)       # changes
+#'    parinit <- param    # improve the stability of nlm as the r value
+#'    bestmodP <- nlm(f=negLLP,p=param,funk=simpspm,initpar=parinit, #changes
+#'                    indat=abdat,logobs=log(abdat$cpue),notfixed=c(2:4))
 #'    bestest <- exp(bestmodP$estimate)     
 #'    result[i,] <- c(bestest,bestmodP$minimum)  # store each result
 #'  }

@@ -28,9 +28,10 @@ aicbic calculates and returns the AIC and BIC using the
 }
 \examples{
 \dontrun{
- data(blackisland)
- param <- c(Linf=170.0,K=0.3,sigma=4.0)
- modelvb <- nlm(f=negnormL,p=param,funk=fabens,indat=blackisland)
- aicbic(modelvb,blackisland)  # 589.3615 597.4097 291.6808 3
+data(blackisland); bi <- blackisland
+param <- c(Linf=170.0,K=0.3,sigma=4.0)
+modelvb <- nlm(f=negNLL,p=param,funk=fabens,observed=bi$dl,indat=bi,
+               initL="l1",delT="dt") # could have used the defaults
+aicbic(modelvb,blackisland)  # 588.3382 596.3846 291.1691   3
 }
 }

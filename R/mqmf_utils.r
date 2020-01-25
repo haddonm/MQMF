@@ -20,10 +20,11 @@
 #'
 #' @examples
 #' \dontrun{
-#'  data(blackisland)
-#'  param <- c(Linf=170.0,K=0.3,sigma=4.0)
-#'  modelvb <- nlm(f=negnormL,p=param,funk=fabens,indat=blackisland)
-#'  aicbic(modelvb,blackisland)  # 589.3615 597.4097 291.6808 3
+#' data(blackisland); bi <- blackisland
+#' param <- c(Linf=170.0,K=0.3,sigma=4.0)
+#' modelvb <- nlm(f=negNLL,p=param,funk=fabens,observed=bi$dl,indat=bi,
+#'                initL="l1",delT="dt") # could have used the defaults
+#' aicbic(modelvb,blackisland)  # 588.3382 596.3846 291.1691   3
 #' }
 aicbic <- function(model,dat,nLL=TRUE) {  # model <- modelil; dat=bi
   if (class(dat) %in% c("matrix","data.frame")) {
@@ -166,7 +167,7 @@ countNAs <- function(invect) {
 #' \dontrun{
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 #' print(x)
-#' apply(x,1,countones)
+#' apply(x,1,countones)  # by rows
 #' }
 countones <- function(invect) {
    pick <- which(invect == 1)
@@ -820,6 +821,31 @@ penalty0 <- function(x){
   return(ans)
 } # end of penalty0
 
+#' @title penalty1 enables the adding of a large penalty as one approaches 1.0
+#'
+#' @description penalty1 allows for the option of adding a large penalty as
+#'     a parameter approaches 1.0 and moves to become larger than 1. For 
+#'     example, when fitting a surpklus production model sometimes the 
+#'     optimal mathematical model fit can occur by implying catches greater
+#'     than available biomass, implying harvest rates > 1.0. By adding a 
+#'     large penalty to such values and adding those to the likelihood 
+#'     such strange outcomes can be avoided.
+#'
+#' @param x the parameter value that potentially incurs a penalty
+#'
+#' @return a single value as a penalty to be added to a Log-Likelihood or SSQ
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'  x <- c(0.5,0.9,0.98,0.99)
+#'  penalty1(x)
+#' }
+penalty1 <- function(x){
+  ans <- (abs(1/(x - 1.0)))^5/1e8
+  return(ans)
+} # end of penalty1
+
 #' @title plotfishM plots the catch and optionally the cpue
 #'
 #' @description plotfishM uses a matrix of fishery data. It requires 
@@ -996,6 +1022,10 @@ printV <- function(invect,label=c("index","value")) {
 #' properties(abdat)
 #' }
 properties <- function(indat,dimout=FALSE) {
+  if (class(indat) == "matrix") {
+    warning("Input to properties was a matrix not a data.frame \n")
+    indat <- as.data.frame(indat)
+  }
   if(dimout) print(dim(indat))
   isna <- sapply(indat,function(x) sum(is.na(x)))
   uniques <- sapply(indat,function(x) length(unique(x)))

@@ -29,7 +29,11 @@ setpalette is a shortcut for changing the
 \dontrun{
    setpalette("R3")
    plot(1:8,rep(0.25,8),type="p",pch=16,cex=5,col=c(1:8))
+   text(1,0.2,"Default R3.0.0 - some garish or pale",cex=1.5,
+        font=7,pos=4)
    setpalette("R4")
    points(1:8,rep(0.3,8),pch=16,cex=5,col=c(1:8)) #toprow
+   text(1,0.325,"Default R4.0.0 - more balanced",cex=1.5,
+        font=7,pos=4)
 }
 }

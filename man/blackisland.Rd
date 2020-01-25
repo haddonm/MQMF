@@ -42,7 +42,7 @@ A 108 x 4 data.frame containing dt, the time
 \dontrun{
  data(blackisland)
  print(head(blackisland,20))
- plot(blackisland$len1,blackisland$deltal,type="p",pch=16,
+ plot(blackisland$l1,blackisland$dl,type="p",pch=16,
  xlab="Initial Length mm",ylab="Growth Increment mm",
  panel.first=grid())
  abline(h=0)

@@ -9,15 +9,16 @@ altnegLL(inp, indat)
 \arguments{
 \item{inp}{a vector of model parameters (r,K,Binit)}
 
-\item{indat}{a matrix with at least columns 'year', 'catch', and 'cpue'}
+\item{indat}{a matrix with at least columns 'year', 'catch', and 
+'cpue'}
 }
 \value{
 a single value, the negative log-likelihood
 }
 \description{
 altnegLL calculates negLLM using the simplification
-   from Haddon (2011) using the ssq calculated within the function
-   spm
+    from Haddon (2011) using the ssq calculated within the function
+    spm
 }
 \examples{
 \dontrun{
@@ -25,6 +26,6 @@ altnegLL calculates negLLM using the simplification
  pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
  ans <- fitSPM(pars,fish=dataspm,schaefer=TRUE,maxiter=1000)
  outfit(ans)
- altnegLL(ans$estimate,dataspm) 
+ altnegLL(ans$estimate,dataspm) # should be -12.12879
 }
 }

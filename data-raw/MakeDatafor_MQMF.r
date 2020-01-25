@@ -133,10 +133,15 @@ plot1(pttuna$year,pttuna$cpue)
  save(pttuna,file="C:/Users/Malcolm/Dropbox/rcode/MQMF/data-raw/pttuna.RData")
  
  
+ # make twoindex  for use with simpspmM, spmCE, and negLLM -----------
+ filename <- "C:/Users/Malcolm/Dropbox/rcode/MQMF/data-raw/data_simpspmM.csv"
+ twoindex <- read.csv(filename,header=TRUE)
+ save(twoindex,file="data-raw/twoindex.RData")
+ 
 # check and re-store data ---------------------------------------
-tools::checkRdaFiles(paths="C:/Users/user/DropBox/rcode/MQMF/data-raw")
-tools::resaveRdaFiles(paths="C:/Users/User/DropBox/rcode/MQMF/data-raw",compress="auto")
-tools::checkRdaFiles(paths="C:/Users/User/DropBox/rcode/MQMF/data-raw")
+tools::checkRdaFiles(paths="C:/Users/Malcolm/DropBox/rcode/MQMF/data-raw")
+tools::resaveRdaFiles(paths="C:/Users/Malcolm/DropBox/rcode/MQMF/data-raw",compress="auto")
+tools::checkRdaFiles(paths="C:/Users/Malcolm/DropBox/rcode/MQMF/data-raw")
 
 # l---------------------------------------------------------------
 

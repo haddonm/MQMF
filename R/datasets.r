@@ -82,7 +82,7 @@ NULL
 #' \dontrun{
 #'  data(blackisland)
 #'  print(head(blackisland,20))
-#'  plot(blackisland$len1,blackisland$deltal,type="p",pch=16,
+#'  plot(blackisland$l1,blackisland$dl,type="p",pch=16,
 #'  xlab="Initial Length mm",ylab="Growth Increment mm",
 #'  panel.first=grid())
 #'  abline(h=0)
@@ -177,7 +177,7 @@ NULL
 #'   data(LatA)
 #'   pars <- c(27.0,0.15,-2.0) # von Bertalanffy
 #'   bestvB <- nlm(f=ssq,funk=vB,observed=LatA$length,p=pars,
-#'                 ages=LatA$age,typsize=magnitude(pars),iterlim=1000)
+#'                 ages=LatA$age,typsize=magnitude(pars))
 #'                 outfit(bestvB,backtran=FALSE,title="vB")
 #' }
 NULL
@@ -452,3 +452,56 @@ NULL
 #' }
 NULL
 
+#' @title twoindex has orange roughy catches with hypothetical cpue
+#'
+#' @description twoindex is a 35 x 4 data.frame of fishery data made 
+#'     up of smoothed real catches but two simulated indices of relative
+#'     abundanceThis data-set is designedto illustrate
+#'     the implementation of surplus production models when there are
+#'     more than one time-series of relative abundance indices. The
+#'     indices have been designed to generate a workable answer but also
+#'     require the use of a penalty on harvest rates to avoid massively 
+#'     inflated harvest rates well above 1. Instead of using simpspm,
+#'     spm, and negLL1, we need to use simpspmM, spmCE, and negLLM.
+#'
+#' @name twoindex
+#' 
+#' @docType data
+#' 
+#' @format A data.frame of fishery data 
+#' \describe{
+#'   \item{year}{the calander year of fishing}
+#'   \item{catch}{the reported catch in tonnes}
+#'   \item{cpue1}{the first index of relative abundance}
+#'   \item{cpue2}{the second index of relative abundance}
+#' }
+#' 
+#' @section Subjects:
+#'  \itemize{
+#'    \item Surplus production models
+#'    \item Dynamic model fitting
+#'    \item -ve log-likelihoods
+#'  }
+#'  
+#' @source Catches extracted from Table 4, page 11 of Haddon, M. (2017) 
+#'    Orange Roughy East (Hoplostethus atlanticus) stock assessment
+#'    using data to 2016 Report to November 2017 SE RAG meeting. CSIRO, 
+#'    Oceans and Atmosphere, Australia. 51p. from https://www.afma.gov.au/fisheries-management/species/orange-roughy
+#'    Catch data extended to 2019 using AFMA's catchwatch system. The cpue series are
+#'    hypothetical and have been designed to facilate the use of penalty1
+#'    and the use of multiple indices of relative abundance. The eral stock assessment uses
+#'    acoustic survey indices and many years of age composition data inside Stock Synthesis 3.
+#' 
+#' @examples
+#'  \dontrun{
+#'  data(twoindex)
+#'  fish <- as.matrix(twoindex)
+#'  pars <- log(c(0.04,155000,0.4,0.3))
+#'  bestSP <- nlm(f=negLLM,p=pars,funk=simpspmM,indat=fish,
+#'              schaefer=TRUE,logobs=log(fish[,c("cpue1","cpue2")]),
+#'              steptol=1e-06,harvpen=TRUE)
+#'  outfit(bestSP)  # best fitting estimates
+#'  answer <- plotspmmod(bestSP$estimate,indat=fish,
+#'                       plotprod=TRUE,maxy=3.4)
+#' }
+NULL

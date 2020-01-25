@@ -48,6 +48,5 @@ parset alters the current base graphics par settings
  parset(plots=c(1,2))
  plot1(x,y,defpar=FALSE)
  plot1(y,x,defpar=FALSE)
- parsyn()
 }
 }

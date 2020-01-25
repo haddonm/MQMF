@@ -22,15 +22,17 @@ uphist is merely a wrapper around the base hist
     the x-axis. With fisheries data it is surprisingly common to 
     have data that has a very few extreme values that can obscure
     a standard plot of the data. The data are only truncated 
-    within the function so any other analyses will be on all 
+    within the uphist function so any other analyses will be on all 
     available data. If a maximum value is selected which 
     accidently eliminates all available data the script stops with
-    an appropriate warning.
+    an appropriate warning. If a value is selected which fails to 
+    eliminate any data then all data are used.
 }
 \examples{
 \dontrun{
   x <- rlnorm(5000, meanlog=2, sdlog=1)
   hist(x,breaks=30,main="",xlab="log-normal values")
   uphist(x,breaks=30,main="",xlab="log-normal values",maxval=100)
+  uphist(x,breaks=30,main="",xlab="log-normal values",maxval=1000)
 }
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm.r
 \name{spmCE}
 \alias{spmCE}
-\title{spmCE - calculates the dynamics using a Schaefer or Fox model}
+\title{spmCE - calculates the dynamics for nultiple cpue time-series}
 \usage{
 spmCE(
   inp,
@@ -16,7 +16,8 @@ spmCE(
 \arguments{
 \item{inp}{a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), you
 would use the latter if it was suspected that the fishery data 
-started after some initial depletion had occurred.}
+started after some initial depletion had occurred. Then there should 
+be the same number of sigma values as tehre are cpue time-series}
 
 \item{indat}{a matrix with at least columns 'year', 'catch', and 'cpue'}
 
@@ -38,25 +39,24 @@ a list of five objects; outmat the matrix with the dynamics
 }
 \description{
 spmCE calculates the dynamics using a Schaefer of Fox model
-    and is used instead of simpspm whenthere are multiple indeex vectors.
+    and is used instead of spm when there are multiple index vectors.
     The outputs include  predicted Biomass, year, catch, cpue, predicted
     cpue, contributions to q, ssq, and depletion levels. Generally it
     would be more sensible to use simpspm when fitting a Schaefer model 
     and simpfox when fitting a Fox model
     as those functions are designed to generate only the predicted cpue
     required by the functions ssq and negLLM, but the example shows how 
-    it could be used. the function spm is used inside 'plotspmmod'
-    and could be used alone, to generate a fullist of model outputs
-    after the model has been fitted.
+    it could be used.
 }
 \examples{
 \dontrun{
-data(abdat)
-pars <- log(c(0.35,7800,3500,0.05))
-ans <- plotspmmod(pars,dat)
- bestSP <- fitSPM(par=pars,fish=abdat,funk=simpspm)
+ data(twoindex)
+ fish <- as.matrix(twoindex)
+ pars <- log(c(0.04,155000,0.4,0.3))
+ bestSP <- nlm(f=negLLM,p=pars,funk=simpspmM,indat=fish,
+             schaefer=TRUE,logobs=log(fish[,c("cpue1","cpue2")]),
+             steptol=1e-06,harvpen=TRUE)
  outfit(bestSP)  # best fitting estimates
- ans <- plotspmmod(bestSP$estimate,abdat,schaefer=TRUE)
- str(ans)
+ getMSY(exp(bestSP$estimate))
 }
 }

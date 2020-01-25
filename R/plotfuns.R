@@ -44,7 +44,7 @@
 #'  xv <- mvnpar[,"K"]
 #'  yv <- mvnpar[,"r"]
 #'  # plotprep(width=6,height=5,newdev = FALSE)
-#'  plot(xv,yv,type="p")
+#'  plot(xv,yv,type="p") # use default 0.5 and 0.9 contours.
 #'  addcontours(xv,yv,range(xv),range(yv),lwd=2,col=2)
 #'  points(mean(xv),mean(yv),pch=16,cex=1.5,col=2)
 #' }
@@ -324,7 +324,6 @@ panel.cor <- function(x, y, digits = 3, ...) {
 #'  parset(plots=c(1,2))
 #'  plot1(x,y,defpar=FALSE)
 #'  plot1(y,x,defpar=FALSE)
-#'  parsyn()
 #' }
 parset <- function(plots=c(1,1),cex=0.75,font=7,outmargin=c(0,0,0,0),
                    margin=c(0.45,0.45,0.05,0.05)) {
@@ -343,7 +342,7 @@ parset <- function(plots=c(1,1),cex=0.75,font=7,outmargin=c(0,0,0,0),
 #'
 #' @examples
 #' \dontrun{
-#'  parsyn()
+#'   parsyn()
 #' }
 parsyn <- function() {
   cat("par(mfrow=c(1,1),mai=c(0.45,0.45,0.05,0.05),oma=c(0,0,0,0)) \n")
@@ -612,8 +611,12 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
 #' \dontrun{
 #'    setpalette("R3")
 #'    plot(1:8,rep(0.25,8),type="p",pch=16,cex=5,col=c(1:8))
+#'    text(1,0.2,"Default R3.0.0 - some garish or pale",cex=1.5,
+#'         font=7,pos=4)
 #'    setpalette("R4")
 #'    points(1:8,rep(0.3,8),pch=16,cex=5,col=c(1:8)) #toprow
+#'    text(1,0.325,"Default R4.0.0 - more balanced",cex=1.5,
+#'         font=7,pos=4)
 #' }
 setpalette <- function(x="R4") { # x="R4"
   choice <- c("default","R3","R4")
@@ -638,10 +641,11 @@ setpalette <- function(x="R4") { # x="R4"
 #'     the x-axis. With fisheries data it is surprisingly common to 
 #'     have data that has a very few extreme values that can obscure
 #'     a standard plot of the data. The data are only truncated 
-#'     within the function so any other analyses will be on all 
+#'     within the uphist function so any other analyses will be on all 
 #'     available data. If a maximum value is selected which 
 #'     accidently eliminates all available data the script stops with
-#'     an appropriate warning. 
+#'     an appropriate warning. If a value is selected which fails to 
+#'     eliminate any data then all data are used.
 #'
 #' @param x the vector of values to be plotted as a histogram
 #' @param maxval the maximum value to be retained in the plotted data
@@ -655,6 +659,7 @@ setpalette <- function(x="R4") { # x="R4"
 #'   x <- rlnorm(5000, meanlog=2, sdlog=1)
 #'   hist(x,breaks=30,main="",xlab="log-normal values")
 #'   uphist(x,breaks=30,main="",xlab="log-normal values",maxval=100)
+#'   uphist(x,breaks=30,main="",xlab="log-normal values",maxval=1000)
 #' }
 uphist <- function(x,maxval=NA,...) {
   if (is.numeric(maxval)) {

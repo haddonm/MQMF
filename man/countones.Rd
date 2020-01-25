@@ -19,6 +19,6 @@ countones used in apply to count the number of ones in a vector
 \dontrun{
 x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 print(x)
-apply(x,1,countones)
+apply(x,1,countones)  # by rows
 }
 }

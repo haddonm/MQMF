@@ -24,21 +24,22 @@ an object of class acf, which can be plotted
 }
 \description{
 getlag is a wrapper for the ccf function (cross correlation)
-    that is used within the spm and aspm analyses to determine at what
+    that is used within the spm analyses to determine at what
     negative lag, if any, cpue data is informative about the stock 
     dynamics beyond any information already available in the catch data.
     If the cpue is directly correlated with catches (lag=0 has a strong
     correlation) then cpue will not add much more information to an 
     analysis. Only if there is a significant negative correlation is it 
     likely that the cpue will increase the information available and 
-    make it more likely that a spm or aspm may be able to be fitted 
+    make it more likely that an assessment model may be able to be fitted 
     meaningfully to the available data. If there is no significant 
-    negative correlations then it becomes much more unlikely than a 
-    valid model fit will be possible. The getlag function first finds 
-    those rows for which both catch and cpue have values and then it 
-    runs the analysis. Thus, you cannot have gaps in your cpue data 
-    although there can be catches at the start or end or both for which
-    there are no cpue data.
+    negative correlations then it becomes much more unlikely that a 
+    useful model fit to the cpue will be possible. The getlag function 
+    first finds those rows for which both catch and cpue have values 
+    and then it runs the cross-correlation analysis. Thus, you cannot 
+    have gaps in your cpue data although there can be catches at the 
+    start or end of the time-series, or both, for which there are no 
+    cpue data.
 }
 \examples{
 \dontrun{

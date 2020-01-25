@@ -67,7 +67,7 @@ addcontours is used to add contours to a dense plot of
  xv <- mvnpar[,"K"]
  yv <- mvnpar[,"r"]
  # plotprep(width=6,height=5,newdev = FALSE)
- plot(xv,yv,type="p")
+ plot(xv,yv,type="p") # use default 0.5 and 0.9 contours.
  addcontours(xv,yv,range(xv),range(yv),lwd=2,col=2)
  points(mean(xv),mean(yv),pch=16,cex=1.5,col=2)
 }

@@ -40,7 +40,7 @@ A data.frame containing an index number, the estimated
   data(LatA)
   pars <- c(27.0,0.15,-2.0) # von Bertalanffy
   bestvB <- nlm(f=ssq,funk=vB,observed=LatA$length,p=pars,
-                ages=LatA$age,typsize=magnitude(pars),iterlim=1000)
+                ages=LatA$age,typsize=magnitude(pars))
                 outfit(bestvB,backtran=FALSE,title="vB")
 }
 }
