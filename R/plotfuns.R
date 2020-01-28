@@ -332,6 +332,7 @@ parset <- function(plots=c(1,1),cex=0.75,font=7,outmargin=c(0,0,0,0),
       font.lab=font)
 } # end of parset
 
+
 #' @title parsyn types the standard par command syntax  to the console
 #'
 #' @description parsyn types the standard par command syntax to the console

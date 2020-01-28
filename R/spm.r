@@ -24,7 +24,7 @@ altnegLL <- function(inp,indat) { # inp=pars; indat=dataspm
    out <- spm(inp,indat)$outmat
    pick <- which(indat[,"cpue"] > 0)
    Nobs <- length(pick)
-   ssq <- sum((log(out[pick,"CPUE"])-log(out[pick,"PredCE"]))^2)
+   ssq <- sum((log(out[pick,"CPUE"])-log(out[pick,"predCE"]))^2)
    sigma <- sqrt(ssq/Nobs)
    negLogL <- (Nobs/2)*(log(2*pi) + 2*log(sigma) + 1)
    return(negLogL)
@@ -1024,14 +1024,14 @@ spmboot <- function(optpar,fishery,iter=100,schaefer=TRUE) {
   nyrs <- length(years)
   pickyr <- which(outmat[,"CPUE"] > 0)
   cpueO <- outmat[pickyr,"CPUE"]
-  predO <- outmat[pickyr,"PredCE"]  # original values
+  predO <- outmat[pickyr,"predCE"]  # original values
   resids <- cpueO/predO
   varib <- c("r","K","sigma","-veLL")
   lenpar <- length(optpar)
   if (lenpar > 3) varib <- c("r","K","Binit","sigma","-veLL")
   bootpar <- matrix(0,nrow=iter,ncol=length(varib),
                     dimnames=list(1:iter,varib))
-  columns <- c("ModelB","BootCE","PredCE","Depletion","Harvest")
+  columns <- c("ModelB","BootCE","predCE","Depletion","Harvest")
   dynam <- array(0,dim=c(iter,nyrs,length(columns)),
                  dimnames=list(1:iter,years,columns))
   dynam[1,,] <- outmat[1:nyrs,c(2,6,7,4,5)]
@@ -1109,7 +1109,7 @@ spmCE <- function(inp,indat,schaefer=TRUE,
   qval <- numeric(nce)
   predCE <- matrix(NA,nrow=nyrs,ncol=nce)
   columns <- c("Year","ModelB","Catch","Depletion","Harvest")
-  addtxt <- c("CPUE","PredCE")
+  addtxt <- c("CPUE","predCE")
   if (nce > 1) {
     addtxt <- c(paste0("CPUE",1:nce),paste0("predCE",1:nce))
   }
