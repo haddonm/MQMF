@@ -15,15 +15,16 @@ a single value as a penalty to be added to a Log-Likelihood or SSQ
 \description{
 penalty1 allows for the option of adding a large penalty as
     a parameter approaches 1.0 and moves to become larger than 1. For 
-    example, when fitting a surpklus production model sometimes the 
+    example, when fitting a surplus production model sometimes the 
     optimal mathematical model fit can occur by implying catches greater
     than available biomass, implying harvest rates > 1.0. By adding a 
     large penalty to such values and adding those to the likelihood 
-    such strange outcomes can be avoided.
+    such strange outcomes can be avoided. This will accept a single
+    value or a vector.
 }
 \examples{
 \dontrun{
- x <- c(0.5,0.9,0.98,0.99)
- penalty1(x)
+ x <- c(0.5,0.8,0.88,0.9,0.98,0.99,1.01)
+ round(cbind(x,penalty1(x)),4)
 }
 }

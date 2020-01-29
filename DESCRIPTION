@@ -18,7 +18,8 @@ Encoding: UTF-8
 LazyData: true
 Imports: MASS,
     mvtnorm
-Suggests: knitr,
+Suggests: 
+    knitr,
     rmarkdown
 RoxygenNote: 7.0.2
 BugReports: https://github.com/haddonm/MQMF

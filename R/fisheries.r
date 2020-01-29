@@ -528,7 +528,7 @@ negLL1 <- function(pars,funk,logobs,...) {
 #'  bestSP <- nlm(f=negLLM,p=pars,funk=simpspmM,indat=fish,
 #'              schaefer=TRUE,logobs=log(fish[,c("cpue1","cpue2")]),
 #'              steptol=1e-06,harvpen=TRUE)
-#'  outfit(bestSP)  # best fitting estimates
+#'  outfit(bestSP,digits=5,title="negLLM example") #optimum solution
 #'  answer <- plotspmmod(bestSP$estimate,indat=fish,
 #'                       plotprod=TRUE,maxy=3.4)
 #' }
