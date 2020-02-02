@@ -52,6 +52,10 @@ filenameLAA <- "data-raw/LatA.csv"
 LatA <- read.csv(filenameLAA,header=TRUE)
 dim(LatA)
 head(LatA,20)
+LatA <- LatA[,-1]
+LatA <- LatA[order(LatA$age),]
+rownames(LatA) <- 1:358
+
 save(LatA,file="data-raw/LatA.RData")
 
 

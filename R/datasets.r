@@ -138,24 +138,21 @@ NULL
 NULL
 
 
-#' @title LatA Length at age for 358 female fish 
+#' @title LatA Simulated length-at-age for 358 female fish 
 #'
-#' @description A data.frame containing an index number, the estimated 
-#'     age for 358 redfish (\emph{Centroberyx affinis}) from eastern Australia 
-#'     sampled in 1997, all from a single port. 
+#' @description A data.frame containing the simulated 
+#'     age for an array of different lengths based upon the properties
+#'     of an extensive collection of redfish (\emph{Centroberyx affinis}) 
+#'     length-at-age data from eastern Australia sampled in the 1990's. 
 #'     
 #' @name LatA
 #' 
 #' @docType data
 #' 
-#' @format A data.frame with 358 rows and 3 variables:
+#' @format A data.frame with 358 rows and 2 variables:
 #' \describe{
-#'   \item{Sex}{gender coded as 1 = males and 2 = females, this is an 
-#'       unusual coding as very often one finds females=1 and males=2. 
-#'       This shows that simple codes cannot be taken for granted and
-#'       can therefore be dangerous so watch out for them}
-#'   \item{Length}{Fork length of the fish, in cms}
-#'   \item{Age}{Estimated age from otolith reading}
+#'   \item{age}{Estimated age from otolith reading}
+#'   \item{length}{Fork length of the fish, in cms}
 #' }
 #' 
 #' @section Subjects:
@@ -166,11 +163,15 @@ NULL
 #'   \item Michaelis-Menton curve used as a growth curve 
 #'  }
 #'  
-#' @source This data is a small sub-set of very many more samples collected 
-#'     across species and years by the many excellent people running the 
+#' @source This data this simulation is based upon is from one species 
+#'     collected many years by the many excellent people running the 
 #'     Integrated Stock Monitoring Program in the Australian South East 
-#'     Fishery over the years of its existence. Thanks to the Australian
-#'     Fisheries Management Authority for permission to use this data.
+#'     Fishery over the years of its existence. The simulation is based
+#'     on a characterization of redfish properties and includes random
+#'     error in the hypothetical measurements as well as the processes of
+#'     growth (i.e. both measurement and process error). The other inputs
+#'     were a selected set of growth parameters and the relative frequency
+#'     of different ages vs lengths.
 #'     
 #' @examples 
 #' \dontrun{
@@ -182,7 +183,7 @@ NULL
 #' }
 NULL
 
-#' @title minnow is individual growth data for use with growth curves
+#' @title minnow contains weekly growth data for use with growth curves
 #'
 #' @description minnow is a dataset of mean length against time in weeks for
 #'     minnows (\emph{Phoxinus phoxinus}), derived from Pitcher & 
@@ -191,10 +192,10 @@ NULL
 #'     in length as each year progresses because these are mean lengths 
 #'     rather than individual measurements (which would, more typically,
 #'     be used these days). The data have been read off a graph within 
-#'     the paper as it is not reported explicitly and are therefore 
+#'     the paper as it is not reported explicitly, and are therefore 
 #'     only approximate, but will do for our purposes (but expect 
 #'     different parameters to those shown in the original paper).
-#'     This is length at time not age, though time is being used as 
+#'     This is length at time not age. Though time is being used as 
 #'     a proxy for age there is no age 0.
 #'
 #' @name minnow
@@ -463,6 +464,13 @@ NULL
 #'     require the use of a penalty on harvest rates to avoid massively 
 #'     inflated harvest rates well above 1. Instead of using simpspm,
 #'     spm, and negLL1, we need to use simpspmM, spmCE, and negLLM.
+#'     The cpue series are hypothetical and have been designed to 
+#'     illustrate the use of penalty1 and the use of multiple indices 
+#'     of relative abundance. The real stock assessment uses acoustic 
+#'     survey indices and also uses many years of age composition data 
+#'     inside Stock Synthesis 3, not surprisingly the inclusion of real
+#'     time-series of indices and of age-composition data leads to very 
+#'     different results.
 #'
 #' @name twoindex
 #' 
@@ -486,11 +494,7 @@ NULL
 #' @source Catches extracted from Table 4, page 11 of Haddon, M. (2017) 
 #'    Orange Roughy East (Hoplostethus atlanticus) stock assessment
 #'    using data to 2016 Report to November 2017 SE RAG meeting. CSIRO, 
-#'    Oceans and Atmosphere, Australia. 51p. from https://www.afma.gov.au/fisheries-management/species/orange-roughy
-#'    Catch data extended to 2019 using AFMA's catchwatch system. The cpue series are
-#'    hypothetical and have been designed to facilate the use of penalty1
-#'    and the use of multiple indices of relative abundance. The eral stock assessment uses
-#'    acoustic survey indices and many years of age composition data inside Stock Synthesis 3.
+#'    Oceans and Atmosphere, Australia. 51p. from https://www.afma.gov.au/fisheries-management/species/orange-roughy Catch data extended to 2019 using AFMA's catchwatch system. 
 #' 
 #' @examples
 #'  \dontrun{

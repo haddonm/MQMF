@@ -335,10 +335,11 @@ parset <- function(plots=c(1,1),cex=0.75,font=7,outmargin=c(0,0,0,0),
 
 #' @title parsyn types the standard par command syntax  to the console
 #'
-#' @description parsyn types the standard par command syntax to the console
-#'      so it can be copied and pasted into your own code and modified.
+#' @description parsyn prints the standard par command syntax to the 
+#'     console so it can be copied and pasted into your own code and 
+#'     modified as suits your needs. It is simply a memory aid.
 #'
-#' @return it writes two lines of R code to the console
+#' @return nothing but it writes two lines of R code to the console
 #' @export
 #'
 #' @examples
@@ -347,7 +348,7 @@ parset <- function(plots=c(1,1),cex=0.75,font=7,outmargin=c(0,0,0,0),
 #' }
 parsyn <- function() {
   cat("par(mfrow=c(1,1),mai=c(0.45,0.45,0.05,0.05),oma=c(0,0,0,0)) \n")
-  cat("par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7) \n")
+  cat("par(cex=0.75,mgp=c(1.35,0.35,0),font.axis=7,font=7,font.lab=7) \n")
 }
 
 #' @title plot1 a simple way to plot an xy line plot
@@ -441,19 +442,19 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
   par(mfrow=c(1,2),mai=c(0.45,0.45,0.05,0.1),oma=c(0.0,0,2.0,0.0))
   par(cex=cex, mgp=c(1.35,0.35,0), font.axis=font,font=font,
       font.lab=font)
-  plot(x[,"year"],x[,"nt"],type="l",col=2,lwd=1,ylim=c(0,ymax),yaxs="i",
+  plot(x[,"year"],x[,"nt"],type="l",col=1,lwd=1,ylim=c(0,ymax),yaxs="i",
        panel.first = grid(),xlab="Time",ylab="Population Size")
   if (length(y) > 0) {
     lines(x[,"year"],y,lwd=1,col=3)
   }
   mtext("Population Dynamics",side=3,line=0.0,cex=cex,font=font)
   plot(x[1:(yrs-1),"nt"],x[1:(yrs-1),"nt1"],type="p",pch=1,lwd=1.0,
-       cex=0.9,yaxs="i",xlim=c(0,ymax),ylim=c(0,ymax),
+       cex=cex,yaxs="i",xlim=c(0,ymax),ylim=c(0,ymax),col="darkgrey",
        panel.first=grid(),xlab="Population Nt",ylab="Population Nt+1")
   begin <- trunc(yrs * 0.8)      # final 20%
   lines(xl,xl,lwd=2,col="grey")
-  points(x[begin:(yrs-1),"nt"],x[begin:(yrs-1),"nt1"],pch=16,col=2,
-         cex=(cex*1.5))
+  points(x[begin:(yrs-1),"nt"],x[begin:(yrs-1),"nt1"],pch=18,col=1,
+         cex=(cex*1.2))
   mtext("Phase Plot",side=3,line=0.0,cex=cex,font=font,outer=FALSE)
   mtext(main,side=3,line=1.0,cex=cex,font=font,outer=TRUE)
   invisible(x)

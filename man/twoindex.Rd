@@ -15,11 +15,7 @@
 Catches extracted from Table 4, page 11 of Haddon, M. (2017) 
    Orange Roughy East (Hoplostethus atlanticus) stock assessment
    using data to 2016 Report to November 2017 SE RAG meeting. CSIRO, 
-   Oceans and Atmosphere, Australia. 51p. from https://www.afma.gov.au/fisheries-management/species/orange-roughy
-   Catch data extended to 2019 using AFMA's catchwatch system. The cpue series are
-   hypothetical and have been designed to facilate the use of penalty1
-   and the use of multiple indices of relative abundance. The eral stock assessment uses
-   acoustic survey indices and many years of age composition data inside Stock Synthesis 3.
+   Oceans and Atmosphere, Australia. 51p. from https://www.afma.gov.au/fisheries-management/species/orange-roughy Catch data extended to 2019 using AFMA's catchwatch system.
 }
 \description{
 twoindex is a 35 x 4 data.frame of fishery data made 
@@ -31,6 +27,13 @@ twoindex is a 35 x 4 data.frame of fishery data made
     require the use of a penalty on harvest rates to avoid massively 
     inflated harvest rates well above 1. Instead of using simpspm,
     spm, and negLL1, we need to use simpspmM, spmCE, and negLLM.
+    The cpue series are hypothetical and have been designed to 
+    illustrate the use of penalty1 and the use of multiple indices 
+    of relative abundance. The real stock assessment uses acoustic 
+    survey indices and also uses many years of age composition data 
+    inside Stock Synthesis 3, not surprisingly the inclusion of real
+    time-series of indices and of age-composition data leads to very 
+    different results.
 }
 \section{Subjects}{
 

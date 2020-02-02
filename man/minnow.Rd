@@ -3,7 +3,7 @@
 \docType{data}
 \name{minnow}
 \alias{minnow}
-\title{minnow is individual growth data for use with growth curves}
+\title{minnow contains weekly growth data for use with growth curves}
 \format{A data.frame of mean length-at-time data
 \describe{
   \item{week}{the week of sampling minnows for lengths}
@@ -21,10 +21,10 @@ minnow is a dataset of mean length against time in weeks for
     in length as each year progresses because these are mean lengths 
     rather than individual measurements (which would, more typically,
     be used these days). The data have been read off a graph within 
-    the paper as it is not reported explicitly and are therefore 
+    the paper as it is not reported explicitly, and are therefore 
     only approximate, but will do for our purposes (but expect 
     different parameters to those shown in the original paper).
-    This is length at time not age, though time is being used as 
+    This is length at time not age. Though time is being used as 
     a proxy for age there is no age 0.
 }
 \section{Subjects}{

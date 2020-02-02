@@ -7,11 +7,12 @@
 parsyn()
 }
 \value{
-it writes two lines of R code to the console
+nothing but it writes two lines of R code to the console
 }
 \description{
-parsyn types the standard par command syntax to the console
-     so it can be copied and pasted into your own code and modified.
+parsyn prints the standard par command syntax to the 
+    console so it can be copied and pasted into your own code and 
+    modified as suits your needs. It is simply a memory aid.
 }
 \examples{
 \dontrun{

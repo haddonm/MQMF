@@ -3,27 +3,28 @@
 \docType{data}
 \name{LatA}
 \alias{LatA}
-\title{LatA Length at age for 358 female fish}
-\format{A data.frame with 358 rows and 3 variables:
+\title{LatA Simulated length-at-age for 358 female fish}
+\format{A data.frame with 358 rows and 2 variables:
 \describe{
-  \item{Sex}{gender coded as 1 = males and 2 = females, this is an 
-      unusual coding as very often one finds females=1 and males=2. 
-      This shows that simple codes cannot be taken for granted and
-      can therefore be dangerous so watch out for them}
-  \item{Length}{Fork length of the fish, in cms}
-  \item{Age}{Estimated age from otolith reading}
+  \item{age}{Estimated age from otolith reading}
+  \item{length}{Fork length of the fish, in cms}
 }}
 \source{
-This data is a small sub-set of very many more samples collected 
-    across species and years by the many excellent people running the 
+This data this simulation is based upon is from one species 
+    collected many years by the many excellent people running the 
     Integrated Stock Monitoring Program in the Australian South East 
-    Fishery over the years of its existence. Thanks to the Australian
-    Fisheries Management Authority for permission to use this data.
+    Fishery over the years of its existence. The simulation is based
+    on a characterization of redfish properties and includes random
+    error in the hypothetical measurements as well as the processes of
+    growth (i.e. both measurement and process error). The other inputs
+    were a selected set of growth parameters and the relative frequency
+    of different ages vs lengths.
 }
 \description{
-A data.frame containing an index number, the estimated 
-    age for 358 redfish (\emph{Centroberyx affinis}) from eastern Australia 
-    sampled in 1997, all from a single port.
+A data.frame containing the simulated 
+    age for an array of different lengths based upon the properties
+    of an extensive collection of redfish (\emph{Centroberyx affinis}) 
+    length-at-age data from eastern Australia sampled in the 1990's.
 }
 \section{Subjects}{
 
