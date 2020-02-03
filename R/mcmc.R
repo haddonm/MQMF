@@ -53,12 +53,13 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #'    expirementally set to otain an acceptance rate between 20 - 40%. 
 #'    It is also usual to run numerous diagnostic plots on th eoutputs 
 #'    to ensure convergence on the final stationary distribution. There 
-#'    are three main loops: 1) total number of iterations N * thinstep,
-#'    2) thinstep/(number of parameters) so that at least all parameters 
-#'    are stepped through at least once (=thinstep  = np) before any 
-#'    combinations are considered for acceptance, this means that the
-#'    true thinning rate is thinstep/np, and 3) the number of parameters
-#'    loop that steps through the np parameters varying each one.
+#'    are three main loops: 1) total number of iterations (N + burnin)* 
+#'    thinstep, used by priorcalc, 2) thinstep/(number of parameters) 
+#'    so that at least all parameters are stepped through at least once 
+#'    (thinstep = np) before any combinations are considered for 
+#'    acceptance, this means that the true thinning rate is thinstep/np, 
+#'    and 3) the number of parameters loop that steps through the np 
+#'    parameters varying each one.
 #'
 #' @param chains the number of independent MCMC chains produced
 #' @param burnin the number of steps made before candidate parameter
@@ -118,7 +119,7 @@ do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
       colnames(posterior) <- c("r","K","Binit","sigma","Post")
       arate <- numeric(np) # to store acceptance rate
       func0 <- exp(-infunk(param,calcpred,indat=calcdat,obsdat,...) 
-                   + priorcalc(np,N)) #back transform log-likelihoods 
+                   + priorcalc(np,totN)) #back transform log-likelihoods 
       posterior[1,] <- c(exp(param),func0) # start the chain
       for (iter in 2:totN) {  # Generate the Markov Chain
          randinc <-  matrix(rnorm(thinstep,mean=0,sd=1),nrow=stepnp,ncol=np)
@@ -129,7 +130,7 @@ do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
                oldpar <- param[i]  # incrementing them one a at time
                param[i] <- param[i] + randinc[st,i]
                func1 <- exp(-infunk(param,calcpred,indat=calcdat,obsdat,...) 
-                            + priorcalc(np,N)) 
+                            + priorcalc(np,totN)) 
                if (func1/func0 > uniform[i]) { # Accept 
                   func0 = func1
                   arate[i] = arate[i] + 1

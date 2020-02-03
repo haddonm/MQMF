@@ -77,12 +77,13 @@ do_MCMC conducts a Gibbs within Metropolis algorithm. One
    expirementally set to otain an acceptance rate between 20 - 40%. 
    It is also usual to run numerous diagnostic plots on th eoutputs 
    to ensure convergence on the final stationary distribution. There 
-   are three main loops: 1) total number of iterations N * thinstep,
-   2) thinstep/(number of parameters) so that at least all parameters 
-   are stepped through at least once (=thinstep  = np) before any 
-   combinations are considered for acceptance, this means that the
-   true thinning rate is thinstep/np, and 3) the number of parameters
-   loop that steps through the np parameters varying each one.
+   are three main loops: 1) total number of iterations (N + burnin)* 
+   thinstep, used by priorcalc, 2) thinstep/(number of parameters) 
+   so that at least all parameters are stepped through at least once 
+   (thinstep = np) before any combinations are considered for 
+   acceptance, this means that the true thinning rate is thinstep/np, 
+   and 3) the number of parameters loop that steps through the np 
+   parameters varying each one.
 }
 \examples{
 \dontrun{
