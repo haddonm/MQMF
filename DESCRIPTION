@@ -1,6 +1,6 @@
 Package: MQMF
 Title: Using R for Modelling and Quantitative Methods in Fisheries
-Version: 0.1.8
+Version: 0.1.9
 Date: 2020-01-31
 Authors@R: person("Malcolm", "Haddon", role = c("aut", "cre"), 
                   email = "malcolm.haddon@gmail.com")
@@ -11,7 +11,9 @@ Description: Provides R functions for use with the new book: Using R for
     run or support the practical examples presented in the book. The 
     integral help for each function describes how those functions can be 
     used to implement the URMQMF examples. All examples have been run
-    and tested.
+    and tested. The chapter r-code chunks are now included as chapter2, 
+    chapter3, ..., chapter7 functions, which are empty except for the 
+    help pages.
 Depends: R (>= 3.5.0)
 License: GPL-3
 Encoding: UTF-8
