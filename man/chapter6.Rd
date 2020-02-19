@@ -2,7 +2,7 @@
 % Please edit documentation in R/ch_chunks.R
 \name{chapter6}
 \alias{chapter6}
-\title{chapter6 The R-code chunks from On Uncertainty}
+\title{chapter6 The 53 R-code chunks from On Uncertainty}
 \description{
 chapter6 is not an active function but rather acts 
     as a repository for the various example code chunks found in 

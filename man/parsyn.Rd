@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotfuns.R
 \name{parsyn}
 \alias{parsyn}
-\title{parsyn types the standard par command syntax  to the console}
+\title{parsyn types the standard par command syntax to the console}
 \usage{
 parsyn()
 }

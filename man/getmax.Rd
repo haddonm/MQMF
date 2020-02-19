@@ -15,17 +15,20 @@ getmax(x, mult = 1.05)
 a suitable upper bound for a plot if required
 }
 \description{
-getmax generates an upper bound for a plot where it is unknown
-    whether the maximum is greater than zero of not. If > 0 then
-    multiplying by the default mult of 1.05 works well but if the outcome if
-    < 0 then the multiplier needs to be adjusted appropriately so the maximum
-    is slightly higher than the maximum of the data
+getmax generates an upper bound for a plot where it 
+    is unknown whether the maximum is greater than zero of not. 
+    If > 0 then multiplying by the default mult of 1.05 works well 
+    but if the outcome if < 0 then the multiplier needs to be 
+    adjusted appropriately so the maximum is slightly higher than 
+    the maximum of the data
 }
 \examples{
-vect <- rnorm(10,mean=0,sd=2)
-sort(vect,decreasing=TRUE)
-getmax(vect,mult=1.0)
-vect <- rnorm(10,mean = -5,sd = 1.5)
-sort(vect,decreasing=TRUE)
-getmax(vect,mult=1.0)
+\dontrun{
+ vect <- rnorm(10,mean=0,sd=2)
+ sort(vect,decreasing=TRUE)
+ getmax(vect,mult=1.0)
+ vect <- rnorm(10,mean = -5,sd = 1.5)
+ sort(vect,decreasing=TRUE)
+ getmax(vect,mult=1.0)
+}   
 }

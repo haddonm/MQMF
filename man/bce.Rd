@@ -14,7 +14,7 @@ mortality over the time period t, this is usually estimated by
 multiplying the fully selected F by the selectivity/availability
 at age.}
 
-\item{Nt}{The population numbers at the start of time t}
+\item{Nt}{The population numbers-at-age at the start of time t}
 
 \item{ages}{the ages 0:maxage used in the calculations}
 }
@@ -22,13 +22,15 @@ at age.}
 a matrix of numbers-, natural mortality-, and catch-at-age
 }
 \description{
-bce the Baranov Catch Equation. The total kill is made
-    up of fish being killed by fishing and other dying naturally.
-    We use the bce to estimate the catch (those killed by fishing).
-    The problem is that some fish that would be expected to die 
-    naturally can be expected to be caught and killed by fishing
-    so estimating the catch is slightly more complex than Nt x Ht.
-    It is invariably better to use the Baranov Catch Equation.
+bce the Baranov Catch Equation. The total mortality of
+    fish in an exploited population is made up of fish being killed 
+    by fishing and others dying naturally. We use the bce to estimate 
+    the catch (those killed by fishing). The problem is that some 
+    fish that would be expected to die naturally can be expected to 
+    be caught and killed by fishing so estimating the catch is 
+    slightly more complex than numbers of fish available times the 
+    harvest rate, Nt x Ht. It is invariably better to use the 
+    Baranov Catch Equation when calculating the expected catches.
 }
 \examples{
 \dontrun{

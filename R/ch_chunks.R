@@ -1,7 +1,7 @@
 
 # chapter2 --------
 
-#' @title chapter2 The R-code chunks from A Non-Introduction to R
+#' @title chapter2 The 14 R-code chunks from A Non-Introduction to R
 #'
 #' @description chapter2 contains no active function but rather acts 
 #'     as a repository for the various example code chunks found in 
@@ -210,7 +210,7 @@ NULL
 
 # chapter3 --------
 
-#' @title chapter3 The R-code chunks from Simple Population Models
+#' @title chapter3 The 27 R-code chunks from Simple Population Models
 #'
 #' @description chapter3 is not an active function but rather acts 
 #'     as a repository for the various example code chunks found in 
@@ -571,7 +571,7 @@ NULL
 
 # chapter4 --------
 
-#' @title chapter4 The R-code chunks from Model Parameter Estimation
+#' @title chapter4 The 49 R-code chunks from Model Parameter Estimation
 #'
 #' @description chapter4 is not an active function but rather acts 
 #'     as a repository for the various example code chunks found in 
@@ -1228,7 +1228,7 @@ NULL
 
 # chapter5 --------
 
-#' @title chapter5 The R-code chunks from Static Models
+#' @title chapter5 The 23 R-code chunks from Static Models
 #'
 #' @description chapter5 is not an active function but rather acts 
 #'     as a repository for the various example code chunks found in 
@@ -1629,7 +1629,7 @@ NULL
 
 # chapter6 --------
 
-#' @title chapter6 The R-code chunks from On Uncertainty
+#' @title chapter6 The 53 R-code chunks from On Uncertainty
 #'
 #' @description chapter6 is not an active function but rather acts 
 #'     as a repository for the various example code chunks found in 
@@ -2438,7 +2438,7 @@ NULL
 
 # chapter7 --------
 
-#' @title chapter7 The R-code chunks from Surplus Production Models
+#' @title chapter7 The 67 R-code chunks from Surplus Production Models
 #'
 #' @description chapter7 is not an active function but rather acts 
 #'     as a repository for the various example code chunks found in 

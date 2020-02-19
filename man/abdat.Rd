@@ -11,7 +11,7 @@
   \item{cpue}{the standardized catch-per-unit-effort for this dive fishery}
 }}
 \source{
-Catch data from Mundy, C. and J. McAllister (2019) Tasmanian abalone fishery assessment 2018, Institute for Marine and Antarctic Studies, University of Tasmania, 190p. ISBN: 978-1-925646-46-7. The cpue data is an unpublished early attempt at standardizing the cpue data with respect to month, block, and diver. Many more details are now included.
+Catch data from Mundy, C. and J. McAllister (2019) Tasmanian abalone fishery assessment 2018, Institute for Marine and Antarctic Studies, University of Tasmania, 190p. ISBN: 978-1-925646-46-7. The cpue data is an unpublished early attempt at standardizing the cpue data with respect to month, block, and diver. Many more details are now included in such analyses.
 }
 \description{
 A dataset of fishery data for blacklip abalone 
@@ -39,7 +39,7 @@ A dataset of fishery data for blacklip abalone
  data(abdat)
  print(abdat)
  plot(abdat$year,abdat$cpue, type="l",xlab="year",ylab="CPUE",
- panel.first=grid())
+      panel.first=grid())
  points(abdat$year,abdat$cpue,pch=16,cex=1.2)
 }
 }

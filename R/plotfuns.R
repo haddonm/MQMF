@@ -10,7 +10,8 @@
 #'     to translate the density of points into 2-D kernal densities, and 
 #'     then searches through the resulting densities for those points 
 #'     that would identify approximate contours. Finally it calls the 
-#'     contour function to add the identified contours to the xy plot.
+#'     contour function to add the identified approximate contours to 
+#'     the xy plot.
 #'
 #' @param xval the vector of x-axis values, one half of the data pairs
 #' @param yval the vector of y-axis values, the other half of the data
@@ -86,18 +87,18 @@ addcontours <- function(xval,yval,xrange,yrange,ngrid=100,
 
 #' @title addnorm adds a normal distribution to a histogram of a data set.
 #'
-#' @description  addnorm - adds a normal distribution to a histogram of a 
+#' @description  addnorm adds a normal distribution to a histogram of a 
 #'     data set. This is generally to be used to illustrate whether 
 #'     log-transformation normalizes a set of catch or cpue data.
-#' @param inhist - is the output from a call to 'hist' (see examples)
-#' @param xdata -  is the data that is being plotted in the histogram.
-#' @param inc - defaults to a value of 0.01; is the fine grain increment 
-#'     used to define the normal curve. The histogram will be coarse 
-#'     grained relative to this.
+#' @param inhist is the output from a call to 'hist' (see examples)
+#' @param xdata is the data that is being plotted in the histogram.
+#' @param inc defaults to a value of 0.01; is the fine grain increment 
+#'     used to define the normal curve. The histogram breaks should 
+#'     be coarse grained relative to inc.
 #' @return a list with a vector of 'x' values and a vector of 'y' values 
 #'     (to be used to plot the fitted normal probability density function), 
-#'     and a vector used two called 'stats' containing the mean and sandard 
-#'     deviation of the input data
+#'     and a vector called 'stats' containing the mean and 
+#'     standard deviation of the input data
 #' @export
 #' @examples
 #' \dontrun{
@@ -122,19 +123,19 @@ addnorm <- function(inhist,xdata,inc=0.01) {
   return(ans)
 } # end of addnorm
 
-#' @title addlnorm - estimates a log-normal distribution from output of hist
+#' @title addlnorm estimates a log-normal distribution from output of hist
 #'
-#' @description  addlnorm - estiamtes a log-normal distribution from output 
-#'     of a histogram of a data set.
-#' @param inhist - is the output from a call to 'hist' (see examples)
-#' @param xdata -  is the data that is being plotted in the histogram.
-#' @param inc - defaults to a value of 0.01; is the fine grain increment 
-#'     used to define the normal curve. The histogram will be coarse grained 
-#'     relative to this.
+#' @description  addlnorm estimates a log-normal distribution from the
+#'     output of a histogram of a data set.
+#' @param inhist is the output from a call to 'hist' (see examples)
+#' @param xdata is the data that is being plotted in the histogram.
+#' @param inc defaults to a value of 0.01; is the fine grain increment 
+#'     used to define the normal curve. The histogram breaks should be
+#'     coarse grained relative to this.
 #' @return a 4 x N matrix of x and y values to be used to plot the fitted 
 #'     normal probability density function.Combined with estiamtes of 
 #'     mean(log(indata)) and log(sd(indata))
-#' @export addlnorm
+#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -162,30 +163,32 @@ addlnorm <- function(inhist,xdata,inc=0.01) {
 #'    integers because the ordinary function fails to count them correctly. 
 #'    The function is designed for integers and if it is given real numbers
 #'     it will issue a warning and then round all values before plotting.
-#' @param x - the vector of integers to be counted and plotted OR a matrix 
+#' @param x the vector of integers to be counted and plotted OR a matrix 
 #'     of values in column 1 and counts in column 2
-#' @param col - the colour of the fill; defaults to black = 1, set this to 0
+#' @param col the colour of the fill; defaults to black = 1, set this to 0
 #'    for an empty bar, but then give a value for border
-#' @param border - the colour of the outline of each bar defaults to col
-#' @param width - denotes the width of each bar; defaults to 1, should be >0
-#'    and usually <= 1. A warning will beissued outside this range. If
+#' @param border the colour of the outline of each bar defaults to 1
+#' @param width denotes the width of each bar; defaults to 1, should be >0
+#'    and usually <= 1. A warning will be issued outside this range. If
 #'    < 0 then it will be reset to 1.0
-#' @param xlabel - the label for the x axis; defaults to ""
-#' @param ylabel - the label for the y axis; defaults to ""
-#' @param main - the title for the individual plot; defaults to ""
-#' @param lwd - the line width of the border; defaults to 1
-#' @param xmin - sets the lower bound for x-axis; used to match plots
-#' @param xmax - sets the upper bound for x axis; used with multiple plots
-#' @param ymax - enables external control of the maximum y value; mainly of
+#' @param xlabel the label for the x axis; defaults to ""
+#' @param ylabel the label for the y axis; defaults to ""
+#' @param main the title for the individual plot; defaults to ""
+#' @param lwd the line width of the border; defaults to 1
+#' @param xmin sets the lower bound for x-axis; used to match plots
+#' @param xmax sets the upper bound for x axis; used with multiple plots
+#' @param ymax enables external control of the maximum y value; mainly of
 #'    use when plotting multiple plots together.
-#' @param plotout - plot the histogram or not? Defaults to TRUE
-#' @param prop - plot the proportions rather than the counts
-#' @param inc - sets the xaxis increment; used to customize the axis;
+#' @param plotout plot the histogram or not? Defaults to TRUE
+#' @param prop plot the proportions rather than the counts
+#' @param inc sets the xaxis increment; used to customize the axis;
 #'    defaults to 1.
-#' @param xaxis - set to FALSE to define the xaxis outside of inthist;
+#' @param xaxis set to FALSE to define the xaxis outside of inthist;
 #'    defaults to TRUE
+#'    
 #' @return a matrix of values and counts is returned invisibly
-#' @export inthist
+#' @export
+#' 
 #' @examples
 #' \dontrun{
 #'  x <- trunc(runif(1000)*10) + 1
@@ -194,7 +197,7 @@ addlnorm <- function(inhist,xdata,inc=0.01) {
 #'          ylabel="Frequency")
 #'  abline(h=100)
 #' }
-inthist <- function(x,col=1,border=NULL,width=1,xlabel="",ylabel="",
+inthist <- function(x,col=1,border=1,width=1,xlabel="",ylabel="",
                     main="",lwd=1,xmin=NA,xmax=NA,ymax=NA,plotout=TRUE,
                     prop=FALSE,inc=1,xaxis=TRUE) {
   if (class(x) == "matrix") {
@@ -205,7 +208,6 @@ inthist <- function(x,col=1,border=NULL,width=1,xlabel="",ylabel="",
     if (length(counts) == 0) stop("No data provided \n\n")
     values <- as.numeric(names(counts))
   }
-  
   if (sum(!(abs(values - round(values)) < .Machine$double.eps^0.5)) > 0) {
     warning("Attempting to use 'inthist' with non-integers; 
             Values now rounded \n")
@@ -333,7 +335,7 @@ parset <- function(plots=c(1,1),cex=0.75,font=7,outmargin=c(0,0,0,0),
 } # end of parset
 
 
-#' @title parsyn types the standard par command syntax  to the console
+#' @title parsyn types the standard par command syntax to the console
 #'
 #' @description parsyn prints the standard par command syntax to the 
 #'     console so it can be copied and pasted into your own code and 
@@ -351,15 +353,15 @@ parsyn <- function() {
   cat("par(cex=0.75,mgp=c(1.35,0.35,0),font.axis=7,font=7,font.lab=7) \n")
 }
 
-#' @title plot1 a simple way to plot an xy line plot
+#' @title plot1 a quick way to plot an xy line or point plot
 #'
 #' @description plot1 provides a quick way to plot out a single xy
-#'     line plot. It can be used with plotprep to generate a plot
-#'     outside of Rstudio or by itself to generate one within Rstudio.
-#'     It uses a standard par setup and permits custom labels, font,
-#'     and font size (cex). It checks the spread of y and if a ymax is
-#'     not given in the parameters finds the ymax and checks to see if
-#'     y goes negative in which case it uses getmin, so the
+#'     line or point plot. It can be used with plotprep to generate a 
+#'     plot outside of Rstudio or by itself to generate one within 
+#'     Rstudio. It uses a standard par setup and permits custom labels, 
+#'     font, and font size (cex). It checks the spread of y and if a 
+#'     ymax is not given in the parameters finds the ymax and checks 
+#'     to see if y goes negative in which case it uses getmin, so the
 #'     y-axis is set to 0 - ymax or ymin - ymax
 #'
 #' @param x The single vector of x data
@@ -416,7 +418,7 @@ plot1 <- function(x,y,xlab="",ylab="",type="l",usefont=7,cex=0.75,
 #'
 #' @param x a dynpop matrix containing at least year, nt, and nt1 as
 #'     columns, as returned invisibly from discretelogistic.
-#' @param y a second y value added to the first plot if presnet
+#' @param y a second y value added to the first plot if present
 #' @param main defines text to print across top of plot with the
 #'     intention of including the parameter values, default="" 
 #' @param cex the size of the fonts used, default=0.9
@@ -448,12 +450,12 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
     lines(x[,"year"],y,lwd=1,col=3)
   }
   mtext("Population Dynamics",side=3,line=0.0,cex=cex,font=font)
-  plot(x[1:(yrs-1),"nt"],x[1:(yrs-1),"nt1"],type="p",pch=1,lwd=1.0,
+  plot(x[1:yrs,"nt"],x[1:yrs,"nt1"],type="p",pch=1,lwd=1.0,
        cex=cex,yaxs="i",xlim=c(0,ymax),ylim=c(0,ymax),col="darkgrey",
        panel.first=grid(),xlab="Population Nt",ylab="Population Nt+1")
   begin <- trunc(yrs * 0.8)      # final 20%
   lines(xl,xl,lwd=2,col="grey")
-  points(x[begin:(yrs-1),"nt"],x[begin:(yrs-1),"nt1"],pch=18,col=1,
+  points(x[begin:yrs,"nt"],x[begin:yrs,"nt1"],pch=18,col=1,
          cex=(cex*1.2))
   mtext("Phase Plot",side=3,line=0.0,cex=cex,font=font,outer=FALSE)
   mtext(main,side=3,line=1.0,cex=cex,font=font,outer=TRUE)
@@ -491,7 +493,7 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
 #'  plotprep(newdev=TRUE)
 #'  hist(x,breaks=30,main="",col=2)
 #'  plotprep(width=6,height=5,newdev=FALSE)
-#'  par(mfrow = c(2,1))
+#'  par(mfrow = c(2,1)) # can run parset() or change the par settings
 #'  hist(x,breaks=20,main="",col=2)
 #'  hist(x,breaks=30,main="",col=3)
 #' }
@@ -593,8 +595,8 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
 #' @title setpalette is a shortcut for altering the palette to R4
 #' 
 #' @description setpalette is a shortcut for changing the 
-#'     default color palette to the new R version 4.0.0 version
-#'     before it comes out. The new palette was described in a
+#'     default color palette to the proposed new R version 4.0.0 
+#'     version before it comes out. The new palette was described in a
 #'     blog post at developer.r-project.org and provides less 
 #'     garish and a more visible set of default colours that can
 #'     be called using the numbers 1 - 8. An important point is 
@@ -606,7 +608,7 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
 #'     default value. Use "default" or "R3" to revert back to the
 #'     standard R version 3. values.
 #'
-#' @return nothing but it does alter the base palette
+#' @return nothing but it does alter the base colour palette
 #' @export
 #'
 #' @examples

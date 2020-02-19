@@ -12,12 +12,12 @@ default value. Use "default" or "R3" to revert back to the
 standard R version 3. values.}
 }
 \value{
-nothing but it does alter the base palette
+nothing but it does alter the base colour palette
 }
 \description{
 setpalette is a shortcut for changing the 
-    default color palette to the new R version 4.0.0 version
-    before it comes out. The new palette was described in a
+    default color palette to the proposed new R version 4.0.0 
+    version before it comes out. The new palette was described in a
     blog post at developer.r-project.org and provides less 
     garish and a more visible set of default colours that can
     be called using the numbers 1 - 8. An important point is 

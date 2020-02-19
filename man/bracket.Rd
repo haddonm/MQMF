@@ -15,8 +15,7 @@ bracket(x, yaxis, xaxis)
 values}
 }
 \value{
-a vector of five values, left, right, bottom, top and 
-    target
+a vector of 5 values, left, right, bottom, top and target
 }
 \description{
 bracket scans through a series of predicted values for

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ch_chunks.R
 \name{chapter3}
 \alias{chapter3}
-\title{chapter3 The R-code chunks from Simple Population Models}
+\title{chapter3 The 27 R-code chunks from Simple Population Models}
 \description{
 chapter3 is not an active function but rather acts 
     as a repository for the various example code chunks found in 

@@ -10,22 +10,22 @@ calcprior(pars, N)
 \item{pars}{the parameters of the model being examined by the MCMC}
 
 \item{N}{the number of replicate parameter vectors to be returned from 
-do_MCMC}
+do_MCMC, remember to include the burn-in replicates}
 }
 \value{
 the sum of a vector of small constant valus to act as priors.
 }
 \description{
-so as to include a prior probability into Bayesian
-    calculations calcprior is a template for generating such priors.
-    The default given here is to return a constant small number for the
-    prior probability, it needs to sum to 1.0 across the replicates 
-    returned by do_MCMC. If non-uniform priors are required write
-    a different function and in do_MCMC point priorcalc at it. 
-    Whatever function you define needs to have the same input
-    parameters as this calcprior, i.e. the parameters and N. If
-    something else if required then do_MCMC will need modification in
-    in the two places where priorcalc is used.
+calcprior is used to include a prior probability into 
+    Bayesian calculations. calcprior is a template for generating 
+    such priors. The default given here is to return a constant 
+    small number for the prior probability, it needs to sum to 1.0 
+    across the replicates returned by do_MCMC. If non-uniform priors 
+    are required write a different function and in do_MCMC point 
+    priorcalc at it. Whatever function you define needs to have the 
+    same input parameters as this calcprior, i.e. the parameters 
+    and N. If something else if required then do_MCMC will need 
+    modification inthe two places where priorcalc is used.
 }
 \examples{
 \dontrun{

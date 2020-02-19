@@ -23,10 +23,10 @@ schaef is yellowfin tuna fishery data from Schaefer
     and was used in one of the first descriptions of a stock 
     assessment that used a surplus production model. The catch-per-
     unit-effort, cpue, is a ratio cpue of the total catch divided by 
-    the total effort as thousands of punds per day. These days such 
-    ratios tend not to be used with individual records 
-    for each day's effort being used instead. 
-    This does not obscure the variation between different 
+    the total effort as thousands of pounds per day. These days such 
+    ratios tend not to be used, with individual records 
+    for each day's effort being used instead. Using individual records 
+    does not obscure the variation between different 
     vessels, areas, depths, and seasons. Initial parameter estimates 
     close to the optimum values for both the Schaefer model and the
     Fox model could be

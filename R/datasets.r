@@ -29,14 +29,14 @@
 #'   \item Uncertainty examples
 #'  }
 #' 
-#' @source Catch data from Mundy, C. and J. McAllister (2019) Tasmanian abalone fishery assessment 2018, Institute for Marine and Antarctic Studies, University of Tasmania, 190p. ISBN: 978-1-925646-46-7. The cpue data is an unpublished early attempt at standardizing the cpue data with respect to month, block, and diver. Many more details are now included.
+#' @source Catch data from Mundy, C. and J. McAllister (2019) Tasmanian abalone fishery assessment 2018, Institute for Marine and Antarctic Studies, University of Tasmania, 190p. ISBN: 978-1-925646-46-7. The cpue data is an unpublished early attempt at standardizing the cpue data with respect to month, block, and diver. Many more details are now included in such analyses.
 #' 
 #' @examples
 #' \dontrun{
 #'  data(abdat)
 #'  print(abdat)
 #'  plot(abdat$year,abdat$cpue, type="l",xlab="year",ylab="CPUE",
-#'  panel.first=grid())
+#'       panel.first=grid())
 #'  points(abdat$year,abdat$cpue,pch=16,cex=1.2)
 #' }
 NULL
@@ -94,7 +94,7 @@ NULL
 #'
 #' @description A data.frame containing 31 years of catch, standardized
 #'     cpue, number of records, and the unstandardized geometric mean
-#'     cpue. The fisherie sdata can is used in the surplus production
+#'     cpue. The fisheries data can is used in the surplus production
 #'     modelling. Initial parameter estimates very close to the 
 #'     optimum values could be param <- log(c(r=0.25, K=5500, Binit=3000,
 #'     sigma=0.2)) for the Schaefer model and log(c(r=0.15, K=6500,
@@ -151,8 +151,8 @@ NULL
 #' 
 #' @format A data.frame with 358 rows and 2 variables:
 #' \describe{
-#'   \item{age}{Estimated age from otolith reading}
-#'   \item{length}{Fork length of the fish, in cms}
+#'   \item{age}{simulated ages in years}
+#'   \item{length}{consequent simulated fork length of the fish, in cms}
 #' }
 #' 
 #' @section Subjects:
@@ -163,15 +163,16 @@ NULL
 #'   \item Michaelis-Menton curve used as a growth curve 
 #'  }
 #'  
-#' @source This data this simulation is based upon is from one species 
-#'     collected many years by the many excellent people running the 
-#'     Integrated Stock Monitoring Program in the Australian South East 
-#'     Fishery over the years of its existence. The simulation is based
-#'     on a characterization of redfish properties and includes random
-#'     error in the hypothetical measurements as well as the processes of
-#'     growth (i.e. both measurement and process error). The other inputs
-#'     were a selected set of growth parameters and the relative frequency
-#'     of different ages vs lengths.
+#' @source The data this simulation is based upon is from length-at-age 
+#'     data for one species collected over many years by the many 
+#'     excellent people running the Integrated Stock Monitoring Program 
+#'     in the Australian South East Fishery over the years of its 
+#'     existence. The simulation is based on a characterization of 
+#'     redfish properties and includes random error in the hypothetical 
+#'     measurements as well as the processes of growth (i.e. both 
+#'     measurement and process error). The other inputs were a selected 
+#'     set of growth parameters and the relative frequency of different 
+#'     ages vs lengths.
 #'     
 #' @examples 
 #' \dontrun{
@@ -183,7 +184,7 @@ NULL
 #' }
 NULL
 
-#' @title minnow contains weekly growth data for use with growth curves
+#' @title minnow contains weekly growth data for use with seasonal growth curves
 #'
 #' @description minnow is a dataset of mean length against time in weeks for
 #'     minnows (\emph{Phoxinus phoxinus}), derived from Pitcher & 
@@ -192,11 +193,11 @@ NULL
 #'     in length as each year progresses because these are mean lengths 
 #'     rather than individual measurements (which would, more typically,
 #'     be used these days). The data have been read off a graph within 
-#'     the paper as it is not reported explicitly, and are therefore 
-#'     only approximate, but will do for our purposes (but expect 
-#'     different parameters to those shown in the original paper).
-#'     This is length at time not age. Though time is being used as 
-#'     a proxy for age there is no age 0.
+#'     the original paper as it is not reported explicitly, and are 
+#'     therefore only approximate, but will do for our purposes (but 
+#'     expect different parameters to those reported in the original 
+#'     paper). This is length at time not age. Though time is being 
+#'     used as a proxy for age there is no age 0.
 #'
 #' @name minnow
 #' 
@@ -279,7 +280,7 @@ NULL
 #' @title pttuna is yellowfin tuna fishery data from Pella-Tomlinson 1969
 #'
 #' @description pttuna is yellowfin tuna fishery data from Pella-Tomlinson's
-#'     (1969) classical paper describing their generalized surplsu production 
+#'     (1969) classical paper describing their generalized surplus production 
 #'     model. This is the same data as contained in the schaef data-set, except
 #'     it is extended from 1934 - 1967. Some of the values are slightly 
 #'     different, and their table rounds off the cpue estimates slightly 
@@ -330,10 +331,10 @@ NULL
 #'     and was used in one of the first descriptions of a stock 
 #'     assessment that used a surplus production model. The catch-per-
 #'     unit-effort, cpue, is a ratio cpue of the total catch divided by 
-#'     the total effort as thousands of punds per day. These days such 
-#'     ratios tend not to be used with individual records 
-#'     for each day's effort being used instead. 
-#'     This does not obscure the variation between different 
+#'     the total effort as thousands of pounds per day. These days such 
+#'     ratios tend not to be used, with individual records 
+#'     for each day's effort being used instead. Using individual records 
+#'     does not obscure the variation between different 
 #'     vessels, areas, depths, and seasons. Initial parameter estimates 
 #'     close to the optimum values for both the Schaefer model and the
 #'     Fox model could be
@@ -400,7 +401,6 @@ NULL
 #'    \item maturity ogives or logistic curves
 #'    \item Binomial likelihoods
 #'  }
-#'  
 #'
 #' @source Many thanks to the Institute of Marine and Antarctic Science, 
 #'     which is part of the University of Tasmania, and especially to 
@@ -457,7 +457,7 @@ NULL
 #'
 #' @description twoindex is a 35 x 4 data.frame of fishery data made 
 #'     up of smoothed real catches but two simulated indices of relative
-#'     abundanceThis data-set is designedto illustrate
+#'     abundance. This data-set is designed to be used to illustrate
 #'     the implementation of surplus production models when there are
 #'     more than one time-series of relative abundance indices. The
 #'     indices have been designed to generate a workable answer but also
@@ -494,7 +494,9 @@ NULL
 #' @source Catches extracted from Table 4, page 11 of Haddon, M. (2017) 
 #'    Orange Roughy East (Hoplostethus atlanticus) stock assessment
 #'    using data to 2016 Report to November 2017 SE RAG meeting. CSIRO, 
-#'    Oceans and Atmosphere, Australia. 51p. from https://www.afma.gov.au/fisheries-management/species/orange-roughy Catch data extended to 2019 using AFMA's catchwatch system. 
+#'    Oceans and Atmosphere, Australia. 51p. from 
+#'    https://www.afma.gov.au/fisheries-management/species/orange-roughy 
+#'    Catch data extended to 2019 using AFMA's catchwatch system. 
 #' 
 #' @examples
 #'  \dontrun{
@@ -504,7 +506,10 @@ NULL
 #'  bestSP <- nlm(f=negLLM,p=pars,funk=simpspmM,indat=fish,
 #'              schaefer=TRUE,logobs=log(fish[,c("cpue1","cpue2")]),
 #'              steptol=1e-06,harvpen=TRUE)
-#'  outfit(bestSP)  # best fitting estimates
+#'  namepar <- c("r", "K", "Binit","sigma")
+#'  outfit(bestSP,parnames=namepar)  # best fitting estimates
+#'  # if 'Either ~local min or steptol too small try 'steptol=1e-05'
+#'  # plotprep(width=7,height=5,newdev=FALSE) # for external plot
 #'  answer <- plotspmmod(bestSP$estimate,indat=fish,
 #'                       plotprod=TRUE,maxy=3.4)
 #' }

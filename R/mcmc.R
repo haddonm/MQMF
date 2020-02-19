@@ -2,20 +2,20 @@
 
 #' @title calcprior return sum of a vector of constant values as priors
 #' 
-#' @description so as to include a prior probability into Bayesian
-#'     calculations calcprior is a template for generating such priors.
-#'     The default given here is to return a constant small number for the
-#'     prior probability, it needs to sum to 1.0 across the replicates 
-#'     returned by do_MCMC. If non-uniform priors are required write
-#'     a different function and in do_MCMC point priorcalc at it. 
-#'     Whatever function you define needs to have the same input
-#'     parameters as this calcprior, i.e. the parameters and N. If
-#'     something else if required then do_MCMC will need modification in
-#'     in the two places where priorcalc is used.
+#' @description calcprior is used to include a prior probability into 
+#'     Bayesian calculations. calcprior is a template for generating 
+#'     such priors. The default given here is to return a constant 
+#'     small number for the prior probability, it needs to sum to 1.0 
+#'     across the replicates returned by do_MCMC. If non-uniform priors 
+#'     are required write a different function and in do_MCMC point 
+#'     priorcalc at it. Whatever function you define needs to have the 
+#'     same input parameters as this calcprior, i.e. the parameters 
+#'     and N. If something else if required then do_MCMC will need 
+#'     modification inthe two places where priorcalc is used.
 #'
 #' @param pars the parameters of the model being examined by the MCMC
 #' @param N the number of replicate parameter vectors to be returned from 
-#'     do_MCMC
+#'     do_MCMC, remember to include the burn-in replicates
 #'
 #' @return the sum of a vector of small constant valus to act as priors. 
 #' @export
@@ -41,8 +41,8 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #'    2) calcpred used within infunk to calculate the predicted values
 #'    used to compare with the observed (found in obsdat), and 
 #'    3) priorcalc used to calculate the prior probabilities of the 
-#'    various parameters in each trial. N * thinstep iterations are made 
-#'    in total although only N are stored. The jumping
+#'    various parameters in each trial. (N + burnin) * thinstep iterations 
+#'    are made in total although only N are stored. The jumping
 #'    function uses random normal deviates (mean=0, sd=1) to combine with
 #'    each parameter value (after multiplication by the specific scaling
 #'    factor held in scales). Determination of suitable scaling values
@@ -50,8 +50,8 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #'    of iterations to begin with. Multiple chains would be usual and 
 #'    the thinstep would be larger eg. 128, 256, or 512, but it would 
 #'    take 8, 16, or 32 times longer. The scales are usually 
-#'    expirementally set to otain an acceptance rate between 20 - 40%. 
-#'    It is also usual to run numerous diagnostic plots on th eoutputs 
+#'    expirically set to otain an acceptance rate between 20 - 40%. 
+#'    It is also usual to run numerous diagnostic plots on the outputs 
 #'    to ensure convergence on the final stationary distribution. There 
 #'    are three main loops: 1) total number of iterations (N + burnin)* 
 #'    thinstep, used by priorcalc, 2) thinstep/(number of parameters) 

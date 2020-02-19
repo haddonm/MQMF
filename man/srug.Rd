@@ -42,5 +42,5 @@ srug implements the Schnute and Richards (1990) unified
 \references{
 Schnute, J.T. and L.J. Richards (1990) A unified approach 
     to the analysis of fish growth, maturity, and survivorship data. 
-    _Canadian Journal of Fisheries and Aquatic Science_ __47__:24-40
+    \emph{Canadian Journal of Fisheries and Aquatic Science} 47:24-40
 }

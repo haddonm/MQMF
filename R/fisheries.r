@@ -2,20 +2,22 @@
 
 #' @title bce Baranov catch equation
 #'
-#' @description bce the Baranov Catch Equation. The total kill is made
-#'     up of fish being killed by fishing and other dying naturally.
-#'     We use the bce to estimate the catch (those killed by fishing).
-#'     The problem is that some fish that would be expected to die 
-#'     naturally can be expected to be caught and killed by fishing
-#'     so estimating the catch is slightly more complex than Nt x Ht.
-#'     It is invariably better to use the Baranov Catch Equation.
+#' @description bce the Baranov Catch Equation. The total mortality of
+#'     fish in an exploited population is made up of fish being killed 
+#'     by fishing and others dying naturally. We use the bce to estimate 
+#'     the catch (those killed by fishing). The problem is that some 
+#'     fish that would be expected to die naturally can be expected to 
+#'     be caught and killed by fishing so estimating the catch is 
+#'     slightly more complex than numbers of fish available times the 
+#'     harvest rate, Nt x Ht. It is invariably better to use the 
+#'     Baranov Catch Equation when calculating the expected catches.
 #'
 #' @param M instantaneous rate of natural mortality, assumed constant
 #' @param Fat a vector of age-specific instantaneous rates of fishing
 #'     mortality over the time period t, this is usually estimated by
 #'     multiplying the fully selected F by the selectivity/availability
 #'     at age.
-#' @param Nt The population numbers at the start of time t
+#' @param Nt The population numbers-at-age at the start of time t
 #' @param ages the ages 0:maxage used in the calculations
 #' 
 #' @return a matrix of numbers-, natural mortality-, and catch-at-age
@@ -57,7 +59,7 @@ bce <- function(M,Fat,Nt,ages) {
 #' @title bh represents one version of Beverton-Holt recruitment
 #' 
 #' @description bh implements the Beverton-Holt stock recruitment
-#'    equation where R = aB/(b + B), where R is the recruitment, a and
+#'    equation R = aB/(b + B), where R is the recruitment, a and
 #'    b are the parameters and B is the spawning biomass. a is the 
 #'    maximum recruitment level and b is the biomass required to
 #'    generate 0.5 x maximum recruitment 
@@ -65,7 +67,7 @@ bce <- function(M,Fat,Nt,ages) {
 #' @param p a vector of the a and b parameters
 #' @param B a vector, possibly of length 1, of spawning biomass levels
 #'
-#' @return a vector equal in length to B or the predicted recruitments
+#' @return a vector equal in length to B of the predicted recruitment(s)
 #' @export
 #'
 #' @examples
@@ -80,10 +82,10 @@ bh <- function(p,B) {
 } # end of Beverton-Holt
 
 
-#' @title discretelogistic example box 2.2 Discrete logistic model
+#' @title discretelogistic example and figure  3.2 Discrete logistic model
 #'
 #' @description discretelogistic is an implementation of equation 3.1
-#'     in teh Simple Population Models chapter. It enables the 
+#'     in the Simple Population Models chapter. It enables the 
 #'     exploration of the dynamics of the Discrete logistic model, 
 #'     based around the classical Schaefer model. 
 #'     
@@ -93,7 +95,7 @@ bh <- function(p,B) {
 #'     generate monotonically damped equilibria. r values between 
 #'     1 < r < 2.03 would generate damped oscillatory equilibria, r 
 #'     values from 2.03 < r < 2.43 should generate stable limit cycles 
-#'     on a cycle of 2., 2.43 < r < 2.54 gives stable limit cycles of 
+#'     on a cycle of 2, 2.43 < r < 2.54 gives stable limit cycles of 
 #'     cycle 4, then 2.54 < r < 2.57 gives cycles > 4, and ~2.575 < r 
 #'     gives chaos (though r = 2.63 appears to generate a repeat period
 #'     of six!). discretelogistic should be used in conjunction with 
@@ -159,6 +161,8 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
 #'
 #' @return a vector of selectivities
 #' @export
+#' 
+#' @references Methot, R.D. and C.R, Wetzel (2013) Stock synthesis: A biological and statistical framework for fish stock assessment and fishery management. Supplementary material, Appendix A. Equs A1.30 onwards. \emph{Fisheries Research} 142:86-99.
 #'
 #' @examples
 #' \dontrun{
@@ -219,9 +223,9 @@ fabens <- function(par,indat,initL="l1",delT="dt") {
   return(preddL)
 }
 
-#' @title Gz calculates predicted Gompertz length at age growth curve
+#' @title Gz calculates predicted Gompertz length-at-age growth curve
 #'
-#' @description Gz calculates length at age for the Gompertz curve.
+#' @description Gz calculates length-at-age for the Gompertz curve.
 #'     This curve can have an inflection near the origin as well
 #'     as at an age where growth slows due to maturity occurring.
 #'
@@ -351,9 +355,9 @@ mature <- function(a,b,sizeage) {
   return(ans)
 } # end of mature
 
-#' @title mm calculates the predicted Michaelis-Menton length at age
+#' @title mm calculates the predicted Michaelis-Menton length-at-age
 #'
-#' @description mm calculates length at age for the generalized 
+#' @description mm calculates length-at-age for the generalized 
 #'     Michaelis-Menton curve.
 #'
 #' @param p is a vector the first three cells of which are a, b, c
@@ -395,8 +399,7 @@ mm <- function(p, ages) {
 #'  mnnegLL(obs,predf)   # should be  705.5333
 #' }
 mnnegLL <- function(obs,predf) { 
-  k <- length(obs)
-  if (length(predf) != k) {
+  if (length(predf) != length(obs)) {
     label <- paste0("Need a predicted frequency for each observed ",
                     "frequency input to mnnegLL  \n")
     stop(label)
@@ -776,7 +779,7 @@ ricker <- function(p,B) {
 #' 
 #' @references Schnute, J.T. and L.J. Richards (1990) A unified approach 
 #'     to the analysis of fish growth, maturity, and survivorship data. 
-#'     _Canadian Journal of Fisheries and Aquatic Science_ __47__:24-40
+#'     \emph{Canadian Journal of Fisheries and Aquatic Science} 47:24-40
 #'
 #' @return A vector of predicted proportion mature (proportion of 1.0) 
 #'     for the given parameters and the sizeage data

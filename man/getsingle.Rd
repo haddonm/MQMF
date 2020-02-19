@@ -9,15 +9,15 @@ getsingle(inline, sep = ",")
 \arguments{
 \item{inline}{the line of text, usually taken after using readLines}
 
-\item{sep}{the separator used to divide the numbers from descriptive text.
-defaults to a comma.}
+\item{sep}{the separator used to divide the numbers from descriptive 
+text, defaults to a comma.}
 }
 \value{
 a single number
 }
 \description{
-getsingle splits up a text line and translates the first non-
-    empty character string into a number.
+getsingle splits up a text line and translates the 
+    first non-empty character string into a number.
 }
 \examples{
 \dontrun{

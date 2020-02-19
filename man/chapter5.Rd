@@ -2,7 +2,7 @@
 % Please edit documentation in R/ch_chunks.R
 \name{chapter5}
 \alias{chapter5}
-\title{chapter5 The R-code chunks from Static Models}
+\title{chapter5 The 23 R-code chunks from Static Models}
 \description{
 chapter5 is not an active function but rather acts 
     as a repository for the various example code chunks found in 

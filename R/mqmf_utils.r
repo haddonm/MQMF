@@ -6,7 +6,7 @@
 #'     standard definitions. It defaults to assuming that negative log-
 #'     likelihoods have been used in teh model fitting, but provides the
 #'     option of having used SSQ (set nLL to FALSE). If using SSQ it 
-#'     uses Burnham and Anderson (2002) definition but sets BIC to NA. 
+#'     uses Burnham and Anderson's (2002) definition but sets BIC to NA. 
 #'     aicbic can recognize the outputs from optim, nlm, and nlminb.
 #'
 #' @param model the optimum model fitted by either optim, nlm, or nlminb
@@ -17,6 +17,8 @@
 #' @return a vector of three numbers, AIC first, then BIC, then negLL or 
 #'     SSQ, depending on nLL, then number of parameters p
 #' @export
+#' 
+#' @references Burnham, K.P. and D.R. Anderson (2002) \emph{Model Selection and Inference. A Practical Information-Theoretic Approach.} Second Edition Springer-Verlag, New York. 488 p.
 #'
 #' @examples
 #' \dontrun{
@@ -74,8 +76,7 @@ aicbic <- function(model,dat,nLL=TRUE) {  # model <- modelil; dat=bi
 #'
 #' @seealso linter
 #'
-#' @return a vector of five values, left, right, bottom, top and 
-#'     target
+#' @return a vector of 5 values, left, right, bottom, top and target
 #' @export
 #'
 #' @examples
@@ -293,11 +294,12 @@ getmin <- function(x,mult=1.05) {
 
 #' @title getmax generates the upper bound for a plot
 #'
-#' @description getmax generates an upper bound for a plot where it is unknown
-#'     whether the maximum is greater than zero of not. If > 0 then
-#'     multiplying by the default mult of 1.05 works well but if the outcome if
-#'     < 0 then the multiplier needs to be adjusted appropriately so the maximum
-#'     is slightly higher than the maximum of the data
+#' @description getmax generates an upper bound for a plot where it 
+#'     is unknown whether the maximum is greater than zero of not. 
+#'     If > 0 then multiplying by the default mult of 1.05 works well 
+#'     but if the outcome if < 0 then the multiplier needs to be 
+#'     adjusted appropriately so the maximum is slightly higher than 
+#'     the maximum of the data
 #'
 #' @param x the vector of data to be tested for its maximum
 #' @param mult the multiplier for both ends, defaults to 1.05 (=0.95 if < 0)
@@ -306,12 +308,14 @@ getmin <- function(x,mult=1.05) {
 #' @export
 #'
 #' @examples
-#' vect <- rnorm(10,mean=0,sd=2)
-#' sort(vect,decreasing=TRUE)
-#' getmax(vect,mult=1.0)
-#' vect <- rnorm(10,mean = -5,sd = 1.5)
-#' sort(vect,decreasing=TRUE)
-#' getmax(vect,mult=1.0)
+#' \dontrun{
+#'  vect <- rnorm(10,mean=0,sd=2)
+#'  sort(vect,decreasing=TRUE)
+#'  getmax(vect,mult=1.0)
+#'  vect <- rnorm(10,mean = -5,sd = 1.5)
+#'  sort(vect,decreasing=TRUE)
+#'  getmax(vect,mult=1.0)
+#' }   
 getmax <- function(x,mult=1.05) {
    ymax <- max(x,na.rm=TRUE)
    if (ymax > 0) {
@@ -381,12 +385,12 @@ getseed <- function() {
 
 #' @title getsingle extracts one number from an input line of characters
 #'
-#' @description getsingle splits up a text line and translates the first non-
-#'     empty character string into a number.
+#' @description getsingle splits up a text line and translates the 
+#'     first non-empty character string into a number.
 #'
 #' @param inline the line of text, usually taken after using readLines
-#' @param sep the separator used to divide the numbers from descriptive text.
-#'     defaults to a comma.
+#' @param sep the separator used to divide the numbers from descriptive 
+#'     text, defaults to a comma.
 #'
 #' @return a single number
 #' @export
@@ -432,7 +436,7 @@ gettime <- function() {
   return(hr+min+sec)
 } # end of gettime
 
-#' @title getvector  extracts a vector of numbers from a line of characters
+#' @title getvector extracts a vector of numbers from a line of characters
 #'
 #' @description getvector when reading in a csv file using readLines,
 #'     getvector extarcts a line of numbers from a specified line within
@@ -453,7 +457,7 @@ gettime <- function() {
 #' getvector(x)    # uses default separator
 #' getvector(y,sep="#")
 #' }
-getvector <- function(indat,locate,sep=",") { # indat=dat; locate=pick+2;sep=","
+getvector <- function(indat,locate,sep=",") { 
   vect <- indat[locate]
   if (length(grep("\t",vect) > 0)) vect <- gsub("\t",sep,vect)
   vect <- unlist(strsplit(vect,sep))
@@ -616,8 +620,7 @@ likeratio <- function(nLL1,nLL2,df=1) {
 #'     y-axis, and target is the value we are looking for on the y-axis.
 #'     
 #'
-#' @param pars a vector of five values, left, right, bottom, top and 
-#'     target
+#' @param pars a vector of 5 values, left, right, bottom, top and target
 #'     
 #' @seealso bracket
 #'     
@@ -705,7 +708,7 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #' @description outfit takes in the output list from either optim,
 #'     nlminb, or nlm and prints it more tidily to the console, In the
 #'     case of nlm it also prints the conclusion regarding the
-#'     solution
+#'     solution. It might be more effective to implement an S3 method.
 #'
 #' @param inopt the list object output by nlm, nlminb, or optim
 #' @param backtran a logical default = TRUE If TRUE it assumes
@@ -1008,7 +1011,7 @@ printV <- function(invect,label=c("index","value")) {
 
 #' @title properties - used to check a data.frame before standardization
 #'
-#' @description properties - used to check a data.frame before
+#' @description properties used to check a data.frame before
 #'     standardization
 #' @param indat the data.frame containing the data fields to be used
 #'     in the subsequent standardization. It tabulates the number of
@@ -1016,33 +1019,44 @@ printV <- function(invect,label=c("index","value")) {
 #'     the minimum and maximum of the numeric variables
 #' @param dimout determines whether or noth the dimensions of the data.frame
 #'     are printed to the screen or not; defaults to FALSE
+#'     
 #' @return a data.frame with the rows being each variable from the input
 #'     input data.frame and the columns being the number of NAs, the
 #'     number of unique values, and minimum and maximum (where possible).
-#' @export properties
+#' @export
+#' 
 #' @examples
 #' \dontrun{
 #' data(abdat)
 #' properties(abdat)
 #' }
 properties <- function(indat,dimout=FALSE) {
-  if (class(indat) == "matrix") {
-    warning("Input to properties was a matrix not a data.frame \n")
-    indat <- as.data.frame(indat)
+  dominmax <- function(x) {
+    if (length(which(x > 0)) == 0) return(c(NA,NA))
+    mini <- min(x,na.rm=TRUE)
+    maxi <- max(x,na.rm=TRUE)
+    return(c(mini,maxi))
   }
   if(dimout) print(dim(indat))
   isna <- sapply(indat,function(x) sum(is.na(x)))
   uniques <- sapply(indat,function(x) length(unique(x)))
-  clas <- sapply(indat,class)
+  columns <- length(indat)
+  clas <- character(columns)
+  for (i in 1:columns) {
+    clas[i] <- class(indat[,i])[1]
+  }
   numbers <- c("integer","numeric")
   pick <- which(clas %in% numbers)
   minimum <- numeric(length(uniques))
   maximum <- minimum
-  minimum[pick] <- sapply(indat[,pick],min,na.rm=TRUE)
-  maximum[pick] <- sapply(indat[,pick],max,na.rm=TRUE)
+  for (i in 1:length(pick)) {
+    minmax <- dominmax(indat[,pick[i]])
+    minimum[pick[i]] <- minmax[1]
+    maximum[pick[i]] <- minmax[2]
+  }
   index <- 1:length(isna)
-  props <- as.data.frame(cbind(index,isna,uniques,clas,minimum,
-                               maximum,t(indat[1,])))
+  props <- as.data.frame(cbind(index,isna,uniques,clas,round(minimum,4),
+                               round(maximum,4),t(indat[1,])))
   colnames(props) <- c("Index","isNA","Unique","Class","Min",
                        "Max","Example")
   return(props)

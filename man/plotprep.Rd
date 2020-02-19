@@ -53,7 +53,7 @@ plotprep: sets up a window and the par values for plots.
  plotprep(newdev=TRUE)
  hist(x,breaks=30,main="",col=2)
  plotprep(width=6,height=5,newdev=FALSE)
- par(mfrow = c(2,1))
+ par(mfrow = c(2,1)) # can run parset() or change the par settings
  hist(x,breaks=20,main="",col=2)
  hist(x,breaks=30,main="",col=3)
 }

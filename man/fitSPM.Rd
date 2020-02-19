@@ -52,7 +52,7 @@ fitSPM fits a surplus production model (either Schaefer or
     the first parameter from becoming < 0.0. If that is not wanted then
     set funkone to FALSE, which would then use negLL by itself.
     The output object is the usual object output from nlm, which can 
-    be neatly printed using outfit.
+    be neatly printed using the MQMF function outfit.
     The $estimate values can be used in plotspmmod to plot the 
     outcome, or in spmboot to conduct bootstrap sampling of the residuals 
     from the CPUE model fit to gain an appreciation of any uncertainty 

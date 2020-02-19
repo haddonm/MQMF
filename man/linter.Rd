@@ -7,8 +7,7 @@
 linter(pars)
 }
 \arguments{
-\item{pars}{a vector of five values, left, right, bottom, top and 
-target}
+\item{pars}{a vector of 5 values, left, right, bottom, top and target}
 }
 \value{
 a single value being the x-axis value between left and right

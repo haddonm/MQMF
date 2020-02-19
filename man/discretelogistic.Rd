@@ -2,7 +2,7 @@
 % Please edit documentation in R/fisheries.r
 \name{discretelogistic}
 \alias{discretelogistic}
-\title{discretelogistic example box 2.2 Discrete logistic model}
+\title{discretelogistic example and figure  3.2 Discrete logistic model}
 \usage{
 discretelogistic(r = 0.5, K = 1000, N0 = 50, Ct = 0, Yrs = 50, p = 1)
 }
@@ -27,7 +27,7 @@ invisibly returns a matrix of year, nt, and nt1
 }
 \description{
 discretelogistic is an implementation of equation 3.1
-    in teh Simple Population Models chapter. It enables the 
+    in the Simple Population Models chapter. It enables the 
     exploration of the dynamics of the Discrete logistic model, 
     based around the classical Schaefer model. 
     
@@ -37,7 +37,7 @@ discretelogistic is an implementation of equation 3.1
     generate monotonically damped equilibria. r values between 
     1 < r < 2.03 would generate damped oscillatory equilibria, r 
     values from 2.03 < r < 2.43 should generate stable limit cycles 
-    on a cycle of 2., 2.43 < r < 2.54 gives stable limit cycles of 
+    on a cycle of 2, 2.43 < r < 2.54 gives stable limit cycles of 
     cycle 4, then 2.54 < r < 2.57 gives cycles > 4, and ~2.575 < r 
     gives chaos (though r = 2.63 appears to generate a repeat period
     of six!). discretelogistic should be used in conjunction with 

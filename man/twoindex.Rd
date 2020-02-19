@@ -15,12 +15,14 @@
 Catches extracted from Table 4, page 11 of Haddon, M. (2017) 
    Orange Roughy East (Hoplostethus atlanticus) stock assessment
    using data to 2016 Report to November 2017 SE RAG meeting. CSIRO, 
-   Oceans and Atmosphere, Australia. 51p. from https://www.afma.gov.au/fisheries-management/species/orange-roughy Catch data extended to 2019 using AFMA's catchwatch system.
+   Oceans and Atmosphere, Australia. 51p. from 
+   https://www.afma.gov.au/fisheries-management/species/orange-roughy 
+   Catch data extended to 2019 using AFMA's catchwatch system.
 }
 \description{
 twoindex is a 35 x 4 data.frame of fishery data made 
     up of smoothed real catches but two simulated indices of relative
-    abundanceThis data-set is designedto illustrate
+    abundance. This data-set is designed to be used to illustrate
     the implementation of surplus production models when there are
     more than one time-series of relative abundance indices. The
     indices have been designed to generate a workable answer but also
@@ -52,7 +54,10 @@ twoindex is a 35 x 4 data.frame of fishery data made
  bestSP <- nlm(f=negLLM,p=pars,funk=simpspmM,indat=fish,
              schaefer=TRUE,logobs=log(fish[,c("cpue1","cpue2")]),
              steptol=1e-06,harvpen=TRUE)
- outfit(bestSP)  # best fitting estimates
+ namepar <- c("r", "K", "Binit","sigma")
+ outfit(bestSP,parnames=namepar)  # best fitting estimates
+ # if 'Either ~local min or steptol too small try 'steptol=1e-05'
+ # plotprep(width=7,height=5,newdev=FALSE) # for external plot
  answer <- plotspmmod(bestSP$estimate,indat=fish,
                       plotprod=TRUE,maxy=3.4)
 }

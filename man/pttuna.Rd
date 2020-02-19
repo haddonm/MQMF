@@ -17,7 +17,7 @@ from Table 6 page 457 in Pella, J.J. and P.K. Tomlinson (1969) A Generalized Sto
 }
 \description{
 pttuna is yellowfin tuna fishery data from Pella-Tomlinson's
-    (1969) classical paper describing their generalized surplsu production 
+    (1969) classical paper describing their generalized surplus production 
     model. This is the same data as contained in the schaef data-set, except
     it is extended from 1934 - 1967. Some of the values are slightly 
     different, and their table rounds off the cpue estimates slightly 

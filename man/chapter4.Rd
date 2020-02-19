@@ -2,7 +2,7 @@
 % Please edit documentation in R/ch_chunks.R
 \name{chapter4}
 \alias{chapter4}
-\title{chapter4 The R-code chunks from Model Parameter Estimation}
+\title{chapter4 The 49 R-code chunks from Model Parameter Estimation}
 \description{
 chapter4 is not an active function but rather acts 
     as a repository for the various example code chunks found in 

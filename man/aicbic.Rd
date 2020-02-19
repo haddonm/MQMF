@@ -23,7 +23,7 @@ aicbic calculates and returns the AIC and BIC using the
     standard definitions. It defaults to assuming that negative log-
     likelihoods have been used in teh model fitting, but provides the
     option of having used SSQ (set nLL to FALSE). If using SSQ it 
-    uses Burnham and Anderson (2002) definition but sets BIC to NA. 
+    uses Burnham and Anderson's (2002) definition but sets BIC to NA. 
     aicbic can recognize the outputs from optim, nlm, and nlminb.
 }
 \examples{
@@ -34,4 +34,7 @@ modelvb <- nlm(f=negNLL,p=param,funk=fabens,observed=bi$dl,indat=bi,
                initL="l1",delT="dt") # could have used the defaults
 aicbic(modelvb,blackisland)  # 588.3382 596.3846 291.1691   3
 }
+}
+\references{
+Burnham, K.P. and D.R. Anderson (2002) \emph{Model Selection and Inference. A Practical Information-Theoretic Approach.} Second Edition Springer-Verlag, New York. 488 p.
 }

@@ -14,10 +14,14 @@ NULL
 
 #' @title MQMF R functions for the New Book
 #'
-#' @description The MQMF package provides a set of functions that
-#'     enable translations into R of the main examples in the book
-#'     Modelling and Quantitative Methods in Fisheries 2nd edition.
-#'     Try \code{browseVignettes("MQMF")}
+#' @description The MQMF package Provides R functions for use with the 
+#'     new book: Using R for Modelling and Quantitative Methods in 
+#'     Fisheries, being published by CRC Press / Chapman & Hall in 
+#'     their Using R series. Currently no vignettes are included but 
+#'     all examples from the chapters are included as functions. Try
+#'     ?chapter2, ?chapter3, ..., ?chapter7. The list of functions 
+#'     below is not complete so scroll to the down of any help file 
+#'     and click the link to the index of functions instead.
 #'
 #' @references Haddon, M. (2011) Modelling and Quantitative Methods in
 #'     Fisheries 2nd edition, Chapman & Hall/ CRC Press, Boca Raton,

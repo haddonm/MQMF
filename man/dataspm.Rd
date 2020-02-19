@@ -22,7 +22,7 @@ Haddon, M. and M. Sporcic (2017) Catch rate standardizations for
 \description{
 A data.frame containing 31 years of catch, standardized
     cpue, number of records, and the unstandardized geometric mean
-    cpue. The fisherie sdata can is used in the surplus production
+    cpue. The fisheries data can is used in the surplus production
     modelling. Initial parameter estimates very close to the 
     optimum values could be param <- log(c(r=0.25, K=5500, Binit=3000,
     sigma=0.2)) for the Schaefer model and log(c(r=0.15, K=6500,

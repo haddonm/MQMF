@@ -2,7 +2,7 @@
 % Please edit documentation in R/fisheries.r
 \name{mm}
 \alias{mm}
-\title{mm calculates the predicted Michaelis-Menton length at age}
+\title{mm calculates the predicted Michaelis-Menton length-at-age}
 \usage{
 mm(p, ages)
 }
@@ -16,7 +16,7 @@ for the mm curve.}
 a vector of predicted lengths for a vector of ages in 'ages'
 }
 \description{
-mm calculates length at age for the generalized 
+mm calculates length-at-age for the generalized 
     Michaelis-Menton curve.
 }
 \examples{

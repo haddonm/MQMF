@@ -47,7 +47,8 @@ addcontours is used to add contours to a dense plot of
     to translate the density of points into 2-D kernal densities, and 
     then searches through the resulting densities for those points 
     that would identify approximate contours. Finally it calls the 
-    contour function to add the identified contours to the xy plot.
+    contour function to add the identified approximate contours to 
+    the xy plot.
 }
 \examples{
 \dontrun{

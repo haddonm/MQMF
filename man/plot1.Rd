@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotfuns.R
 \name{plot1}
 \alias{plot1}
-\title{plot1 a simple way to plot an xy line plot}
+\title{plot1 a quick way to plot an xy line or point plot}
 \usage{
 plot1(
   x,
@@ -50,12 +50,12 @@ nothing but it does plot a graph and changes the par setting
 }
 \description{
 plot1 provides a quick way to plot out a single xy
-    line plot. It can be used with plotprep to generate a plot
-    outside of Rstudio or by itself to generate one within Rstudio.
-    It uses a standard par setup and permits custom labels, font,
-    and font size (cex). It checks the spread of y and if a ymax is
-    not given in the parameters finds the ymax and checks to see if
-    y goes negative in which case it uses getmin, so the
+    line or point plot. It can be used with plotprep to generate a 
+    plot outside of Rstudio or by itself to generate one within 
+    Rstudio. It uses a standard par setup and permits custom labels, 
+    font, and font size (cex). It checks the spread of y and if a 
+    ymax is not given in the parameters finds the ymax and checks 
+    to see if y goes negative in which case it uses getmin, so the
     y-axis is set to 0 - ymax or ymin - ymax
 }
 \examples{

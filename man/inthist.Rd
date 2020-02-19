@@ -7,7 +7,7 @@
 inthist(
   x,
   col = 1,
-  border = NULL,
+  border = 1,
   width = 1,
   xlabel = "",
   ylabel = "",
@@ -23,41 +23,41 @@ inthist(
 )
 }
 \arguments{
-\item{x}{- the vector of integers to be counted and plotted OR a matrix 
+\item{x}{the vector of integers to be counted and plotted OR a matrix 
 of values in column 1 and counts in column 2}
 
-\item{col}{- the colour of the fill; defaults to black = 1, set this to 0
+\item{col}{the colour of the fill; defaults to black = 1, set this to 0
 for an empty bar, but then give a value for border}
 
-\item{border}{- the colour of the outline of each bar defaults to col}
+\item{border}{the colour of the outline of each bar defaults to 1}
 
-\item{width}{- denotes the width of each bar; defaults to 1, should be >0
-and usually <= 1. A warning will beissued outside this range. If
+\item{width}{denotes the width of each bar; defaults to 1, should be >0
+and usually <= 1. A warning will be issued outside this range. If
 < 0 then it will be reset to 1.0}
 
-\item{xlabel}{- the label for the x axis; defaults to ""}
+\item{xlabel}{the label for the x axis; defaults to ""}
 
-\item{ylabel}{- the label for the y axis; defaults to ""}
+\item{ylabel}{the label for the y axis; defaults to ""}
 
-\item{main}{- the title for the individual plot; defaults to ""}
+\item{main}{the title for the individual plot; defaults to ""}
 
-\item{lwd}{- the line width of the border; defaults to 1}
+\item{lwd}{the line width of the border; defaults to 1}
 
-\item{xmin}{- sets the lower bound for x-axis; used to match plots}
+\item{xmin}{sets the lower bound for x-axis; used to match plots}
 
-\item{xmax}{- sets the upper bound for x axis; used with multiple plots}
+\item{xmax}{sets the upper bound for x axis; used with multiple plots}
 
-\item{ymax}{- enables external control of the maximum y value; mainly of
+\item{ymax}{enables external control of the maximum y value; mainly of
 use when plotting multiple plots together.}
 
-\item{plotout}{- plot the histogram or not? Defaults to TRUE}
+\item{plotout}{plot the histogram or not? Defaults to TRUE}
 
-\item{prop}{- plot the proportions rather than the counts}
+\item{prop}{plot the proportions rather than the counts}
 
-\item{inc}{- sets the xaxis increment; used to customize the axis;
+\item{inc}{sets the xaxis increment; used to customize the axis;
 defaults to 1.}
 
-\item{xaxis}{- set to FALSE to define the xaxis outside of inthist;
+\item{xaxis}{set to FALSE to define the xaxis outside of inthist;
 defaults to TRUE}
 }
 \value{

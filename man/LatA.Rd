@@ -6,19 +6,20 @@
 \title{LatA Simulated length-at-age for 358 female fish}
 \format{A data.frame with 358 rows and 2 variables:
 \describe{
-  \item{age}{Estimated age from otolith reading}
-  \item{length}{Fork length of the fish, in cms}
+  \item{age}{simulated ages in years}
+  \item{length}{consequent simulated fork length of the fish, in cms}
 }}
 \source{
-This data this simulation is based upon is from one species 
-    collected many years by the many excellent people running the 
-    Integrated Stock Monitoring Program in the Australian South East 
-    Fishery over the years of its existence. The simulation is based
-    on a characterization of redfish properties and includes random
-    error in the hypothetical measurements as well as the processes of
-    growth (i.e. both measurement and process error). The other inputs
-    were a selected set of growth parameters and the relative frequency
-    of different ages vs lengths.
+The data this simulation is based upon is from length-at-age 
+    data for one species collected over many years by the many 
+    excellent people running the Integrated Stock Monitoring Program 
+    in the Australian South East Fishery over the years of its 
+    existence. The simulation is based on a characterization of 
+    redfish properties and includes random error in the hypothetical 
+    measurements as well as the processes of growth (i.e. both 
+    measurement and process error). The other inputs were a selected 
+    set of growth parameters and the relative frequency of different 
+    ages vs lengths.
 }
 \description{
 A data.frame containing the simulated 

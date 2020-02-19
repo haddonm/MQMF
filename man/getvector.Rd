@@ -2,7 +2,7 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{getvector}
 \alias{getvector}
-\title{getvector  extracts a vector of numbers from a line of characters}
+\title{getvector extracts a vector of numbers from a line of characters}
 \usage{
 getvector(indat, locate, sep = ",")
 }

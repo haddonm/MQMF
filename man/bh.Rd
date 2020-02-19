@@ -12,11 +12,11 @@ bh(p, B)
 \item{B}{a vector, possibly of length 1, of spawning biomass levels}
 }
 \value{
-a vector equal in length to B or the predicted recruitments
+a vector equal in length to B of the predicted recruitment(s)
 }
 \description{
 bh implements the Beverton-Holt stock recruitment
-   equation where R = aB/(b + B), where R is the recruitment, a and
+   equation R = aB/(b + B), where R is the recruitment, a and
    b are the parameters and B is the spawning biomass. a is the 
    maximum recruitment level and b is the biomass required to
    generate 0.5 x maximum recruitment

@@ -7,22 +7,22 @@
 addnorm(inhist, xdata, inc = 0.01)
 }
 \arguments{
-\item{inhist}{- is the output from a call to 'hist' (see examples)}
+\item{inhist}{is the output from a call to 'hist' (see examples)}
 
-\item{xdata}{-  is the data that is being plotted in the histogram.}
+\item{xdata}{is the data that is being plotted in the histogram.}
 
-\item{inc}{- defaults to a value of 0.01; is the fine grain increment 
-used to define the normal curve. The histogram will be coarse 
-grained relative to this.}
+\item{inc}{defaults to a value of 0.01; is the fine grain increment 
+used to define the normal curve. The histogram breaks should 
+be coarse grained relative to inc.}
 }
 \value{
 a list with a vector of 'x' values and a vector of 'y' values 
     (to be used to plot the fitted normal probability density function), 
-    and a vector used two called 'stats' containing the mean and sandard 
-    deviation of the input data
+    and a vector called 'stats' containing the mean and 
+    standard deviation of the input data
 }
 \description{
-addnorm - adds a normal distribution to a histogram of a 
+addnorm adds a normal distribution to a histogram of a 
     data set. This is generally to be used to illustrate whether 
     log-transformation normalizes a set of catch or cpue data.
 }

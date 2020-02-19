@@ -10,7 +10,7 @@
 \item{x}{a dynpop matrix containing at least year, nt, and nt1 as
 columns, as returned invisibly from discretelogistic.}
 
-\item{y}{a second y value added to the first plot if presnet}
+\item{y}{a second y value added to the first plot if present}
 
 \item{main}{defines text to print across top of plot with the
 intention of including the parameter values, default=""}

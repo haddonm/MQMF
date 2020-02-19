@@ -65,8 +65,8 @@ do_MCMC conducts a Gibbs within Metropolis algorithm. One
    2) calcpred used within infunk to calculate the predicted values
    used to compare with the observed (found in obsdat), and 
    3) priorcalc used to calculate the prior probabilities of the 
-   various parameters in each trial. N * thinstep iterations are made 
-   in total although only N are stored. The jumping
+   various parameters in each trial. (N + burnin) * thinstep iterations 
+   are made in total although only N are stored. The jumping
    function uses random normal deviates (mean=0, sd=1) to combine with
    each parameter value (after multiplication by the specific scaling
    factor held in scales). Determination of suitable scaling values
@@ -74,8 +74,8 @@ do_MCMC conducts a Gibbs within Metropolis algorithm. One
    of iterations to begin with. Multiple chains would be usual and 
    the thinstep would be larger eg. 128, 256, or 512, but it would 
    take 8, 16, or 32 times longer. The scales are usually 
-   expirementally set to otain an acceptance rate between 20 - 40%. 
-   It is also usual to run numerous diagnostic plots on th eoutputs 
+   expirically set to otain an acceptance rate between 20 - 40%. 
+   It is also usual to run numerous diagnostic plots on the outputs 
    to ensure convergence on the final stationary distribution. There 
    are three main loops: 1) total number of iterations (N + burnin)* 
    thinstep, used by priorcalc, 2) thinstep/(number of parameters) 

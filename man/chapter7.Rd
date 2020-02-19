@@ -2,7 +2,7 @@
 % Please edit documentation in R/ch_chunks.R
 \name{chapter7}
 \alias{chapter7}
-\title{chapter7 The R-code chunks from Surplus Production Models}
+\title{chapter7 The 67 R-code chunks from Surplus Production Models}
 \description{
 chapter7 is not an active function but rather acts 
     as a repository for the various example code chunks found in 

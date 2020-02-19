@@ -30,7 +30,7 @@ nothing but it does print the list to the console tidily
 outfit takes in the output list from either optim,
     nlminb, or nlm and prints it more tidily to the console, In the
     case of nlm it also prints the conclusion regarding the
-    solution
+    solution. It might be more effective to implement an S3 method.
 }
 \examples{
 \dontrun{

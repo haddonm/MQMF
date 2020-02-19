@@ -1,4 +1,5 @@
 ^data-raw$
+^data-raw\*$
 ^Meta$
 ^doc$
 ^.*\.Rproj$

@@ -21,7 +21,7 @@ a data.frame with the rows being each variable from the input
     number of unique values, and minimum and maximum (where possible).
 }
 \description{
-properties - used to check a data.frame before
+properties used to check a data.frame before
     standardization
 }
 \examples{
