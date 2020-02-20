@@ -320,7 +320,7 @@ tmplot(vals,"alpha")
  
 ## Recruitment     
 ### Introduction     
-### Properties of â€œGoodâ€ Stock Recruitment Relationships     
+### Properties of Good Stock Recruitment Relationships     
 ### Recruitment Overfishing     
 ### Beverton and Holt Recruitment     
 # R-chunk 19  

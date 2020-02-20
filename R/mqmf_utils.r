@@ -4,7 +4,7 @@
 #' 
 #' @description aicbic calculates and returns the AIC and BIC using the
 #'     standard definitions. It defaults to assuming that negative log-
-#'     likelihoods have been used in teh model fitting, but provides the
+#'     likelihoods have been used in the model fitting, but provides the
 #'     option of having used SSQ (set nLL to FALSE). If using SSQ it 
 #'     uses Burnham and Anderson's (2002) definition but sets BIC to NA. 
 #'     aicbic can recognize the outputs from optim, nlm, and nlminb.

@@ -227,7 +227,7 @@ NULL
 #' surprod <- function(Nt,r,K) return((r*Nt)*(1-(Nt/K)))    
 #' densdep <- function(Nt,K) return((1-(Nt/K)))    
 #' r <- 1.2; K <- 1000.0; Nt <- seq(10,1000,10)  
-#' plotprep(width=7, height=5, newdev=FALSE)  
+#' # plotprep(width=7, height=5, newdev=FALSE)  
 #' par(mfrow=c(2,1),mai=c(0.4,0.4,0.05,0.05),oma=c(0.0,0,0.0,0.0))     
 #' par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)     
 #' plot1(Nt,surprod(Nt,r,K),xlab="Population Nt",defpar=FALSE,    
@@ -1548,7 +1548,7 @@ NULL
 #'  
 #' ## Recruitment     
 #' ### Introduction     
-#' ### Properties of “Good” Stock Recruitment Relationships     
+#' ### Properties of Good Stock Recruitment Relationships     
 #' ### Recruitment Overfishing     
 #' ### Beverton and Holt Recruitment     
 #' # R-chunk 19  
