@@ -5,3 +5,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
+^md$
+^cran-comments\.md$
+^MQMF\.Rcheck$
+^MQMF\.Rcheck\*$

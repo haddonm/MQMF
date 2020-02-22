@@ -31,7 +31,7 @@ This R package is almost ready to be submitted to CRAN, and currently has no err
 
 Malcolm Haddon
 
-February 20 2020
+February 21, 2020
 
 
 Haddon, M. (2011) _Modelling and Quantitative Methods in Fisheries_. 2nd Ed. CRC/Chapman & Hall. 449p.

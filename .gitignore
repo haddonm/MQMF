@@ -7,3 +7,5 @@ data-raw/*
 .RData
 inst/doc
 README.md
+MQMF.Rcheck
+MQMF.Rcheck/*

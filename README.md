@@ -38,7 +38,7 @@ CMD check –as-cran and those used by the rhub package.
 
 Malcolm Haddon
 
-February 20 2020
+February 21, 2020
 
 Haddon, M. (2011) *Modelling and Quantitative Methods in Fisheries*. 2nd
 Ed. CRC/Chapman & Hall. 449p.
