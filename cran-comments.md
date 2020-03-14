@@ -3,6 +3,7 @@
 
 This is a resubmission. In this version, as directed, I have:
 
+
 * Deleted the CRAN-RELEASE file; the previous date of submission was 2020-02-22
 
 * Modified the book reference in the DESCRIPTION to include the ISBN, have put quotes around the title, and have simplified the description paragraph. I have not been sent a DOI by the publishers yet.
