@@ -30,9 +30,11 @@
 #' 
 #' 
 #' # R-chunk 2
-#' #A more complex function prepares to plot a single base graphic
-#' #It has the syntax for opening a window outside of Rstudio and
-#' #defining a base graphic
+#'  #A more complex function prepares to plot a single base graphic
+#'  #It has the syntax for opening a window outside of Rstudio and
+#'  #defining a base graphic. It includes oldpar<-par(no.readonly=TRUE)
+#'  #which is returned invisibly so that the original 'par' settings
+#'  #can be recovered using par(oldpar) after completion of your plot.
 #' 
 #' plotprep2 <- function(plots=c(1,1),width=6, height=3.75,usefont=7,
 #'                       newdev=TRUE) {
@@ -40,9 +42,11 @@
 #'       (newdev)) {
 #'     dev.new(width=width,height=height,noRStudioGD = TRUE)
 #'   }
+#'   oldpar <- par(no.readonly=TRUE)  # not in the book's example
 #'   par(mfrow=plots,mai=c(0.45,0.45,0.1,0.05),oma=c(0,0,0,0))
 #'   par(cex=0.75,mgp=c(1.35,0.35,0),font.axis=usefont,font=usefont,
 #'       font.lab=usefont)
+#'   return(invisible(oldpar))
 #' }  #  see ?plotprep; see also parsyn() and parset()
 #' 
 #' 
@@ -66,6 +70,7 @@
 #' 
 #' data("LatA")  #LatA = length at age data; try properties(LatA)
 #' #plotprep(width=6.0,height=5.0,newdev=FALSE) #unhash for external plot
+#' oldpar <- par(no.readonly=TRUE)  # not in the book's example
 #' setpalette("R4") #a more balanced, default palette see its help
 #' par(mfrow=c(2,2),mai=c(0.45,0.45,0.1,0.05))  # see ?parsyn
 #' par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)
@@ -74,6 +79,7 @@
 #' hist(LatA$age,breaks=30,main="",col=4) # 4=blue
 #' hist(LatA$age, breaks=30,col=2, main="", xlim=c(0,43), #2=red
 #'      xlab="Age (years)",ylab="Count")
+#' par(oldpar)  # not in the book's example
 #' 
 #' ### Dealing with Factors
 #' # R-chunk 5
@@ -227,6 +233,7 @@ NULL
 #' surprod <- function(Nt,r,K) return((r*Nt)*(1-(Nt/K)))    
 #' densdep <- function(Nt,K) return((1-(Nt/K)))    
 #' r <- 1.2; K <- 1000.0; Nt <- seq(10,1000,10)  
+#' oldpar <- par(no.readonly=TRUE) # this line not in book
 #' # plotprep(width=7, height=5, newdev=FALSE)  
 #' par(mfrow=c(2,1),mai=c(0.4,0.4,0.05,0.05),oma=c(0.0,0,0.0,0.0))     
 #' par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)     
@@ -234,7 +241,7 @@ NULL
 #'       ylab="Production")    
 #' plot1(Nt,densdep(Nt,K),xlab="Population Nt",defpar=FALSE,    
 #'       ylab="Density-Dependence")    
-#' 
+#' par(oldpar)  # this line not in book
 #' ### Dynamic Behaviour    
 #' # R-chunk 2 
 #' #Code for Figure 3.2. Try varying the value of rv from 0.5-2.8 
@@ -242,9 +249,10 @@ NULL
 #' yrs <- 100; rv=2.8;  Kv <- 1000.0; Nz=100; catch=0.0; p=1.0    
 #' ans <- discretelogistic(r=rv,K=Kv,N0=Nz,Ct=catch,Yrs=yrs,p=p)    
 #' avcatch <- mean(ans[(yrs-50):yrs,"nt"],na.rm=TRUE) #used in text    
-#' label <- paste0("r=",rv," K=",Kv," Ct=",catch, " N0=",Nz," p=",p=p)    
+#' label <- paste0("r=",rv," K=",Kv," Ct=",catch, " N0=",Nz," p=",p=p)   
+#' oldpar <- par(no.readonly=TRUE) # this line not in book
 #' plot(ans, main=label, cex=0.9, font=7) #Schaefer dynamics    
-#' 
+#' par(oldpar)   # this line not in book
 #' # R-chunk 3 
 #' #run discrete logistic dynamics for 600 years  
 #'   
@@ -305,8 +313,10 @@ NULL
 #'     result[i,] <- c(rval,length(unique(tail(ans[,"nt1"],taill))))    
 #'     result2[i,] <- tail(ans[,"nt1"],taill)    
 #'   }      
-#'   if (limy[1] == 0) limy <- c(0,getmax(result2,mult=1.02))    
-#'   parset() # plot taill values against taill of each r value    
+#'   if (limy[1] == 0) limy <- c(0,getmax(result2,mult=1.02))  
+#'     
+#'   oldpar <- parset() #plot taill values against taill of each r value  
+#'   on.exit(par(oldpar))    #  this line not in book 
 #'   plot(rep(testseq[1],taill),result2[1,],type="p",pch=16,cex=0.1,    
 #'        ylim=limy,xlim=c(min(testseq)*(1-incx),max(testseq)*(1+incx)),    
 #'        xlab="r value",yaxs="i",xaxs="i",ylab="Equilibrium Numbers",    
@@ -348,7 +358,8 @@ NULL
 #'   avB <- round(mean(x[(yrs-40):yrs,"nt"],na.rm=TRUE),3)    
 #'   mtext(avB,side=1,outer=F,line=-1.1,font=7,cex=1.0)     
 #' } # end of plottime    
-#' #the oma argument is used to adjust the space around the graph    
+#' #the oma argument is used to adjust the space around the graph 
+#' oldpar <- par(no.readonly=TRUE) # this line not in book   
 #' par(mfrow=c(2,2),mai=c(0.25,0.4,0.05,0.05),oma=c(1.0,0,0.25,0))     
 #' par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 #' plottime(nocatch,"Catch = 0")    
@@ -356,7 +367,7 @@ NULL
 #' plottime(catch200,"Catch = 200")    
 #' plottime(catch300,"Catch = 300")    
 #' mtext("years",side=1,outer=TRUE,line=-0.2,font=7,cex=1.0)     
-#' 
+#' par(oldpar)
 #' 
 #' # R-chunk 12 
 #' #Phase plot for Schaefer model Fig 3.5    
@@ -372,6 +383,7 @@ NULL
 #'   points(x[begin:yrs,"nt"],x[begin:yrs,"nt1"],pch=18,col=1,cex=1.2)    
 #'   mtext(label,side=1,outer=F,line=-1.1,font=7,cex=1.2)     
 #' } # end of plotphase    
+#' oldpar <- par(no.readonly=TRUE) # this line not in book   
 #' par(mfrow=c(2,2),mai=c(0.25,0.25,0.05,0.05),oma=c(1.0,1.0,0,0))     
 #' par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 #' plotphase(nocatch,"Catch = 0",ymax=1300)    
@@ -380,7 +392,7 @@ NULL
 #' plotphase(catch300,"Catch = 300",ymax=1300)    
 #' mtext("nt",side=1,outer=T,line=0.0,font=7,cex=1.0)    
 #' mtext("nt+1",side=2,outer=T,line=0.0,font=7,cex=1.0)    
-#' 
+#' par(oldpar)    # this line not in book
 #' 
 #' ### Determinism    
 #' ## Age-Structured Modelling Concepts    
@@ -396,11 +408,11 @@ NULL
 #' Bt <- matrix(0,nrow=yrs1,ncol=nZ,dimnames=list(years,Z))    
 #' Bt[1,] <- B0    
 #' for (j in 1:nZ) for (i in 2:yrs1) Bt[i,j] <- Bt[(i-1),j]*exp(-Z[j])    
-#' plot1(years,Bt[,1],xlab="Years",ylab="Population Size",lwd=2)    
+#' oldp <- plot1(years,Bt[,1],xlab="Years",ylab="Population Size",lwd=2)    
 #' if (nZ > 1) for (j in 2:nZ) lines(years,Bt[,j],lwd=2,col=j,lty=j)    
 #' legend("topright",legend=paste0("Z = ",Z),col=1:nZ,lwd=3,    
 #'        bty="n",cex=1,lty=1:5)     
-#' 
+#' par(oldp)  # this line not in book
 #' 
 #' ### Instantaneous vs Annual Mortality Rates    
 #' # R-chunk 14 
@@ -433,11 +445,11 @@ NULL
 #'   
 #' Fi <- seq(0.001,2,0.001)    
 #' H <- 1 - exp(-Fi)    
-#' parset()  # a wrapper for simplifying defining the par values    
+#' oldpar <- parset()  # a wrapper for simplifying defining the par values    
 #' plot(Fi,H,type="l",lwd=2,panel.first=grid(),xlab="Instantaneous Fishing Mortality F",    
 #'      ylab="Annual Proportion Mortality H")    
 #' lines(c(0,1),c(0,1),lwd=2,lty=2,col=2)    
-#' 
+#' par(oldpar)   # this line not in book
 #' 
 #' ## Simple Yield per Recruit    
 #' # R-chunk 17 
@@ -483,8 +495,8 @@ NULL
 #' # R-chunk 21 
 #' #Use MQMF::plot1 for a quick plot of the total catches. Figure 3.8    
 #' 
-#' plot1(H,totC,xlab="Harvest Rate",ylab="Total Yield",lwd=2)    
-#' 
+#' oldpar <- plot1(H,totC,xlab="Harvest Rate",ylab="Total Yield",lwd=2)    
+#' par(oldpar) # to reset the par values if desired
 #' 
 #' ### Selectivity in Yield-per-Recruit    
 #' # R-chunk 22 
@@ -494,14 +506,14 @@ NULL
 #' sel1 <- mature(-3.650425,0.146017,sizeage=ages) #-3.65/0.146=25    
 #' sel2 <- mature(-6,0.2,ages)    
 #' sel3 <- mature(-6,0.24,ages)    
-#' plot1(ages,sel1,xlab="Age Yrs",ylab="Selectivity",cex=0.75,lwd=2)    
+#' oldp <- plot1(ages,sel1,xlab="Age Yrs",ylab="Selectivity",cex=0.75,lwd=2)    
 #' lines(ages,sel2,col=2,lwd=2,lty=2)    
 #' lines(ages,sel3,col=3,lwd=2,lty=3)    
 #' abline(v=25,col="grey",lty=2)     
 #' abline(h=c(0.25,0.5,0.75),col="grey",lty=2)    
 #' legend("topleft",c("25_15.04","30_10.986","25_9.155"),col=c(1,2,3),    
 #'        lwd=3,cex=1.1,bty="n",lty=1:3)    
-#' 
+#' par(oldp)
 #' 
 #' ### The Baranov Catch Equation    
 #' # R-chunk 23 
@@ -553,12 +565,12 @@ NULL
 #' # R-chunk 26 
 #' #A full YPR analysis  Figure 3.10    
 #' 
-#' plot1(H,yield[,3],xlab="Harvest Rate",ylab="Yield",cex=0.75,lwd=2)    
+#' oldp <- plot1(H,yield[,3],xlab="Harvest Rate",ylab="Yield",cex=0.75,lwd=2)    
 #' lines(H,yield[,2],lwd=2,col=2,lty=2)    
 #' lines(H,yield[,1],lwd=2,col=3,lty=3)    
 #' legend("bottomright",legend=as50,col=c(3,2,1),lwd=3,bty="n",    
 #'        cex=1.0,lty=c(3,2,1))     
-#' 
+#' par(oldp)
 #' 
 #' # R-chunk 27 
 #' #Tabulate yield-per-recruit using Baranoc catch equation   
@@ -636,12 +648,13 @@ NULL
 #' # R-chunk 5 
 #' #plot the LatA data set   Figure 4.2    
 #' 
-#' parset()        # parset and getmax are two MQMF functions     
+#' oldpar <- parset()   # parset and getmax are two MQMF functions     
 #' ymax <- getmax(LatA$length) # simplifies use of base graphics. For    
 #' # full colour, with the rgb as set-up below, there must be >= 5 obs    
 #' plot(LatA$age,LatA$length,type="p",pch=16,cex=1.2,xlab="Age Years",     
 #'      ylab="Length cm",col=rgb(1,0,0,1/5),ylim=c(0,ymax),yaxs="i",    
-#'      xlim=c(0,44),panel.first=grid())    
+#'      xlim=c(0,44),panel.first=grid()) 
+#' par(oldpar) # this line not in book   
 #' 
 #' # R-chunk 6 
 #' # use nlm to fit 3 growth curves to LatA, only p and funk change   
@@ -688,7 +701,7 @@ NULL
 #' predmm <- mm(bestMM2$estimate,ages) #from the nlm analysis above    
 #' ymax <- getmax(LatA$length) #try ?getmax or getmax [no brackets]    
 #' xmax <- getmax(LatA$age)  #there is also a getmin, not used here    
-#' parset(font=7)   # or use parsyn() to prompt for the par syntax    
+#' oldpar <- parset(font=7) #or use parsyn() to prompt for par syntax    
 #' plot(LatA$age,LatA$length,type="p",pch=16, col=rgb(1,0,0,1/5),    
 #'      cex=1.2,xlim=c(0,xmax),ylim=c(0,ymax),yaxs="i",xlab="Age",    
 #'      ylab="Length (cm)",panel.first=grid())    
@@ -697,7 +710,8 @@ NULL
 #' lines(ages,predmm,lwd=2,col=3,lty=3)  # MM        3=green    
 #' #notice the legend function and its syntax.    
 #' legend("bottomright",cex=1.2,c("von Bertalanffy","Gompertz",    
-#'                                "Michaelis-Menton"),col=c(4,1,3),lty=c(1,2,3),lwd=3,bty="n")    
+#'                    "Michaelis-Menton"),col=c(4,1,3),lty=c(1,2,3),lwd=3,bty="n") 
+#' par(oldpar)  # this line not in book                       
 #' 
 #' ### Objective Model Selection    
 #' ### The Influence of Residual Error Choice on Model Fit    
@@ -725,7 +739,7 @@ NULL
 #' predvBLN <- vB(bestvBLN$estimate,ages)     
 #' ymax <- getmax(LatA$length)     
 #' xmax <- getmax(LatA$age)        
-#' parset()                  
+#' oldpar <- parset()                  
 #' plot(LatA$age,LatA$length,type="p",pch=16, col=rgb(1,0,0,1/5),    
 #'      cex=1.2,xlim=c(0,xmax),ylim=c(0,ymax),yaxs="i",xlab="Age",    
 #'      ylab="Length (cm)",panel.first=grid())    
@@ -733,6 +747,7 @@ NULL
 #' lines(ages,predvBLN,lwd=2,col=1)        # add Log-Normal solid    
 #' legend("bottomright",c("Normal Errors","Log-Normal Errors"),    
 #'        col=c(4,1),lty=c(2,1),lwd=3,bty="n",cex=1.2)    
+#' par(oldpar)
 #' 
 #' ### Remarks on Initial Model Fitting    
 #' ## Maximum Likelihood     
@@ -753,7 +768,7 @@ NULL
 #' 
 #' 
 #' # R-chunk 13 
-#' #tabluate results of Normal Likelihoods    
+#' #tabulate results of Normal Likelihoods    
 #' 
 #' kable(result,digits=c(4,8,8,0),row.names = TRUE, caption='(ref:tab401)')    
 #' 
@@ -779,9 +794,10 @@ NULL
 #' x <- seq(-5,5,0.1)  # a sequence of values around a mean of 0.0    
 #' NL <- dnorm(x,mean=0,sd=1.0)   # normal likelihoods for each X    
 #' CD <- pnorm(x,mean=0,sd=1.0)   # cumulative density vs X    
-#' plot1(x,CD,xlab="x = StDev from Mean",ylab="Likelihood and CDF")    
+#' oldp <- plot1(x,CD,xlab="x = StDev from Mean",ylab="Likelihood and CDF")    
 #' lines(x,NL,lwd=3,col=2,lty=3) # dashed line as these are points    
-#' abline(h=0.5,col=4,lwd=1)    
+#' abline(h=0.5,col=4,lwd=1)  
+#' par(oldp)  
 #' 
 #' # R-chunk 16 
 #' #function facilitates exploring different polygons Fig 4.6    
@@ -806,11 +822,12 @@ NULL
 #' pd <- dnorm(x,mean=5.0,sd=1.0) #prob density for each X value    
 #' mid <- mean(x)        
 #' delta <- 0.05  # how wide either side of the sample mean to go?     
-#' parset()       # a pre-defined MQMF base graphics set-up for par    
-#' ymax <- getmax(pd)    # find maximum y value for the plot    
+#' oldpar <- parset() #pre-defined MQMF base graphics set-up for par    
+#' ymax <- getmax(pd) # find maximum y value for the plot    
 #' plot(x,pd,type="l",xlab="Variable x",ylab="Probability Density",    
 #'      ylim=c(0,ymax),yaxs="i",lwd=2,panel.first=grid())    
-#' approxprob <- plotpoly(mid,delta)  #use function defined above    
+#' approxprob <- plotpoly(mid,delta)  #use function defined above 
+#' par(oldpar)  # this line not in the book
 #' 
 #' ### Equivalence with Sum-of-Squares     
 #' ### Fitting a Model to Data using Normal Likelihoods    
@@ -819,8 +836,10 @@ NULL
 #' 
 #' data(LatA) # load the redfish data set into memory and plot it    
 #' ages <- LatA$age;  lengths <- LatA$length    
-#' plot1(ages,lengths,xlab="Age",ylab="Length",type="p",cex=0.8,    
+#' oldpar <- plot1(ages,lengths,xlab="Age",ylab="Length",type="p",cex=0.8,    
 #'       pch=16,col=rgb(1,0,0,1/5))    
+#' par(oldpar)
+#' 
 #' 
 #' # R-chunk 18 
 #' # Fit the vB growth curve using maximum likelihood    
@@ -845,22 +864,24 @@ NULL
 #' Age <- 1:max(ages) # used in comparisons     
 #' predvB <- vB(ansvB$estimate,Age) #optimum solution    
 #' predMM <- mm(ansMM$estimate,Age) #optimum solution    
-#' parset()                       # plot the deata points first  
+#' oldpar <- parset()               # plot the deata points first  
 #' plot(ages,lengths,xlab="Age",ylab="Length",type="p",pch=16,    
 #'      ylim=c(10,33),panel.first=grid(),col=rgb(1,0,0,1/3))    
 #' lines(Age,predvB,lwd=2,col=4)     # then add the growth curves  
 #' lines(Age,predMM,lwd=2,col=1,lty=2)    
 #' legend("bottomright",c("von Bertalanffy","Michaelis-Menton"),    
-#'        col=c(4,1),lwd=3,bty="n",cex=1.2,lty=c(1,2))    
+#'        col=c(4,1),lwd=3,bty="n",cex=1.2,lty=c(1,2)) 
+#' par(oldpar)   
 #' 
 #' # R-chunk 21 
 #' # residual plot for vB curve   Fig 4.9    
 #' 
 #' predvB <- vB(ansvB$estimate,ages) # predicted values for age data    
 #' resids <- lengths - predvB               # calculate vB residuals     
-#' plot1(ages,resids,type="p",col=rgb(1,0,0,1/3),xlim=c(0,43),    
-#'       pch=16,xlab="Ages Years",ylab="Residuals")    
+#' oldpar <- plot1(ages,resids,type="p",col=rgb(1,0,0,1/3),
+#'            xlim=c(0,43),pch=16,xlab="Ages Years",ylab="Residuals")    
 #' abline(h=0.0,col=1,lty=2)    # emphasize the zero line  
+#' par(oldpar)
 #' 
 #' ## Log-Normal Likelihoods     
 #' ### Simplification of Log-Normal Likelihoods    
@@ -873,26 +894,27 @@ NULL
 #' y2 <- dlnorm(x,meanlog=0,sdlog=1.0,log=FALSE)#from log-normal     
 #' y3 <- dlnorm(x,meanlog=0,sdlog=0.6,log=FALSE)#distribution     
 #' y4 <- dlnorm(x,0.75,0.6)         #log=TRUE = log-likelihoods    
-#' parset(plots=c(1,2)) #MQMF shortcut plot formatting function    
+#' oldpar <- parset(plots=c(1,2)) #MQMF base plot formatting function    
 #' plot(x,y3,type="l",lwd=2,panel.first=grid(),    
 #'      ylab="Log-Normal Likelihood")    
 #' lines(x,y,lwd=2,col=2,lty=2)    
 #' lines(x,y2,lwd=2,col=3,lty=3)    
 #' lines(x,y4,lwd=2,col=4,lty=4)    
-#' legend("topright",c("meanlog sdlog","    0.0      0.6",    
-#'                     "    0.0      1.0","    0.0      1.2","    0.75    0.6"),    
+#' legend("topright",c("meanlog sdlog","    0.0      0.6    0.0",    
+#'                     "      1.0","    0.0      1.2","    0.75    0.6"),    
 #'        col=c(0,1,3,2,4),lwd=3,bty="n",cex=1.0,lty=c(0,1,3,2,4))    
 #' plot(log(x),y3,type="l",lwd=2,panel.first=grid(),ylab="")    
 #' lines(log(x),y,lwd=2,col=2,lty=2)    
 #' lines(log(x),y2,lwd=2,col=3,lty=3)    
-#' lines(log(x),y4,lwd=2,col=4,lty=4)    
+#' lines(log(x),y4,lwd=2,col=4,lty=4)  
+#' par(oldpar)  # return par to old settings; this line not in book
 #' 
 #' # R-chunk 23 
 #' 
 #' set.seed(12354) # plot random log-normal numbers as Fig 4.11    
 #' meanL <- 0.7;   sdL <- 0.5  # generate 5000 random log-normal     
 #' x <- rlnorm(5000,meanlog = meanL,sdlog = sdL) # values    
-#' parset(plots=c(1,2)) # simplifies the plots par() definition    
+#' oldpar <- parset(plots=c(1,2)) # simplifies plots par() definition    
 #' hist(x[x < 8.0],breaks=seq(0,8,0.25),col=0,main="")     
 #' meanx <- mean(log(x)); sdx <- sd(log(x))    
 #' outstat <- c(exp(meanx-(sdx^2)),exp(meanx),exp(meanx+(sdx^2)/2))    
@@ -901,7 +923,8 @@ NULL
 #'        col=c(4,1,2),lwd=3,bty="n",cex=1.2,lty=c(1,2,3))    
 #' outh <- hist(log(x),breaks=30,col=0,main="")   # approxnormal    
 #' hans <- addnorm(outh,log(x)) #MQMF function; try  ?addnorm    
-#' lines(hans$x,hans$y,lwd=3,col=1) # type addnorm into the console    
+#' lines(hans$x,hans$y,lwd=3,col=1) # type addnorm into the console 
+#' par(oldpar)  # return par to old settings; this line not in book   
 #' 
 #' # R-chunk 24 
 #' #examine log-normal propoerties. It is a bad idea to reuse     
@@ -935,9 +958,10 @@ NULL
 #' # R-chunk 26 
 #' # Fig 4.12 visual examination of the fit to the tigers data    
 #' 
-#' plot1(tigers$Spawn,predR,xlab="Spawning Biomass","Recruitment",    
+#' oldp <- plot1(tigers$Spawn,predR,xlab="Spawning Biomass","Recruitment",    
 #'       maxy=getmax(c(predR,tigers$Recruit)),lwd=2)    
-#' points(tigers$Spawn,tigers$Recruit,pch=16,cex=1.1,col=2)    
+#' points(tigers$Spawn,tigers$Recruit,pch=16,cex=1.1,col=2)  
+#' par(oldp)  # return par to old settings; this line not in book   
 #' 
 #' # R-chunk 27 
 #' #tabulating observed, predicted and residual recruitment    
@@ -968,9 +992,10 @@ NULL
 #' 
 #' predce <- simpspm(bestmod$estimate,abdat) #compare obs vs pred    
 #' ymax <- getmax(c(predce,obslog))    
-#' plot1(abdat$year,obslog,type="p",maxy=ymax,ylab="Log(CPUE)",    
+#' oldp <- plot1(abdat$year,obslog,type="p",maxy=ymax,ylab="Log(CPUE)",    
 #'       xlab="Year",cex=0.9)    
-#' lines(abdat$year,predce,lwd=2,col=2)    
+#' lines(abdat$year,predce,lwd=2,col=2) 
+#' par(oldp)  # return par to old settings; this line not in book    
 #' 
 #' ## Likelihoods from the Binomial Distribution    
 #' ### An Example using Binomial Likelihoods    
@@ -982,9 +1007,9 @@ NULL
 #' m <- 1:60  # how likely is each of the 60 possibilites?    
 #' binom <- dbinom(m,n,p)   # get individual likelihoods    
 #' cumbin <- pbinom(m,n,p)  # get cumulative distribution    
-#' plot1(m,binom,type="h",xlab="Number of Males",ylab="Probability")     
+#' oldp <- plot1(m,binom,type="h",xlab="Number of Males",ylab="Probability")     
 #' abline(v=which.closest(0.025,cumbin),col=2,lwd=2) # lower 95% CI    
-#' 
+#' par(oldp)  # return par to old settings; this line not in book  
 #' 
 #' # R-chunk 32 
 #' # plot relative likelihood of different p values Fig 4.16    
@@ -993,8 +1018,9 @@ NULL
 #' m <- 20  # number of successes = finding a male    
 #' p <- seq(0.1,0.6,0.001) #range of probability we find a male     
 #' lik <- dbinom(m,n,p)    # R function for binomial likelihoods    
-#' plot1(p,lik,type="l",xlab="Prob. of 20 Males",ylab="Prob.")    
-#' abline(v=p[which.max(lik)],col=2,lwd=2) # try "p" instead of "l"    
+#' oldp <- plot1(p,lik,type="l",xlab="Prob. of 20 Males",ylab="Prob.")    
+#' abline(v=p[which.max(lik)],col=2,lwd=2) # try "p" instead of "l" 
+#' par(oldp)  # return par to old settings; this line not in book     
 #' 
 #' # R-chunk 33 
 #' # find best estimate using optimize to finely search an interval    
@@ -1042,14 +1068,15 @@ NULL
 #' # Compare outcome for 2 independent seal estimates Fig 4.17    
 #' # Should plot points not a line as each are independent     
 #' 
-#' plot1(X,lik1,type="l",xlab="Total Pup Numbers",    
+#' oldp <- plot1(X,lik1,type="l",xlab="Total Pup Numbers",    
 #'       ylab="Probability",maxy=0.085,lwd=2)    
 #' abline(v=X[which.max(lik1)],col=1,lwd=1)    
 #' lines(X,lik2,lwd=2,col=2,lty=3)  # add line to plot    
 #' abline(v=X[which.max(lik2)],col=2,lwd=1) # add optimum    
 #' #given p = 151/X, then X = 151/p and p = optimum proportion     
 #' legend("topright",legend=round((151/optsol[,"p"])),col=c(1,2),lwd=3,    
-#'        bty="n",cex=1.1,lty=c(1,3))    
+#'        bty="n",cex=1.1,lty=c(1,3)) 
+#' par(oldp)  # return par to old settings; this line not in book     
 #' 
 #' ### Using Multiple Independent Samples    
 #' 
@@ -1058,7 +1085,7 @@ NULL
 #' 
 #' totlik <- totlik/sum(totlik) # rescale so the total sums to one    
 #' cumlik <- cumsum(totlik) #approx cumulative likelihood for CI        
-#' plot1(X,totlik,type="l",lwd=2,xlab="Total Pup Numbers",    
+#' oldp <- plot1(X,totlik,type="l",lwd=2,xlab="Total Pup Numbers",    
 #'       ylab="Posterior Joint Probability")    
 #' percs <- c(X[which.closest(0.025,cumlik)],X[which.max(totlik)],    
 #'            X[which.closest(0.975,cumlik)])    
@@ -1068,7 +1095,8 @@ NULL
 #' m <- furs[3,1];  n <- furs[3,2] # likelihoods for the     
 #' lik3 <- dbinom(m,n,p)            # average of six samples    
 #' lik4 <- lik3/sum(lik3)  # rescale for comparison with totlik    
-#' lines(X,lik4,lwd=2,col=3,lty=2) #add 6 sample average to plot    
+#' lines(X,lik4,lwd=2,col=3,lty=2) #add 6 sample average to plot 
+#' par(oldp)  # return par to old settings; this line not in book     
 #' 
 #' ### Analytical Approaches    
 #' ## Other Distributions    
@@ -1082,14 +1110,15 @@ NULL
 #' obs <- c(0,0,6,12,35,40,29,23,13,7,10,14,11,16,11,11,9,8,5,2,0,0,0,0)    
 #' # data from (Helidoniotis and Haddon, 2012)    
 #' dat <- as.matrix(cbind(mids,obs)) #xy matrix needed by inthist    
-#' parset()  #set up par declaration then use an MQMF function     
+#' oldp <- parset()  #set up par declaration then use an MQMF function     
 #' inthist(dat,col=2,border=3,width=1.8, #histogram of integers    
-#'         xlabel="Shell Length mm",ylabel="Frequency",xmin=7,xmax=55)     
+#'         xlabel="Shell Length mm",ylabel="Frequency",xmin=7,xmax=55)   
+#' par(oldp)  # return par to old settings; this line not in book    
 #' 
 #' # R-chunk 40 
 #' #cohort data with 2 guess-timated normal curves Fig 4.20    
 #' 
-#' parset()  # set up the required par declaration    
+#' oldp <- parset()  # set up the required par declaration    
 #' inthist(dat,col=0,border=8,width=1.8,xlabel="Shell Length mm",    
 #'         ylabel="Frequency",xmin=7,xmax=55,lwd=2)  # MQMF function          
 #' #Guess normal parameters and plot those curves on histogram    
@@ -1101,7 +1130,8 @@ NULL
 #' cohort2 <- (n*(1-prop1)*cw)*dnorm(mids,av[2],stdev[2])# cohort    
 #' #(n*prop1*cw) scales likelihoods to suit the 2mm class width    
 #' lines(mids,cohort1,lwd=2,col=1)    
-#' lines(mids,cohort2,lwd=2,col=4)    
+#' lines(mids,cohort2,lwd=2,col=4) 
+#' par(oldp)  # return par to old settings; this line not in book     
 #' 
 #' # R-chunk 41 
 #' #wrapper function for calculating the multinomial log-likelihoods    
@@ -1147,7 +1177,7 @@ NULL
 #' # R-chunk 44 
 #' #plot the alternate model fits to cohorts  Fig 4.21    
 #' 
-#' parset()  # set up required par declaration; then plot curves    
+#' oldp <- parset() #set up required par declaration; then plot curves    
 #' pick <- which(mids < 28)    
 #' inthist(dat[pick,],col=0,border=8,width=1.8,xmin=5,xmax=28,    
 #'         xlabel="Shell Length mm",ylabel="Frequency",lwd=3)     
@@ -1156,6 +1186,7 @@ NULL
 #' label <- c("midpoints","bounds")      # very minor differences   
 #' legend("topleft",legend=label,lwd=3,col=c(1,4),bty="n",    
 #'        cex=1.2,lty=c(2,1))    
+#' par(oldp)  # return par to old settings; this line not in book  
 #' 
 #' # R-chunk 45 
 #' # setup table of results for comparison of fitting strategies    
@@ -1179,20 +1210,21 @@ NULL
 #' 
 #' X <- seq(0.0,10,0.1) #now try different shapes and scale values    
 #' dg <- dgamma(X,shape=1,scale=1)     
-#' plot1(X,dg,xlab = "Quantile","Probability Density")    
+#' oldp <- plot1(X,dg,xlab = "Quantile","Probability Density")    
 #' lines(X,dgamma(X,shape=1.5,scale=1),lwd=2,col=2,lty=2)    
 #' lines(X,dgamma(X,shape=2,scale=1),lwd=2,col=3,lty=3)    
 #' lines(X,dgamma(X,shape=4,scale=1),lwd=2,col=4,lty=4)    
 #' legend("topright",legend=c("Shape 1","Shape 1.5","Shape 2",    
 #'                            "Shape 4"),lwd=3,col=c(1,2,3,4),bty="n",cex=1.25,lty=1:4)    
 #' mtext("Scale c = 1",side=3,outer=FALSE,line=-1.1,cex=1.0,font=7)    
+#' par(oldp)  # return par to old settings; this line not in book  
 #' 
 #' ## Likelihoods from the Beta Distribution    
 #' # R-chunk 48 
 #' #Illustrate different Beta function curves. Figure 4.23    
 #' 
 #' x <- seq(0, 1, length = 1000)    
-#' parset()    
+#' oldp <- parset()    
 #' plot(x,dbeta(x,shape1=3,shape2=1),type="l",lwd=2,ylim=c(0,4),    
 #'      yaxs="i",panel.first=grid(), xlab="Variable 0 - 1",     
 #'      ylab="Beta Probability Density - Scale1 = 3")    
@@ -1200,6 +1232,7 @@ NULL
 #' for (i in 1:length(bval))     
 #'   lines(x,dbeta(x,shape1=3,shape2=bval[i]),lwd=2,col=(i+1),lty=c(i+1))    
 #' legend(0.5,3.95,c(1.0,bval),col=c(1:7),lwd=2,bty="n",lty=1:5)    
+#' par(oldp)  # return par to old settings; this line not in book  
 #' 
 #' 
 #' ## Bayes' Theorem    
@@ -1213,7 +1246,8 @@ NULL
 #' y <- rep(1/1000,1000)    
 #' cumy <- cumsum(y)    
 #' group <- sort(rep(c(1:50),20))    
-#' xlab <- seq(10,990,20)    
+#' xlab <- seq(10,990,20)  
+#' oldp <- par(no.readonly=TRUE)  # this line not in book  
 #' par(mfrow=c(2,1),mai=c(0.45,0.3,0.05,0.05),oma=c(0.0,1.0,0.0,0.0))     
 #' par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 #' yval <- tapply(y,group,sum)    
@@ -1221,7 +1255,8 @@ NULL
 #'      xlim=c(0,1000),ylim=c(0,1),ylab="",xlab="Linear Scale")    
 #' plot(log(x),cumy,type="p",pch=16,cex=0.5,panel.first=grid(),    
 #'      xlim=c(0,7),xlab="Logarithmic Scale",ylab="")    
-#' mtext("Cumulative Probability",side=2,outer=TRUE,cex=0.9,font=7)    
+#' mtext("Cumulative Probability",side=2,outer=TRUE,cex=0.9,font=7)
+#' par(oldp)  # return par to old settings; this line not in book      
 #' }
 NULL
 
@@ -1259,7 +1294,7 @@ NULL
 #' # R-chunk 2  
 #'  #plot the non-seasonal fit and its residuals.  Figure 5.1     
 #'  
-#' parset(plots=c(2,1),margin=c(0.35,0.45,0.02,0.05))      
+#' oldp <- parset(plots=c(2,1),margin=c(0.35,0.45,0.02,0.05))      
 #' plot1(week,length,type="p",cex=1.0,col=2,xlab="Weeks",pch=16,     
 #'       ylab="Length (mm)",defpar=FALSE)     
 #' lines(0:160,predL,lwd=2,col=1)     
@@ -1268,7 +1303,8 @@ NULL
 #' plot1(week,resids,type="l",col="darkgrey",cex=0.9,lwd=2,     
 #'     xlab="Weeks",lty=3,ylab="Normal Residuals",defpar=FALSE)     
 #' points(week,resids,pch=16,cex=1.1,col="red")     
-#' abline(h=0,col=1,lwd=1)     
+#' abline(h=0,col=1,lwd=1) 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'      
 #' # R-chunk 3  
 #'  # Fit seasonal vB curve, parameters = Linf, K, t0, C, s, sigma     
@@ -1287,7 +1323,7 @@ NULL
 #' # R-chunk 4  
 #'  #Plot seasonal growth curve and residuals   Figure 5.2     
 #'  
-#' parset(plots=c(2,1))  # MQMF utility wrapper function     
+#' oldp <- parset(plots=c(2,1))  # MQMF utility wrapper function     
 #' plot1(week,length,type="p",cex=0.9,col=2,xlab="Weeks",pch=16,     
 #'       ylab="Length (mm)",defpar=FALSE)     
 #' lines(0:160,predLs,lwd=2,col=1)     
@@ -1296,18 +1332,20 @@ NULL
 #' plot1(week,resids,type="l",col="darkgrey",cex=0.9,xlab="Weeks",     
 #'       lty=3,ylab="Normal Residuals",defpar=FALSE)     
 #' points(week,resids,pch=16,cex=1.1,col="red")     
-#' abline(h=0,col=1,lwd=1)     
+#' abline(h=0,col=1,lwd=1)  
+#' par(oldp)  # return par to old settings; this line not in book     
 #'  
 #' ### Fabens Method with Tagging Data     
 #' # R-chunk 5  
 #'  # tagging growth increment data from Black Island, Tasmania     
 #'  
 #' data(blackisland);  bi <- blackisland # just to keep things brief     
-#' parset()     
+#' oldp <- parset()     
 #' plot(bi$l1,bi$dl,type="p",pch=16,cex=1.0,col=2,ylim=c(-1,33),     
 #'      ylab="Growth Increment mm",xlab="Initial Length mm",     
 #'      panel.first = grid())     
-#' abline(h=0,col=1)     
+#' abline(h=0,col=1)  
+#' par(oldp)  # return par to old settings; this line not in book     
 #'  
 #' ### Fitting Models to Tagging Data     
 #' # R-chunk 6  
@@ -1330,7 +1368,7 @@ NULL
 #' # R-chunk 7  
 #'  #growth curves and regression fitted to tagging data Fig 5.4     
 #'  
-#' parset(margin=c(0.4,0.4,0.05,0.05))     
+#' oldp <- parset(margin=c(0.4,0.4,0.05,0.05))     
 #' plot(bi$l1,bi$dl,type="p",pch=16,cex=1.0,col=3,ylim=c(-2,31),     
 #'      ylab="Growth Increment mm",xlab="Length mm",panel.first=grid())     
 #' abline(h=0,col=1)     
@@ -1339,11 +1377,12 @@ NULL
 #' abline(linm,lwd=3,col=7,lty=2) # add dashed linear regression     
 #' legend("topright",c("vB","LinReg","IL"),lwd=3,bty="n",cex=1.2,     
 #'                     col=c(1,7,2),lty=c(1,2,2))     
+#' par(oldp)  # return par to old settings; this line not in book  
 #'  
 #' # R-chunk 8  
 #'  #residuals for vB and inverse logistic for tagging data Fig 5.5     
 #'  
-#' parset(plots=c(1,2),outmargin=c(1,1,0,0),margin=c(.25,.25,.05,.05))     
+#' oldp <- parset(plots=c(1,2),outmargin=c(1,1,0,0),margin=c(.25,.25,.05,.05))     
 #' plot(bi$l1,(bi$dl - predvB),type="p",pch=16,col=1,ylab="",     
 #'      xlab="",panel.first=grid(),ylim=c(-8,11))     
 #' abline(h=0,col=1)     
@@ -1353,7 +1392,8 @@ NULL
 #' abline(h=0,col=1)     
 #' mtext("IL",side=3,outer=FALSE,line=-1.2,cex=1.2,font=7)     
 #' mtext("Length mm",side=1,line=-0.1,cex=1.0,font=7,outer=TRUE)     
-#' mtext("Residual",side=2,line=-0.1,cex=1.0,font=7,outer=TRUE)     
+#' mtext("Residual",side=2,line=-0.1,cex=1.0,font=7,outer=TRUE)   
+#' par(oldp)  # return par to old settings; this line not in book    
 #'  
 #' ### A Closer Look at the Fabens Methods     
 #' ### Implementation of Non-Constant Variances     
@@ -1387,7 +1427,7 @@ NULL
 #'  
 #' predvB <- fabens(modelvb$estimate,bi)     
 #' predvB2 <- fabens(modelvb2$estimate,bi)     
-#' parset(margin=c(0.4,0.4,0.05,0.05))     
+#' oldp <- parset(margin=c(0.4,0.4,0.05,0.05))     
 #' plot(bi$l1,bi$dl,type="p",pch=1,cex=1.0,col=1,ylim=c(-2,31),     
 #'      ylab="Growth Increment mm",xlab="Length mm",panel.first=grid())     
 #' abline(h=0,col=1)     
@@ -1395,6 +1435,7 @@ NULL
 #' lines(bi$l1,predvB2,col=2,lwd=2,lty=2)  # IL     
 #' legend("topright",c("Constant sigma","Changing sigma"),lwd=3,     
 #'        col=c(1,2),bty="n",cex=1.1,lty=c(1,2))     
+#' par(oldp)  # return par to old settings; this line not in book  
 #'  
 #' ## Objective Model Selection     
 #' ### Akiake's Information Criterion     
@@ -1432,8 +1473,9 @@ NULL
 #'  
 #' propm <- tapply(tasab$mature,tasab$length,mean) #mean maturity at L     
 #' lens <- as.numeric(names(propm))            # lengths in the data     
-#' plot1(lens,propm,type="p",cex=0.9,xlab="Length mm",     
+#' oldp <- plot1(lens,propm,type="p",cex=0.9,xlab="Length mm",     
 #'       ylab="Proportion Mature")     
+#' par(oldp)  # return par to old settings; this line not in book  
 #'      
 #' # R-chunk 15  
 #'  #Use glm to estimate mature logistic     
@@ -1463,7 +1505,7 @@ NULL
 #' propm <- tapply(tasab$mature,tasab$length,mean) #prop mature     
 #' lens <- as.numeric(names(propm))       # lengths in the data     
 #' pick <- which((lens > 79) & (lens < 146))     
-#' parset()   
+#' oldp <- parset()   
 #' plot(lens[pick],propm[pick],type="p",cex=0.9, #the data points     
 #'       xlab="Length mm",ylab="Proportion Mature",pch=1)      
 #' L <- seq(80,145,1) # for increased curve separation     
@@ -1474,6 +1516,8 @@ NULL
 #' abline(h=c(0.25,0.5,0.75),lty=3,col="grey")   
 #' legend("topleft",c("site1","both","site2"),col=c(3,1,2),lty=c(2,1,4),     
 #'        lwd=3,bty="n")     
+#' par(oldp)  # return par to old settings; this line not in book  
+#' 
 #'  
 #' ### The Assumption of Symmetry     
 #' # R-chunk 17  
@@ -1485,10 +1529,11 @@ NULL
 #' L25 <- linter(bracket(0.25,asym,L))      
 #' L50 <- linter(bracket(0.5,asym,L))      
 #' L75 <- linter(bracket(0.75,asym,L))    
-#' parset()   
+#' oldp <- parset()   
 #' plot(L,asym,type="l",lwd=2,xlab="Length mm",ylab="Proportion Mature")     
 #' abline(h=c(0.25,0.5,0.75),lty=3,col="grey")     
-#' abline(v=c(L25,L50,L75),lwd=c(1,2,1),col=c(1,2,1))     
+#' abline(v=c(L25,L50,L75),lwd=c(1,2,1),col=c(1,2,1))  
+#' par(oldp)  # return par to old settings; this line not in book     
 #'  
 #' # R-chunk 18  
 #'  #Variation possible using the Schnute and Richard's Curve fig 5.10     
@@ -1503,7 +1548,7 @@ NULL
 #' vals <- seq(0.05,0.09,0.01) # a value     
 #' nvals <- length(vals)     
 #' asym <-  srug(p=c(a=vals[1],b=0.2,c=1.0,alpha=100),sizeage=L)     
-#' parset(plots=c(2,2))      
+#' oldp <- parset(plots=c(2,2))      
 #' plot(L,asym,type="l",lwd=2,xlab="Length mm",ylab="Proportion Mature",     
 #'       ylim=c(0,1.05))     
 #' abline(h=c(0.25,0.5,0.75),lty=3,col="darkgrey")     
@@ -1544,7 +1589,8 @@ NULL
 #'   asym <- srug(p=c(a=0.07,b=0.2,c=1.0,alpha=vals[i]),sizeage=L)     
 #'   lines(L,asym,lwd=2,col=i,lty=i)     
 #' }     
-#' tmplot(vals,"alpha")     
+#' tmplot(vals,"alpha") 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' ## Recruitment     
 #' ### Introduction     
@@ -1556,12 +1602,13 @@ NULL
 #'  
 #' B <- 1:3000     
 #' bhb <- c(1000,500,250,150,50)     
-#' parset()   
+#' oldp <- parset()   
 #' plot(B,bh(c(1000,bhb[1]),B),type="l",ylim=c(0,1050),   
 #'       xlab="Spawning Biomass",ylab="Recruitment")     
 #' for (i in 2:5) lines(B,bh(c(1000,bhb[i]),B),lwd=2,col=i,lty=i)     
 #' legend("bottomright",legend=bhb,col=c(1:5),lwd=3,bty="n",lty=c(1:5))     
-#' abline(h=c(500,1000),col=1,lty=2)     
+#' abline(h=c(500,1000),col=1,lty=2)   
+#' par(oldp)  # return par to old settings; this line not in book    
 #'  
 #' ### Ricker Recruitment     
 #' # R-chunk 20  
@@ -1569,13 +1616,12 @@ NULL
 #'  
 #' B <- 1:20000     
 #' rickb <- c(0.0002,0.0003,0.0004)    
-#' parset()   
+#' oldp <- parset()   
 #' plot(B,ricker(c(10,rickb[1]),B),type="l",xlab="Spawning Biomass",ylab="Recruitment")     
 #' for (i in 2:3)      
 #'    lines(B,ricker(c(10,rickb[i]),B),lwd=2,col=i,lty=i)     
 #' legend("topright",legend=rickb,col=1:3,lty=1:3,bty="n",lwd=2)     
-#'  
-#'  
+#' par(oldp)  # return par to old settings; this line not in book   
 #'  
 #'  
 #' ### Deriso's Generalized Model     
@@ -1584,12 +1630,15 @@ NULL
 #'  # plot of three special cases from Deriso-Schnute curve  Fig. 5.13     
 #' deriso <- function(p,B) return(p[1] * B *(1 - p[2]*p[3]*B)^(1/p[3]))     
 #' B <- 1:10000     
-#' plot1(B,deriso(c(10,0.001,-1),B),lwd=2,xlab="Spawning Biomass",ylab="Recruitment") 
+#' oldp <- plot1(B,deriso(c(10,0.001,-1),B),lwd=2,xlab="Spawning Biomass",
+#'               ylab="Recruitment") 
 #' lines(B,deriso(c(10,0.0004,0.25),B),lwd=2,col=2,lty=2)  # DS     
 #' lines(B,deriso(c(10,0.0004,1e-06),B),lwd=2,col=3,lty=3) # Ricker     
 #' lines(B,deriso(c(10,0.0004,0.5),B),lwd=2,col=1,lty=3)   # odd line     
 #' legend(x=7000,y=8500,legend=c("BH","DS","Ricker","odd line"),     
 #'        col=c(1,2,3,1),lty=c(1,2,3,3),bty="n",lwd=3)     
+#' par(oldp)  # return par to old settings; this line not in book  
+#' 
 #'  
 #' ### Re-Parameterized Beverton-Holt Equation     
 #' ### Re-Parameterized Ricker Equation     
@@ -1604,13 +1653,14 @@ NULL
 #' sel2 <- mature(-3.650425,0.146017,sizeage=ages)     
 #' sel3 <- mature(-6,0.2,ages)     
 #' sel4 <- logist(22.0,14,ages,knifeedge = TRUE)     
-#' plot1(ages,sel1,xlab="Age Years",ylab="Selectivity",cex=0.75,lwd=2)     
+#' oldp <- plot1(ages,sel1,xlab="Age Years",ylab="Selectivity",cex=0.75,lwd=2)     
 #' lines(ages,sel2,col=2,lwd=2,lty=2)     
 #' lines(ages,sel3,col=3,lwd=2,lty=3)     
 #' lines(ages,sel4,col=4,lwd=2,lty=4)     
 #' abline(v=in50,col=1,lty=2); abline(h=0.5,col=1,lty=2)     
 #' legend("topleft",c("25_eq5.30","25_eq5.31","30_eq5.31","22_eq5.30N"),     
 #'        col=c(1,2,3,4),lwd=3,cex=1.1,bty="n",lty=c(1:4))     
+#' par(oldp)  # return par to old settings; this line not in book  
 #'  
 #'  
 #' ### Dome Shaped Selection     
@@ -1619,11 +1669,12 @@ NULL
 #'  
 #' L <- seq(1,30,1)     
 #' p <- c(10,11,16,33,-5,-2)     
-#' plot1(L,domed(p,L),type="l",lwd=2,ylab="Selectivity",xlab="Age Years")     
+#' oldp <- plot1(L,domed(p,L),type="l",lwd=2,ylab="Selectivity",xlab="Age Years")     
 #' p1 <- c(8,12,16,33,-5,-1)     
 #' lines(L,domed(p1,L),lwd=2,col=2,lty=2)     
 #' p2 <- c(9,10,16,33,-5,-4)     
-#' lines(L,domed(p2,L),lwd=2,col=4,lty=4)     
+#' lines(L,domed(p2,L),lwd=2,col=4,lty=4)  
+#' par(oldp)  # return par to old settings; this line not in book     
 #' }
 NULL
 
@@ -1661,10 +1712,11 @@ NULL
 #' predce <- exp(simpspm(bestmod$estimate,abdat))      
 #' optresid <- abdat[,"cpue"]/predce #multiply by predce for obsce     
 #' ymax <- getmax(c(predce,abdat$cpue))     
-#' plot1(abdat$year,(predce*optresid),type="l",maxy=ymax,cex=0.9,     
+#' oldp <- plot1(abdat$year,(predce*optresid),type="l",maxy=ymax,cex=0.9,     
 #'       ylab="CPUE",xlab="Year",lwd=3,col="grey",lty=1)     
 #' points(abdat$year,abdat$cpue,pch=1,col=1,cex=1.1)     
-#' lines(abdat$year,predce,lwd=2,col=1)  # best fit line     
+#' lines(abdat$year,predce,lwd=2,col=1)  # best fit line   
+#' par(oldp)  # return par to old settings; this line not in book    
 #'  
 #' ## Bootstrapping     
 #' ### Empirical Probability Density Distributions     
@@ -1674,14 +1726,15 @@ NULL
 #'  
 #' data(npf)     
 #' model <- lm(endeavour ~ tiger,data=npf)     
-#' plot1(npf$tiger,npf$endeavour,type="p",xlab="Tiger Prawn (t)",     
+#' oldp <- plot1(npf$tiger,npf$endeavour,type="p",xlab="Tiger Prawn (t)",     
 #'       ylab="Endeavour Prawn (t)",cex=0.9)     
 #' abline(model,col=1,lwd=2)     
 #' correl <- sqrt(summary(model)$r.squared)     
 #' pval <- summary(model)$coefficients[2,4]     
 #' label <- paste0("Correlation ",round(correl,5)," P = ",round(pval,8))     
 #' text(2700,180,label,cex=1.0,font=7,pos=4)     
-#'  
+#' par(oldp)  # return par to old settings; this line not in book  
+#'   
 #'  
 #' # R-chunk 4  
 #' # 5000 bootstrap estimates of correlation coefficient Fig 6.3     
@@ -1696,14 +1749,15 @@ NULL
 #' rge <- range(result)                  # store the range of results     
 #' CI <- quants(result)     # calculate quantiles; 90%CI = 5% and 95%     
 #' restrim <- result[result > 0] #remove possible -ve values for plot     
-#' parset(cex=1.0)        # set up a plot window and draw a histogram     
+#' oldp <- parset(cex=1.0)  #set up a plot window and draw a histogram     
 #' bins <- seq(trunc(range(restrim)[1]*10)/10,1.0,0.01)      
 #' outh <- hist(restrim,breaks=bins,main="",col=0,xlab="Correlation")     
 #' abline(v=c(correl,mean(result)),col=c(4,3),lwd=c(3,2),lty=c(1,2))     
 #' abline(v=CI[c(2,4)],col=4,lwd=2) # and 90% confidence intervals     
 #' text(0.48,400,makelabel("Range ",rge,sep="  ",sigdig=4),font=7,pos=4)     
 #' label <- makelabel("90%CI ",CI[c(2,4)],sep="  ",sigdig=4)     
-#' text(0.48,300,label,cex=1.0,font=7,pos=4)     
+#' text(0.48,300,label,cex=1.0,font=7,pos=4)   
+#' par(oldp)  # return par to old settings; this line not in book    
 #'  
 #' ## Bootstrapping Time-Series Data     
 #' # R-chunk 5  
@@ -1746,12 +1800,13 @@ NULL
 #' # R-chunk 8  
 #'  # bootstrap replicates in grey behind main plot Fig 6.4     
 #'  
-#' plot1(abdat[,"year"],abdat[,"cpue"],type="n",xlab="Year",     
-#'       ylab="CPUE") # type="n" just lays out an empty plot     
+#' oldp <- plot1(abdat[,"year"],abdat[,"cpue"],type="n",xlab="Year",     
+#'               ylab="CPUE") # type="n" just lays out an empty plot     
 #' for (i in 1:N)      # ready to add the separate components     
 #'   lines(abdat[,"year"],results[i,],lwd=1,col="grey")     
 #' points(abdat[,"year"],abdat[,"cpue"],pch=16,cex=1.0,col=1)     
-#' lines(abdat[,"year"],predce,lwd=2,col=1)     
+#' lines(abdat[,"year"],predce,lwd=2,col=1) 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' # R-chunk 9  
 #'  #histograms of bootstrap parameters and model outputs Fig 6.5     
@@ -1763,13 +1818,14 @@ NULL
 #' }     
 #' msy <- parboot[,"r"]*parboot[,"K"]/4 #calculate bootstrap MSY      
 #' msyB <- quants(msy)        #from optimum bootstrap parameters     
-#' parset(plots=c(2,2),cex=0.9)     
+#' oldp <- parset(plots=c(2,2),cex=0.9)     
 #' bootres <- apply(parboot,2,quants); pick <- c(2,3,4) #quantiles     
 #' dohist(parboot,nmvar="r",bootres=bootres,avpar=optpar[1])     
 #' dohist(parboot,nmvar="K",bootres=bootres,avpar=optpar[2])     
 #' dohist(parboot,nmvar="Binit",bootres=bootres,avpar=optpar[3])     
 #' hist(msy,breaks=30,main="",xlab="MSY",col=0)     
-#' abline(v=c(optmsy,msyB[pick]),lwd=c(3,2,3,2),col=c(3,4,4,4))     
+#' abline(v=c(optmsy,msyB[pick]),lwd=c(3,2,3,2),col=c(3,4,4,4)) 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' ### Parameter Correlation     
 #' # R-chunk 10  
@@ -1817,11 +1873,12 @@ NULL
 #' for (i in 1:N) mvncpue[i,] <- exp(simpspm(log(mvnpar[i,]),abdat))     
 #' msy <- mvnpar[,"r"]*mvnpar[,"K"]/4 #N MSY estimates      
 #'  # plot data and trajectories from the N parameter vectors     
-#' plot1(abdat[,"year"],abdat[,"cpue"],type="p",xlab="Year",     
-#'       ylab="CPUE",cex=0.9)     
+#' oldp <- plot1(abdat[,"year"],abdat[,"cpue"],type="p",xlab="Year",     
+#'               ylab="CPUE",cex=0.9)     
 #' for (i in 1:N) lines(abdat[,"year"],mvncpue[i,],col="grey",lwd=1)     
 #' points(abdat[,"year"],abdat[,"cpue"],pch=16,cex=1.0)#orig data     
-#' lines(abdat[,"year"],exp(simpspm(optpar,abdat)),lwd=2,col=1)     
+#' lines(abdat[,"year"],exp(simpspm(optpar,abdat)),lwd=2,col=1)  
+#' par(oldp)  # return par to old settings; this line not in book     
 #'      
 #' # R-chunk 13  
 #'  #correlations between parameters when using mvtnorm Fig 6.8     
@@ -1838,13 +1895,15 @@ NULL
 #' plothist <- function(x,optp,label,resmvn) {     
 #'   hist(x,breaks=30,main="",xlab=label,col=0)     
 #'   abline(v=c(exp(optp),resmvn),lwd=c(3,2,3,2),col=c(3,4,4,4))      
-#' } # repeated 4 times, so worthwhile writing a short function     
+#' } # repeated 4 times, so worthwhile writing a short function  
+#' oldp <- par(no.readonly=TRUE)   
 #' par(mfrow=c(2,2),mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))      
 #' par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)     
 #' plothist(mvnpar[,"r"],optpar[1],"r",mvnres[pick,"r"])     
 #' plothist(mvnpar[,"K"],optpar[2],"K",mvnres[pick,"K"])     
 #' plothist(mvnpar[,"Binit"],optpar[3],"Binit",mvnres[pick,"Binit"])     
-#' plothist(msy,meanmsy,"MSY",msymvn[pick])     
+#' plothist(msy,meanmsy,"MSY",msymvn[pick])    
+#' par(oldp)  # return par to old settings; this line not in book   
 #'  
 #' # R-chunk 15  
 #'  #Tabulate percentile CI from bootstrap (B) and multi-variate (mvn)     
@@ -1960,14 +2019,15 @@ NULL
 #' # R-chunk 26  
 #'  #K parameter likelihood profile  Fig 6.12     
 #'  
-#' plot1(resK[,"K"],resK[,"likes"],xlab="K value",     
-#'       ylab="Likelihood",lwd=2)     
+#' oldp <- plot1(resK[,"K"],resK[,"likes"],xlab="K value",     
+#'               ylab="Likelihood",lwd=2)     
 #' lower <- which.closest(0.025,resK[,"cumlike"])     
 #' mid <- which(resK[,"likes"] == max(resK[,"likes"]))     
 #' upper <- which.closest(0.975,resK[,"cumlike"])     
 #' abline(v=c(resK[c(lower,mid,upper),"K"]),col=1,lwd=c(1,2,1))     
 #' label <- makelabel("",resK[c(lower,mid,upper),"K"],sep="  ")     
-#' text(9500,0.005,label,cex=1.2,pos=4)     
+#' text(9500,0.005,label,cex=1.2,pos=4)    
+#' par(oldp)  # return par to old settings; this line not in book   
 #'  
 #' ### Percentile Likelihood Profiles for Model Outputs     
 #' # R-chunk 27  
@@ -2067,7 +2127,7 @@ NULL
 #' # R-chunk 32  
 #' #first example and start of 3 initial chains for MCMC Fig6.15     
 #'  
-#' parset(cex=0.85)        
+#' oldp <- parset(cex=0.85)        
 #' P <- 75  # the first 75 steps only start to explore parameter space   
 #' plot(postY[,"K"],postY[,"r"],type="p",cex=0.2,xlim=c(7000,13000),     
 #'    ylim=c(0.28,0.47),col=8,xlab="K",ylab="r",panel.first=grid())     
@@ -2076,7 +2136,8 @@ NULL
 #' lines(post1[1:P,"K"],post1[1:P,"r"],lwd=1,col=1)     
 #' points(post1[1:P,"K"],post1[1:P,"r"],pch=1,cex=1.2,col=1)     
 #' lines(post3[1:P,"K"],post3[1:P,"r"],lwd=1,col=1)     
-#' points(post3[1:P,"K"],post3[1:P,"r"],pch=2,cex=1.2,col=1)     
+#' points(post3[1:P,"K"],post3[1:P,"r"],pch=2,cex=1.2,col=1)    
+#' par(oldp)  # return par to old settings; this line not in book   
 #'  
 #' # R-chunk 33  
 #'  #pairs plot of parameters from the first MCMC Fig 6.16     
@@ -2088,7 +2149,8 @@ NULL
 #' # R-chunk 34  
 #'  #plot the traces from the first MCMC example Fig 6.17     
 #'  
-#' posterior <- result4[[1]][[1]]     
+#' posterior <- result4[[1]][[1]]  
+#' oldp <- par(no.readonly=TRUE)   # this line not in book
 #' par(mfrow=c(4,2),mai=c(0.4,0.4,0.05,0.05),oma=c(0.0,0,0.0,0.0))     
 #' par(cex=0.8, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)     
 #' label <- colnames(posterior)     
@@ -2098,19 +2160,21 @@ NULL
 #'   plot(1:N,posterior[,i],type="l",lwd=1,ylim=c(ymin,ymax),     
 #'        panel.first=grid(),ylab=label[i],xlab="Step")     
 #'   plot(density(posterior[,i]),lwd=2,col=2,panel.first=grid(),main="")     
-#' }     
+#' }    
+#' par(oldp)  # return par to old settings; this line not in book   
 #'  
 #' # R-chunk 35  
 #'  #Use acf to examine auto-correlation with thinstep = 16   Fig 6.18     
 #'  
 #' posterior <- result4[[1]][[1]]     
 #' label <- colnames(posterior)[1:4]     
-#' parset(plots=c(2,2),cex=0.85)     
+#' oldp <- parset(plots=c(2,2),cex=0.85)     
 #' for (i in 1:4) auto <- acf(posterior[,i],type="correlation",lwd=2,     
 #'                            plot=TRUE,ylab=label[i],lag.max=20)     
+#' par(oldp)  # return par to old settings; this line not in book  
 #'  
 #'  
-#'  # R-chunk 36  
+#' # R-chunk 36  
 #'  #setup MCMC with thinstep of 128 per parameter  Fig 6.19     
 #'  
 #' begin=gettime()     
@@ -2121,9 +2185,10 @@ NULL
 #'                   obsdat=logce,calcprior,scales,schaefer=TRUE)     
 #' posterior <- result[[1]][[1]]     
 #' label <- colnames(posterior)[1:4]     
-#' parset(plots=c(2,2),cex=0.85)     
+#' oldp <- parset(plots=c(2,2),cex=0.85)     
 #' for (i in 1:4) auto <- acf(posterior[,i],type="correlation",lwd=2,     
 #'                            plot=TRUE,ylab=label[i],lag.max=20)     
+#' par(oldp)  # return par to old settings; this line not in book  
 #' cat(gettime() - begin)     
 #'  
 #'  
@@ -2141,7 +2206,8 @@ NULL
 #' bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=abdat,     
 #'                logobs=log(abdat$cpue))     
 #' optval <- exp(bestmod$estimate)     
-#' posterior <- result[[1]][[1]] #example above N=1000, thin=512     
+#' posterior <- result[[1]][[1]] #example above N=1000, thin=512  
+#' oldp <- par(no.readonly=TRUE)   
 #' par(mfrow=c(5,1),mai=c(0.4,0.3,0.025,0.05),oma=c(0,1,0,0))      
 #' par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 #' np <- length(param)     
@@ -2160,7 +2226,8 @@ NULL
 #' lines(tmp,lwd=2,col=2)     
 #' abline(v=(optval[1]*optval[2]/4),lwd=3,col=4)     
 #' mtext("Frequency",side=2,outer=T,line=0.0,font=7,cex=1.0)     
-#'  
+#' par(oldp)  # return par to old settings; this line not in book  
+#'   
 #'  
 #' ## The Use of Rcpp     
 #' # R-chunk 38  
@@ -2287,14 +2354,16 @@ NULL
 #'  
 #' # R-chunk 45  
 #' #compare marginal distributions of the 2 chains  Fig 6.21     
-#'  
+#'
+#' oldp <- par(no.readonly=TRUE)  # this line not in the book
 #' par(mfrow=c(1,1),mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))      
 #' par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 #' maxy <- getmax(c(density(postR[,"K"])$y,density(postC[,"K"])$y))     
 #' plot(density(postR[,"K"]),lwd=2,col=1,xlab="K",ylab="Density",     
 #'      main="",ylim=c(0,maxy),panel.first=grid())     
 #' lines(density(postC[,"K"]),lwd=3,col=5,lty=2)     
-#'  
+#' par(oldp)  # return par to old settings; this line not in book  
+#'   
 #'  
 #' ### Multiple Independent Chains     
 #' # R-chunk 46  
@@ -2313,7 +2382,8 @@ NULL
 #'  
 #' # R-chunk 47  
 #'  #3 chain run using simpspmC, 10000 reps, thinstep=256 Fig 6.22     
-#'  
+#' 
+#' oldp <- par(no.readonly=TRUE) 
 #' par(mfrow=c(2,2),mai=c(0.4,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))      
 #' par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 #' label <- c("r","K","Binit","sigma")     
@@ -2322,7 +2392,8 @@ NULL
 #'         xlab=label[i],ylab="Density",main="",panel.first=grid())       
 #'    lines(density(resultC$result[[1]][,i]),lwd=2,col=2)     
 #'    lines(density(resultC$result[[3]][,i]),lwd=2,col=3)     
-#' }     
+#' } 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' # R-chunk 48  
 #'  #generate summary stats from the 3 MCMC chains     
@@ -2385,7 +2456,8 @@ NULL
 #'  
 #' posterior1 <- result1$result[[1]]     
 #' posterior2 <- result2$result[[1]]     
-#' label <- colnames(posterior1)[1:4]     
+#' label <- colnames(posterior1)[1:4]  
+#' oldp <- par(no.readonly=TRUE)   
 #' par(mfrow=c(4,2),mai=c(0.25,0.45,0.05,0.05),oma=c(1.0,0,1.0,0.0))      
 #' par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)       
 #' for (i in 1:4) {     
@@ -2397,18 +2469,19 @@ NULL
 #'   if (i == 1) mtext(2048,side=3,line=-0.1,outer=FALSE,cex=1.2)     
 #' }     
 #' mtext("Lag",side=1,line=-0.1,outer=TRUE,cex=1.2)     
-#'  
+#' par(oldp)  # return par to old settings; this line not in book    
 #'  
 #' # R-chunk 52  
 #' #visual comparison of 2 chains marginal densities  Fig 6.24     
 #'  
-#' parset(plots=c(2,2),cex=0.85)      
+#' oldp <- parset(plots=c(2,2),cex=0.85)      
 #' label <- c("r","K","Binit","sigma")     
 #' for (i in 1:4) {     
 #'    plot(density(result1$result[[1]][,i]),lwd=4,col=1,xlab=label[i],     
 #'         ylab="Density",main="",panel.first=grid())       
 #'    lines(density(result2$result[[1]][,i]),lwd=2,col=5,lty=2)     
-#' }     
+#' }    
+#' par(oldp)  # return par to old settings; this line not in book   
 #'  
 #' # R-chunk 53  
 #'  #tablulate a summary of the two different thinning rates.     
@@ -2465,7 +2538,7 @@ NULL
 #' # R-chunk 3  
 #'  #schaef fishery data and regress cpue and catch    Fig 7.1     
 #'  
-#' parset(plots=c(3,1),margin=c(0.35,0.4,0.05,0.05))     
+#' oldp <- parset(plots=c(3,1),margin=c(0.35,0.4,0.05,0.05))     
 #' plot1(schaef[,"year"],schaef[,"catch"],ylab="Catch",xlab="Year",     
 #'       defpar=FALSE,lwd=2)     
 #' plot1(schaef[,"year"],schaef[,"cpue"],ylab="CPUE",xlab="Year",     
@@ -2473,19 +2546,21 @@ NULL
 #' plot1(schaef[,"catch"],schaef[,"cpue"],type="p",ylab="CPUE",     
 #'       xlab="Catch",defpar=FALSE,pch=16,cex=1.0)     
 #' model <- lm(schaef[,"cpue"] ~ schaef[,"catch"])     
-#' abline(model,lwd=2,col=2)   # summary(model)     
+#' abline(model,lwd=2,col=2)   # summary(model) 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' # R-chunk 4  
 #'  #cross correlation between cpue and catch in schaef Fig 7.2     
 #'  
-#' parset(cex=0.85) #sets par parameters for a tidy base graphic     
+#' oldp <- parset(cex=0.85) #sets par values for a tidy base graphic     
 #' ccf(x=schaef[,"catch"],y=schaef[,"cpue"],type="correlation",     
-#'     ylab="Correlation",plot=TRUE)     
+#'     ylab="Correlation",plot=TRUE) 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' # R-chunk 5  
 #'  #now plot schaef data with timelag of 2 years on cpue   Fig 7.3     
 #'  
-#' parset(plots=c(3,1),margin=c(0.35,0.4,0.05,0.05))     
+#' oldp <- parset(plots=c(3,1),margin=c(0.35,0.4,0.05,0.05))     
 #' plot1(schaef[1:20,"year"],schaef[1:20,"catch"],ylab="Catch",     
 #'       xlab="Year",defpar=FALSE,lwd=2)     
 #' plot1(schaef[3:22,"year"],schaef[3:22,"cpue"],ylab="CPUE",     
@@ -2493,7 +2568,8 @@ NULL
 #' plot1(schaef[1:20,"catch"],schaef[3:22,"cpue"],type="p",     
 #'       ylab="CPUE",xlab="Catch",defpar=FALSE,cex=1.0,pch=16)     
 #' model2 <- lm(schaef[3:22,"cpue"] ~ schaef[1:20,"catch"])     
-#' abline(model2,lwd=2,col=2)     
+#' abline(model2,lwd=2,col=2) 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' # R-chunk 6  
 #'  #write out a summary of he regression model2     
@@ -2511,7 +2587,7 @@ NULL
 #' sp <- prodfun(r,Bt,K,1.0)  # Schaefer equivalent     
 #' sp0 <- prodfun(r,Bt,K,p=1e-08)  # Fox equivalent     
 #' sp3 <- prodfun(r,Bt,K,3) #left skewed production, marine mammal?     
-#' parset(plots=c(2,1),margin=c(0.35,0.4,0.1,0.05))     
+#' oldp <- parset(plots=c(2,1),margin=c(0.35,0.4,0.1,0.05))     
 #' plot1(Bt,sp,type="l",lwd=2,xlab="Stock Size",     
 #'       ylab="Surplus Production",maxy=200,defpar=FALSE)     
 #' lines(Bt,sp0 * (max(sp)/max(sp0)),lwd=2,col=2,lty=2) # rescale      
@@ -2521,7 +2597,8 @@ NULL
 #' plot1(Bt,densdep(Bt,K,p=1),xlab="Stock Size",defpar=FALSE,     
 #'       ylab="Density-Dependence",maxy=2.5,lwd=2)     
 #' lines(Bt,densdep(Bt,K,1e-08),lwd=2,col=2,lty=2)     
-#' lines(Bt,densdep(Bt,K,3),lwd=3,col=3,lty=3)     
+#' lines(Bt,densdep(Bt,K,3),lwd=3,col=3,lty=3)
+#' par(oldp)  # return par to old settings; this line not in book       
 #'  
 #' ### The Schaefer Model     
 #' ### Sum of Squared Residuals     
@@ -2616,11 +2693,12 @@ NULL
 #'  # replicates from the robustness test        Fig 7.7     
 #'  
 #' result <- robout2$results     
-#' parset(plots=c(2,2),margin=c(0.35,0.45,0.05,0.05))     
+#' oldp <- parset(plots=c(2,2),margin=c(0.35,0.45,0.05,0.05))     
 #' hist(result[,"r"],breaks=15,col=2,main="",xlab="r")     
 #' hist(result[,"K"],breaks=15,col=2,main="",xlab="K")     
 #' hist(result[,"Binit"],breaks=15,col=2,main="",xlab="Binit")     
-#' hist(result[,"MSY"],breaks=15,col=2,main="",xlab="MSY")     
+#' hist(result[,"MSY"],breaks=15,col=2,main="",xlab="MSY")   
+#' par(oldp)  # return par to old settings; this line not in book    
 #'  
 #' # R-chunk 19  
 #'  #robustSPM parameters against each other  Fig 7.8     
@@ -2682,9 +2760,10 @@ NULL
 #'                   indat=fish,notfix=c(2:4))     
 #' Kval <- seq(7200,11500,200)     
 #' outk <- doprofile(Kval,loc=2,c(0.4,7200,6500,0.3),indat=fish,notfix=c(1,3,4))     
-#' parset(plots=c(2,1),cex=0.85,outmargin=c(0.5,0.5,0,0))     
+#' oldp <- parset(plots=c(2,1),cex=0.85,outmargin=c(0.5,0.5,0,0))     
 #' plotprofile(outr,var="r",defpar=FALSE,lwd=2) #MQMF function     
-#' plotprofile(outk,var="K",defpar=FALSE,lwd=2)     
+#' plotprofile(outk,var="K",defpar=FALSE,lwd=2) 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' ### Bootstrap Confidence Intervals     
 #' # R-chunk 24  
@@ -2726,7 +2805,8 @@ NULL
 #'  #boostrap CI. Note use of uphist to expand scale  Fig 7.12     
 #'  
 #' colf <- c(1,1,1,4); lwdf <- c(1,3,1,3); ltyf <- c(1,1,1,2)     
-#' colsf <- c(2,3,4,6)  ;parset(plots=c(3,2))     
+#' colsf <- c(2,3,4,6)  
+#' oldp <- parset(plots=c(3,2))     
 #' hist(bootpar[,"r"],breaks=25,main="",xlab="r")     
 #' abline(v=c(bootCI["r",colsf]),col=colf,lwd=lwdf,lty=ltyf)     
 #' uphist(bootpar[,"K"],maxval=14000,breaks=25,main="",xlab="K")     
@@ -2738,7 +2818,8 @@ NULL
 #' hist(bootpar[,"Depl"],breaks=25,main="",xlab="Final Depletion")     
 #' abline(v=c(bootCI["Depl",colsf]),col=colf,lwd=lwdf,lty=ltyf)     
 #' hist(bootpar[,"Harv"],breaks=25,main="",xlab="End Harvest Rate")     
-#' abline(v=c(bootCI["Harv",colsf]),col=colf,lwd=lwdf,lty=ltyf)     
+#' abline(v=c(bootCI["Harv",colsf]),col=colf,lwd=lwdf,lty=ltyf)   
+#' par(oldp)  # return par to old settings; this line not in book    
 #'  
 #' # R-chunk 29  
 #'  #Fig7.13 1000 bootstrap trajectories for dataspm model fit      
@@ -2746,7 +2827,7 @@ NULL
 #' dynam <- boots$dynam     
 #' years <- fish[,"year"]     
 #' nyrs <- length(years)     
-#' parset()     
+#' oldp <- parset()     
 #' ymax <- getmax(c(dynam[,,"predCE"],fish[,"cpue"]))     
 #' plot(fish[,"year"],fish[,"cpue"],type="n",ylim=c(0,ymax),     
 #'      xlab="Year",ylab="CPUE",yaxs="i",panel.first = grid())     
@@ -2756,6 +2837,8 @@ NULL
 #' percs <- apply(dynam[,,"predCE"],2,quants)     
 #' arrows(x0=years,y0=percs["5%",],y1=percs["95%",],length=0.03,     
 #'        angle=90,code=3,col=0)     
+#' par(oldp)  # return par to old settings; this line not in book  
+#' 
 #'  
 #' # R-chunk 30  
 #'  #Fit the Fox model to dataspm; note different parameters     
@@ -2768,7 +2851,7 @@ NULL
 #' # R-chunk 31  
 #'  # bootstrap trajectories from both model fits  Fig 7.14     
 #'  
-#' parset()     
+#' oldp <- parset()     
 #' ymax <- getmax(c(dynam[,,"predCE"],fish[,"cpue"]))     
 #' plot(fish[,"year"],fish[,"cpue"],type="n",ylim=c(0,ymax),     
 #'      xlab="Year",ylab="CPUE",yaxs="i",panel.first = grid())     
@@ -2780,6 +2863,8 @@ NULL
 #' arrows(x0=years,y0=percs["5%",],y1=percs["95%",],length=0.03,     
 #'        angle=90,code=3,col=0)     
 #' legend(1985,0.35,c("Schaefer","Fox"),col=c(8,1),bty="n",lwd=3)     
+#' par(oldp)  # return par to old settings; this line not in book  
+#' 
 #'  
 #' ### Parameter Correlations     
 #' # R-chunk 32  
@@ -2838,8 +2923,8 @@ NULL
 #' # R-chunk 38  
 #'  #data and trajectories from 1000 MVN parameter vectors   Fig 7.16     
 #'  
-#' plot1(fish[,"year"],fish[,"cpue"],type="p",xlab="Year",ylab="CPUE",     
-#'       maxy=2.0)     
+#'oldp <-  plot1(fish[,"year"],fish[,"cpue"],type="p",xlab="Year",
+#'               ylab="CPUE",maxy=2.0)     
 #' for (i in 1:N) lines(fish[,"year"],mvncpue[i,],col="grey",lwd=1)     
 #' points(fish[,"year"],fish[,"cpue"],pch=1,cex=1.3,col=1,lwd=2) # data     
 #' lines(fish[,"year"],exp(simpspm(optpar,fish)),lwd=2,col=1)# pred      
@@ -2847,23 +2932,26 @@ NULL
 #' arrows(x0=fish[,"year"],y0=percs["5%",],y1=percs["95%",],length=0.03,     
 #'        angle=90,code=3,col=1) #add 90% quantiles     
 #' msy <- mvnpar[,"r"]*mvnpar[,"K"]/4  # 1000 MSY estimates     
-#' text(2010,1.75,paste0("MSY ",round(mean(msy),3)),cex=1.25,font=7)     
+#' text(2010,1.75,paste0("MSY ",round(mean(msy),3)),cex=1.25,font=7) 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' # R-chunk 39  
 #'  #Isolate errant cpue trajectories Fig 7.17     
 #'  
 #' pickd <- which(mvncpue[,"2016"] < 0.40)     
-#' plot1(fish[,"year"],fish[,"cpue"],type="n",xlab="Year",ylab="CPUE",     
-#'       maxy=6.25)     
+#' oldp <- plot1(fish[,"year"],fish[,"cpue"],type="n",xlab="Year",
+#'               ylab="CPUE",maxy=6.25)     
 #' for (i in 1:length(pickd))      
 #'   lines(fish[,"year"],mvncpue[pickd[i],],col=1,lwd=1)     
 #' points(fish[,"year"],fish[,"cpue"],pch=16,cex=1.25,col=4)      
 #' lines(fish[,"year"],exp(simpspm(optpar,fish)),lwd=3,col=2,lty=2)      
+#' par(oldp)  # return par to old settings; this line not in book  
+#' 
 #'  
 #' # R-chunk 40  
 #'  #Use adhoc function to plot errant parameters Fig 7.18     
 #'  
-#' parset(plots=c(2,2),cex=0.85)     
+#' oldp <- parset(plots=c(2,2),cex=0.85)     
 #' outplot <- function(var1,var2,pickdev) {     
 #'   plot1(mvnpar[,var1],mvnpar[,var2],type="p",pch=16,cex=1.0,     
 #'         defpar=FALSE,xlab=var1,ylab=var2,col=8)     
@@ -2872,7 +2960,8 @@ NULL
 #' outplot("r","K",pickd) # assumes mvnpar in working environment     
 #' outplot("sigma","Binit",pickd)     
 #' outplot("r","Binit",pickd)     
-#' outplot("K","Binit",pickd)     
+#' outplot("K","Binit",pickd) 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' # R-chunk 41  
 #'  #asymptotically sampled parameter vectors  Fig 7.19     
@@ -2913,11 +3002,12 @@ NULL
 #' msy <- mvnparA[,"r"]*mvnparA[,"K"]/4     
 #' for (i in 1:N) mvncpueA[i,]<-exp(simpspm(log(mvnparA[i,]),fish))     
 #' mvnparA <- cbind(mvnparA,msy)     
-#' plot1(fish[,"year"],fish[,"cpue"],type="p",xlab="Year",ylab="CPUE",     
-#'       maxy=2.5)     
+#' oldp <- plot1(fish[,"year"],fish[,"cpue"],type="p",xlab="Year",
+#'               ylab="CPUE",maxy=2.5)     
 #' for (i in 1:N) lines(fish[,"year"],mvncpueA[i,],col=8,lwd=1)     
 #' points(fish[,"year"],fish[,"cpue"],pch=16,cex=1.0) #orig data     
-#' lines(fish[,"year"],exp(simpspm(optparA,fish)),lwd=2,col=0)      
+#' lines(fish[,"year"],exp(simpspm(optparA,fish)),lwd=2,col=0)    
+#' par(oldp)  # return par to old settings; this line not in book    
 #'  
 #' # R-chunk 45  
 #'  #plot asymptotically sampled parameter vectors Figure 7.21     
@@ -2964,11 +3054,12 @@ NULL
 #' # R-chunk 49  
 #'  # marginal distributions of 3 parameters and msy  Figure 7.24     
 #'  
-#' parset(plots=c(2,2), cex=0.85)     
+#' oldp <- parset(plots=c(2,2), cex=0.85)     
 #' plot(density(post1[,"r"]),lwd=2,main="",xlab="r") #plot has a method     
 #' plot(density(post1[,"K"]),lwd=2,main="",xlab="K")   #for output from     
 #' plot(density(post1[,"Binit"]),lwd=2,main="",xlab="Binit")  # density     
-#' plot(density(msy),lwd=2,main="",xlab="MSY")   #try str(density(msy))     
+#' plot(density(msy),lwd=2,main="",xlab="MSY")   #try str(density(msy)) 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' # R-chunk 50  
 #'  #MCMC r and K parameters, approx 50 + 90% contours. Fig7.25     
@@ -2979,7 +3070,7 @@ NULL
 #' } # end of puttxt - a quick utility function     
 #' kran <- range(post1[,"K"]);  rran <- range(post1[,"r"])     
 #' mran <- range(msy)         #ranges used in the plots     
-#' parset(plots=c(1,2),margin=c(0.35,0.35,0.05,0.1)) #plot r vs K     
+#' oldp <- parset(plots=c(1,2),margin=c(0.35,0.35,0.05,0.1)) #plot r vs K     
 #' plot(post1[,"K"],post1[,"r"],type="p",cex=0.5,xlim=kran,     
 #'      ylim=rran,col="grey",xlab="K",ylab="r",panel.first=grid())     
 #' points(optpar[2],optpar[1],pch=16,col=1,cex=1.75) # center     
@@ -2992,13 +3083,14 @@ NULL
 #' points(optpar[2],getMSY(optpar,p),pch=16,col=1,cex=1.75)#center     
 #' addcontours(post1[,"K"],msy,kran,mran,contval=c(0.5,0.9),lwd=2,col=1)     
 #' puttxt(0.6,kran,0.99,mran,kran,"K= ",sigd=0)     
-#' puttxt(0.6,kran,0.97,mran,mran,"MSY= ",sigd=3)     
+#' puttxt(0.6,kran,0.97,mran,mran,"MSY= ",sigd=3) 
+#' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' # R-chunk 51  
 #'  #Traces for the Fox model parameters from the MCMC  Fig7.26     
 #'  
-#' parset(plots=c(4,1),margin=c(0.3,0.45,0.05,0.05),     
-#'        outmargin = c(1,0,0,0),cex=0.85)     
+#' oldp <- parset(plots=c(4,1),margin=c(0.3,0.45,0.05,0.05),     
+#'                outmargin = c(1,0,0,0),cex=0.85)     
 #' label <- colnames(post1)     
 #' N <- dim(post1)[1]     
 #' for (i in 1:3) {     
@@ -3009,6 +3101,7 @@ NULL
 #' plot(1:N,msy,type="l",lwd=1,ylab="MSY",xlab="")     
 #' abline(h=median(msy),col=2)     
 #' mtext("Step",side=1,outer=T,line=0.0,font=7,cex=1.1)     
+#' par(oldp)  # return par to old settings; this line not in book  
 #'  
 #' # R-chunk 52  
 #'  #Do five chains of the same length for the Fox model     
@@ -3026,7 +3119,7 @@ NULL
 #' # R-chunk 53  
 #'  #Now plot marginal posteriors from 5 Fox model chains    Fig7.27     
 #'  
-#' parset(plots=c(2,1),cex=0.85,margin=c(0.4,0.4,0.05,0.05))     
+#' oldp <- parset(plots=c(2,1),cex=0.85,margin=c(0.4,0.4,0.05,0.05))     
 #' post <- result[[1]][[1]]     
 #' plot(density(post[,"K"]),lwd=2,col=1,main="",xlab="K",     
 #'      ylim=c(0,4.4e-04),panel.first=grid())     
@@ -3040,7 +3133,8 @@ NULL
 #'   post <- result$result[[i]]     
 #'   msy <-  post[,"r"]*post[,"K"]/((p + 1)^((p+1)/p))     
 #'   lines(density(msy),lwd=2,col=i)     
-#' }     
+#' }
+#' par(oldp)  # return par to old settings; this line not in book       
 #'  
 #' # R-chunk 54  
 #'  # get qunatiles of each chain     
@@ -3137,9 +3231,10 @@ NULL
 #' # R-chunk 65  
 #'  # auto-correlation, or lack of, and the K trace Fig 7.32     
 #'  
-#' parset(plots=c(2,1),cex=0.85)      
+#' oldp <- parset(plots=c(2,1),cex=0.85)      
 #' acf(parB[,2],lwd=2)     
-#' plot(1:N,parB[,2],type="l",ylab="K",ylim=c(8000,19000),xlab="")     
+#' plot(1:N,parB[,2],type="l",ylab="K",ylim=c(8000,19000),xlab="")   
+#' par(oldp)  # return par to old settings; this line not in book    
 #'  
 #' # R-chunk 66  
 #'  #  Fig 7.33     

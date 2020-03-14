@@ -32,10 +32,11 @@ outfit(bestmod,title="SP-Model",parnames=label) #backtransforms
 predce <- exp(simpspm(bestmod$estimate,abdat))      
 optresid <- abdat[,"cpue"]/predce #multiply by predce for obsce     
 ymax <- getmax(c(predce,abdat$cpue))     
-plot1(abdat$year,(predce*optresid),type="l",maxy=ymax,cex=0.9,     
+oldp <- plot1(abdat$year,(predce*optresid),type="l",maxy=ymax,cex=0.9,     
       ylab="CPUE",xlab="Year",lwd=3,col="grey",lty=1)     
 points(abdat$year,abdat$cpue,pch=1,col=1,cex=1.1)     
-lines(abdat$year,predce,lwd=2,col=1)  # best fit line     
+lines(abdat$year,predce,lwd=2,col=1)  # best fit line   
+par(oldp)  # return par to old settings; this line not in book    
  
 ## Bootstrapping     
 ### Empirical Probability Density Distributions     
@@ -45,14 +46,15 @@ lines(abdat$year,predce,lwd=2,col=1)  # best fit line
  
 data(npf)     
 model <- lm(endeavour ~ tiger,data=npf)     
-plot1(npf$tiger,npf$endeavour,type="p",xlab="Tiger Prawn (t)",     
+oldp <- plot1(npf$tiger,npf$endeavour,type="p",xlab="Tiger Prawn (t)",     
       ylab="Endeavour Prawn (t)",cex=0.9)     
 abline(model,col=1,lwd=2)     
 correl <- sqrt(summary(model)$r.squared)     
 pval <- summary(model)$coefficients[2,4]     
 label <- paste0("Correlation ",round(correl,5)," P = ",round(pval,8))     
 text(2700,180,label,cex=1.0,font=7,pos=4)     
- 
+par(oldp)  # return par to old settings; this line not in book  
+  
  
 # R-chunk 4  
 # 5000 bootstrap estimates of correlation coefficient Fig 6.3     
@@ -67,14 +69,15 @@ for (i in 1:N) {          #sample index from 1:23 with replacement
 rge <- range(result)                  # store the range of results     
 CI <- quants(result)     # calculate quantiles; 90\%CI = 5\% and 95\%     
 restrim <- result[result > 0] #remove possible -ve values for plot     
-parset(cex=1.0)        # set up a plot window and draw a histogram     
+oldp <- parset(cex=1.0)  #set up a plot window and draw a histogram     
 bins <- seq(trunc(range(restrim)[1]*10)/10,1.0,0.01)      
 outh <- hist(restrim,breaks=bins,main="",col=0,xlab="Correlation")     
 abline(v=c(correl,mean(result)),col=c(4,3),lwd=c(3,2),lty=c(1,2))     
 abline(v=CI[c(2,4)],col=4,lwd=2) # and 90\% confidence intervals     
 text(0.48,400,makelabel("Range ",rge,sep="  ",sigdig=4),font=7,pos=4)     
 label <- makelabel("90\%CI ",CI[c(2,4)],sep="  ",sigdig=4)     
-text(0.48,300,label,cex=1.0,font=7,pos=4)     
+text(0.48,300,label,cex=1.0,font=7,pos=4)   
+par(oldp)  # return par to old settings; this line not in book    
  
 ## Bootstrapping Time-Series Data     
 # R-chunk 5  
@@ -117,12 +120,13 @@ cat("total time = ",Sys.time()-start, "seconds   \n")
 # R-chunk 8  
  # bootstrap replicates in grey behind main plot Fig 6.4     
  
-plot1(abdat[,"year"],abdat[,"cpue"],type="n",xlab="Year",     
-      ylab="CPUE") # type="n" just lays out an empty plot     
+oldp <- plot1(abdat[,"year"],abdat[,"cpue"],type="n",xlab="Year",     
+              ylab="CPUE") # type="n" just lays out an empty plot     
 for (i in 1:N)      # ready to add the separate components     
   lines(abdat[,"year"],results[i,],lwd=1,col="grey")     
 points(abdat[,"year"],abdat[,"cpue"],pch=16,cex=1.0,col=1)     
-lines(abdat[,"year"],predce,lwd=2,col=1)     
+lines(abdat[,"year"],predce,lwd=2,col=1) 
+par(oldp)  # return par to old settings; this line not in book      
  
 # R-chunk 9  
  #histograms of bootstrap parameters and model outputs Fig 6.5     
@@ -134,13 +138,14 @@ dohist <- function(invect,nmvar,bins=30,bootres,avpar) { #adhoc
 }     
 msy <- parboot[,"r"]*parboot[,"K"]/4 #calculate bootstrap MSY      
 msyB <- quants(msy)        #from optimum bootstrap parameters     
-parset(plots=c(2,2),cex=0.9)     
+oldp <- parset(plots=c(2,2),cex=0.9)     
 bootres <- apply(parboot,2,quants); pick <- c(2,3,4) #quantiles     
 dohist(parboot,nmvar="r",bootres=bootres,avpar=optpar[1])     
 dohist(parboot,nmvar="K",bootres=bootres,avpar=optpar[2])     
 dohist(parboot,nmvar="Binit",bootres=bootres,avpar=optpar[3])     
 hist(msy,breaks=30,main="",xlab="MSY",col=0)     
-abline(v=c(optmsy,msyB[pick]),lwd=c(3,2,3,2),col=c(3,4,4,4))     
+abline(v=c(optmsy,msyB[pick]),lwd=c(3,2,3,2),col=c(3,4,4,4)) 
+par(oldp)  # return par to old settings; this line not in book      
  
 ### Parameter Correlation     
 # R-chunk 10  
@@ -188,11 +193,12 @@ mvnpar <- matrix(exp(rmvnorm(N,mean=optpar,sigma=vcov)),
 for (i in 1:N) mvncpue[i,] <- exp(simpspm(log(mvnpar[i,]),abdat))     
 msy <- mvnpar[,"r"]*mvnpar[,"K"]/4 #N MSY estimates      
  # plot data and trajectories from the N parameter vectors     
-plot1(abdat[,"year"],abdat[,"cpue"],type="p",xlab="Year",     
-      ylab="CPUE",cex=0.9)     
+oldp <- plot1(abdat[,"year"],abdat[,"cpue"],type="p",xlab="Year",     
+              ylab="CPUE",cex=0.9)     
 for (i in 1:N) lines(abdat[,"year"],mvncpue[i,],col="grey",lwd=1)     
 points(abdat[,"year"],abdat[,"cpue"],pch=16,cex=1.0)#orig data     
-lines(abdat[,"year"],exp(simpspm(optpar,abdat)),lwd=2,col=1)     
+lines(abdat[,"year"],exp(simpspm(optpar,abdat)),lwd=2,col=1)  
+par(oldp)  # return par to old settings; this line not in book     
      
 # R-chunk 13  
  #correlations between parameters when using mvtnorm Fig 6.8     
@@ -209,13 +215,15 @@ msymvn <- quants(msy)   # msy from mult-variate normal estimates
 plothist <- function(x,optp,label,resmvn) {     
   hist(x,breaks=30,main="",xlab=label,col=0)     
   abline(v=c(exp(optp),resmvn),lwd=c(3,2,3,2),col=c(3,4,4,4))      
-} # repeated 4 times, so worthwhile writing a short function     
+} # repeated 4 times, so worthwhile writing a short function  
+oldp <- par(no.readonly=TRUE)   
 par(mfrow=c(2,2),mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))      
 par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)     
 plothist(mvnpar[,"r"],optpar[1],"r",mvnres[pick,"r"])     
 plothist(mvnpar[,"K"],optpar[2],"K",mvnres[pick,"K"])     
 plothist(mvnpar[,"Binit"],optpar[3],"Binit",mvnres[pick,"Binit"])     
-plothist(msy,meanmsy,"MSY",msymvn[pick])     
+plothist(msy,meanmsy,"MSY",msymvn[pick])    
+par(oldp)  # return par to old settings; this line not in book   
  
 # R-chunk 15  
  #Tabulate percentile CI from bootstrap (B) and multi-variate (mvn)     
@@ -331,14 +339,15 @@ kable(head(resK,8),digits=c(4,0,3,4,5,9,7),caption='(ref:tab604)')
 # R-chunk 26  
  #K parameter likelihood profile  Fig 6.12     
  
-plot1(resK[,"K"],resK[,"likes"],xlab="K value",     
-      ylab="Likelihood",lwd=2)     
+oldp <- plot1(resK[,"K"],resK[,"likes"],xlab="K value",     
+              ylab="Likelihood",lwd=2)     
 lower <- which.closest(0.025,resK[,"cumlike"])     
 mid <- which(resK[,"likes"] == max(resK[,"likes"]))     
 upper <- which.closest(0.975,resK[,"cumlike"])     
 abline(v=c(resK[c(lower,mid,upper),"K"]),col=1,lwd=c(1,2,1))     
 label <- makelabel("",resK[c(lower,mid,upper),"K"],sep="  ")     
-text(9500,0.005,label,cex=1.2,pos=4)     
+text(9500,0.005,label,cex=1.2,pos=4)    
+par(oldp)  # return par to old settings; this line not in book   
  
 ### Percentile Likelihood Profiles for Model Outputs     
 # R-chunk 27  
@@ -438,7 +447,7 @@ cat("Accept = ",result4[[2]],"\n")
 # R-chunk 32  
 #first example and start of 3 initial chains for MCMC Fig6.15     
  
-parset(cex=0.85)        
+oldp <- parset(cex=0.85)        
 P <- 75  # the first 75 steps only start to explore parameter space   
 plot(postY[,"K"],postY[,"r"],type="p",cex=0.2,xlim=c(7000,13000),     
    ylim=c(0.28,0.47),col=8,xlab="K",ylab="r",panel.first=grid())     
@@ -447,7 +456,8 @@ points(post2[1:P,"K"],post2[1:P,"r"],pch=15,cex=1.0)
 lines(post1[1:P,"K"],post1[1:P,"r"],lwd=1,col=1)     
 points(post1[1:P,"K"],post1[1:P,"r"],pch=1,cex=1.2,col=1)     
 lines(post3[1:P,"K"],post3[1:P,"r"],lwd=1,col=1)     
-points(post3[1:P,"K"],post3[1:P,"r"],pch=2,cex=1.2,col=1)     
+points(post3[1:P,"K"],post3[1:P,"r"],pch=2,cex=1.2,col=1)    
+par(oldp)  # return par to old settings; this line not in book   
  
 # R-chunk 33  
  #pairs plot of parameters from the first MCMC Fig 6.16     
@@ -459,7 +469,8 @@ pairs(cbind(posterior[,1:4],msy),pch=16,col=rgb(1,0,0,1/50),font=7)
 # R-chunk 34  
  #plot the traces from the first MCMC example Fig 6.17     
  
-posterior <- result4[[1]][[1]]     
+posterior <- result4[[1]][[1]]  
+oldp <- par(no.readonly=TRUE)   # this line not in book
 par(mfrow=c(4,2),mai=c(0.4,0.4,0.05,0.05),oma=c(0.0,0,0.0,0.0))     
 par(cex=0.8, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)     
 label <- colnames(posterior)     
@@ -469,19 +480,21 @@ for (i in 1:4) {
   plot(1:N,posterior[,i],type="l",lwd=1,ylim=c(ymin,ymax),     
        panel.first=grid(),ylab=label[i],xlab="Step")     
   plot(density(posterior[,i]),lwd=2,col=2,panel.first=grid(),main="")     
-}     
+}    
+par(oldp)  # return par to old settings; this line not in book   
  
 # R-chunk 35  
  #Use acf to examine auto-correlation with thinstep = 16   Fig 6.18     
  
 posterior <- result4[[1]][[1]]     
 label <- colnames(posterior)[1:4]     
-parset(plots=c(2,2),cex=0.85)     
+oldp <- parset(plots=c(2,2),cex=0.85)     
 for (i in 1:4) auto <- acf(posterior[,i],type="correlation",lwd=2,     
                            plot=TRUE,ylab=label[i],lag.max=20)     
+par(oldp)  # return par to old settings; this line not in book  
  
  
- # R-chunk 36  
+# R-chunk 36  
  #setup MCMC with thinstep of 128 per parameter  Fig 6.19     
  
 begin=gettime()     
@@ -492,9 +505,10 @@ result <- do_MCMC(chains=1,burnin=100,N=1000,thinstep=512,inpar,
                   obsdat=logce,calcprior,scales,schaefer=TRUE)     
 posterior <- result[[1]][[1]]     
 label <- colnames(posterior)[1:4]     
-parset(plots=c(2,2),cex=0.85)     
+oldp <- parset(plots=c(2,2),cex=0.85)     
 for (i in 1:4) auto <- acf(posterior[,i],type="correlation",lwd=2,     
                            plot=TRUE,ylab=label[i],lag.max=20)     
+par(oldp)  # return par to old settings; this line not in book  
 cat(gettime() - begin)     
  
  
@@ -512,7 +526,8 @@ param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
 bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=abdat,     
                logobs=log(abdat$cpue))     
 optval <- exp(bestmod$estimate)     
-posterior <- result[[1]][[1]] #example above N=1000, thin=512     
+posterior <- result[[1]][[1]] #example above N=1000, thin=512  
+oldp <- par(no.readonly=TRUE)   
 par(mfrow=c(5,1),mai=c(0.4,0.3,0.025,0.05),oma=c(0,1,0,0))      
 par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 np <- length(param)     
@@ -531,7 +546,8 @@ tmp$y <- tmp$y * (sum(mout$counts)*(mout$mids[2]-mout$mids[1]))
 lines(tmp,lwd=2,col=2)     
 abline(v=(optval[1]*optval[2]/4),lwd=3,col=4)     
 mtext("Frequency",side=2,outer=T,line=0.0,font=7,cex=1.0)     
- 
+par(oldp)  # return par to old settings; this line not in book  
+  
  
 ## The Use of Rcpp     
 # R-chunk 38  
@@ -658,14 +674,16 @@ cat("Time Ratio = ",timeC/timeR)
  
 # R-chunk 45  
 #compare marginal distributions of the 2 chains  Fig 6.21     
- 
+
+oldp <- par(no.readonly=TRUE)  # this line not in the book
 par(mfrow=c(1,1),mai=c(0.45,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))      
 par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 maxy <- getmax(c(density(postR[,"K"])$y,density(postC[,"K"])$y))     
 plot(density(postR[,"K"]),lwd=2,col=1,xlab="K",ylab="Density",     
      main="",ylim=c(0,maxy),panel.first=grid())     
 lines(density(postC[,"K"]),lwd=3,col=5,lty=2)     
- 
+par(oldp)  # return par to old settings; this line not in book  
+  
  
 ### Multiple Independent Chains     
 # R-chunk 46  
@@ -684,7 +702,8 @@ cat("time = ",gettime() - beginC," secs  \n")
  
 # R-chunk 47  
  #3 chain run using simpspmC, 10000 reps, thinstep=256 Fig 6.22     
- 
+
+oldp <- par(no.readonly=TRUE) 
 par(mfrow=c(2,2),mai=c(0.4,0.45,0.05,0.05),oma=c(0.0,0,0.0,0.0))      
 par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 label <- c("r","K","Binit","sigma")     
@@ -693,7 +712,8 @@ for (i in 1:4) {
         xlab=label[i],ylab="Density",main="",panel.first=grid())       
    lines(density(resultC$result[[1]][,i]),lwd=2,col=2)     
    lines(density(resultC$result[[3]][,i]),lwd=2,col=3)     
-}     
+} 
+par(oldp)  # return par to old settings; this line not in book      
  
 # R-chunk 48  
  #generate summary stats from the 3 MCMC chains     
@@ -756,7 +776,8 @@ result2 <- do_MCMC(chains=1,burnin=50,N=1000,thinstep=2048,
  
 posterior1 <- result1$result[[1]]     
 posterior2 <- result2$result[[1]]     
-label <- colnames(posterior1)[1:4]     
+label <- colnames(posterior1)[1:4]  
+oldp <- par(no.readonly=TRUE)   
 par(mfrow=c(4,2),mai=c(0.25,0.45,0.05,0.05),oma=c(1.0,0,1.0,0.0))      
 par(cex=0.85, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)       
 for (i in 1:4) {     
@@ -768,18 +789,19 @@ for (i in 1:4) {
   if (i == 1) mtext(2048,side=3,line=-0.1,outer=FALSE,cex=1.2)     
 }     
 mtext("Lag",side=1,line=-0.1,outer=TRUE,cex=1.2)     
- 
+par(oldp)  # return par to old settings; this line not in book    
  
 # R-chunk 52  
 #visual comparison of 2 chains marginal densities  Fig 6.24     
  
-parset(plots=c(2,2),cex=0.85)      
+oldp <- parset(plots=c(2,2),cex=0.85)      
 label <- c("r","K","Binit","sigma")     
 for (i in 1:4) {     
    plot(density(result1$result[[1]][,i]),lwd=4,col=1,xlab=label[i],     
         ylab="Density",main="",panel.first=grid())       
    lines(density(result2$result[[1]][,i]),lwd=2,col=5,lty=2)     
-}     
+}    
+par(oldp)  # return par to old settings; this line not in book   
  
 # R-chunk 53  
  #tablulate a summary of the two different thinning rates.     

@@ -17,6 +17,7 @@ chapter3 is not an active function but rather acts
 surprod <- function(Nt,r,K) return((r*Nt)*(1-(Nt/K)))    
 densdep <- function(Nt,K) return((1-(Nt/K)))    
 r <- 1.2; K <- 1000.0; Nt <- seq(10,1000,10)  
+oldpar <- par(no.readonly=TRUE) # this line not in book
 # plotprep(width=7, height=5, newdev=FALSE)  
 par(mfrow=c(2,1),mai=c(0.4,0.4,0.05,0.05),oma=c(0.0,0,0.0,0.0))     
 par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)     
@@ -24,7 +25,7 @@ plot1(Nt,surprod(Nt,r,K),xlab="Population Nt",defpar=FALSE,
       ylab="Production")    
 plot1(Nt,densdep(Nt,K),xlab="Population Nt",defpar=FALSE,    
       ylab="Density-Dependence")    
-
+par(oldpar)  # this line not in book
 ### Dynamic Behaviour    
 # R-chunk 2 
 #Code for Figure 3.2. Try varying the value of rv from 0.5-2.8 
@@ -32,9 +33,10 @@ plot1(Nt,densdep(Nt,K),xlab="Population Nt",defpar=FALSE,
 yrs <- 100; rv=2.8;  Kv <- 1000.0; Nz=100; catch=0.0; p=1.0    
 ans <- discretelogistic(r=rv,K=Kv,N0=Nz,Ct=catch,Yrs=yrs,p=p)    
 avcatch <- mean(ans[(yrs-50):yrs,"nt"],na.rm=TRUE) #used in text    
-label <- paste0("r=",rv," K=",Kv," Ct=",catch, " N0=",Nz," p=",p=p)    
+label <- paste0("r=",rv," K=",Kv," Ct=",catch, " N0=",Nz," p=",p=p)   
+oldpar <- par(no.readonly=TRUE) # this line not in book
 plot(ans, main=label, cex=0.9, font=7) #Schaefer dynamics    
-
+par(oldpar)   # this line not in book
 # R-chunk 3 
 #run discrete logistic dynamics for 600 years  
   
@@ -95,8 +97,10 @@ bifurcation <- function(testseq,taill=100,yrs=1000,limy=0,incx=0.001){
     result[i,] <- c(rval,length(unique(tail(ans[,"nt1"],taill))))    
     result2[i,] <- tail(ans[,"nt1"],taill)    
   }      
-  if (limy[1] == 0) limy <- c(0,getmax(result2,mult=1.02))    
-  parset() # plot taill values against taill of each r value    
+  if (limy[1] == 0) limy <- c(0,getmax(result2,mult=1.02))  
+    
+  oldpar <- parset() #plot taill values against taill of each r value  
+  on.exit(par(oldpar))    #  this line not in book 
   plot(rep(testseq[1],taill),result2[1,],type="p",pch=16,cex=0.1,    
        ylim=limy,xlim=c(min(testseq)*(1-incx),max(testseq)*(1+incx)),    
        xlab="r value",yaxs="i",xaxs="i",ylab="Equilibrium Numbers",    
@@ -138,7 +142,8 @@ plottime <- function(x,ylab) {
   avB <- round(mean(x[(yrs-40):yrs,"nt"],na.rm=TRUE),3)    
   mtext(avB,side=1,outer=F,line=-1.1,font=7,cex=1.0)     
 } # end of plottime    
-#the oma argument is used to adjust the space around the graph    
+#the oma argument is used to adjust the space around the graph 
+oldpar <- par(no.readonly=TRUE) # this line not in book   
 par(mfrow=c(2,2),mai=c(0.25,0.4,0.05,0.05),oma=c(1.0,0,0.25,0))     
 par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 plottime(nocatch,"Catch = 0")    
@@ -146,7 +151,7 @@ plottime(catch50,"Catch = 50")
 plottime(catch200,"Catch = 200")    
 plottime(catch300,"Catch = 300")    
 mtext("years",side=1,outer=TRUE,line=-0.2,font=7,cex=1.0)     
-
+par(oldpar)
 
 # R-chunk 12 
 #Phase plot for Schaefer model Fig 3.5    
@@ -162,6 +167,7 @@ plotphase <- function(x,label,ymax=0) { #x from discretelogistic
   points(x[begin:yrs,"nt"],x[begin:yrs,"nt1"],pch=18,col=1,cex=1.2)    
   mtext(label,side=1,outer=F,line=-1.1,font=7,cex=1.2)     
 } # end of plotphase    
+oldpar <- par(no.readonly=TRUE) # this line not in book   
 par(mfrow=c(2,2),mai=c(0.25,0.25,0.05,0.05),oma=c(1.0,1.0,0,0))     
 par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 plotphase(nocatch,"Catch = 0",ymax=1300)    
@@ -170,7 +176,7 @@ plotphase(catch200,"Catch = 200",ymax=1300)
 plotphase(catch300,"Catch = 300",ymax=1300)    
 mtext("nt",side=1,outer=T,line=0.0,font=7,cex=1.0)    
 mtext("nt+1",side=2,outer=T,line=0.0,font=7,cex=1.0)    
-
+par(oldpar)    # this line not in book
 
 ### Determinism    
 ## Age-Structured Modelling Concepts    
@@ -186,11 +192,11 @@ nZ <- length(Z)
 Bt <- matrix(0,nrow=yrs1,ncol=nZ,dimnames=list(years,Z))    
 Bt[1,] <- B0    
 for (j in 1:nZ) for (i in 2:yrs1) Bt[i,j] <- Bt[(i-1),j]*exp(-Z[j])    
-plot1(years,Bt[,1],xlab="Years",ylab="Population Size",lwd=2)    
+oldp <- plot1(years,Bt[,1],xlab="Years",ylab="Population Size",lwd=2)    
 if (nZ > 1) for (j in 2:nZ) lines(years,Bt[,j],lwd=2,col=j,lty=j)    
 legend("topright",legend=paste0("Z = ",Z),col=1:nZ,lwd=3,    
        bty="n",cex=1,lty=1:5)     
-
+par(oldp)  # this line not in book
 
 ### Instantaneous vs Annual Mortality Rates    
 # R-chunk 14 
@@ -223,11 +229,11 @@ kable(result,digits=c(10,0,8,4))
   
 Fi <- seq(0.001,2,0.001)    
 H <- 1 - exp(-Fi)    
-parset()  # a wrapper for simplifying defining the par values    
+oldpar <- parset()  # a wrapper for simplifying defining the par values    
 plot(Fi,H,type="l",lwd=2,panel.first=grid(),xlab="Instantaneous Fishing Mortality F",    
      ylab="Annual Proportion Mortality H")    
 lines(c(0,1),c(0,1),lwd=2,lty=2,col=2)    
-
+par(oldpar)   # this line not in book
 
 ## Simple Yield per Recruit    
 # R-chunk 17 
@@ -273,8 +279,8 @@ kable(totC,digits=c(1,1,1,1,1,1,1,1,1,1))
 # R-chunk 21 
 #Use MQMF::plot1 for a quick plot of the total catches. Figure 3.8    
 
-plot1(H,totC,xlab="Harvest Rate",ylab="Total Yield",lwd=2)    
-
+oldpar <- plot1(H,totC,xlab="Harvest Rate",ylab="Total Yield",lwd=2)    
+par(oldpar) # to reset the par values if desired
 
 ### Selectivity in Yield-per-Recruit    
 # R-chunk 22 
@@ -284,14 +290,14 @@ ages <- seq(0,50,1)
 sel1 <- mature(-3.650425,0.146017,sizeage=ages) #-3.65/0.146=25    
 sel2 <- mature(-6,0.2,ages)    
 sel3 <- mature(-6,0.24,ages)    
-plot1(ages,sel1,xlab="Age Yrs",ylab="Selectivity",cex=0.75,lwd=2)    
+oldp <- plot1(ages,sel1,xlab="Age Yrs",ylab="Selectivity",cex=0.75,lwd=2)    
 lines(ages,sel2,col=2,lwd=2,lty=2)    
 lines(ages,sel3,col=3,lwd=2,lty=3)    
 abline(v=25,col="grey",lty=2)     
 abline(h=c(0.25,0.5,0.75),col="grey",lty=2)    
 legend("topleft",c("25_15.04","30_10.986","25_9.155"),col=c(1,2,3),    
        lwd=3,cex=1.1,bty="n",lty=1:3)    
-
+par(oldp)
 
 ### The Baranov Catch Equation    
 # R-chunk 23 
@@ -343,12 +349,12 @@ for (sel in 1:length(as50)) {
 # R-chunk 26 
 #A full YPR analysis  Figure 3.10    
 
-plot1(H,yield[,3],xlab="Harvest Rate",ylab="Yield",cex=0.75,lwd=2)    
+oldp <- plot1(H,yield[,3],xlab="Harvest Rate",ylab="Yield",cex=0.75,lwd=2)    
 lines(H,yield[,2],lwd=2,col=2,lty=2)    
 lines(H,yield[,1],lwd=2,col=3,lty=3)    
 legend("bottomright",legend=as50,col=c(3,2,1),lwd=3,bty="n",    
        cex=1.0,lty=c(3,2,1))     
-
+par(oldp)
 
 # R-chunk 27 
 #Tabulate yield-per-recruit using Baranoc catch equation   

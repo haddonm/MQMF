@@ -23,8 +23,6 @@ penalty1 allows for the option of adding a large penalty as
     value or a vector.
 }
 \examples{
-\dontrun{
  x <- c(0.5,0.8,0.88,0.9,0.98,0.99,1.01)
  round(cbind(x,penalty1(x)),4)
-}
 }

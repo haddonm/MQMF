@@ -28,8 +28,6 @@ calcprior is used to include a prior probability into
     modification inthe two places where priorcalc is used.
 }
 \examples{
-\dontrun{
 param <- log(c(0.4,9400,3400,0.05))  
 calcprior(pars=param,N=20000)  # should give -39.61395
-}
 }

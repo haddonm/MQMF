@@ -24,9 +24,9 @@ ricker implements the Ricker stock recruitment
    increases.
 }
 \examples{
-\dontrun{
   B <- 1:10000
   rec <- ricker(c(10,0.0002),B)
+  oldpar <- par(no.readonly=TRUE)
   plot1(B,rec,xlab="SpB",ylab="Recruitment",lwd=2)
-}
+  par(oldpar)
 }

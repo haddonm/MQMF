@@ -25,7 +25,6 @@ halftable would be used when printing a table using kable
     index.
 }
 \examples{
-\dontrun{
 x <- as.data.frame(matrix(runif(80),nrow=20,ncol=4))
 x[,1] <- 1986:2005
 x[,4] <- paste0("text",1:20)
@@ -34,5 +33,4 @@ halftable(x[,c(1,2,4)],yearcol="V1")
 x1 <- rbind(x,x[1,])
 x1[21,"V1"] <- 2006
 halftable(x1,yearcol="V1",subdiv=3)
-}
 }

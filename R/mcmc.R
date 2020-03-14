@@ -21,14 +21,11 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' param <- log(c(0.4,9400,3400,0.05))  
 #' calcprior(pars=param,N=20000)  # should give -39.61395
-#' }
 calcprior <- function(pars,N) { # return log(1/N) for all values entered.
   return(sum(rep(log(1/N),length(pars))))
 }
-
 
 #' @title do_MCMC conducts an MCMC using Gibbs within Metropolis
 #'
@@ -86,26 +83,27 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' data(abdat); fish <- as.matrix(abdat) # to increase speed
-#'  param <- log(c(0.4,9400,3400,0.05))
-#'  N <- 10000  
-#'  result <- do_MCMC(chains=1,burnin=20,N=N,thinstep=16,inpar=param,
-#'                    infunk=negLL,calcpred=simpspm,calcdat=fish,
-#'                    obsdat=log(fish[,"cpue"]),priorcalc=calcprior,
-#'                    scales=c(0.06,0.05,0.06,0.42))
-#'  cat("Acceptance Rate = ",result[[2]],"\n")
-#'  cat("Failure Rate    = ",result[[3]],"\n")
-#'  #plotprep(width=6,height=5,newdev=FALSE)
-#'  out <- result[[1]][[1]] # get the list containing the matrix
-#'  pairs(out[,1:4],col=rgb(1,0,0,1/20))
-#'  
-#'  parset(plots=c(1,2)) # Note the serial correlation in each trace
-#'  plot1(1:N,out[,1],ylab="r",defpar=FALSE)
-#'  plot1(1:N,out[,2],ylab="K",defpar=FALSE)
-#' }
-do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,calcdat,
-                    obsdat,priorcalc,scales,...) {
+#' param <- log(c(0.4,9400,3400,0.05))
+#' N <- 500  # usually very, very  many more  10s of 1000s
+#' result <- do_MCMC(chains=1,burnin=20,N=N,thinstep=8,inpar=param,
+#'                   infunk=negLL,calcpred=simpspm,calcdat=fish,
+#'                   obsdat=log(fish[,"cpue"]),priorcalc=calcprior,
+#'                   scales=c(0.06,0.05,0.06,0.42))
+#' # a thinstep of 8 is whofully inadequate, see the runs in the plots
+#' cat("Acceptance Rate = ",result[[2]],"\n")
+#' cat("Failure Rate    = ",result[[3]],"\n")
+#' oldpar <- par(no.readonly=TRUE)
+#' #plotprep(width=6,height=5,newdev=FALSE)
+#' out <- result[[1]][[1]] # get the list containing the matrix
+#' pairs(out[,1:4],col=rgb(1,0,0,1/5)) # adjust the 1/5 to suit N
+#' 
+#' parset(plots=c(1,2)) # Note the serial correlation in each trace
+#' plot1(1:N,out[,1],ylab="r",xlab="Replicate",defpar=FALSE)
+#' plot1(1:N,out[,2],ylab="K",xlab="Replicate",defpar=FALSE)
+#' par(oldpar)
+do_MCMC <- function(chains,burnin,N,thinstep,inpar,infunk,calcpred,
+                    calcdat,obsdat,priorcalc,scales,...) {
    totN <- N + burnin   # total number of replicate steps
    result <- vector("list",chains) # to store all results
    for (ch in 1:chains) { # ch=1

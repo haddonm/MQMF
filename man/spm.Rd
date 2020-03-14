@@ -47,7 +47,6 @@ spm calculates the dynamics using a Schaefer of Fox
     multiple vectors of the index then use simpspmM and spmCE.
 }
 \examples{
-\dontrun{
  data(abdat)   # spm is used inside plotspmmod
  pars <- log(c(0.35,7800,3500,0.05))
  ans <- plotspmmod(pars,abdat) #not fitted, just guessed
@@ -55,5 +54,4 @@ spm calculates the dynamics using a Schaefer of Fox
  outfit(bestSP)  # best fitting estimates
  ans <- plotspmmod(bestSP$estimate,abdat,schaefer=TRUE)
  str(ans)
-}
 }

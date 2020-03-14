@@ -18,11 +18,7 @@ tag release and recapture.}
 default="l1"}
 
 \item{delT}{column name of the time interval, deltaT, within indat, 
-    default="dt"
-
-#' @references Haddon, M., Mundy, C., and D. Tarbath (2008) Using an 
-   inverse-logistic model to describe growth increments of blacklip 
-   abalone (Haliotis rubra) in Tasmania. Fishery Bulletin 106:58-71}
+default="dt"}
 }
 \value{
 a vector of predicted growth increments
@@ -37,13 +33,19 @@ invl requires at least three parameters, MaxDL, L50, and
     length at 5% of MaxDL.
 }
 \examples{
-\dontrun{
  data(blackisland)
+ oldpar <- par(no.readonly=TRUE)
  plot(blackisland$l1,blackisland$dl,type="p",pch=16,
  xlab="Initial Length mm",ylab="Growth Increment mm",panel.first=grid())
  abline(h=0)
  param <- c(25, 130, 35, 3) # MaxDL, L50, delta, sigma
  predDL <- invl(param,blackisland,initL="l1",delT="dt")
  lines(blackisland$l1,predDL,col=2,lwd=2) 
+ par(oldpar)
 }
+\references{
+Haddon, M., Mundy, C., and D. Tarbath (2008) Using an 
+   inverse-logistic model to describe growth increments of blacklip 
+   abalone (Haliotis rubra) in Tasmania. \emph{Fishery Bulletin} 
+   106:58-71
 }

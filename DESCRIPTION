@@ -1,18 +1,16 @@
 Package: MQMF
-Title: Using R for Modelling and Quantitative Methods in Fisheries
+Title: Modelling and Quantitative Methods in Fisheries
 Version: 1.0.0
-Date: 2020-02-21
+Date: 2020-03-14
 Authors@R: person("Malcolm", "Haddon", role = c("aut", "cre"), 
                   email = "malcolm.haddon@gmail.com")
 Maintainer: Malcolm Haddon <malcolm.haddon@gmail.com>
-Description: Provides R functions for use with the new book: Using R for 
-    Modelling and Quantitative Methods in Fisheries, being published in
-    2020 by Chapman & Hall in their Using R series.  The package 
-    provides numerous functions and data-sets required to either 
-    run or support the practical examples presented in the book. The 
-    integral help for each function describes how those functions can be 
-    used to implement the examples contained in Using R for Modelling 
-    and Quantitative Methods in Fisheries. 
+Description: Complements the book Haddon (2020, ISBN: 9780367469894) 
+    "Using R for Modelling and Quantitative Methods in Fisheries", 
+    being published in June 2020 by Chapman & Hall in their 
+    "Using R series". There are numerous functions and data-sets that 
+    are used in the book's many practical examples. 
+URL: https://github.com/haddonm/MQMF
 Depends: R (>= 3.5.0)
 License: GPL-3
 Encoding: UTF-8
@@ -23,3 +21,5 @@ Suggests:
     knitr,
     rmarkdown
 RoxygenNote: 7.0.2
+NeedsCompilation: no
+

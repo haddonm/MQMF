@@ -32,12 +32,10 @@ logist calcualtes a Logistic curve that can be used as a
     the second parameter.
 }
 \examples{
-\dontrun{
 in50 <- 100.0
 deltaS <- 8.0
 lens <- seq(2,210,2)
 select <- logist(inL50=in50,delta=deltaS,depend=lens)
 selectk <- logist(in50,deltaS,lens,knifeedge=TRUE)
 round(cbind(lens[35:70],select[35:70],selectk[35:70]),5)
-}
 }

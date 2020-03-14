@@ -33,7 +33,6 @@ outfit takes in the output list from either optim,
     solution. It might be more effective to implement an S3 method.
 }
 \examples{
-\dontrun{
  x <- 1:10  # generate power function data from c(2,2) + random
  y <- c(2.07,8.2,19.28,40.4,37.8,64.68,100.2,129.11,151.77,218.94)
  alldat <- cbind(x=x,y=y)
@@ -44,5 +43,4 @@ outfit takes in the output list from either optim,
  pars <- c(2,2)
  best <- nlm(f=ssq,p=pars,typsize=magnitude(pars),indat=alldat)
  outfit(best,backtran=FALSE) #a=1.3134, b=2.2029 ssq=571.5804
-}
 }

@@ -41,12 +41,12 @@ npf is fishery catch data from Australia's Northern
 }
 
 \examples{
- \dontrun{
  data(npf)
  npf
+ oldpar <- par(no.readonly=TRUE)
  plot1(npf$year,npf$tiger,xlab="Year",ylab="Tonnes",lwd=2)
  lines(npf$year,npf$endeavour,col=2,lwd=2)
  legend("topleft",c("Tiger","Endeavour"),col=c(1,2),lwd=3,
         bty="n",cex=1.5)
-}
+ par(oldpar)
 }

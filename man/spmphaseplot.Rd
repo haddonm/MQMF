@@ -14,17 +14,17 @@ spmphaseplot(
 )
 }
 \arguments{
-\item{answer}{the object output by the function plotspmmod, containing the
-production curve, the fishery dynamics (predicted harvest rate and
-biomass through time).}
+\item{answer}{the object output by the function plotspmmod, 
+containing the production curve, the fishery dynamics (predicted 
+harvest rate and biomass through time).}
 
-\item{Blim}{limit reference point, defaults to 0.2 so that 0.2B0 is used.}
+\item{Blim}{limit reference point, default = 0.2 = 0.2B0.}
 
-\item{Btarg}{what target reference point will be used in the phase plot. 
-A default of 0.5 is used.}
+\item{Btarg}{what target reference point will be used in the phase 
+plot. A default of 0.5 is used.}
 
-\item{filename}{default is empty. If a filename is put here a .png file
-with that name will be put into the working directory.}
+\item{filename}{default is empty. If a filename is put here a .png 
+file with that name will be put into the working directory.}
 
 \item{resol}{the resolution of the png file, defaults to 200 dpi}
 
@@ -36,14 +36,13 @@ an invisible list of B0, Bmsy, Hmsy, and Hlim.
 }
 \description{
 spmphaseplot uses the output from plotspmmod to plot up
-    the phase plot of harvest rate vs Biomass, marked with the limit and
-    default targets. It identifies the start and end years (green and red
-    dots) and permits the stock status to be determined visually. It also
-    plots out the catch time-series and harvest rate time-series to aid 
-    in interpretation of the phase plot.
+    the phase plot of harvest rate vs Biomass, marked with the limit 
+    and default targets. It identifies the start and end years 
+    (green and red dots) and permits the stock status to be determined 
+    visually. It also plots out the catch time-series and harvest 
+    rate time-series to aid in interpretation of the phase plot.
 }
 \examples{
-\dontrun{
   data(dataspm)
   pars <- log(c(0.164,6740,3564,0.05))
   bestSP <- fitSPM(pars,fish=dataspm,funkone=TRUE)
@@ -51,5 +50,4 @@ spmphaseplot uses the output from plotspmmod to plot up
   str(ans)
   outs <- spmphaseplot(ans,fnt=7)
   str(outs)
-}
 }

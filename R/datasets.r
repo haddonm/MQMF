@@ -32,13 +32,13 @@
 #' @source Catch data from Mundy, C. and J. McAllister (2019) Tasmanian abalone fishery assessment 2018, Institute for Marine and Antarctic Studies, University of Tasmania, 190p. ISBN: 978-1-925646-46-7. The cpue data is an unpublished early attempt at standardizing the cpue data with respect to month, block, and diver. Many more details are now included in such analyses.
 #' 
 #' @examples
-#' \dontrun{
 #'  data(abdat)
 #'  print(abdat)
+#'  oldpar <- par(no.readonly=TRUE)
 #'  plot(abdat$year,abdat$cpue, type="l",xlab="year",ylab="CPUE",
 #'       panel.first=grid())
 #'  points(abdat$year,abdat$cpue,pch=16,cex=1.2)
-#' }
+#'  par(oldpar)
 NULL
 
 #' @title blackisland tagging data from a blacklip abalone population
@@ -79,16 +79,15 @@ NULL
 #'     the University of Tasmania for the use of this data.
 #'     
 #' @examples
-#' \dontrun{
 #'  data(blackisland)
 #'  print(head(blackisland,20))
+#'  oldpar <- par(no.readonly=TRUE)
 #'  plot(blackisland$l1,blackisland$dl,type="p",pch=16,
 #'  xlab="Initial Length mm",ylab="Growth Increment mm",
 #'  panel.first=grid())
 #'  abline(h=0)
-#' }     
+#'  par(oldpar)
 NULL
-
 
 #' @title dataspm A data.frame of fisheries catch and cpue data 
 #'
@@ -127,14 +126,14 @@ NULL
 #'     from Table 7.96 PinkLing4050 page 216.
 #' 
 #' @examples 
-#' \dontrun{
 #'  data(dataspm)
+#'  oldpar <- par(no.readonly=TRUE)
 #'  plot(dataspm$year,dataspm$geom,type="l",lwd=2,xlab="Year",
 #'  ylab="CPUE",panel.first=grid())
 #'  lines(dataspm$year,dataspm$cpue*mean(dataspm$geom),lwd=2,col=2)
 #'  legend("topright",c("cpue","geom"), col=c(1,2), lwd=3, bty="n",
 #'  cex=1.2)
-#' }
+#'  par(oldpar)
 NULL
 
 
@@ -175,13 +174,11 @@ NULL
 #'     ages vs lengths.
 #'     
 #' @examples 
-#' \dontrun{
 #'   data(LatA)
 #'   pars <- c(27.0,0.15,-2.0) # von Bertalanffy
 #'   bestvB <- nlm(f=ssq,funk=vB,observed=LatA$length,p=pars,
 #'                 ages=LatA$age,typsize=magnitude(pars))
-#'                 outfit(bestvB,backtran=FALSE,title="vB")
-#' }
+#'   outfit(bestvB,backtran=FALSE,title="vB")
 NULL
 
 #' @title minnow contains weekly growth data for use with seasonal growth curves
@@ -220,13 +217,12 @@ NULL
 #' Two models of seasonal growth. \emph{Journal of Applied Ecology} 10:599–606.
 #' 
 #' @examples
-#'  \dontrun{
 #'  data(minnow)
+#'  oldpar <- par(no.readonly=TRUE)
 #'  plot1(minnow$week,minnow$length,type="p",pch=16,cex=1.2,
 #'        xlab="Week",ylab="Length mm")
-#' }
+#'  par(oldpar)
 NULL
-
 
 #' @title npf fishery catch data from Northern Prawn Fishery 1970-1992
 #'
@@ -267,14 +263,14 @@ NULL
 #'     Northern Prawn Fishery: The first 25 years. NPF25. Cleveland, 
 #'     Australia. 179p.
 #' @examples
-#'  \dontrun{
 #'  data(npf)
 #'  npf
+#'  oldpar <- par(no.readonly=TRUE)
 #'  plot1(npf$year,npf$tiger,xlab="Year",ylab="Tonnes",lwd=2)
 #'  lines(npf$year,npf$endeavour,col=2,lwd=2)
 #'  legend("topleft",c("Tiger","Endeavour"),col=c(1,2),lwd=3,
 #'         bty="n",cex=1.5)
-#' }
+#'  par(oldpar)
 NULL
 
 #' @title pttuna is yellowfin tuna fishery data from Pella-Tomlinson 1969
@@ -311,16 +307,13 @@ NULL
 #'    \item Log-Normal likelihoods
 #'  }
 #'  
-#' @source from Table 6 page 457 in Pella, J.J. and P.K. Tomlinson (1969) A Generalized Stock Production Model. \emph{Bulletin, Inter-American Tropical Tuna Commission} 13(3): 421-458. Obtainable from
-#'     \emph{https://www.iattc.org/BulletinsENG.htm}
+#' @source from Table 6 page 457 in Pella, J.J. and P.K. Tomlinson (1969) A Generalized Stock Production Model. \emph{Bulletin, Inter-American Tropical Tuna Commission} 13(3): 421-458. Obtainable from \emph{https://www.iattc.org/BulletinsENG.htm}
 #' 
 #' @examples
-#'  \dontrun{
 #'  data(pttuna)
 #'  pars <- log(c(r=0.25,K=2.1e06,Binit=2.2e06,sigma=0.2))
 #'  answer <- fitSPM(pars,pttuna,schaefer=TRUE,maxiter=1000)
 #'  outfit(answer,title="Pella-Tomlinson Data",digits=4)
-#' }
 NULL
 
 
@@ -365,12 +358,10 @@ NULL
 #'     \emph{https://www.iattc.org/BulletinsENG.htm}
 #' 
 #' @examples
-#'  \dontrun{
 #'  data(schaef)
 #'  pars <- log(c(r=0.2,K=2.1e06,Binit=2.2e06,sigma=0.2))
 #'  answer <- fitSPM(pars,schaef,schaefer=TRUE,maxiter=1000)
 #'  outfit(answer,title="Schaefer, 1957 Data",digits=4)
-#' }
 NULL
 
 #' @title tasab is a matrix of abalone maturity-at-length data
@@ -408,11 +399,9 @@ NULL
 #'     this data collected in February 1995.
 #' 
 #' @examples
-#'  \dontrun{
 #'  data(tasab)
 #'  head(tasab,20)
 #'  table(tasab$site,tasab$sex)
-#' }
 NULL
 
 #' @title tigers is tiger prawn recruitment data from Penn & Caputi 1986
@@ -446,11 +435,11 @@ NULL
 #'     Marine and Freshwater Research} 37: 491-505. Sorted on spawning index.
 #' 
 #' @examples
-#'  \dontrun{
 #'  data(tigers)
 #'  tigers
+#'  oldpar <- par(no.readonly=TRUE)
 #'  plot1(tigers$Spawn,tigers$Recruit,type="p",pch=16,cex=1.25)
-#' }
+#'  par(oldpar)
 NULL
 
 #' @title twoindex has orange roughy catches with hypothetical cpue
@@ -499,7 +488,6 @@ NULL
 #'    Catch data extended to 2019 using AFMA's catchwatch system. 
 #' 
 #' @examples
-#'  \dontrun{
 #'  data(twoindex)
 #'  fish <- as.matrix(twoindex)
 #'  pars <- log(c(0.04,155000,0.4,0.3))
@@ -512,5 +500,4 @@ NULL
 #'  # plotprep(width=7,height=5,newdev=FALSE) # for external plot
 #'  answer <- plotspmmod(bestSP$estimate,indat=fish,
 #'                       plotprod=TRUE,maxy=3.4)
-#' }
 NULL

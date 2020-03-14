@@ -32,7 +32,6 @@ spmprojDet conducts deterministic forward projections of the
     predCE are matrices of years vs projcatch.
 }
 \examples{
-\dontrun{
  data(abdat)
  param <- log(c(r=0.3,K=11500,Binit=3300,sigma=0.05))
  bestmod <- nlm(f=negLL1,p=param,funk=simpspm,logobs=log(abdat$cpue),
@@ -41,5 +40,4 @@ spmprojDet conducts deterministic forward projections of the
  out <- spm(bestmod$estimate,indat=abdat,schaefer=FALSE)
  catches <- seq(700,1000,50)
  spmprojDet(spmobj = out,projcatch=catches,projyr=10,plotout=TRUE)
-}
 }

@@ -21,13 +21,11 @@
 #' @references Burnham, K.P. and D.R. Anderson (2002) \emph{Model Selection and Inference. A Practical Information-Theoretic Approach.} Second Edition Springer-Verlag, New York. 488 p.
 #'
 #' @examples
-#' \dontrun{
 #' data(blackisland); bi <- blackisland
 #' param <- c(Linf=170.0,K=0.3,sigma=4.0)
 #' modelvb <- nlm(f=negNLL,p=param,funk=fabens,observed=bi$dl,indat=bi,
 #'                initL="l1",delT="dt") # could have used the defaults
 #' aicbic(modelvb,blackisland)  # 588.3382 596.3846 291.1691   3
-#' }
 aicbic <- function(model,dat,nLL=TRUE) {  # model <- modelil; dat=bi
   if (class(dat) %in% c("matrix","data.frame")) {
     n <- nrow(dat)
@@ -80,7 +78,6 @@ aicbic <- function(model,dat,nLL=TRUE) {  # model <- modelil; dat=bi
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  L = seq(60,160,1)
 #'  p=c(a=0.075,b=0.075,c=1.0,alpha=100)
 #'  asym <- srug(p=p,sizeage=L)
@@ -90,7 +87,6 @@ aicbic <- function(model,dat,nLL=TRUE) {  # model <- modelil; dat=bi
 #'  ans <- c(L25,L50,L75,L50-L25,L75-L50)
 #'  {cat("   L25    L50      L75   L50-L25 L75-L50 \n")
 #'  cat(round(ans,4),"\n")} 
-#' }
 bracket <- function(x,yaxis,xaxis) {
   pick <- which(yaxis < x) 
   bot <- max(pick)
@@ -110,11 +106,9 @@ bracket <- function(x,yaxis,xaxis) {
 #' @return A single value of zero or the number of ones
 #' @export
 #' @examples
-#' \dontrun{
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 #' print(x)
 #' apply(x,1,countgtone)
-#' }
 countgtone <- function(invect) {
   pick1 <- which(invect > 1.0)
   return(length(pick1))
@@ -129,12 +123,10 @@ countgtone <- function(invect) {
 #' @return A single integer counting how many numbers are > 0
 #' @export
 #' @examples
-#' \dontrun{
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 #' print(x)
 #' apply(x,1,countgtzero) # count by rows
 #' apply(x,2,countgtzero) # count by columns
-#' }
 countgtzero <- function(invect) {
   pick <- which(invect > 0)
   return(length(pick))
@@ -147,12 +139,10 @@ countgtzero <- function(invect) {
 #' @return A single value of zero or the number of NAs
 #' @export
 #' @examples
-#' \dontrun{
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 #' diag(x) <- NA
 #' print(x)
 #' apply(x,1,countNAs)
-#' }
 countNAs <- function(invect) {
   pick <- which(is.na(invect))
   return(length(pick))
@@ -165,11 +155,9 @@ countNAs <- function(invect) {
 #' @return A single value of zero or the number of ones
 #' @export
 #' @examples
-#' \dontrun{
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 #' print(x)
 #' apply(x,1,countones)  # by rows
-#' }
 countones <- function(invect) {
    pick <- which(invect == 1)
    return(length(pick))
@@ -182,12 +170,10 @@ countones <- function(invect) {
 #' @return A single value of zero or the number of zeros
 #' @export
 #' @examples
-#' \dontrun{
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 #' print(x)
 #' apply(x,1,countzeros) # count by rows
 #' apply(x,2,countzeros) # count by columns
-#' }
 countzeros <- function(invect) {
    pick <- which(invect == 0.0)
    return(length(pick))
@@ -205,15 +191,15 @@ countzeros <- function(invect) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'  DepCat <- as.factor(rep(seq(100,600,100),2)); DepCat
-#'  5 * DepCat[3]
-#'  as.numeric(levels(DepCat))  # #only converts the levels not the replicates
+#'  DepCat <- as.factor(rep(seq(100,600,100),2))
+#'  print(DepCat)
+#'  5 * DepCat[3]   # throws an error, cannot multiply a factor
+#'  as.numeric(DepCat) # ordinal values of the factors
+#'  as.numeric(levels(DepCat)) #converts the levels not the replicates
 #'  DepCat <- facttonum(DepCat)
-#'  DepCat / 2.0
-#'  x <- factor(letters) # don't be silly, characters are not numbers
-#'  facttonum(x)
-#' }
+#'  DepCat / 2.0     # now all values back to values
+#'  x <- factor(letters) 
+#'  facttonum(x) # this would be silly, characters are not numbers
 facttonum <- function(invect){
   if (class(invect) == "factor") {
     outvect <- suppressWarnings(as.numeric(levels(invect))[invect])
@@ -238,11 +224,9 @@ facttonum <- function(invect){
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' vals <- c(1,2,3,4,5)
 #' counts <- c(3,NA,7,4,2)
 #' freqMean(vals,counts)  # should give 3.125 and 1.258306
-#' }
 freqMean <- function(values,infreqs) {
    N <- length(values)
    if (N != length(infreqs)) {
@@ -308,14 +292,12 @@ getmin <- function(x,mult=1.05) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  vect <- rnorm(10,mean=0,sd=2)
 #'  sort(vect,decreasing=TRUE)
 #'  getmax(vect,mult=1.0)
 #'  vect <- rnorm(10,mean = -5,sd = 1.5)
 #'  sort(vect,decreasing=TRUE)
 #'  getmax(vect,mult=1.0)
-#' }   
 getmax <- function(x,mult=1.05) {
    ymax <- max(x,na.rm=TRUE)
    if (ymax > 0) {
@@ -358,11 +340,10 @@ getname <- function(x) {
 #'     seeds generated should differ even when they are generated close
 #'     together in time.
 #'
-#' @return  an integer up to 7 digits long
+#' @return  an integer up to 7 digits long 
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' useseed <- getseed()
 #' set.seed(useseed)
 #' rnorm(5)
@@ -370,7 +351,6 @@ getname <- function(x) {
 #' rnorm(5)
 #' set.seed(useseed)
 #' rnorm(5)
-#' }
 getseed <- function() {
   pickseed <- as.character(as.integer(Sys.time()))
   nc <- nchar(pickseed)
@@ -396,13 +376,11 @@ getseed <- function() {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' x <- "12.3 , this is a number"
 #' y <- "21.3 # 22.3 # here are two numbers"
 #' getsingle(x)
 #' getsingle(y,sep="#")
 #' getsingle(y) # be sure to get the separator correct
-#' }
 getsingle <- function(inline,sep=",") {  # inline=dat[41]
   tmp <- unlist(strsplit(inline,sep))
   tmp <- gsub(" ","",tmp)
@@ -422,12 +400,10 @@ getsingle <- function(inline,sep=",") {  # inline=dat[41]
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'   begin <- gettime()
 #'   for (i in 1:1e6) sqrt(i)
 #'   finish <- gettime()
 #'   print(finish - begin)
-#' }
 gettime <- function() {
   tim <- unlist(as.POSIXlt(Sys.time()))
   hr <- as.numeric(tim["hour"])*3600
@@ -451,12 +427,10 @@ gettime <- function() {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' x <- "12.3, 15.1, 8.7,10.3,  # this is a vector of numbers"
 #' y <- "21.3 # 22.3 # 8.7 # 10.3 # here are four numbers"
 #' getvector(x)    # uses default separator
 #' getvector(y,sep="#")
-#' }
 getvector <- function(indat,locate,sep=",") { 
   vect <- indat[locate]
   if (length(grep("\t",vect) > 0)) vect <- gsub("\t",sep,vect)
@@ -488,7 +462,6 @@ getvector <- function(indat,locate,sep=",") {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' x <- as.data.frame(matrix(runif(80),nrow=20,ncol=4))
 #' x[,1] <- 1986:2005
 #' x[,4] <- paste0("text",1:20)
@@ -497,7 +470,6 @@ getvector <- function(indat,locate,sep=",") {
 #' x1 <- rbind(x,x[1,])
 #' x1[21,"V1"] <- 2006
 #' halftable(x1,yearcol="V1",subdiv=3)
-#' }
 halftable <- function(inmat,yearcol="year",subdiv=3) {
    if (!(subdiv %in% c(2,3))) stop("\n subdiv must be 2 or 3 \n")
    numrow <- dim(inmat)[1]
@@ -546,15 +518,14 @@ halftable <- function(inmat,yearcol="year",subdiv=3) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' test <- matrix(c(1,2,3,4),nrow=2,ncol=2,dimnames=list(1:2,c("year","Catch")))
+#' x <- 1:10
+#' test <- matrix(x,nrow=5,ncol=2,dimnames=list(1:5,c("year","Catch")))
 #' print(test)
 #' iscol("year",test)
 #' iscol("Catch",test)
 #' iscol("catch",test)
 #' iscol("ages",test)
-#' }
-iscol <- function(incol="year",inmat) { # incol="ages"; inmat=dat
+iscol <- function(incol="year",inmat) {
   if (length(grep(incol,colnames(inmat))) < 1) return(FALSE)
   else return(TRUE)
 }
@@ -579,12 +550,10 @@ iscol <- function(incol="year",inmat) { # incol="ages"; inmat=dat
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'   one <- 291.1691
 #'   two <- 277.0122
 #'   dof <- 1
-#'   round(likeratio(one,two,dof),8)
-#' }
+#'   round(likeratio(one,two,dof),8)  # LR = 28.3138
 likeratio <- function(nLL1,nLL2,df=1) {
   if (!(nLL1 < nLL2)) {
     tmp <- nLL1
@@ -629,7 +598,6 @@ likeratio <- function(nLL1,nLL2,df=1) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  L = seq(60,160,1)
 #'  p=c(a=0.075,b=0.075,c=1.0,alpha=100)
 #'  asym <- srug(p=p,sizeage=L)
@@ -639,7 +607,6 @@ likeratio <- function(nLL1,nLL2,df=1) {
 #'  ans <- c(L25,L50,L75,L50-L25,L75-L50)
 #'  {cat("   L25    L50      L75   L50-L25 L75-L50 \n")
 #'  cat(round(ans,4),"\n")} 
-#' }
 linter <- function(pars) {
   # pars= "left","right","bottom","top","target"
   rge <- pars[4] - pars[3]
@@ -667,10 +634,8 @@ linter <- function(pars) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'   x <- c(0,0.03,0.3,3,30,300,3000)
 #'   magnitude(x)
-#' }
 magnitude <- function(x) {
    return(10^(floor(log10(abs(x)))))
 }
@@ -691,10 +656,8 @@ magnitude <- function(x) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' pars <- c(18.3319532,33.7935124,3.0378107,6.0194465,0.5815360,0.4270468)
 #' makelabel("Cohort1",pars[c(1,3,5)],sep="__")
-#' }
 makelabel <- function(txt,vect,sep="_",sigdig=3) {
    tmp <- NULL
    nnum <- length(vect)
@@ -726,7 +689,6 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  x <- 1:10  # generate power function data from c(2,2) + random
 #'  y <- c(2.07,8.2,19.28,40.4,37.8,64.68,100.2,129.11,151.77,218.94)
 #'  alldat <- cbind(x=x,y=y)
@@ -737,7 +699,6 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #'  pars <- c(2,2)
 #'  best <- nlm(f=ssq,p=pars,typsize=magnitude(pars),indat=alldat)
 #'  outfit(best,backtran=FALSE) #a=1.3134, b=2.2029 ssq=571.5804
-#' }
 outfit <- function(inopt,backtran=TRUE,digits=5,title="",
                    parnames=""){
 #  inopt=bestvB; backtran = FALSE; digits=5; title=""; parnames=""
@@ -813,12 +774,10 @@ outfit <- function(inopt,backtran=TRUE,digits=5,title="",
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'   penalty0(0.5)
 #'   penalty0(0.1)
 #'   penalty0(0.01)
 #'   penalty0(0.005)
-#' }
 penalty0 <- function(x){
   ans <- 100*exp(-1000*x)
   return(ans)
@@ -841,10 +800,8 @@ penalty0 <- function(x){
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  x <- c(0.5,0.8,0.88,0.9,0.98,0.99,1.01)
 #'  round(cbind(x,penalty1(x)),4)
-#' }
 penalty1 <- function(x){
   nl <- length(x)
   ans <- numeric(nl)
@@ -890,6 +847,8 @@ plotfishM <- function(fish,spsname="",ce=TRUE,title=TRUE,fnt=7,both=TRUE,
   rows <- 1
   if (ce) rows <- 2
   yrs <- fish[,year]
+  oldpar <- par(no.readonly=TRUE)
+  on.exit(par(oldpar))
   par(mfrow=c(rows,1),mai=c(0.5,0.45,0.025,0.05))
   if (title) par(oma=c(0.0,0,1.0,0.0))
       else   par(oma=c(0.0,0,0.0,0.0))
@@ -956,7 +915,9 @@ plotfishM <- function(fish,spsname="",ce=TRUE,title=TRUE,fnt=7,both=TRUE,
 #' prop1 <- 0.55  # the proportion of observations in cohort 1
 #' pars <-c(av,stdev,prop1)  # combine parameters into a vector
 #' predf <- predfreq(pars,n=262,sizecl=mids,midval=TRUE)
+#' oldpar <- par(no.readonly=TRUE)
 #' plot1(mids,predf,xlab="Sizes",ylab="Predicted Frequency",lwd=2)
+#' par(oldpar)
 #' }
 predfreq <- function(pars,n,sizecl,midval=TRUE) { 
   cw <- sizecl[2] - sizecl[1]
@@ -967,8 +928,7 @@ predfreq <- function(pars,n,sizecl,midval=TRUE) {
   if (midval) { # use approximation
     freqs <- numeric(nval) #nval zero vector hold freqs
     for (i in 1:c) # step through the cohorts
-      freqs <- freqs+(n*props[i]*cw)*dnorm(sizecl,
-                                           pars[i],pars[i+c])
+      freqs <- freqs+(n*props[i]*cw)*dnorm(sizecl,pars[i],pars[i+c])
   } else { #use cumulative probablities
     freqs <- numeric(nval-1) #nval-1 zero vector to hold freqs
     for (i in 1:c) { # step through the cohorts  i=1
@@ -1020,16 +980,15 @@ printV <- function(invect,label=c("index","value")) {
 #' @param dimout determines whether or noth the dimensions of the data.frame
 #'     are printed to the screen or not; defaults to FALSE
 #'     
-#' @return a data.frame with the rows being each variable from the input
+#' @return a data.frame with the rows being each variable from the 
 #'     input data.frame and the columns being the number of NAs, the
-#'     number of unique values, and minimum and maximum (where possible).
+#'     number of unique values, and minimum and maximum (where 
+#'     possible).
 #' @export
 #' 
 #' @examples
-#' \dontrun{
 #' data(abdat)
 #' properties(abdat)
-#' }
 properties <- function(indat,dimout=FALSE) {
   dominmax <- function(x) {
     if (length(which(x > 0)) == 0) return(c(NA,NA))
@@ -1064,11 +1023,12 @@ properties <- function(indat,dimout=FALSE) {
 
 #' @title removeEmpty removes empty strings from a vector of strings
 #'
-#' @description removeEmpty removes empty strings from a vector of strings.
-#'     Such spaces often created by spurious commas at the end of lines. It
-#'     also removes strings made up only of spaces and removes spaces from
-#'     inside of inidivdual chunks of text. So, should be useful when
-#'     reading in data from a custom csv file when parsing different formats
+#' @description removeEmpty removes empty strings from a vector of 
+#'     strings. Such spaces often created by spurious commas at the 
+#'     end of lines. It also removes strings made up only of spaces 
+#'     and removes spaces from inside of inidivdual chunks of text. 
+#'     So, should be useful when reading in data from a custom csv 
+#'     file when parsing different formats
 #'
 #' @param invect a vector of input strings, possibly containing empty strings
 #'
@@ -1076,19 +1036,16 @@ properties <- function(indat,dimout=FALSE) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' x <- c("1","","2","","   ","3"," ","4","","a string","end")
 #' x
 #' length(x)
 #' length(removeEmpty(x))
 #' removeEmpty(x)
-#' }
 removeEmpty <- function(invect) {
   tmp <- gsub(" ","",invect)
   tmp <- tmp[nchar(tmp) > 0]
   return(tmp)
 }
-
 
 #' @title quants used in apply to estimate quantiles across a vector
 #'
@@ -1108,7 +1065,6 @@ quants <- function(invect,probs=c(0.025,0.05,0.5,0.95,0.975)) {
    ans <- quantile(invect,probs = probs,na.rm=T)
    return(ans)
 }
-
 
 #' @title which.closest find the number closest to a given value
 #'
@@ -1148,13 +1104,11 @@ which.closest <- function(x,invect,index=T) {
 #' @export
 #' 
 #' @examples 
-#' \dontrun{
 #'    x <- 1:10
 #'    y <- 6:15
 #'    x
 #'    y
 #'    x[(x %ni% y)]   # are not in y
-#' }
 `%ni%` <- function(x,y) {  
   !(x %in% y)
 }

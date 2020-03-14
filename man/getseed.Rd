@@ -24,7 +24,6 @@ getseed generates a seed for use within set.seed.
     together in time.
 }
 \examples{
-\dontrun{
 useseed <- getseed()
 set.seed(useseed)
 rnorm(5)
@@ -32,5 +31,4 @@ set.seed(12345)
 rnorm(5)
 set.seed(useseed)
 rnorm(5)
-}
 }

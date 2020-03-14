@@ -38,11 +38,9 @@ A data.frame containing the simulated
 }
 
 \examples{
-\dontrun{
   data(LatA)
   pars <- c(27.0,0.15,-2.0) # von Bertalanffy
   bestvB <- nlm(f=ssq,funk=vB,observed=LatA$length,p=pars,
                 ages=LatA$age,typsize=magnitude(pars))
-                outfit(bestvB,backtran=FALSE,title="vB")
-}
+  outfit(bestvB,backtran=FALSE,title="vB")
 }

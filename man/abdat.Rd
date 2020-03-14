@@ -35,11 +35,11 @@ A dataset of fishery data for blacklip abalone
 }
 
 \examples{
-\dontrun{
  data(abdat)
  print(abdat)
+ oldpar <- par(no.readonly=TRUE)
  plot(abdat$year,abdat$cpue, type="l",xlab="year",ylab="CPUE",
       panel.first=grid())
  points(abdat$year,abdat$cpue,pch=16,cex=1.2)
-}
+ par(oldpar)
 }

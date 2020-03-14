@@ -20,11 +20,9 @@ plotspmdat plots a fish data set. It plots the catch
     and CPUE against time
 }
 \examples{
-\dontrun{
 yrs <- 2000:2010
 catches <- rnorm(length(yrs),mean=150,sd=5)
 ce <- rnorm(length(yrs),mean=20,sd=1)
 fish <- as.data.frame(cbind(year=yrs,catch=catches,cpue=ce))
-plotspmdat(fish)
-}   # x=dat
+plotspmdat(fish) 
 }

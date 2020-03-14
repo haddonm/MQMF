@@ -12,8 +12,7 @@
   \item{cpue}{the catch '000 pounds per standard class 4 day, a ratio cpue}
 }}
 \source{
-from Table 6 page 457 in Pella, J.J. and P.K. Tomlinson (1969) A Generalized Stock Production Model. \emph{Bulletin, Inter-American Tropical Tuna Commission} 13(3): 421-458. Obtainable from
-    \emph{https://www.iattc.org/BulletinsENG.htm}
+from Table 6 page 457 in Pella, J.J. and P.K. Tomlinson (1969) A Generalized Stock Production Model. \emph{Bulletin, Inter-American Tropical Tuna Commission} 13(3): 421-458. Obtainable from \emph{https://www.iattc.org/BulletinsENG.htm}
 }
 \description{
 pttuna is yellowfin tuna fishery data from Pella-Tomlinson's
@@ -39,10 +38,8 @@ pttuna is yellowfin tuna fishery data from Pella-Tomlinson's
 }
 
 \examples{
- \dontrun{
  data(pttuna)
  pars <- log(c(r=0.25,K=2.1e06,Binit=2.2e06,sigma=0.2))
  answer <- fitSPM(pars,pttuna,schaefer=TRUE,maxiter=1000)
  outfit(answer,title="Pella-Tomlinson Data",digits=4)
-}
 }

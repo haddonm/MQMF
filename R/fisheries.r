@@ -24,14 +24,12 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' age <- 0:25
 #' Ft <- -log(1 - 0.2) # harvest rate of 0.2
 #' Faa <- rep(Ft,length(age))
 #' M <- 0.12
 #' Nt <- 1000
 #' bce(M,Fat=Faa,Nt,ages=age)   # should give 188.8862
-#' }
 bce <- function(M,Fat,Nt,ages) {
   nage <- length(ages)
   lFat <- length(Fat)
@@ -71,16 +69,13 @@ bce <- function(M,Fat,Nt,ages) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'   B <- 1:3000
 #'   rec <- bh(c(1000,200),B)
 #'   plot1(B,rec,xlab="SpB",ylab="Recruitment",lwd=2)
-#' }
 bh <- function(p,B) {
   rec <- (p[1] * B)/(p[2] + B)
   return(rec)
 } # end of Beverton-Holt
-
 
 #' @title discretelogistic example and figure  3.2 Discrete logistic model
 #'
@@ -118,12 +113,10 @@ bh <- function(p,B) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'   discretelogistic(0.5,1000.0,25,0.0,50) # asymptotic
 #'   discretelogistic(2.5,1000.0,25,0.0,50) # 4-phase stable limit
 #'   ans <- discretelogistic(r=2.55,K=1000.0,N0=100,Ct=95.0,Yrs=100)
 #'   plot(ans)  # uses an S3 plot method for dynpop objects
-#' }
 discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
   yr1 <- Yrs + 1
   years <- seq(1,yr1,1)
@@ -144,15 +137,15 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
 
 #' @title domed calculates domed selectivity curves
 #' 
-#' @description domed uses 6 parameters and a set of mean size or
-#'     age classes to calculate a domed selectivity curve with a 
-#'     maximum of 1.0 but has parameters for the selectivity of
-#'     the initial and final size/age classes. There is an 
-#'     ascending limb and a descending limb with the potential 
-#'     of a plateau in between. The six parameters are 1) the
-#'     age/size where selectivity first becomes 1.0, 2) the size/
-#'     age where selectivity first begins to decline, 3) the 
-#'     steepness of the ascending limb, 4) the steepness of the
+#' @description domed uses 6 parameters and a set of mean size or age
+#'     classes to calculate a domed selectivity curve with a maximum 
+#'     of 1.0 (rescaling can be done outside the function), but has 
+#'     parameters for the selectivity of the initial and final 
+#'     size/age classes. There is an ascending limb and a descending 
+#'     limb with the potential of a plateau in between. The six 
+#'     parameters are 1) the age/size where selectivity first becomes 
+#'     1.0, 2) the size/age where selectivity first begins to decline, 
+#'     3) the steepness of the ascending limb, 4) the steepness of the
 #'     descending limb, 5) the selectivity of the first age/size
 #'     class, and 6) the selectivity of the last age/size class.
 #'
@@ -165,12 +158,10 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
 #' @references Methot, R.D. and C.R, Wetzel (2013) Stock synthesis: A biological and statistical framework for fish stock assessment and fishery management. Supplementary material, Appendix A. Equs A1.30 onwards. \emph{Fisheries Research} 142:86-99.
 #'
 #' @examples
-#' \dontrun{
 #'   L <- seq(1,30,1)
 #'   p <- c(10,11,16,33,-5,-2)
 #'   sel <- domed(p,L)
 #'   plot1(L,sel,xlab="Age",ylab="Selectivity",lwd=2)
-#' }
 domed <- function(p,L) {
   nL <- length(L)
   comp1 <- 1/(1 + exp(-p[5]))
@@ -208,16 +199,16 @@ domed <- function(p,L) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  data(blackisland)
+#'  oldpar <- par(no.readonly=TRUE)
 #'  plot(blackisland$l1,blackisland$dl,type="p",pch=16,
 #'  xlab="Initial Length mm",ylab="Growth Increment mm",
 #'  panel.first=grid())
 #'  abline(h=0)
 #'  param <- c(170, 0.3, 4.0) # Linf, K, sigma
 #'  predDL <- fabens(param,blackisland,initL="l1",delT="dt")
-#'  lines(blackisland$l1,predDL,col=2,lwd=2)   
-#' }
+#'  lines(blackisland$l1,predDL,col=2,lwd=2)  
+#'  par(oldpar) 
 fabens <- function(par,indat,initL="l1",delT="dt") {
   preddL <- (par[1] - indat[,initL])*(1 - exp(-(par[2] * indat[,delT])))
   return(preddL)
@@ -237,11 +228,11 @@ fabens <- function(par,indat,initL="l1",delT="dt") {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  ages <- seq(0,20,1)   # sigma is ignored here
+#'  oldpar <- par(no.readonly=TRUE)
 #'  pars <- c(a=26.0,b=2.8,c=-0.65,sigma=1.0) # a, b, c, sigma;
 #'  plot1(ages,Gz(pars,ages),xlab="Age",ylab="Length",lwd=2)
-#' }
+#'  par(oldpar)
 Gz <- function(p, ages) {
   return(p[1]*exp(-p[2]*exp(p[3]*ages)))
 }
@@ -266,23 +257,24 @@ Gz <- function(p, ages) {
 #' @param delT column name of the time interval, deltaT, within indat, 
 #'     default="dt"
 #'
-#'#' @references Haddon, M., Mundy, C., and D. Tarbath (2008) Using an 
+#' @references Haddon, M., Mundy, C., and D. Tarbath (2008) Using an 
 #'    inverse-logistic model to describe growth increments of blacklip 
-#'    abalone (Haliotis rubra) in Tasmania. Fishery Bulletin 106:58-71
+#'    abalone (Haliotis rubra) in Tasmania. \emph{Fishery Bulletin} 
+#'    106:58-71
 #'
 #' @return a vector of predicted growth increments 
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  data(blackisland)
+#'  oldpar <- par(no.readonly=TRUE)
 #'  plot(blackisland$l1,blackisland$dl,type="p",pch=16,
 #'  xlab="Initial Length mm",ylab="Growth Increment mm",panel.first=grid())
 #'  abline(h=0)
 #'  param <- c(25, 130, 35, 3) # MaxDL, L50, delta, sigma
 #'  predDL <- invl(param,blackisland,initL="l1",delT="dt")
 #'  lines(blackisland$l1,predDL,col=2,lwd=2) 
-#' }
+#'  par(oldpar)
 invl <- function(par,indat,initL="l1",delT="dt") {
   preddl <- (par[1] * indat[,delT])/
     (1 + exp(log(19) * (indat[,initL] - par[2])/par[3]))
@@ -309,14 +301,12 @@ invl <- function(par,indat,initL="l1",delT="dt") {
 #' @return A vector of length(depend) with the predicted logistic values
 #' @export
 #' @examples
-#' \dontrun{
 #' in50 <- 100.0
 #' deltaS <- 8.0
 #' lens <- seq(2,210,2)
 #' select <- logist(inL50=in50,delta=deltaS,depend=lens)
 #' selectk <- logist(in50,deltaS,lens,knifeedge=TRUE)
 #' round(cbind(lens[35:70],select[35:70],selectk[35:70]),5)
-#' }
 logist <- function(inL50,delta,depend,knifeedge=FALSE) {
   ans <- 1/(1+exp(-log(19.0)*(depend-inL50)/(delta)))
   if (knifeedge) {
@@ -368,11 +358,9 @@ mature <- function(a,b,sizeage) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  ages <- seq(0,20,1)    # sigma is ignored here
 #'  pars <- c(a=23.0,b=1.0,c=1.0,sigma=1.0) # a, b, c, sigma
 #'  plot1(ages,mm(pars,ages),xlab="Age",ylab="Length",lwd=2)
-#' }
 mm <- function(p, ages) {
   return((p[1]*ages)/(p[2] + ages^p[3]))
 }
@@ -392,12 +380,10 @@ mm <- function(p, ages) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'   obs <- c(0,0,6,12,35,40,29,23,13,7,10,14,11,16,11,11,9,8,5,2,0)
 #'   predf <- c(0.1,0.9,4.5,14.4,29.7,39.9,35.2,21.3,10.9,8.0,9.5,12.1,
 #'              14.1,14.7,13.7,11.5,8.6,5.8,3.5,1.9,0.9) 
 #'  mnnegLL(obs,predf)   # should be  705.5333
-#' }
 mnnegLL <- function(obs,predf) { 
   if (length(predf) != length(obs)) {
     label <- paste0("Need a predicted frequency for each observed ",
@@ -432,11 +418,9 @@ mnnegLL <- function(obs,predf) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' data(abdat)  #expect an answer of -31.65035
 #' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
 #' negLL(pars=param,funk=simpspm,logobs=log(abdat[,"cpue"]),indat=abdat)
-#' }
 negLL <- function(pars,funk,logobs,...) {
   npar <- length(pars)
   logpred <- funk(pars,...)
@@ -475,11 +459,9 @@ negLL <- function(pars,funk,logobs,...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' data(abdat)  #expect an answer of -31.65035
 #' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
 #' negLL1(pars=param,funk=simpspm,logobs=log(abdat[,"cpue"]),indat=abdat)
-#' }
 negLL1 <- function(pars,funk,logobs,...) {
   npar <- length(pars)
   logpred <- funk(pars,...)
@@ -524,7 +506,6 @@ negLL1 <- function(pars,funk,logobs,...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  data(twoindex)
 #'  fish <- as.matrix(twoindex)
 #'  pars <- log(c(0.04,155000,0.4,0.3))
@@ -534,7 +515,6 @@ negLL1 <- function(pars,funk,logobs,...) {
 #'  outfit(bestSP,digits=5,title="negLLM example") #optimum solution
 #'  answer <- plotspmmod(bestSP$estimate,indat=fish,
 #'                       plotprod=TRUE,maxy=3.4)
-#' }
 negLLM <- function(pars,funk,logobs,indat,index="cpue",harvpen=TRUE,...) {
   npar <- length(pars)
   logpred <- funk(pars,indat)
@@ -587,15 +567,15 @@ negLLM <- function(pars,funk,logobs,indat,index="cpue",harvpen=TRUE,...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  data(minnow)
 #'  pars <- c(89, 0.01,-15,3.75)  # ssq    = 785.6183
 #'  age <- minnow$week            # negNLL = 151.1713
 #'  ssq(funk=vB,observed=minnow$length,p=pars,ages=age)
 #'  negNLL(pars,funk=vB,observed=minnow$length,ages=age)
+#'  oldpar <- par(no.readonly=TRUE)
 #'  plot1(age,vB(pars,age),xlab="Age",ylab="Length",lwd=2)
 #'  points(age,minnow$length,pch=16,cex=1.2)
-#' }
+#'  par(oldpar)
 negNLL <- function(pars,funk,observed,...) {
   npar <- length(pars)
   predobs <- funk(pars,...)
@@ -631,7 +611,6 @@ negNLL <- function(pars,funk,observed,...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  data(blackisland)
 #'  param <- c(Linf=173.65,K=0.2666,sigma=3.6)
 #'  sigfunk <- function(pars,predobs) return(tail(pars,1))
@@ -640,7 +619,6 @@ negNLL <- function(pars,funk,observed,...) {
 #'  param2 <- c(21.03,130.94,40.65,3.162)  
 #'  negnormL(par=param2,funk=invl,funksig=sigfunk,indat=blackisland,
 #'            obs="dl",initL="l1",delT="dt")  # should be 277.0186
-#' }
 negnormL <- function(pars,funk,funksig,indat,obs="dl",...){
   predobs <- funk(pars,indat,...) #if sigma not a constant then
   sigma <- funksig(pars,predobs) #funksig produces a vector
@@ -651,18 +629,19 @@ negnormL <- function(pars,funk,funksig,indat,obs="dl",...){
 #' @title negLLP  -ve log-likelihood for normally distributed variables
 #'
 #' @description negLLP calculates the negative log-likelihood for normally
-#'     distributed variables. It assumes the presence of a function 'funk'
-#'     that will calculate predicted values of a dependent 
-#'     variable from a vector of independent values (logobs). 
-#'     By having a separate vector of parameters in 'initpar' and a vector 
-#'     of the indices of those parameters that will be fitted (notfixed) 
-#'     it is possible to fit only a subset of parameters. This is useful 
-#'     if generating a likelihood profile, or 
-#'     setting up a likelihood ratio test. With more complex models it is 
-#'     often a useful strategy to estimate the full number of parameters in 
-#'     a series of phases, increasing the number being estimated each time 
-#'     while keeping the rest fixed. 'negLLP' makes such phasing of the 
-#'     fitting of a model to data possible.
+#'     distributed variables allowing for some parameters to reamin fiuxed. 
+#'     It assumes the presence of a function 'funk' that will calculate 
+#'     predicted values of a dependent variable from a vector of 
+#'     independent values (logobs). By having a separate vector of 
+#'     parameters in 'initpar' and a vector of the indices of those 
+#'     parameters that will be fitted (notfixed) it is possible to fit 
+#'     only a subset of parameters. This is useful, for example, if 
+#'     generating a likelihood profile, or setting up a likelihood 
+#'     ratio test. With more complex models it is often a useful 
+#'     strategy to estimate the full number of parameters in a 
+#'     sequence of phases, increasing the number being estimated each 
+#'     time while keeping the rest fixed. 'negLLP' makes such phasing 
+#'     of the fitting of a model to data possible.
 #'     This function can be applied directly to log-transformed data for 
 #'     log-normally distributed data, in which case funk would need to 
 #'     generate log-transformed values. But can also be applied to 
@@ -694,7 +673,6 @@ negnormL <- function(pars,funk,funksig,indat,obs="dl",...){
 #' @return the sum of the negative log-likelihoods using a normal PDF
 #' @export
 #' @examples
-#' \dontrun{
 #'  data(abdat)
 #'  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
 #'  optmod <- nlm(f=negLLP,p=param,funk=simpspm,initpar=param,
@@ -713,8 +691,7 @@ negnormL <- function(pars,funk,funksig,indat,obs="dl",...){
 #'    bestest <- exp(bestmodP$estimate)     
 #'    result[i,] <- c(bestest,bestmodP$minimum)  # store each result
 #'  }
-#'  result   #Now plot -veLL againt r values for the profile
-#' }
+#'  result   #Now you can plot -veLL againt r values for the profile
 negLLP <- function(pars, funk, indat, logobs, initpar=pars,
                    notfixed=c(1:length(pars)),...) {
   usepar <- initpar
@@ -748,11 +725,11 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'   B <- 1:10000
 #'   rec <- ricker(c(10,0.0002),B)
+#'   oldpar <- par(no.readonly=TRUE)
 #'   plot1(B,rec,xlab="SpB",ylab="Recruitment",lwd=2)
-#' }
+#'   par(oldpar)
 ricker <- function(p,B) {
   R <- p[1] * B * exp(-p[2] * B)
   return(R)
@@ -786,13 +763,13 @@ ricker <- function(p,B) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  L <- seq(50,160,1)
 #'  p <- c(a=0.07,b=0.2,c=1.0,alpha=100.0)
 #'  predR <- srug(p=p,sizeage=L) # proportion of total
+#'  oldpar <- par(no.readonly=TRUE)
 #'  plot1(L,predR,xlab="Length",ylab="Prop of Recruitment")
 #'  abline(h=0.5) #visually confirm asymmetry
-#' }
+#'  par(oldpar)
 srug <- function(p,sizeage) { # p = a, b, c, alpha
   ans <- 1.0/((1.0 + p[4] * exp(-p[1]*sizeage^p[3]))^(1/p[2]))
   return(ans)  
@@ -831,11 +808,9 @@ srug <- function(p,sizeage) { # p = a, b, c, alpha
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'   data(minnow)  # remember -13 is only 3+ months
 #'   pars <- c(89, 0.1,-13)  # ssq = 83477.84
 #'   ssq(funk=vB,observed=minnow$length,p=pars,ages=minnow$week)
-#' }
 ssq <- function(funk,observed, ...) {
   predval <- funk(...)
   return(sum((observed - predval)^2,na.rm=TRUE))
@@ -854,11 +829,11 @@ ssq <- function(funk,observed, ...) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' ages <- seq(0,20,1)   # sigma is ignored here
 #' pars <- c(Linf=50,K=0.3,t0=-1.0,sigma=1.0) # Linf, K, t0, sigma
+#' oldpar <- par(no.readonly=TRUE)
 #' plot1(ages,vB(pars,ages),xlab="Age",ylab="Length",lwd=2)
-#' }
+#' par(oldpar)
 vB <- function(p,ages) {
   return(p[1] * (1 - exp(-p[2]*(ages-p[3]))))
 }

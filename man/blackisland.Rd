@@ -39,12 +39,12 @@ A 108 x 4 data.frame containing dt, the time
 }
 
 \examples{
-\dontrun{
  data(blackisland)
  print(head(blackisland,20))
+ oldpar <- par(no.readonly=TRUE)
  plot(blackisland$l1,blackisland$dl,type="p",pch=16,
  xlab="Initial Length mm",ylab="Growth Increment mm",
  panel.first=grid())
  abline(h=0)
-}     
+ par(oldpar)
 }

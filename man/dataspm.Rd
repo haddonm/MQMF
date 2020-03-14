@@ -38,12 +38,12 @@ A data.frame containing 31 years of catch, standardized
 }
 
 \examples{
-\dontrun{
  data(dataspm)
+ oldpar <- par(no.readonly=TRUE)
  plot(dataspm$year,dataspm$geom,type="l",lwd=2,xlab="Year",
  ylab="CPUE",panel.first=grid())
  lines(dataspm$year,dataspm$cpue*mean(dataspm$geom),lwd=2,col=2)
  legend("topright",c("cpue","geom"), col=c(1,2), lwd=3, bty="n",
  cex=1.2)
-}
+ par(oldpar)
 }

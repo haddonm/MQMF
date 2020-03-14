@@ -38,13 +38,13 @@ negNLL - Calculates the negative log-likelihood for
     required by whatever funk is being used.
 }
 \examples{
-\dontrun{
  data(minnow)
  pars <- c(89, 0.01,-15,3.75)  # ssq    = 785.6183
  age <- minnow$week            # negNLL = 151.1713
  ssq(funk=vB,observed=minnow$length,p=pars,ages=age)
  negNLL(pars,funk=vB,observed=minnow$length,ages=age)
+ oldpar <- par(no.readonly=TRUE)
  plot1(age,vB(pars,age),xlab="Age",ylab="Length",lwd=2)
  points(age,minnow$length,pch=16,cex=1.2)
-}
+ par(oldpar)
 }

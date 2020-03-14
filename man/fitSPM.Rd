@@ -61,7 +61,6 @@ fitSPM fits a surplus production model (either Schaefer or
     parameters.
 }
 \examples{
-\dontrun{
  data(dataspm) 
  dataspm <- as.matrix(dataspm) # faster than a data.frame
  pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
@@ -69,5 +68,4 @@ fitSPM fits a surplus production model (either Schaefer or
  outfit(ans)   # Schaefer model  -12.12879
  ansF <- fitSPM(pars,dataspm,schaefer=FALSE,maxiter=1000)
  outfit(ansF)  # Fox model       -12.35283 
-}  
 }

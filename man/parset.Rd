@@ -28,7 +28,8 @@ left, top, or right hand sides of the plot. Used when plots
 likely needs to change is having more than one plot}
 }
 \value{
-nothing but it changes the base graphics par settings
+nothing but it changes the base graphics par settings. The 
+    original par values are returned invisibly if user wishes to reset.
 }
 \description{
 parset alters the current base graphics par settings
@@ -42,11 +43,10 @@ parset alters the current base graphics par settings
     the console can be copied to your script and modified to suit.
 }
 \examples{
-\dontrun{
  x <- rnorm(100,mean=5,sd=0.5)
  y <- rnorm(100,mean=5,sd=0.5)
- parset(plots=c(1,2))
+ oldpar <- parset(plots=c(1,2))
  plot1(x,y,defpar=FALSE)
  plot1(y,x,defpar=FALSE)
-}
+ par(oldpar)
 }

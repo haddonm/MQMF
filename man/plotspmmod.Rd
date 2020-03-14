@@ -60,7 +60,6 @@ plotspmmod takes a parameter set and the spmdat matrix
     fit to CPUE. If plotprod=TRUE, it also plots the productivity curves
 }
 \examples{
-\dontrun{
 data(dataspm)
 pars <- log(c(0.264,4740,3064,0.2))
 ans <- plotspmmod(pars,dataspm,schaefer=TRUE,plotprod=TRUE)
@@ -70,5 +69,4 @@ outfit(best,backtran = TRUE)
 ans <- plotspmmod(best$estimate,dataspm,schaefer=TRUE,plotout=TRUE,
                  plotprod=FALSE,addrmse=TRUE)
 str(ans)
-}
 }

@@ -19,12 +19,11 @@ incol is a utility to determine whether a names columns is
     present in a given matrix or data.frame.
 }
 \examples{
-\dontrun{
-test <- matrix(c(1,2,3,4),nrow=2,ncol=2,dimnames=list(1:2,c("year","Catch")))
+x <- 1:10
+test <- matrix(x,nrow=5,ncol=2,dimnames=list(1:5,c("year","Catch")))
 print(test)
 iscol("year",test)
 iscol("Catch",test)
 iscol("catch",test)
 iscol("ages",test)
-}
 }

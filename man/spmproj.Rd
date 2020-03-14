@@ -43,7 +43,6 @@ spmproj uses a matrix of parameter vectors to project
     optimum future catch levels.
 }
 \examples{
-\dontrun{
   data(abdat)
   schf <- FALSE
   param <- log(c(r=0.3,K=11500,Binit=3300,sigma=0.05))
@@ -51,8 +50,7 @@ spmproj uses a matrix of parameter vectors to project
                  indat=abdat,typsize=magnitude(param),iterlim=1000,
                  schaefer=schf,hessian = TRUE)
   out <- spm(bestmod$estimate,indat=abdat,schaefer=schf)
-  matpar <- parasympt(bestmod,1000)
+  matpar <- parasympt(bestmod,10) # normally use 1000 or more
   projs <- spmproj(matpar,abdat,projyr=10,constC=900)
   plotproj(projs,out)
-}  
 }

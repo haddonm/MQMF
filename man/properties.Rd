@@ -16,17 +16,16 @@ the minimum and maximum of the numeric variables}
 are printed to the screen or not; defaults to FALSE}
 }
 \value{
-a data.frame with the rows being each variable from the input
+a data.frame with the rows being each variable from the 
     input data.frame and the columns being the number of NAs, the
-    number of unique values, and minimum and maximum (where possible).
+    number of unique values, and minimum and maximum (where 
+    possible).
 }
 \description{
 properties used to check a data.frame before
     standardization
 }
 \examples{
-\dontrun{
 data(abdat)
 properties(abdat)
-}
 }

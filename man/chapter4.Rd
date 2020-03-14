@@ -65,12 +65,13 @@ ssq(funk=vB, observed=LatA$length, p=pars, ages=LatA$Age) # !!!
 # R-chunk 5 
 #plot the LatA data set   Figure 4.2    
 
-parset()        # parset and getmax are two MQMF functions     
+oldpar <- parset()   # parset and getmax are two MQMF functions     
 ymax <- getmax(LatA$length) # simplifies use of base graphics. For    
 # full colour, with the rgb as set-up below, there must be >= 5 obs    
 plot(LatA$age,LatA$length,type="p",pch=16,cex=1.2,xlab="Age Years",     
      ylab="Length cm",col=rgb(1,0,0,1/5),ylim=c(0,ymax),yaxs="i",    
-     xlim=c(0,44),panel.first=grid())    
+     xlim=c(0,44),panel.first=grid()) 
+par(oldpar) # this line not in book   
 
 # R-chunk 6 
 # use nlm to fit 3 growth curves to LatA, only p and funk change   
@@ -117,7 +118,7 @@ predGz <- Gz(bestGz$estimate,ages) # using the outputs
 predmm <- mm(bestMM2$estimate,ages) #from the nlm analysis above    
 ymax <- getmax(LatA$length) #try ?getmax or getmax [no brackets]    
 xmax <- getmax(LatA$age)  #there is also a getmin, not used here    
-parset(font=7)   # or use parsyn() to prompt for the par syntax    
+oldpar <- parset(font=7) #or use parsyn() to prompt for par syntax    
 plot(LatA$age,LatA$length,type="p",pch=16, col=rgb(1,0,0,1/5),    
      cex=1.2,xlim=c(0,xmax),ylim=c(0,ymax),yaxs="i",xlab="Age",    
      ylab="Length (cm)",panel.first=grid())    
@@ -126,7 +127,8 @@ lines(ages,predGz,lwd=2,col=1,lty=2)  # Gompertz  1=black
 lines(ages,predmm,lwd=2,col=3,lty=3)  # MM        3=green    
 #notice the legend function and its syntax.    
 legend("bottomright",cex=1.2,c("von Bertalanffy","Gompertz",    
-                               "Michaelis-Menton"),col=c(4,1,3),lty=c(1,2,3),lwd=3,bty="n")    
+                   "Michaelis-Menton"),col=c(4,1,3),lty=c(1,2,3),lwd=3,bty="n") 
+par(oldpar)  # this line not in book                       
 
 ### Objective Model Selection    
 ### The Influence of Residual Error Choice on Model Fit    
@@ -154,7 +156,7 @@ predvBN <- vB(bestvBN$estimate,ages)
 predvBLN <- vB(bestvBLN$estimate,ages)     
 ymax <- getmax(LatA$length)     
 xmax <- getmax(LatA$age)        
-parset()                  
+oldpar <- parset()                  
 plot(LatA$age,LatA$length,type="p",pch=16, col=rgb(1,0,0,1/5),    
      cex=1.2,xlim=c(0,xmax),ylim=c(0,ymax),yaxs="i",xlab="Age",    
      ylab="Length (cm)",panel.first=grid())    
@@ -162,6 +164,7 @@ lines(ages,predvBN,lwd=2,col=4,lty=2)   # add Normal dashed
 lines(ages,predvBLN,lwd=2,col=1)        # add Log-Normal solid    
 legend("bottomright",c("Normal Errors","Log-Normal Errors"),    
        col=c(4,1),lty=c(2,1),lwd=3,bty="n",cex=1.2)    
+par(oldpar)
 
 ### Remarks on Initial Model Fitting    
 ## Maximum Likelihood     
@@ -182,7 +185,7 @@ colnames(result) <- c("x","original","estimated","est > orig")
 
 
 # R-chunk 13 
-#tabluate results of Normal Likelihoods    
+#tabulate results of Normal Likelihoods    
 
 kable(result,digits=c(4,8,8,0),row.names = TRUE, caption='(ref:tab401)')    
 
@@ -208,9 +211,10 @@ cat("x = 0.975      Quantile =",qnorm(0.975),"\n") # expect ~1.96
 x <- seq(-5,5,0.1)  # a sequence of values around a mean of 0.0    
 NL <- dnorm(x,mean=0,sd=1.0)   # normal likelihoods for each X    
 CD <- pnorm(x,mean=0,sd=1.0)   # cumulative density vs X    
-plot1(x,CD,xlab="x = StDev from Mean",ylab="Likelihood and CDF")    
+oldp <- plot1(x,CD,xlab="x = StDev from Mean",ylab="Likelihood and CDF")    
 lines(x,NL,lwd=3,col=2,lty=3) # dashed line as these are points    
-abline(h=0.5,col=4,lwd=1)    
+abline(h=0.5,col=4,lwd=1)  
+par(oldp)  
 
 # R-chunk 16 
 #function facilitates exploring different polygons Fig 4.6    
@@ -235,11 +239,12 @@ x <- seq(3.4,3.6,0.05) # where under the normal curve to examine
 pd <- dnorm(x,mean=5.0,sd=1.0) #prob density for each X value    
 mid <- mean(x)        
 delta <- 0.05  # how wide either side of the sample mean to go?     
-parset()       # a pre-defined MQMF base graphics set-up for par    
-ymax <- getmax(pd)    # find maximum y value for the plot    
+oldpar <- parset() #pre-defined MQMF base graphics set-up for par    
+ymax <- getmax(pd) # find maximum y value for the plot    
 plot(x,pd,type="l",xlab="Variable x",ylab="Probability Density",    
      ylim=c(0,ymax),yaxs="i",lwd=2,panel.first=grid())    
-approxprob <- plotpoly(mid,delta)  #use function defined above    
+approxprob <- plotpoly(mid,delta)  #use function defined above 
+par(oldpar)  # this line not in the book
 
 ### Equivalence with Sum-of-Squares     
 ### Fitting a Model to Data using Normal Likelihoods    
@@ -248,8 +253,10 @@ approxprob <- plotpoly(mid,delta)  #use function defined above
 
 data(LatA) # load the redfish data set into memory and plot it    
 ages <- LatA$age;  lengths <- LatA$length    
-plot1(ages,lengths,xlab="Age",ylab="Length",type="p",cex=0.8,    
+oldpar <- plot1(ages,lengths,xlab="Age",ylab="Length",type="p",cex=0.8,    
       pch=16,col=rgb(1,0,0,1/5))    
+par(oldpar)
+
 
 # R-chunk 18 
 # Fit the vB growth curve using maximum likelihood    
@@ -274,22 +281,24 @@ outfit(ansMM,backtran=FALSE,title="MM by minimum -veLL")
 Age <- 1:max(ages) # used in comparisons     
 predvB <- vB(ansvB$estimate,Age) #optimum solution    
 predMM <- mm(ansMM$estimate,Age) #optimum solution    
-parset()                       # plot the deata points first  
+oldpar <- parset()               # plot the deata points first  
 plot(ages,lengths,xlab="Age",ylab="Length",type="p",pch=16,    
      ylim=c(10,33),panel.first=grid(),col=rgb(1,0,0,1/3))    
 lines(Age,predvB,lwd=2,col=4)     # then add the growth curves  
 lines(Age,predMM,lwd=2,col=1,lty=2)    
 legend("bottomright",c("von Bertalanffy","Michaelis-Menton"),    
-       col=c(4,1),lwd=3,bty="n",cex=1.2,lty=c(1,2))    
+       col=c(4,1),lwd=3,bty="n",cex=1.2,lty=c(1,2)) 
+par(oldpar)   
 
 # R-chunk 21 
 # residual plot for vB curve   Fig 4.9    
 
 predvB <- vB(ansvB$estimate,ages) # predicted values for age data    
 resids <- lengths - predvB               # calculate vB residuals     
-plot1(ages,resids,type="p",col=rgb(1,0,0,1/3),xlim=c(0,43),    
-      pch=16,xlab="Ages Years",ylab="Residuals")    
+oldpar <- plot1(ages,resids,type="p",col=rgb(1,0,0,1/3),
+           xlim=c(0,43),pch=16,xlab="Ages Years",ylab="Residuals")    
 abline(h=0.0,col=1,lty=2)    # emphasize the zero line  
+par(oldpar)
 
 ## Log-Normal Likelihoods     
 ### Simplification of Log-Normal Likelihoods    
@@ -302,26 +311,27 @@ y <- dlnorm(x,meanlog=0,sdlog=1.2,log=FALSE) #dlnorm=likelihoods
 y2 <- dlnorm(x,meanlog=0,sdlog=1.0,log=FALSE)#from log-normal     
 y3 <- dlnorm(x,meanlog=0,sdlog=0.6,log=FALSE)#distribution     
 y4 <- dlnorm(x,0.75,0.6)         #log=TRUE = log-likelihoods    
-parset(plots=c(1,2)) #MQMF shortcut plot formatting function    
+oldpar <- parset(plots=c(1,2)) #MQMF base plot formatting function    
 plot(x,y3,type="l",lwd=2,panel.first=grid(),    
      ylab="Log-Normal Likelihood")    
 lines(x,y,lwd=2,col=2,lty=2)    
 lines(x,y2,lwd=2,col=3,lty=3)    
 lines(x,y4,lwd=2,col=4,lty=4)    
-legend("topright",c("meanlog sdlog","    0.0      0.6",    
-                    "    0.0      1.0","    0.0      1.2","    0.75    0.6"),    
+legend("topright",c("meanlog sdlog","    0.0      0.6    0.0",    
+                    "      1.0","    0.0      1.2","    0.75    0.6"),    
        col=c(0,1,3,2,4),lwd=3,bty="n",cex=1.0,lty=c(0,1,3,2,4))    
 plot(log(x),y3,type="l",lwd=2,panel.first=grid(),ylab="")    
 lines(log(x),y,lwd=2,col=2,lty=2)    
 lines(log(x),y2,lwd=2,col=3,lty=3)    
-lines(log(x),y4,lwd=2,col=4,lty=4)    
+lines(log(x),y4,lwd=2,col=4,lty=4)  
+par(oldpar)  # return par to old settings; this line not in book
 
 # R-chunk 23 
 
 set.seed(12354) # plot random log-normal numbers as Fig 4.11    
 meanL <- 0.7;   sdL <- 0.5  # generate 5000 random log-normal     
 x <- rlnorm(5000,meanlog = meanL,sdlog = sdL) # values    
-parset(plots=c(1,2)) # simplifies the plots par() definition    
+oldpar <- parset(plots=c(1,2)) # simplifies plots par() definition    
 hist(x[x < 8.0],breaks=seq(0,8,0.25),col=0,main="")     
 meanx <- mean(log(x)); sdx <- sd(log(x))    
 outstat <- c(exp(meanx-(sdx^2)),exp(meanx),exp(meanx+(sdx^2)/2))    
@@ -330,7 +340,8 @@ legend("topright",c("mode","median","bias-correct"),
        col=c(4,1,2),lwd=3,bty="n",cex=1.2,lty=c(1,2,3))    
 outh <- hist(log(x),breaks=30,col=0,main="")   # approxnormal    
 hans <- addnorm(outh,log(x)) #MQMF function; try  ?addnorm    
-lines(hans$x,hans$y,lwd=3,col=1) # type addnorm into the console    
+lines(hans$x,hans$y,lwd=3,col=1) # type addnorm into the console 
+par(oldpar)  # return par to old settings; this line not in book   
 
 # R-chunk 24 
 #examine log-normal propoerties. It is a bad idea to reuse     
@@ -364,9 +375,10 @@ result <- cbind(tigers,predR,tigers$Recruit/predR)
 # R-chunk 26 
 # Fig 4.12 visual examination of the fit to the tigers data    
 
-plot1(tigers$Spawn,predR,xlab="Spawning Biomass","Recruitment",    
+oldp <- plot1(tigers$Spawn,predR,xlab="Spawning Biomass","Recruitment",    
       maxy=getmax(c(predR,tigers$Recruit)),lwd=2)    
-points(tigers$Spawn,tigers$Recruit,pch=16,cex=1.1,col=2)    
+points(tigers$Spawn,tigers$Recruit,pch=16,cex=1.1,col=2)  
+par(oldp)  # return par to old settings; this line not in book   
 
 # R-chunk 27 
 #tabulating observed, predicted and residual recruitment    
@@ -397,9 +409,10 @@ outfit(bestmod,backtran = TRUE,title="abdat")        # in param
 
 predce <- simpspm(bestmod$estimate,abdat) #compare obs vs pred    
 ymax <- getmax(c(predce,obslog))    
-plot1(abdat$year,obslog,type="p",maxy=ymax,ylab="Log(CPUE)",    
+oldp <- plot1(abdat$year,obslog,type="p",maxy=ymax,ylab="Log(CPUE)",    
       xlab="Year",cex=0.9)    
-lines(abdat$year,predce,lwd=2,col=2)    
+lines(abdat$year,predce,lwd=2,col=2) 
+par(oldp)  # return par to old settings; this line not in book    
 
 ## Likelihoods from the Binomial Distribution    
 ### An Example using Binomial Likelihoods    
@@ -411,9 +424,9 @@ p <- 0.5   # assume a sex-ration of 1:1
 m <- 1:60  # how likely is each of the 60 possibilites?    
 binom <- dbinom(m,n,p)   # get individual likelihoods    
 cumbin <- pbinom(m,n,p)  # get cumulative distribution    
-plot1(m,binom,type="h",xlab="Number of Males",ylab="Probability")     
+oldp <- plot1(m,binom,type="h",xlab="Number of Males",ylab="Probability")     
 abline(v=which.closest(0.025,cumbin),col=2,lwd=2) # lower 95\% CI    
-
+par(oldp)  # return par to old settings; this line not in book  
 
 # R-chunk 32 
 # plot relative likelihood of different p values Fig 4.16    
@@ -422,8 +435,9 @@ n <- 60  # sample size; should really plot points as each independent
 m <- 20  # number of successes = finding a male    
 p <- seq(0.1,0.6,0.001) #range of probability we find a male     
 lik <- dbinom(m,n,p)    # R function for binomial likelihoods    
-plot1(p,lik,type="l",xlab="Prob. of 20 Males",ylab="Prob.")    
-abline(v=p[which.max(lik)],col=2,lwd=2) # try "p" instead of "l"    
+oldp <- plot1(p,lik,type="l",xlab="Prob. of 20 Males",ylab="Prob.")    
+abline(v=p[which.max(lik)],col=2,lwd=2) # try "p" instead of "l" 
+par(oldp)  # return par to old settings; this line not in book     
 
 # R-chunk 33 
 # find best estimate using optimize to finely search an interval    
@@ -471,14 +485,15 @@ optsol[2,] <- unlist(optimize(function(p) {dbinom(m,n,p)},p,
 # Compare outcome for 2 independent seal estimates Fig 4.17    
 # Should plot points not a line as each are independent     
 
-plot1(X,lik1,type="l",xlab="Total Pup Numbers",    
+oldp <- plot1(X,lik1,type="l",xlab="Total Pup Numbers",    
       ylab="Probability",maxy=0.085,lwd=2)    
 abline(v=X[which.max(lik1)],col=1,lwd=1)    
 lines(X,lik2,lwd=2,col=2,lty=3)  # add line to plot    
 abline(v=X[which.max(lik2)],col=2,lwd=1) # add optimum    
 #given p = 151/X, then X = 151/p and p = optimum proportion     
 legend("topright",legend=round((151/optsol[,"p"])),col=c(1,2),lwd=3,    
-       bty="n",cex=1.1,lty=c(1,3))    
+       bty="n",cex=1.1,lty=c(1,3)) 
+par(oldp)  # return par to old settings; this line not in book     
 
 ### Using Multiple Independent Samples    
 
@@ -487,7 +502,7 @@ legend("topright",legend=round((151/optsol[,"p"])),col=c(1,2),lwd=3,
 
 totlik <- totlik/sum(totlik) # rescale so the total sums to one    
 cumlik <- cumsum(totlik) #approx cumulative likelihood for CI        
-plot1(X,totlik,type="l",lwd=2,xlab="Total Pup Numbers",    
+oldp <- plot1(X,totlik,type="l",lwd=2,xlab="Total Pup Numbers",    
       ylab="Posterior Joint Probability")    
 percs <- c(X[which.closest(0.025,cumlik)],X[which.max(totlik)],    
            X[which.closest(0.975,cumlik)])    
@@ -497,7 +512,8 @@ legend("topright",legend=percs,lwd=c(2,4,2),bty="n",col=c(2,1,2),
 m <- furs[3,1];  n <- furs[3,2] # likelihoods for the     
 lik3 <- dbinom(m,n,p)            # average of six samples    
 lik4 <- lik3/sum(lik3)  # rescale for comparison with totlik    
-lines(X,lik4,lwd=2,col=3,lty=2) #add 6 sample average to plot    
+lines(X,lik4,lwd=2,col=3,lty=2) #add 6 sample average to plot 
+par(oldp)  # return par to old settings; this line not in book     
 
 ### Analytical Approaches    
 ## Other Distributions    
@@ -511,14 +527,15 @@ mids <- seq(8,54,cw) #each size class = 2 mm as in 7-9, 9-11, ...
 obs <- c(0,0,6,12,35,40,29,23,13,7,10,14,11,16,11,11,9,8,5,2,0,0,0,0)    
 # data from (Helidoniotis and Haddon, 2012)    
 dat <- as.matrix(cbind(mids,obs)) #xy matrix needed by inthist    
-parset()  #set up par declaration then use an MQMF function     
+oldp <- parset()  #set up par declaration then use an MQMF function     
 inthist(dat,col=2,border=3,width=1.8, #histogram of integers    
-        xlabel="Shell Length mm",ylabel="Frequency",xmin=7,xmax=55)     
+        xlabel="Shell Length mm",ylabel="Frequency",xmin=7,xmax=55)   
+par(oldp)  # return par to old settings; this line not in book    
 
 # R-chunk 40 
 #cohort data with 2 guess-timated normal curves Fig 4.20    
 
-parset()  # set up the required par declaration    
+oldp <- parset()  # set up the required par declaration    
 inthist(dat,col=0,border=8,width=1.8,xlabel="Shell Length mm",    
         ylabel="Frequency",xmin=7,xmax=55,lwd=2)  # MQMF function          
 #Guess normal parameters and plot those curves on histogram    
@@ -530,7 +547,8 @@ cohort1 <- (n*prop1*cw)*dnorm(mids,av[1],stdev[1]) # for each
 cohort2 <- (n*(1-prop1)*cw)*dnorm(mids,av[2],stdev[2])# cohort    
 #(n*prop1*cw) scales likelihoods to suit the 2mm class width    
 lines(mids,cohort1,lwd=2,col=1)    
-lines(mids,cohort2,lwd=2,col=4)    
+lines(mids,cohort2,lwd=2,col=4) 
+par(oldp)  # return par to old settings; this line not in book     
 
 # R-chunk 41 
 #wrapper function for calculating the multinomial log-likelihoods    
@@ -576,7 +594,7 @@ cohort2b <- (cump2[2:nedge] - cump2[1:(nedge-1)])
 # R-chunk 44 
 #plot the alternate model fits to cohorts  Fig 4.21    
 
-parset()  # set up required par declaration; then plot curves    
+oldp <- parset() #set up required par declaration; then plot curves    
 pick <- which(mids < 28)    
 inthist(dat[pick,],col=0,border=8,width=1.8,xmin=5,xmax=28,    
         xlabel="Shell Length mm",ylabel="Frequency",lwd=3)     
@@ -585,6 +603,7 @@ lines(mids,cohort1b,lwd=2,col=4)      # add the bounded results
 label <- c("midpoints","bounds")      # very minor differences   
 legend("topleft",legend=label,lwd=3,col=c(1,4),bty="n",    
        cex=1.2,lty=c(2,1))    
+par(oldp)  # return par to old settings; this line not in book  
 
 # R-chunk 45 
 # setup table of results for comparison of fitting strategies    
@@ -608,20 +627,21 @@ kable(result,digits=c(0,0,4,4,4),align=c("r","r","r","r","r"))
 
 X <- seq(0.0,10,0.1) #now try different shapes and scale values    
 dg <- dgamma(X,shape=1,scale=1)     
-plot1(X,dg,xlab = "Quantile","Probability Density")    
+oldp <- plot1(X,dg,xlab = "Quantile","Probability Density")    
 lines(X,dgamma(X,shape=1.5,scale=1),lwd=2,col=2,lty=2)    
 lines(X,dgamma(X,shape=2,scale=1),lwd=2,col=3,lty=3)    
 lines(X,dgamma(X,shape=4,scale=1),lwd=2,col=4,lty=4)    
 legend("topright",legend=c("Shape 1","Shape 1.5","Shape 2",    
                            "Shape 4"),lwd=3,col=c(1,2,3,4),bty="n",cex=1.25,lty=1:4)    
 mtext("Scale c = 1",side=3,outer=FALSE,line=-1.1,cex=1.0,font=7)    
+par(oldp)  # return par to old settings; this line not in book  
 
 ## Likelihoods from the Beta Distribution    
 # R-chunk 48 
 #Illustrate different Beta function curves. Figure 4.23    
 
 x <- seq(0, 1, length = 1000)    
-parset()    
+oldp <- parset()    
 plot(x,dbeta(x,shape1=3,shape2=1),type="l",lwd=2,ylim=c(0,4),    
      yaxs="i",panel.first=grid(), xlab="Variable 0 - 1",     
      ylab="Beta Probability Density - Scale1 = 3")    
@@ -629,6 +649,7 @@ bval <- c(1.25,2,4,10)
 for (i in 1:length(bval))     
   lines(x,dbeta(x,shape1=3,shape2=bval[i]),lwd=2,col=(i+1),lty=c(i+1))    
 legend(0.5,3.95,c(1.0,bval),col=c(1:7),lwd=2,bty="n",lty=1:5)    
+par(oldp)  # return par to old settings; this line not in book  
 
 
 ## Bayes' Theorem    
@@ -642,7 +663,8 @@ x <- 1:1000
 y <- rep(1/1000,1000)    
 cumy <- cumsum(y)    
 group <- sort(rep(c(1:50),20))    
-xlab <- seq(10,990,20)    
+xlab <- seq(10,990,20)  
+oldp <- par(no.readonly=TRUE)  # this line not in book  
 par(mfrow=c(2,1),mai=c(0.45,0.3,0.05,0.05),oma=c(0.0,1.0,0.0,0.0))     
 par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)      
 yval <- tapply(y,group,sum)    
@@ -650,6 +672,7 @@ plot(x,cumy,type="p",pch=16,cex=0.5,panel.first=grid(),
      xlim=c(0,1000),ylim=c(0,1),ylab="",xlab="Linear Scale")    
 plot(log(x),cumy,type="p",pch=16,cex=0.5,panel.first=grid(),    
      xlim=c(0,7),xlab="Logarithmic Scale",ylab="")    
-mtext("Cumulative Probability",side=2,outer=TRUE,cex=0.9,font=7)    
+mtext("Cumulative Probability",side=2,outer=TRUE,cex=0.9,font=7)
+par(oldp)  # return par to old settings; this line not in book      
 }
 }

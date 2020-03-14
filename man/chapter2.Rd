@@ -29,9 +29,11 @@ apply(matdat,1,countones3)  # apply countones3 to 5 rows
 
 
 # R-chunk 2
-#A more complex function prepares to plot a single base graphic
-#It has the syntax for opening a window outside of Rstudio and
-#defining a base graphic
+ #A more complex function prepares to plot a single base graphic
+ #It has the syntax for opening a window outside of Rstudio and
+ #defining a base graphic. It includes oldpar<-par(no.readonly=TRUE)
+ #which is returned invisibly so that the original 'par' settings
+ #can be recovered using par(oldpar) after completion of your plot.
 
 plotprep2 <- function(plots=c(1,1),width=6, height=3.75,usefont=7,
                       newdev=TRUE) {
@@ -39,9 +41,11 @@ plotprep2 <- function(plots=c(1,1),width=6, height=3.75,usefont=7,
       (newdev)) {
     dev.new(width=width,height=height,noRStudioGD = TRUE)
   }
+  oldpar <- par(no.readonly=TRUE)  # not in the book's example
   par(mfrow=plots,mai=c(0.45,0.45,0.1,0.05),oma=c(0,0,0,0))
   par(cex=0.75,mgp=c(1.35,0.35,0),font.axis=usefont,font=usefont,
       font.lab=usefont)
+  return(invisible(oldpar))
 }  #  see ?plotprep; see also parsyn() and parset()
 
 
@@ -65,6 +69,7 @@ round(rnorm(5),5)
 
 data("LatA")  #LatA = length at age data; try properties(LatA)
 #plotprep(width=6.0,height=5.0,newdev=FALSE) #unhash for external plot
+oldpar <- par(no.readonly=TRUE)  # not in the book's example
 setpalette("R4") #a more balanced, default palette see its help
 par(mfrow=c(2,2),mai=c(0.45,0.45,0.1,0.05))  # see ?parsyn
 par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7)
@@ -73,6 +78,7 @@ hist(LatA$age,breaks=20,col=3,main="") # 3=green #try ?hist
 hist(LatA$age,breaks=30,main="",col=4) # 4=blue
 hist(LatA$age, breaks=30,col=2, main="", xlim=c(0,43), #2=red
      xlab="Age (years)",ylab="Count")
+par(oldpar)  # not in the book's example
 
 ### Dealing with Factors
 # R-chunk 5

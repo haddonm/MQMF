@@ -39,7 +39,6 @@ negnormL is an alternative to negNLL to produce
     does nothing to the sigma value.
 }
 \examples{
-\dontrun{
  data(blackisland)
  param <- c(Linf=173.65,K=0.2666,sigma=3.6)
  sigfunk <- function(pars,predobs) return(tail(pars,1))
@@ -48,5 +47,4 @@ negnormL is an alternative to negNLL to produce
  param2 <- c(21.03,130.94,40.65,3.162)  
  negnormL(par=param2,funk=invl,funksig=sigfunk,indat=blackisland,
            obs="dl",initL="l1",delT="dt")  # should be 277.0186
-}
 }

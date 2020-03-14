@@ -26,11 +26,9 @@ getrmse calculates the rmse of the input invar series
     from a cpue standardization
 }
 \examples{
-\dontrun{
 year <- 1986:1994
 cpue <- c(1.2006,1.3547,1.0585,1.0846,0.9738,1.0437,0.7759,1.0532,1.284)
 dat <- as.matrix(cbind(year,cpue))
 getrmse(dat,invar="cpue")  # should be 0.08265127
 getrmse(dat,invar="cpue")$rmse
-}
 }

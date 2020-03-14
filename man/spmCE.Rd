@@ -14,10 +14,11 @@ spmCE(
 )
 }
 \arguments{
-\item{inp}{a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), you
-would use the latter if it was suspected that the fishery data 
-started after some initial depletion had occurred. Then there should 
-be the same number of sigma values as tehre are cpue time-series}
+\item{inp}{a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), 
+you would use the latter if it was suspected that the fishery 
+data started after some initial depletion had occurred. Then 
+there should be the same number of sigma values as tehre are 
+cpue time-series}
 
 \item{indat}{a matrix with at least columns 'year', 'catch', and 'cpue'}
 
@@ -34,22 +35,21 @@ The default is TRUE}
 \value{
 a list of five objects; outmat the matrix with the dynamics 
     results, q catchability, msy the maximum sustainable yield, the 
-    parameter values, and sumout, which contains r, K, B0, msy, p, q, 
-    Depl, FinalB, and InitDepl
+    parameter values, and sumout, which contains r, K, B0, msy, p, 
+    q, Depl, FinalB, and InitDepl
 }
 \description{
-spmCE calculates the dynamics using a Schaefer of Fox model
-    and is used instead of spm when there are multiple index vectors.
-    The outputs include  predicted Biomass, year, catch, cpue, predicted
-    cpue, contributions to q, ssq, and depletion levels. Generally it
-    would be more sensible to use simpspm when fitting a Schaefer model 
-    and simpfox when fitting a Fox model
-    as those functions are designed to generate only the predicted cpue
-    required by the functions ssq and negLLM, but the example shows how 
-    it could be used.
+spmCE calculates the dynamics using a Schaefer of Fox 
+    model and is used instead of spm when there are multiple index 
+    vectors. The outputs include  predicted Biomass, year, catch, 
+    cpue, predicted cpue, contributions to q, ssq, and depletion 
+    levels. Generally it would be more sensible to use simpspm when 
+    fitting a Schaefer model and simpfox when fitting a Fox model
+    as those functions are designed to generate only the predicted 
+    cpue required by the functions ssq and negLLM, but the example 
+    shows how it could be used.
 }
 \examples{
-\dontrun{
  data(twoindex)
  fish <- as.matrix(twoindex)
  pars <- log(c(0.04,155000,0.4,0.3))
@@ -58,5 +58,4 @@ spmCE calculates the dynamics using a Schaefer of Fox model
              steptol=1e-06,harvpen=TRUE)
  outfit(bestSP)  # best fitting estimates
  getMSY(exp(bestSP$estimate))
-}
 }

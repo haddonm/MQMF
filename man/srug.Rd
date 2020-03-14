@@ -31,13 +31,13 @@ srug implements the Schnute and Richards (1990) unified
     parameter to replace the 1.0 on top of the divisor.
 }
 \examples{
-\dontrun{
  L <- seq(50,160,1)
  p <- c(a=0.07,b=0.2,c=1.0,alpha=100.0)
  predR <- srug(p=p,sizeage=L) # proportion of total
+ oldpar <- par(no.readonly=TRUE)
  plot1(L,predR,xlab="Length",ylab="Prop of Recruitment")
  abline(h=0.5) #visually confirm asymmetry
-}
+ par(oldpar)
 }
 \references{
 Schnute, J.T. and L.J. Richards (1990) A unified approach 

@@ -50,7 +50,6 @@ the use of the function ccf can suggest a lagged
     based on yearly intervals, though this can be changed.
 }
 \examples{
-\dontrun{
 year <- 1985:2008
 catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,645,
            961,940,912,955,935,940,952,1030,985)
@@ -61,5 +60,4 @@ dat <- cbind(year,catch,cpue)
 out <- plotlag(dat,driver="catch",react="cpue",lag=7)
 round(out$results,5)
 out$summ
-}
 }

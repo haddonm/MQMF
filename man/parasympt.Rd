@@ -26,7 +26,6 @@ parasympt generates N vectors from a multi-variate normal
     mvnnorm package. It could be generalized to suit any model.
 }
 \examples{
-\dontrun{
   data(abdat)
   schf <- FALSE
   param <- log(c(r=0.3,K=11500,Binit=3300,sigma=0.05))
@@ -37,5 +36,4 @@ parasympt generates N vectors from a multi-variate normal
   matpar <- parasympt(bestmod,1000)
   head(matpar,15)
   pairs(matpar)
-}
 }

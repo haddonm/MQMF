@@ -22,10 +22,8 @@ penalty0 allows for the option of adding a large penalty as
     examples below illustrate this.
 }
 \examples{
-\dontrun{
   penalty0(0.5)
   penalty0(0.1)
   penalty0(0.01)
   penalty0(0.005)
-}
 }

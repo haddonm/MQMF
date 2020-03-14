@@ -22,11 +22,9 @@ getMSY calculates the MSY for the Polacheck et al 1993
     all values of p.
 }
 \examples{
-\dontrun{
 param <- c(r=1.1,K=1000.0,Binit=800.0,sigma=0.075)
 getMSY(param,p=1.0)     #  275       Schaefer equivalent
 getMSY(param,p=1e-08)   #  404.6674  Fox equivalent
-}
 }
 \references{
 Polacheck, T., Hilborn, R., and A.E. Punt (1993) Fitting 

@@ -30,14 +30,14 @@ fabens requires at least two parameters, Linf and K from
     recapture. It then calculates the expected growth increment.
 }
 \examples{
-\dontrun{
  data(blackisland)
+ oldpar <- par(no.readonly=TRUE)
  plot(blackisland$l1,blackisland$dl,type="p",pch=16,
  xlab="Initial Length mm",ylab="Growth Increment mm",
  panel.first=grid())
  abline(h=0)
  param <- c(170, 0.3, 4.0) # Linf, K, sigma
  predDL <- fabens(param,blackisland,initL="l1",delT="dt")
- lines(blackisland$l1,predDL,col=2,lwd=2)   
-}
+ lines(blackisland$l1,predDL,col=2,lwd=2)  
+ par(oldpar) 
 }

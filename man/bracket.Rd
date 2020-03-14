@@ -32,7 +32,6 @@ bracket scans through a series of predicted values for
     one of those y-axis values.
 }
 \examples{
-\dontrun{
  L = seq(60,160,1)
  p=c(a=0.075,b=0.075,c=1.0,alpha=100)
  asym <- srug(p=p,sizeage=L)
@@ -42,7 +41,6 @@ bracket scans through a series of predicted values for
  ans <- c(L25,L50,L75,L50-L25,L75-L50)
  {cat("   L25    L50      L75   L50-L25 L75-L50 \n")
  cat(round(ans,4),"\n")} 
-}
 }
 \seealso{
 linter
