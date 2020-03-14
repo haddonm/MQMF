@@ -22,10 +22,8 @@ mnnegLL a generic multinomial negative log-likelihood
     number of predicted values matches the number of observed values
 }
 \examples{
-\dontrun{
   obs <- c(0,0,6,12,35,40,29,23,13,7,10,14,11,16,11,11,9,8,5,2,0)
   predf <- c(0.1,0.9,4.5,14.4,29.7,39.9,35.2,21.3,10.9,8.0,9.5,12.1,
              14.1,14.7,13.7,11.5,8.6,5.8,3.5,1.9,0.9) 
  mnnegLL(obs,predf)   # should be  705.5333
-}
 }

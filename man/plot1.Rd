@@ -46,7 +46,9 @@ without having to explicitly declare them in plot1, these include
 col, default = black, pch, if the type = "p", lwd, etc.}
 }
 \value{
-nothing but it does plot a graph and changes the par setting
+plots a graph and sets the default plotting par values. 
+    This changes the current plotting options! The original par 
+    values are returned invisibly if the user wishes to reset.
 }
 \description{
 plot1 provides a quick way to plot out a single xy
@@ -59,9 +61,8 @@ plot1 provides a quick way to plot out a single xy
     y-axis is set to 0 - ymax or ymin - ymax
 }
 \examples{
-\dontrun{
- x <- rnorm(20,mean=5,sd=1)
- plot1(x,x,xlab="x-values",ylab="yvalues")
+ #'  x <- rnorm(20,mean=5,sd=1)
+ oldpar <- plot1(x,x,xlab="x-values",ylab="yvalues")
  points(x,x,pch=16,cex=1.5)
-}
+ par(oldpar)
 }

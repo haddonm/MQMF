@@ -16,9 +16,7 @@ A single value of zero or the number of ones
 countones used in apply to count the number of ones in a vector
 }
 \examples{
-\dontrun{
 x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
 print(x)
 apply(x,1,countones)  # by rows
-}
 }

@@ -20,8 +20,6 @@ magnitude is useful when using an
     parameter value.
 }
 \examples{
-\dontrun{
   x <- c(0,0.03,0.3,3,30,300,3000)
   magnitude(x)
-}
 }

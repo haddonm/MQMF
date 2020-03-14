@@ -34,7 +34,6 @@ linter is a tool for linearly interpolating in a 2-D
     y-axis, and target is the value we are looking for on the y-axis.
 }
 \examples{
-\dontrun{
  L = seq(60,160,1)
  p=c(a=0.075,b=0.075,c=1.0,alpha=100)
  asym <- srug(p=p,sizeage=L)
@@ -44,7 +43,6 @@ linter is a tool for linearly interpolating in a 2-D
  ans <- c(L25,L50,L75,L50-L25,L75-L50)
  {cat("   L25    L50      L75   L50-L25 L75-L50 \n")
  cat(round(ans,4),"\n")} 
-}
 }
 \seealso{
 bracket

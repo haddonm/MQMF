@@ -28,9 +28,8 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' # library(mvtnorm)
-#' # library(MASS)
+#'  library(mvtnorm)
+#'  library(MASS)
 #'  data(abdat)
 #'  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
 #'  bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=abdat, 
@@ -48,7 +47,6 @@
 #'  plot(xv,yv,type="p") # use default 0.5 and 0.9 contours.
 #'  addcontours(xv,yv,range(xv),range(yv),lwd=2,col=2)
 #'  points(mean(xv),mean(yv),pch=16,cex=1.5,col=2)
-#' }
 addcontours <- function(xval,yval,xrange,yrange,ngrid=100,
                         contval=c(0.5,0.90),lwd=1,col=1) {
   z<-kde2d(xval,yval,n=ngrid,lims=c(range(xrange),range(yrange)))
@@ -101,7 +99,7 @@ addcontours <- function(xval,yval,xrange,yrange,ngrid=100,
 #'     standard deviation of the input data
 #' @export
 #' @examples
-#' \dontrun{
+#'  oldpar <- par(no.readonly=TRUE)
 #'  x <- rnorm(1000,mean=5,sd=1)
 #'  #plotprep(height=6,width=4,newdev=FALSE)
 #'  par(mfrow= c(1,1),mai=c(0.5,0.5,0.3,0.05))
@@ -110,7 +108,7 @@ addcontours <- function(xval,yval,xrange,yrange,ngrid=100,
 #'  nline <- addnorm(outH,x)
 #'  lines(nline$x,nline$y,lwd=3,col=2)
 #'  print(nline$stats)
-#' }
+#'  par(oldpar)
 addnorm <- function(inhist,xdata,inc=0.01) {
   lower <- inhist$breaks[1]
   upper <- tail(inhist$breaks,1)
@@ -138,12 +136,12 @@ addnorm <- function(inhist,xdata,inc=0.01) {
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#'  oldpar <- par(no.readonly=TRUE)
 #'  egdata <- rlnorm(200,meanlog=0.075,sdlog=0.5)
 #'  outh <- hist(egdata,main="",col=2,breaks=seq(0,8,0.2))
 #'  ans <- addlnorm(outh,egdata)
 #'  lines(ans[,"x"],ans[,"y"],lwd=2,col=4) 
-#' }
+#'  par(oldpar)
 addlnorm <- function(inhist,xdata,inc=0.01) {
   lower <- inhist$breaks[1]
   upper <- tail(inhist$breaks,1)
@@ -190,13 +188,13 @@ addlnorm <- function(inhist,xdata,inc=0.01) {
 #' @export
 #' 
 #' @examples
-#' \dontrun{
+#'  oldpar <- par(no.readonly=TRUE)
 #'  x <- trunc(runif(1000)*10) + 1
 #'  #plotprep(width=6,height=4)
 #'  inthist(x,col="grey",border=3,width=0.75,xlabel="Random Uniform",
 #'          ylabel="Frequency")
 #'  abline(h=100)
-#' }
+#'  par(oldpar)
 inthist <- function(x,col=1,border=1,width=1,xlabel="",ylabel="",
                     main="",lwd=1,xmin=NA,xmax=NA,ymax=NA,plotout=TRUE,
                     prop=FALSE,inc=1,xaxis=TRUE) {
@@ -263,14 +261,14 @@ inthist <- function(x,col=1,border=1,width=1,xlabel="",ylabel="",
 }  # end of inthist
 
 
-#' @title panel.cor is a version of that given in the pairs help
+#' @title panel.cor is a version of function given in the pairs help
 #' 
 #' @description panel.cor is a panel function modified from that 
 #'     described in the help file for the pairs function from the 
-#'     graphics package. This has been customized to show that 
-#'     one can make such customizations, and this one is used to 
-#'     calculate the correlations between the variables included 
-#'     in a pairs plot.
+#'     graphics package. This has been customized both to show that 
+#'     one can make such customizations, and to enable this one to be
+#'     used to calculate the correlations between the variables 
+#'     included in a pairs plot.
 #'
 #' @param x the first variable - provided by pairs
 #' @param y the second variable, provided by pairs, see examples
@@ -282,11 +280,9 @@ inthist <- function(x,col=1,border=1,width=1,xlabel="",ylabel="",
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'   dat <- matrix(rnorm(900,mean=5,sd=0.5),nrow=300,ncol=3)
 #'   pairs(dat[,1:3],lower.panel=panel.smooth,  # all should be
 #'         upper.panel=panel.cor,gap=0.25,lwd=2) #low correlations
-#' }
 panel.cor <- function(x, y, digits = 3, ...) {
   usr <- par("usr"); on.exit(par(usr)) #store par values
   par(usr = c(0, 1, 0, 1))
@@ -316,22 +312,24 @@ panel.cor <- function(x, y, digits = 3, ...) {
 #' @param margin defines the space allowed for labels on axes. Again,
 #'     likely needs to change is having more than one plot
 #'
-#' @return nothing but it changes the base graphics par settings
+#' @return nothing but it changes the base graphics par settings. The 
+#'     original par values are returned invisibly if user wishes to reset.
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'  x <- rnorm(100,mean=5,sd=0.5)
 #'  y <- rnorm(100,mean=5,sd=0.5)
-#'  parset(plots=c(1,2))
+#'  oldpar <- parset(plots=c(1,2))
 #'  plot1(x,y,defpar=FALSE)
 #'  plot1(y,x,defpar=FALSE)
-#' }
+#'  par(oldpar)
 parset <- function(plots=c(1,1),cex=0.75,font=7,outmargin=c(0,0,0,0),
                    margin=c(0.45,0.45,0.05,0.05)) {
+  oldpar <- par(no.readonly=TRUE)
   par(mfrow=plots,mai=margin,oma=outmargin)
   par(cex=cex, mgp=c(1.35,0.35,0), font.axis=font,font=font,
       font.lab=font)
+  return(invisible(oldpar))
 } # end of parset
 
 
@@ -382,17 +380,19 @@ parsyn <- function() {
 #'     without having to explicitly declare them in plot1, these include
 #'     col, default = black, pch, if the type = "p", lwd, etc.
 #'
-#' @return nothing but it does plot a graph and changes the par setting
+#' @return plots a graph and sets the default plotting par values. 
+#'     This changes the current plotting options! The original par 
+#'     values are returned invisibly if the user wishes to reset.
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'  x <- rnorm(20,mean=5,sd=1)
-#'  plot1(x,x,xlab="x-values",ylab="yvalues")
+#'  #'  x <- rnorm(20,mean=5,sd=1)
+#'  oldpar <- plot1(x,x,xlab="x-values",ylab="yvalues")
 #'  points(x,x,pch=16,cex=1.5)
-#' }
+#'  par(oldpar)
 plot1 <- function(x,y,xlab="",ylab="",type="l",usefont=7,cex=0.75,
                   maxy=0,defpar=TRUE,...){
+  oldpar <- par(no.readonly=TRUE)
   if (defpar) {
     par(mfrow = c(1,1), mai = c(0.45,0.45,0.1,0.05),oma = c(0,0,0,0))
     par(cex = cex, mgp = c(1.35, 0.35, 0), font.axis = usefont,
@@ -402,6 +402,7 @@ plot1 <- function(x,y,xlab="",ylab="",type="l",usefont=7,cex=0.75,
   if (min(y,na.rm=TRUE) < 0.0) ymin <- getmin(y) else ymin <- 0.0
   plot(x,y,type=type,ylim=c(ymin,ymax),yaxs="i",
        ylab=ylab,xlab=xlab,cex=cex,panel.first=grid(),...)
+  return(invisible(oldpar))
 } # end of plot1
 
 #' @title plot.dynpop an S3 method for plotting dynpop objects
@@ -441,6 +442,8 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
   ymax <- getmax(x[,"nt"])
   xl <- c(0,ymax)
   yrs <- length(x[,"year"])
+  oldpar <- par(no.readonly=TRUE)
+  on.exit(par(oldpar))
   par(mfrow=c(1,2),mai=c(0.45,0.45,0.05,0.1),oma=c(0.0,0,2.0,0.0))
   par(cex=cex, mgp=c(1.35,0.35,0), font.axis=font,font=font,
       font.lab=font)
@@ -464,15 +467,19 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
 
 #' @title plotprep: sets up a window and the par values for plotting
 #'
-#' @description plotprep: sets up a window and the par values for plots.
-#'    This is simply a utility function to save typing the standard 
-#'    syntax. Some of the defaults can be changed. Typing the name 
-#'    without () will provide a template for modification. If different 
-#'    par values are wanted then just include a par statement after 
-#'    plotprep()
+#' @description plotprep: sets up a window and changes the par values 
+#'     for plots. This is simply a utility function to save typing the
+#'     standard syntax. Some of the defaults can be changed. Typing 
+#'     the name without () will provide a template for modification. 
+#'     If different par values are wanted then just include a par 
+#'     statement after plotprep(). Calling plotprep saves the current 
+#'     par settings and returns them invisibly. So to recover the 
+#'     original par settings after oldpar <- plotprep(), and you have 
+#'     completed your plot, you can include a par(oldpar) to recover 
+#'     your original settings.
 #'   
 #' @param width defaults to 6 inches = 15.24cm - width of plot
-#' @param height defaults to 3 inches = 7.62cm - height of plot
+#' @param height defaults to 3.6 inches = 9.14cm - height of plot
 #' @param usefont default=7 (bold Times) 1=sans serif, 2=sans serif bold
 #' @param cex default=0.75, size of font used for text within the plots
 #' @param newdev reuse a previously defined graphics device or make a 
@@ -480,26 +487,26 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
 #' @param filename default="" ie do not save to a filename. If filename 
 #'     is defined it makes that file as a png file with resolution resol
 #' @param resol resolution of the png file, if defined, default=300
-#' @param reminder set to FALSE to turn off the reminder to include a
-#'     graphics.off() command after the plot
+#' @param verbose set this to TRUE to turn on the reminder to 
+#'     include a graphics.off() command after the plot. Default=FALSE
 #' 
-#' @return sets up a graphics device, if needed and sets the default 
+#' @return sets up a graphics device, if needed, and resets the default 
 #'     plotting par values. This changes the current plotting options! 
-#' @export plotprep
+#'     The original par values are returned invisibly.
+#' @export
 #' 
 #' @examples
-#' \dontrun{
 #'  x <- rnorm(1000,mean=0,sd=1.0)
 #'  plotprep(newdev=TRUE)
 #'  hist(x,breaks=30,main="",col=2)
-#'  plotprep(width=6,height=5,newdev=FALSE)
+#'  oldpar <- plotprep(width=6,height=5,newdev=FALSE)
 #'  par(mfrow = c(2,1)) # can run parset() or change the par settings
 #'  hist(x,breaks=20,main="",col=2)
 #'  hist(x,breaks=30,main="",col=3)
-#' }
+#'  par(oldpar)
 plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
                      newdev=FALSE,filename="",resol=300,
-                     reminder=TRUE) {
+                     verbose=FALSE) {
   if  ((names(dev.cur()) != "null device") & (newdev)) 
       suppressWarnings(dev.off())
   lenfile <- nchar(filename)
@@ -511,11 +518,13 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
     if (names(dev.cur()) %in% c("null device","RStudioGD"))
       dev.new(width=width,height=height,noRStudioGD = TRUE)
   }
+  oldpar <- par(no.readonly=TRUE)
   par(mfrow = c(1,1),mai=c(0.45,0.45,0.1,0.05), oma=c(0,0,0,0))
   par(cex=cex,mgp=c(1.35,0.35,0),font.axis=usefont,font=usefont, 
       font.lab=usefont)
-  if ((lenfile > 0) & (reminder))
+  if ((lenfile > 0) & (verbose))
       cat("\n Remember to place 'graphics.off()' after plot \n")
+  return(invisible(oldpar))
 } # end of plot_prep
 
 #' @title plotprofile simplifies plotting single likelihood profiles
@@ -545,18 +554,19 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
 #' @param like identifies the name of the column containing the -ve 
 #'     log-likelihood
 #' @param defpar logical, should the par values be assumed or defined, 
-#'     defaults to TRUE, so only one plot will be produced. If part of 
-#'     a multiple plot define the formatting before calling and set this
-#'     to FALSE
+#'     defaults to TRUE, so only one plot will be produced and any old
+#'     par values will be restored afterwards. If part of a multiple 
+#'     plot define the formatting before calling and set this
+#'     to FALSE. This will lead to the oldpar being returned invisibly
+#'     so that eventually the par settings can be reset.
 #' @param ... used for any other graphic parameters used.     
 #'
 #' @return nothing but this does generate a plot.
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#'  data(abdat)
-#'  rval <- seq(0.325,0.45,0.001)
+#'  data(abdat)    #usually use  ~100 steps in rval, perhaps use
+#'  rval <- seq(0.325,0.45,0.02)   # seq(0.325,0.45,0.001)
 #'  ntrial <- length(rval)
 #'  columns <- c("r","K","Binit","sigma","-veLL")
 #'  result <- matrix(0,nrow=ntrial,ncol=length(columns),
@@ -572,10 +582,11 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
 #'    result[i,] <- c(bestest,bestmodP$minimum)
 #'  }
 #'  plotprofile(result,var="r",defpar=TRUE,lwd=2)
-#' }
 plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
                          ylabel="-ve Log-Likelihood",like="-veLL",
                          defpar=TRUE,...) {
+  oldpar <- par(no.readonly=TRUE)
+  if (defpar) on.exit(par(oldpar))
   plot1(prof[,var],prof[,like],xlab=xlabel,ylab=ylabel,
         defpar=defpar,...)
   ntrial <- dim(prof)[1]
@@ -590,7 +601,8 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
                   round(prof[mid,var],digit[2]),"    ",
                   round(prof[(mid+right-1),var],digit[3]))
   mtext(label,side=3,outer=FALSE,line=-1.1,cex=0.9,font=7)
-} # end of plotpreofile
+  if (!defpar) return(invisible(oldpar))
+} # end of plotprofile
 
 #' @title setpalette is a shortcut for altering the palette to R4
 #' 
@@ -612,7 +624,6 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'    setpalette("R3")
 #'    plot(1:8,rep(0.25,8),type="p",pch=16,cex=5,col=c(1:8))
 #'    text(1,0.2,"Default R3.0.0 - some garish or pale",cex=1.5,
@@ -621,7 +632,6 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
 #'    points(1:8,rep(0.3,8),pch=16,cex=5,col=c(1:8)) #toprow
 #'    text(1,0.325,"Default R4.0.0 - more balanced",cex=1.5,
 #'         font=7,pos=4)
-#' }
 setpalette <- function(x="R4") { # x="R4"
   choice <- c("default","R3","R4")
   if (x %in% choice) {
@@ -636,7 +646,6 @@ setpalette <- function(x="R4") { # x="R4"
     cat("Currently options are default, R3, or R4 \n")
   }
 } # end of setpalette
-
 
 #' @title uphist a histogram with an upper limit on the x-axis
 #' 
@@ -659,13 +668,13 @@ setpalette <- function(x="R4") { # x="R4"
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'   x <- rlnorm(5000, meanlog=2, sdlog=1)
 #'   hist(x,breaks=30,main="",xlab="log-normal values")
 #'   uphist(x,breaks=30,main="",xlab="log-normal values",maxval=100)
 #'   uphist(x,breaks=30,main="",xlab="log-normal values",maxval=1000)
-#' }
 uphist <- function(x,maxval=NA,...) {
+  oldpar <- par(no.readonly=TRUE)
+  on.exit(par(oldpar))
   if (is.numeric(maxval)) {
     pick <- which(x > maxval)
     if (length(pick) > 0) x <- x[-pick]

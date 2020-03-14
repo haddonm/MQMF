@@ -28,10 +28,8 @@ likeratio conducts a likelihood ratio test on two
     is always generated.
 }
 \examples{
-\dontrun{
   one <- 291.1691
   two <- 277.0122
   dof <- 1
-  round(likeratio(one,two,dof),8)
-}
+  round(likeratio(one,two,dof),8)  # LR = 28.3138
 }

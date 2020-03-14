@@ -17,10 +17,8 @@ gettime is a function designed to facilitate the measurement
     pass from one day to the next accurate results will be generated.
 }
 \examples{
-\dontrun{
   begin <- gettime()
   for (i in 1:1e6) sqrt(i)
   finish <- gettime()
   print(finish - begin)
-}
 }

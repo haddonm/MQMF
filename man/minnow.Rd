@@ -37,9 +37,9 @@ minnow is a dataset of mean length against time in weeks for
 }
 
 \examples{
- \dontrun{
  data(minnow)
+ oldpar <- par(no.readonly=TRUE)
  plot1(minnow$week,minnow$length,type="p",pch=16,cex=1.2,
        xlab="Week",ylab="Length mm")
-}
+ par(oldpar)
 }

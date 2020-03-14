@@ -20,14 +20,12 @@ summspm extracts critical statistics from output of
     Bmsy, Dmsy, Blim, Btarg, Ctarg. and Dcurr.
 }
 \examples{
-\dontrun{
 data(dataspm)
 plotfishM(dataspm,spsname="Pink Ling")
 pars <- log(c(0.264,4740,3064,0.05))
-ans <- plotspmmod(pars,dataspm,schaefer=FALSE)
+ans <- plotspmmod(pars,dataspm,schaefer=FALSE,plotout=FALSE)
 bestSP <- fitSPM(pars,dataspm,schaefer=FALSE,maxiter=1000)
 outfit(bestSP)
-ans <- plotspmmod(bestSP$estimate,dataspm,schaefer=FALSE)
+ans <- plotspmmod(bestSP$estimate,dataspm,schaefer=FALSE,plotout=FALSE)
 summspm(ans)
-}
 }

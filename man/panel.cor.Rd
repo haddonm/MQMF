@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotfuns.R
 \name{panel.cor}
 \alias{panel.cor}
-\title{panel.cor is a version of that given in the pairs help}
+\title{panel.cor is a version of function given in the pairs help}
 \usage{
 panel.cor(x, y, digits = 3, ...)
 }
@@ -22,15 +22,13 @@ this prints the correlations in a square of the pairs plot
 \description{
 panel.cor is a panel function modified from that 
     described in the help file for the pairs function from the 
-    graphics package. This has been customized to show that 
-    one can make such customizations, and this one is used to 
-    calculate the correlations between the variables included 
-    in a pairs plot.
+    graphics package. This has been customized both to show that 
+    one can make such customizations, and to enable this one to be
+    used to calculate the correlations between the variables 
+    included in a pairs plot.
 }
 \examples{
-\dontrun{
   dat <- matrix(rnorm(900,mean=5,sd=0.5),nrow=300,ncol=3)
   pairs(dat[,1:3],lower.panel=panel.smooth,  # all should be
         upper.panel=panel.cor,gap=0.25,lwd=2) #low correlations
-}
 }

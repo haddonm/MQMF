@@ -42,10 +42,8 @@ schaef is yellowfin tuna fishery data from Schaefer
 }
 
 \examples{
- \dontrun{
  data(schaef)
  pars <- log(c(r=0.2,K=2.1e06,Binit=2.2e06,sigma=0.2))
  answer <- fitSPM(pars,schaef,schaefer=TRUE,maxiter=1000)
  outfit(answer,title="Schaefer, 1957 Data",digits=4)
-}
 }

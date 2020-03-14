@@ -42,7 +42,6 @@ getlag is a wrapper for the ccf function (cross correlation)
     cpue data.
 }
 \examples{
-\dontrun{
 year <- 1985:2008
 catch <- c(1018,742,868,715,585,532,566,611,548,499,479,428,657,481,
            645,961,940,912,955,935,940,952,1030,985)
@@ -53,5 +52,4 @@ dat <- as.data.frame(cbind(year,catch,cpue))
 out <- getlag(dat,plotout=FALSE)
 plot(out,lwd=3,col=2)
 str(out)
-}
 }

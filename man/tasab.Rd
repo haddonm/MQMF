@@ -36,9 +36,7 @@ tasab is a 715 x 4 matrix of maturity-at-length data
 }
 
 \examples{
- \dontrun{
  data(tasab)
  head(tasab,20)
  table(tasab$site,tasab$sex)
-}
 }

@@ -21,9 +21,7 @@ freqMean calculates the mean and stdev of count data
     return a vector of two numbers.
 }
 \examples{
-\dontrun{
 vals <- c(1,2,3,4,5)
 counts <- c(3,NA,7,4,2)
 freqMean(vals,counts)  # should give 3.125 and 1.258306
-}
 }

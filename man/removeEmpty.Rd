@@ -13,18 +13,17 @@ removeEmpty(invect)
 a possibly NULL vector of strings
 }
 \description{
-removeEmpty removes empty strings from a vector of strings.
-    Such spaces often created by spurious commas at the end of lines. It
-    also removes strings made up only of spaces and removes spaces from
-    inside of inidivdual chunks of text. So, should be useful when
-    reading in data from a custom csv file when parsing different formats
+removeEmpty removes empty strings from a vector of 
+    strings. Such spaces often created by spurious commas at the 
+    end of lines. It also removes strings made up only of spaces 
+    and removes spaces from inside of inidivdual chunks of text. 
+    So, should be useful when reading in data from a custom csv 
+    file when parsing different formats
 }
 \examples{
-\dontrun{
 x <- c("1","","2","","   ","3"," ","4","","a string","end")
 x
 length(x)
 length(removeEmpty(x))
 removeEmpty(x)
-}
 }

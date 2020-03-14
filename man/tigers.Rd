@@ -32,9 +32,9 @@ tigers is a dataset of only 14 rows of data with a
 }
 
 \examples{
- \dontrun{
  data(tigers)
  tigers
+ oldpar <- par(no.readonly=TRUE)
  plot1(tigers$Spawn,tigers$Recruit,type="p",pch=16,cex=1.25)
-}
+ par(oldpar)
 }

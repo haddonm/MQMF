@@ -70,11 +70,11 @@ inthist a replacement for the hist function for use with
     it will issue a warning and then round all values before plotting.
 }
 \examples{
-\dontrun{
+ oldpar <- par(no.readonly=TRUE)
  x <- trunc(runif(1000)*10) + 1
  #plotprep(width=6,height=4)
  inthist(x,col="grey",border=3,width=0.75,xlabel="Random Uniform",
          ylabel="Frequency")
  abline(h=100)
-}
+ par(oldpar)
 }

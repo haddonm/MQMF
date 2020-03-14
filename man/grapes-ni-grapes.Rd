@@ -15,11 +15,9 @@ x \%ni\% y
 '\%ni\%' identifies which element in x is NOT in y
 }
 \examples{
-\dontrun{
    x <- 1:10
    y <- 6:15
    x
    y
    x[(x \%ni\% y)]   # are not in y
-}
 }

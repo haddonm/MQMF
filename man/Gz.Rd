@@ -21,9 +21,9 @@ Gz calculates length-at-age for the Gompertz curve.
     as at an age where growth slows due to maturity occurring.
 }
 \examples{
-\dontrun{
  ages <- seq(0,20,1)   # sigma is ignored here
+ oldpar <- par(no.readonly=TRUE)
  pars <- c(a=26.0,b=2.8,c=-0.65,sigma=1.0) # a, b, c, sigma;
  plot1(ages,Gz(pars,ages),xlab="Age",ylab="Length",lwd=2)
-}
+ par(oldpar)
 }

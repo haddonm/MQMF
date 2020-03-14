@@ -20,11 +20,9 @@ getsingle splits up a text line and translates the
     first non-empty character string into a number.
 }
 \examples{
-\dontrun{
 x <- "12.3 , this is a number"
 y <- "21.3 # 22.3 # here are two numbers"
 getsingle(x)
 getsingle(y,sep="#")
 getsingle(y) # be sure to get the separator correct
-}
 }

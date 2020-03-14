@@ -33,12 +33,10 @@ bce the Baranov Catch Equation. The total mortality of
     Baranov Catch Equation when calculating the expected catches.
 }
 \examples{
-\dontrun{
 age <- 0:25
 Ft <- -log(1 - 0.2) # harvest rate of 0.2
 Faa <- rep(Ft,length(age))
 M <- 0.12
 Nt <- 1000
 bce(M,Fat=Faa,Nt,ages=age)   # should give 188.8862
-}
 }

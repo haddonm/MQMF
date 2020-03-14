@@ -2,14 +2,14 @@
 % Please edit documentation in R/spm.r
 \name{robustSPM}
 \alias{robustSPM}
-\title{robustSPM doess a robustness test on quality of fit of an SPM}
+\title{robustSPM does a robustness test on quality of fit of an SPM}
 \usage{
 robustSPM(
   inpar,
   fish,
   N = 10,
   scaler = 40,
-  console = TRUE,
+  verbose = FALSE,
   schaefer = TRUE,
   funk = simpspm,
   funkone = FALSE,
@@ -27,7 +27,8 @@ robustSPM(
 variation to add to the parameter values; default = 15 the 
 smaller the value the more variable the outcome}
 
-\item{console}{print summary statistics to the screen? default = TRUE}
+\item{verbose}{progress and summary statistics to the screen? 
+default = FALSE}
 
 \item{schaefer}{default = TRUE, which sets the analysis to the 
 Schaefer model. setting it to FALSE applies the Fox model}
@@ -58,14 +59,12 @@ robustSPM conducts a robustness test on the quality of
     reasonably well.
 }
 \examples{
-\dontrun{
   data(dataspm)
   param <- log(c(r=0.24,K=5174,Binit=2846,sigma=0.164))
   ans <- fitSPM(pars=param,fish=dataspm,schaefer=TRUE,maxiter=1000)
-  out <- robustSPM(ans$estimate,dataspm,N=50,scaler=40,console=TRUE,
-                   schaefer=TRUE)
+  out <- robustSPM(ans$estimate,dataspm,N=5,scaler=40,verbose=TRUE,
+                   schaefer=TRUE) # N should be 50, 100, or more
   str(out)
-  print(out$results[40:50,])
-  pairs(out$results[,c(6:8,11)])
-} 
+  print(out$results)
+  pairs(out$results[,c(6:8,11)]) # need a larger N!
 }

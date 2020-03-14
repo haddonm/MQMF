@@ -21,11 +21,9 @@ altnegLL calculates negLLM using the simplification
     spm
 }
 \examples{
-\dontrun{
  data(dataspm)
  pars <- log(c(r=0.2,K=6000,Binit=2800,sigma=0.2))
  ans <- fitSPM(pars,fish=dataspm,schaefer=TRUE,maxiter=1000)
  outfit(ans)
  altnegLL(ans$estimate,dataspm) # should be -12.12879
-}
 }

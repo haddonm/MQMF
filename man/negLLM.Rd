@@ -43,7 +43,6 @@ negLLM we have negLL and negLL1 for use when using -ve
     is used in conjunction with simpspmM and spmCE.
 }
 \examples{
-\dontrun{
  data(twoindex)
  fish <- as.matrix(twoindex)
  pars <- log(c(0.04,155000,0.4,0.3))
@@ -53,5 +52,4 @@ negLLM we have negLL and negLL1 for use when using -ve
  outfit(bestSP,digits=5,title="negLLM example") #optimum solution
  answer <- plotspmmod(bestSP$estimate,indat=fish,
                       plotprod=TRUE,maxy=3.4)
-}
 }

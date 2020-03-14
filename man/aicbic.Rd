@@ -27,13 +27,11 @@ aicbic calculates and returns the AIC and BIC using the
     aicbic can recognize the outputs from optim, nlm, and nlminb.
 }
 \examples{
-\dontrun{
 data(blackisland); bi <- blackisland
 param <- c(Linf=170.0,K=0.3,sigma=4.0)
 modelvb <- nlm(f=negNLL,p=param,funk=fabens,observed=bi$dl,indat=bi,
                initL="l1",delT="dt") # could have used the defaults
 aicbic(modelvb,blackisland)  # 588.3382 596.3846 291.1691   3
-}
 }
 \references{
 Burnham, K.P. and D.R. Anderson (2002) \emph{Model Selection and Inference. A Practical Information-Theoretic Approach.} Second Edition Springer-Verlag, New York. 488 p.

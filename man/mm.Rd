@@ -20,9 +20,7 @@ mm calculates length-at-age for the generalized
     Michaelis-Menton curve.
 }
 \examples{
-\dontrun{
  ages <- seq(0,20,1)    # sigma is ignored here
  pars <- c(a=23.0,b=1.0,c=1.0,sigma=1.0) # a, b, c, sigma
  plot1(ages,mm(pars,ages),xlab="Age",ylab="Length",lwd=2)
-}
 }

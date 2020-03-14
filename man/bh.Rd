@@ -22,9 +22,7 @@ bh implements the Beverton-Holt stock recruitment
    generate 0.5 x maximum recruitment
 }
 \examples{
-\dontrun{
   B <- 1:3000
   rec <- bh(c(1000,200),B)
   plot1(B,rec,xlab="SpB",ylab="Recruitment",lwd=2)
-}
 }

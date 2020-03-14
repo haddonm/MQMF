@@ -31,7 +31,7 @@ outfit(bestvB,backtran = FALSE,title="Non-Seasonal vB",parnames=label)
 # R-chunk 2  
  #plot the non-seasonal fit and its residuals.  Figure 5.1     
  
-parset(plots=c(2,1),margin=c(0.35,0.45,0.02,0.05))      
+oldp <- parset(plots=c(2,1),margin=c(0.35,0.45,0.02,0.05))      
 plot1(week,length,type="p",cex=1.0,col=2,xlab="Weeks",pch=16,     
       ylab="Length (mm)",defpar=FALSE)     
 lines(0:160,predL,lwd=2,col=1)     
@@ -40,7 +40,8 @@ resids <- length - vB(bestvB$estimate,week)
 plot1(week,resids,type="l",col="darkgrey",cex=0.9,lwd=2,     
     xlab="Weeks",lty=3,ylab="Normal Residuals",defpar=FALSE)     
 points(week,resids,pch=16,cex=1.1,col="red")     
-abline(h=0,col=1,lwd=1)     
+abline(h=0,col=1,lwd=1) 
+par(oldp)  # return par to old settings; this line not in book      
      
 # R-chunk 3  
  # Fit seasonal vB curve, parameters = Linf, K, t0, C, s, sigma     
@@ -59,7 +60,7 @@ outfit(bestsvb,backtran = FALSE,title="Seasonal Growth",
 # R-chunk 4  
  #Plot seasonal growth curve and residuals   Figure 5.2     
  
-parset(plots=c(2,1))  # MQMF utility wrapper function     
+oldp <- parset(plots=c(2,1))  # MQMF utility wrapper function     
 plot1(week,length,type="p",cex=0.9,col=2,xlab="Weeks",pch=16,     
       ylab="Length (mm)",defpar=FALSE)     
 lines(0:160,predLs,lwd=2,col=1)     
@@ -68,18 +69,20 @@ resids <- length - svb(bestsvb$estimate,week)
 plot1(week,resids,type="l",col="darkgrey",cex=0.9,xlab="Weeks",     
       lty=3,ylab="Normal Residuals",defpar=FALSE)     
 points(week,resids,pch=16,cex=1.1,col="red")     
-abline(h=0,col=1,lwd=1)     
+abline(h=0,col=1,lwd=1)  
+par(oldp)  # return par to old settings; this line not in book     
  
 ### Fabens Method with Tagging Data     
 # R-chunk 5  
  # tagging growth increment data from Black Island, Tasmania     
  
 data(blackisland);  bi <- blackisland # just to keep things brief     
-parset()     
+oldp <- parset()     
 plot(bi$l1,bi$dl,type="p",pch=16,cex=1.0,col=2,ylim=c(-1,33),     
      ylab="Growth Increment mm",xlab="Initial Length mm",     
      panel.first = grid())     
-abline(h=0,col=1)     
+abline(h=0,col=1)  
+par(oldp)  # return par to old settings; this line not in book     
  
 ### Fitting Models to Tagging Data     
 # R-chunk 6  
@@ -102,7 +105,7 @@ predil <- invl(modelil$estimate,bi)
 # R-chunk 7  
  #growth curves and regression fitted to tagging data Fig 5.4     
  
-parset(margin=c(0.4,0.4,0.05,0.05))     
+oldp <- parset(margin=c(0.4,0.4,0.05,0.05))     
 plot(bi$l1,bi$dl,type="p",pch=16,cex=1.0,col=3,ylim=c(-2,31),     
      ylab="Growth Increment mm",xlab="Length mm",panel.first=grid())     
 abline(h=0,col=1)     
@@ -111,11 +114,12 @@ lines(bi$l1,predil,pch=16,col=2,lwd=3,lty=2)  # IL
 abline(linm,lwd=3,col=7,lty=2) # add dashed linear regression     
 legend("topright",c("vB","LinReg","IL"),lwd=3,bty="n",cex=1.2,     
                     col=c(1,7,2),lty=c(1,2,2))     
+par(oldp)  # return par to old settings; this line not in book  
  
 # R-chunk 8  
  #residuals for vB and inverse logistic for tagging data Fig 5.5     
  
-parset(plots=c(1,2),outmargin=c(1,1,0,0),margin=c(.25,.25,.05,.05))     
+oldp <- parset(plots=c(1,2),outmargin=c(1,1,0,0),margin=c(.25,.25,.05,.05))     
 plot(bi$l1,(bi$dl - predvB),type="p",pch=16,col=1,ylab="",     
      xlab="",panel.first=grid(),ylim=c(-8,11))     
 abline(h=0,col=1)     
@@ -125,7 +129,8 @@ plot(bi$l1,(bi$dl - predil),type="p",pch=16,col=1,ylab="",
 abline(h=0,col=1)     
 mtext("IL",side=3,outer=FALSE,line=-1.2,cex=1.2,font=7)     
 mtext("Length mm",side=1,line=-0.1,cex=1.0,font=7,outer=TRUE)     
-mtext("Residual",side=2,line=-0.1,cex=1.0,font=7,outer=TRUE)     
+mtext("Residual",side=2,line=-0.1,cex=1.0,font=7,outer=TRUE)   
+par(oldp)  # return par to old settings; this line not in book    
  
 ### A Closer Look at the Fabens Methods     
 ### Implementation of Non-Constant Variances     
@@ -159,7 +164,7 @@ outfit(modelvb2,backtran = FALSE,parnames = label,title="vB inverse DeltaL, sigm
  
 predvB <- fabens(modelvb$estimate,bi)     
 predvB2 <- fabens(modelvb2$estimate,bi)     
-parset(margin=c(0.4,0.4,0.05,0.05))     
+oldp <- parset(margin=c(0.4,0.4,0.05,0.05))     
 plot(bi$l1,bi$dl,type="p",pch=1,cex=1.0,col=1,ylim=c(-2,31),     
      ylab="Growth Increment mm",xlab="Length mm",panel.first=grid())     
 abline(h=0,col=1)     
@@ -167,6 +172,7 @@ lines(bi$l1,predvB,col=1,lwd=2)         # vB
 lines(bi$l1,predvB2,col=2,lwd=2,lty=2)  # IL     
 legend("topright",c("Constant sigma","Changing sigma"),lwd=3,     
        col=c(1,2),bty="n",cex=1.1,lty=c(1,2))     
+par(oldp)  # return par to old settings; this line not in book  
  
 ## Objective Model Selection     
 ### Akiake's Information Criterion     
@@ -204,8 +210,9 @@ table(tasab$site,tasab$sex) # sites 1 & 2 vs F, I, and M
  
 propm <- tapply(tasab$mature,tasab$length,mean) #mean maturity at L     
 lens <- as.numeric(names(propm))            # lengths in the data     
-plot1(lens,propm,type="p",cex=0.9,xlab="Length mm",     
+oldp <- plot1(lens,propm,type="p",cex=0.9,xlab="Length mm",     
       ylab="Proportion Mature")     
+par(oldp)  # return par to old settings; this line not in book  
      
 # R-chunk 15  
  #Use glm to estimate mature logistic     
@@ -235,7 +242,7 @@ cat("IQ   = ",2*log(3)/cof[2,1],"\n")
 propm <- tapply(tasab$mature,tasab$length,mean) #prop mature     
 lens <- as.numeric(names(propm))       # lengths in the data     
 pick <- which((lens > 79) & (lens < 146))     
-parset()   
+oldp <- parset()   
 plot(lens[pick],propm[pick],type="p",cex=0.9, #the data points     
       xlab="Length mm",ylab="Proportion Mature",pch=1)      
 L <- seq(80,145,1) # for increased curve separation     
@@ -246,6 +253,8 @@ lines(L,mature(coef(model)[1],coef(model)[2],L),lwd=2,col=1,lty=1)
 abline(h=c(0.25,0.5,0.75),lty=3,col="grey")   
 legend("topleft",c("site1","both","site2"),col=c(3,1,2),lty=c(2,1,4),     
        lwd=3,bty="n")     
+par(oldp)  # return par to old settings; this line not in book  
+
  
 ### The Assumption of Symmetry     
 # R-chunk 17  
@@ -257,10 +266,11 @@ asym <- srug(p=p,sizeage=L)
 L25 <- linter(bracket(0.25,asym,L))      
 L50 <- linter(bracket(0.5,asym,L))      
 L75 <- linter(bracket(0.75,asym,L))    
-parset()   
+oldp <- parset()   
 plot(L,asym,type="l",lwd=2,xlab="Length mm",ylab="Proportion Mature")     
 abline(h=c(0.25,0.5,0.75),lty=3,col="grey")     
-abline(v=c(L25,L50,L75),lwd=c(1,2,1),col=c(1,2,1))     
+abline(v=c(L25,L50,L75),lwd=c(1,2,1),col=c(1,2,1))  
+par(oldp)  # return par to old settings; this line not in book     
  
 # R-chunk 18  
  #Variation possible using the Schnute and Richard's Curve fig 5.10     
@@ -275,7 +285,7 @@ L = seq(50,180,1)
 vals <- seq(0.05,0.09,0.01) # a value     
 nvals <- length(vals)     
 asym <-  srug(p=c(a=vals[1],b=0.2,c=1.0,alpha=100),sizeage=L)     
-parset(plots=c(2,2))      
+oldp <- parset(plots=c(2,2))      
 plot(L,asym,type="l",lwd=2,xlab="Length mm",ylab="Proportion Mature",     
       ylim=c(0,1.05))     
 abline(h=c(0.25,0.5,0.75),lty=3,col="darkgrey")     
@@ -316,7 +326,8 @@ for (i in 2:nvals) {
   asym <- srug(p=c(a=0.07,b=0.2,c=1.0,alpha=vals[i]),sizeage=L)     
   lines(L,asym,lwd=2,col=i,lty=i)     
 }     
-tmplot(vals,"alpha")     
+tmplot(vals,"alpha") 
+par(oldp)  # return par to old settings; this line not in book      
  
 ## Recruitment     
 ### Introduction     
@@ -328,12 +339,13 @@ tmplot(vals,"alpha")
  
 B <- 1:3000     
 bhb <- c(1000,500,250,150,50)     
-parset()   
+oldp <- parset()   
 plot(B,bh(c(1000,bhb[1]),B),type="l",ylim=c(0,1050),   
       xlab="Spawning Biomass",ylab="Recruitment")     
 for (i in 2:5) lines(B,bh(c(1000,bhb[i]),B),lwd=2,col=i,lty=i)     
 legend("bottomright",legend=bhb,col=c(1:5),lwd=3,bty="n",lty=c(1:5))     
-abline(h=c(500,1000),col=1,lty=2)     
+abline(h=c(500,1000),col=1,lty=2)   
+par(oldp)  # return par to old settings; this line not in book    
  
 ### Ricker Recruitment     
 # R-chunk 20  
@@ -341,13 +353,12 @@ abline(h=c(500,1000),col=1,lty=2)
  
 B <- 1:20000     
 rickb <- c(0.0002,0.0003,0.0004)    
-parset()   
+oldp <- parset()   
 plot(B,ricker(c(10,rickb[1]),B),type="l",xlab="Spawning Biomass",ylab="Recruitment")     
 for (i in 2:3)      
    lines(B,ricker(c(10,rickb[i]),B),lwd=2,col=i,lty=i)     
 legend("topright",legend=rickb,col=1:3,lty=1:3,bty="n",lwd=2)     
- 
- 
+par(oldp)  # return par to old settings; this line not in book   
  
  
 ### Deriso's Generalized Model     
@@ -356,12 +367,15 @@ legend("topright",legend=rickb,col=1:3,lty=1:3,bty="n",lwd=2)
  # plot of three special cases from Deriso-Schnute curve  Fig. 5.13     
 deriso <- function(p,B) return(p[1] * B *(1 - p[2]*p[3]*B)^(1/p[3]))     
 B <- 1:10000     
-plot1(B,deriso(c(10,0.001,-1),B),lwd=2,xlab="Spawning Biomass",ylab="Recruitment") 
+oldp <- plot1(B,deriso(c(10,0.001,-1),B),lwd=2,xlab="Spawning Biomass",
+              ylab="Recruitment") 
 lines(B,deriso(c(10,0.0004,0.25),B),lwd=2,col=2,lty=2)  # DS     
 lines(B,deriso(c(10,0.0004,1e-06),B),lwd=2,col=3,lty=3) # Ricker     
 lines(B,deriso(c(10,0.0004,0.5),B),lwd=2,col=1,lty=3)   # odd line     
 legend(x=7000,y=8500,legend=c("BH","DS","Ricker","odd line"),     
        col=c(1,2,3,1),lty=c(1,2,3,3),bty="n",lwd=3)     
+par(oldp)  # return par to old settings; this line not in book  
+
  
 ### Re-Parameterized Beverton-Holt Equation     
 ### Re-Parameterized Ricker Equation     
@@ -376,13 +390,14 @@ sel1 <- logist(in50,12,ages)         #-3.65/0.146=L50=25.0
 sel2 <- mature(-3.650425,0.146017,sizeage=ages)     
 sel3 <- mature(-6,0.2,ages)     
 sel4 <- logist(22.0,14,ages,knifeedge = TRUE)     
-plot1(ages,sel1,xlab="Age Years",ylab="Selectivity",cex=0.75,lwd=2)     
+oldp <- plot1(ages,sel1,xlab="Age Years",ylab="Selectivity",cex=0.75,lwd=2)     
 lines(ages,sel2,col=2,lwd=2,lty=2)     
 lines(ages,sel3,col=3,lwd=2,lty=3)     
 lines(ages,sel4,col=4,lwd=2,lty=4)     
 abline(v=in50,col=1,lty=2); abline(h=0.5,col=1,lty=2)     
 legend("topleft",c("25_eq5.30","25_eq5.31","30_eq5.31","22_eq5.30N"),     
        col=c(1,2,3,4),lwd=3,cex=1.1,bty="n",lty=c(1:4))     
+par(oldp)  # return par to old settings; this line not in book  
  
  
 ### Dome Shaped Selection     
@@ -391,10 +406,11 @@ legend("topleft",c("25_eq5.30","25_eq5.31","30_eq5.31","22_eq5.30N"),
  
 L <- seq(1,30,1)     
 p <- c(10,11,16,33,-5,-2)     
-plot1(L,domed(p,L),type="l",lwd=2,ylab="Selectivity",xlab="Age Years")     
+oldp <- plot1(L,domed(p,L),type="l",lwd=2,ylab="Selectivity",xlab="Age Years")     
 p1 <- c(8,12,16,33,-5,-1)     
 lines(L,domed(p1,L),lwd=2,col=2,lty=2)     
 p2 <- c(9,10,16,33,-5,-4)     
-lines(L,domed(p2,L),lwd=2,col=4,lty=4)     
+lines(L,domed(p2,L),lwd=2,col=4,lty=4)  
+par(oldp)  # return par to old settings; this line not in book     
 }
 }

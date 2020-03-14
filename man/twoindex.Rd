@@ -47,7 +47,6 @@ twoindex is a 35 x 4 data.frame of fishery data made
 }
 
 \examples{
- \dontrun{
  data(twoindex)
  fish <- as.matrix(twoindex)
  pars <- log(c(0.04,155000,0.4,0.3))
@@ -60,5 +59,4 @@ twoindex is a 35 x 4 data.frame of fishery data made
  # plotprep(width=7,height=5,newdev=FALSE) # for external plot
  answer <- plotspmmod(bestSP$estimate,indat=fish,
                       plotprod=TRUE,maxy=3.4)
-}
 }

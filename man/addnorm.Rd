@@ -27,7 +27,7 @@ addnorm adds a normal distribution to a histogram of a
     log-transformation normalizes a set of catch or cpue data.
 }
 \examples{
-\dontrun{
+ oldpar <- par(no.readonly=TRUE)
  x <- rnorm(1000,mean=5,sd=1)
  #plotprep(height=6,width=4,newdev=FALSE)
  par(mfrow= c(1,1),mai=c(0.5,0.5,0.3,0.05))
@@ -36,5 +36,5 @@ addnorm adds a normal distribution to a histogram of a
  nline <- addnorm(outH,x)
  lines(nline$x,nline$y,lwd=3,col=2)
  print(nline$stats)
-}
+ par(oldpar)
 }

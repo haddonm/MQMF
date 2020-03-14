@@ -26,9 +26,9 @@ NULL
 #'
 #' @references Haddon, M. (2020) Using R for Modelling and Quantitative 
 #'     Methods in Fisheries, CRC Press / Chapman & Hall/ Boca Raton
-#'     (In Press)
+#'     (In Press)  ISBN: 9780367469894
 #'
-#' @section Utility functions:
+#' @section Some of the utility functions:
 #' \describe{
 #'   \item{countones}{ used in apply to count the ones in a vector}
 #'   \item{countzeros}{ used in apply to count the zeros in a vector}
@@ -52,7 +52,7 @@ NULL
 #'   \item{which.closest}{ finds the value in a vector closest to a given
 #'       value.}
 #' }
-#' @section Plotting and printing functions:
+#' @section Some of the plotting and printing functions:
 #' \describe{
 #'   \item{addnorm}{ adds a normal distribution to the output from hist}
 #'   \item{addlnorm}{ adds a log-normal distribution to output from hist}
@@ -81,21 +81,6 @@ NULL
 #'      device exists already or not.}
 #'   \item{printV}{ returns a vector cbinded to 1:length(invect),
 #'      which effectively prints the numbers vertically}
-#' }
-#' @section Data sets:
-#' \describe{
-#'   \item{abdat}{a fisheries dataset with a fish data.frame, resilience,
-#'        and a spsname.}
-#'   \item{dataspm}{A fisheries data set containing fisheries dependent
-#'       data for pink ling}
-#'   \item{LatA}{ A dataset containing the sex, the length and the
-#'       estimated age for 576 redfish, (Centroberyx affinis) from
-#'       eastern Australia sampled in 1997.}
-#'   \item{tigers}{ A dataset from Penn and Caputi, 1986, containing the
-#'       stock recruitment data for the fiurst example of fitting a
-#'       model to data using Log-Normal Likelihoods}
-#'   \item{minnow}{a dataset of weeks vs lengths of minnows for use with
-#'       fitting seasonal growth curves and growth curves}
 #' }
 #' @docType package
 #' @name MQMF

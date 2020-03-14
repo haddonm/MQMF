@@ -19,9 +19,9 @@ a vector of predicted lengths for the vector of ages in 'ages'
 vB calculates length at age for the von Bertalanffy curve.
 }
 \examples{
-\dontrun{
 ages <- seq(0,20,1)   # sigma is ignored here
 pars <- c(Linf=50,K=0.3,t0=-1.0,sigma=1.0) # Linf, K, t0, sigma
+oldpar <- par(no.readonly=TRUE)
 plot1(ages,vB(pars,ages),xlab="Age",ylab="Length",lwd=2)
-}
+par(oldpar)
 }

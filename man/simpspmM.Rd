@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm.r
 \name{simpspmM}
 \alias{simpspmM}
-\title{simpspmM calculates the predicted CE for an SPM}
+\title{simpspmM calculates predicted CE when multiple indices are present}
 \usage{
 simpspmM(
   pars,
@@ -16,41 +16,40 @@ simpspmM(
 \arguments{
 \item{pars}{the parameters of the SPM = r, K, Binit if fishery is 
 depleted to start with (omit otherwise), and a sigma for each 
- cpue series. Each parameter is in log space and is 
- back-transformed inside simpspmM. sigmas are not used in this
- funciton but should still be in the parameter vector}
+cpue series. Each parameter is in log space and is 
+back-transformed inside simpspmM.}
 
-\item{indat}{the data which needs to include year, catch, and cpue. The
-latter should have a separate column for each fleet, with a column 
-name beginning with cpue or whatever name you put in index (see below) 
-for example cpue1, cpue2,etc.}
+\item{indat}{the data which needs to include year, catch, and cpue. 
+The latter should have a separate column for each fleet, with 
+a column name beginning with cpue or whatever name you put in 
+index (see below) for example cpue1, cpue2, etc.}
 
-\item{schaefer}{a logical value determining whether the spm is to be a
-simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
-The default is TRUE}
+\item{schaefer}{a logical value determining whether the spm is to 
+be a simple Schaefer model (p=1) or approximately a Fox model 
+(p=1e-08). The default is TRUE}
 
 \item{year}{the column name within indat containing the years}
 
 \item{cats}{the cloumn name within indat containing the catches}
 
 \item{index}{the prefix in the column names given to the indices of 
-relative abundance used, perhaps 'cpue' as in cpueTW, cpueAL, etc. 
-grep is used to search for columns containing this prefix to 
-identify whether there are more than one column of cpue data.}
+relative abundance used, perhaps 'cpue' as in cpueTW, cpueAL, 
+etc. grep is used to search for columns containing this prefix 
+to identify whether there are more than one column of cpue data.}
 }
 \value{
 a vector or matrix of nyrs of the predicted CPUE
 }
 \description{
-simpspmM calculates the predicted CPUE for an SPM model. It
-    assumes that there is a variable called 'p' in the global environment
-    and this 'p' variable determines the asymmetry of the production 
-    curve. If p = 1.0 then the SPM is the Schaefer model, if it is 1e-8 
-    it approximates the Fox model. It is designed for when there are 
-    mthan one time-series of an index of relative abundance.
+simpspmM calculates the predicted CPUE for an surplus
+    production model and is designed for when there are more than 
+    one time-series of an index of relative abundance. The parameter
+    vector includes the standard deviations for the log-normal
+    distributions assumed for the indices of relative abundance. 
+    They are not used in this function but will be when the 
+    likelihoods are calculated as a next step in fitting the model.
 }
 \examples{
-\dontrun{
  data(twoindex)
  fish <- as.matrix(twoindex)
  pars <- log(c(0.04,155000,0.4,0.3))
@@ -59,5 +58,4 @@ simpspmM calculates the predicted CPUE for an SPM model. It
              steptol=1e-06,harvpen=TRUE)
  outfit(bestSP)  # best fitting estimates
  simpspmM(bestSP$estimate,fish) # the two log(predicted cpue)
-}
 }

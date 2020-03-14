@@ -27,7 +27,7 @@ kable(halftable(schaef,subdiv=2),digits=c(0,0,0,4))
 # R-chunk 3  
  #schaef fishery data and regress cpue and catch    Fig 7.1     
  
-parset(plots=c(3,1),margin=c(0.35,0.4,0.05,0.05))     
+oldp <- parset(plots=c(3,1),margin=c(0.35,0.4,0.05,0.05))     
 plot1(schaef[,"year"],schaef[,"catch"],ylab="Catch",xlab="Year",     
       defpar=FALSE,lwd=2)     
 plot1(schaef[,"year"],schaef[,"cpue"],ylab="CPUE",xlab="Year",     
@@ -35,19 +35,21 @@ plot1(schaef[,"year"],schaef[,"cpue"],ylab="CPUE",xlab="Year",
 plot1(schaef[,"catch"],schaef[,"cpue"],type="p",ylab="CPUE",     
       xlab="Catch",defpar=FALSE,pch=16,cex=1.0)     
 model <- lm(schaef[,"cpue"] ~ schaef[,"catch"])     
-abline(model,lwd=2,col=2)   # summary(model)     
+abline(model,lwd=2,col=2)   # summary(model) 
+par(oldp)  # return par to old settings; this line not in book      
  
 # R-chunk 4  
  #cross correlation between cpue and catch in schaef Fig 7.2     
  
-parset(cex=0.85) #sets par parameters for a tidy base graphic     
+oldp <- parset(cex=0.85) #sets par values for a tidy base graphic     
 ccf(x=schaef[,"catch"],y=schaef[,"cpue"],type="correlation",     
-    ylab="Correlation",plot=TRUE)     
+    ylab="Correlation",plot=TRUE) 
+par(oldp)  # return par to old settings; this line not in book      
  
 # R-chunk 5  
  #now plot schaef data with timelag of 2 years on cpue   Fig 7.3     
  
-parset(plots=c(3,1),margin=c(0.35,0.4,0.05,0.05))     
+oldp <- parset(plots=c(3,1),margin=c(0.35,0.4,0.05,0.05))     
 plot1(schaef[1:20,"year"],schaef[1:20,"catch"],ylab="Catch",     
       xlab="Year",defpar=FALSE,lwd=2)     
 plot1(schaef[3:22,"year"],schaef[3:22,"cpue"],ylab="CPUE",     
@@ -55,7 +57,8 @@ plot1(schaef[3:22,"year"],schaef[3:22,"cpue"],ylab="CPUE",
 plot1(schaef[1:20,"catch"],schaef[3:22,"cpue"],type="p",     
       ylab="CPUE",xlab="Catch",defpar=FALSE,cex=1.0,pch=16)     
 model2 <- lm(schaef[3:22,"cpue"] ~ schaef[1:20,"catch"])     
-abline(model2,lwd=2,col=2)     
+abline(model2,lwd=2,col=2) 
+par(oldp)  # return par to old settings; this line not in book      
  
 # R-chunk 6  
  #write out a summary of he regression model2     
@@ -73,7 +76,7 @@ r <- 0.75; K <- 1000.0; Bt <- 1:1000
 sp <- prodfun(r,Bt,K,1.0)  # Schaefer equivalent     
 sp0 <- prodfun(r,Bt,K,p=1e-08)  # Fox equivalent     
 sp3 <- prodfun(r,Bt,K,3) #left skewed production, marine mammal?     
-parset(plots=c(2,1),margin=c(0.35,0.4,0.1,0.05))     
+oldp <- parset(plots=c(2,1),margin=c(0.35,0.4,0.1,0.05))     
 plot1(Bt,sp,type="l",lwd=2,xlab="Stock Size",     
       ylab="Surplus Production",maxy=200,defpar=FALSE)     
 lines(Bt,sp0 * (max(sp)/max(sp0)),lwd=2,col=2,lty=2) # rescale      
@@ -83,7 +86,8 @@ legend(275,100,cex=1.1,lty=1:3,c("p = 1.0 Schaefer","p = 1e-08 Fox",
 plot1(Bt,densdep(Bt,K,p=1),xlab="Stock Size",defpar=FALSE,     
       ylab="Density-Dependence",maxy=2.5,lwd=2)     
 lines(Bt,densdep(Bt,K,1e-08),lwd=2,col=2,lty=2)     
-lines(Bt,densdep(Bt,K,3),lwd=3,col=3,lty=3)     
+lines(Bt,densdep(Bt,K,3),lwd=3,col=3,lty=3)
+par(oldp)  # return par to old settings; this line not in book       
  
 ### The Schaefer Model     
 ### Sum of Squared Residuals     
@@ -178,11 +182,12 @@ kable(lastbits,digits=c(5,1,1,4,5,0))
  # replicates from the robustness test        Fig 7.7     
  
 result <- robout2$results     
-parset(plots=c(2,2),margin=c(0.35,0.45,0.05,0.05))     
+oldp <- parset(plots=c(2,2),margin=c(0.35,0.45,0.05,0.05))     
 hist(result[,"r"],breaks=15,col=2,main="",xlab="r")     
 hist(result[,"K"],breaks=15,col=2,main="",xlab="K")     
 hist(result[,"Binit"],breaks=15,col=2,main="",xlab="Binit")     
-hist(result[,"MSY"],breaks=15,col=2,main="",xlab="MSY")     
+hist(result[,"MSY"],breaks=15,col=2,main="",xlab="MSY")   
+par(oldp)  # return par to old settings; this line not in book    
  
 # R-chunk 19  
  #robustSPM parameters against each other  Fig 7.8     
@@ -244,9 +249,10 @@ outr <- doprofile(rval,loc=1,startest=c(rval[1],11500,5000,0.25),
                   indat=fish,notfix=c(2:4))     
 Kval <- seq(7200,11500,200)     
 outk <- doprofile(Kval,loc=2,c(0.4,7200,6500,0.3),indat=fish,notfix=c(1,3,4))     
-parset(plots=c(2,1),cex=0.85,outmargin=c(0.5,0.5,0,0))     
+oldp <- parset(plots=c(2,1),cex=0.85,outmargin=c(0.5,0.5,0,0))     
 plotprofile(outr,var="r",defpar=FALSE,lwd=2) #MQMF function     
-plotprofile(outk,var="K",defpar=FALSE,lwd=2)     
+plotprofile(outk,var="K",defpar=FALSE,lwd=2) 
+par(oldp)  # return par to old settings; this line not in book      
  
 ### Bootstrap Confidence Intervals     
 # R-chunk 24  
@@ -288,7 +294,8 @@ kable(bootCI,digits=c(4,4,4,4,4,4))
  #boostrap CI. Note use of uphist to expand scale  Fig 7.12     
  
 colf <- c(1,1,1,4); lwdf <- c(1,3,1,3); ltyf <- c(1,1,1,2)     
-colsf <- c(2,3,4,6)  ;parset(plots=c(3,2))     
+colsf <- c(2,3,4,6)  
+oldp <- parset(plots=c(3,2))     
 hist(bootpar[,"r"],breaks=25,main="",xlab="r")     
 abline(v=c(bootCI["r",colsf]),col=colf,lwd=lwdf,lty=ltyf)     
 uphist(bootpar[,"K"],maxval=14000,breaks=25,main="",xlab="K")     
@@ -300,7 +307,8 @@ abline(v=c(bootCI["MSY",colsf]),col=colf,lwd=lwdf,lty=ltyf)
 hist(bootpar[,"Depl"],breaks=25,main="",xlab="Final Depletion")     
 abline(v=c(bootCI["Depl",colsf]),col=colf,lwd=lwdf,lty=ltyf)     
 hist(bootpar[,"Harv"],breaks=25,main="",xlab="End Harvest Rate")     
-abline(v=c(bootCI["Harv",colsf]),col=colf,lwd=lwdf,lty=ltyf)     
+abline(v=c(bootCI["Harv",colsf]),col=colf,lwd=lwdf,lty=ltyf)   
+par(oldp)  # return par to old settings; this line not in book    
  
 # R-chunk 29  
  #Fig7.13 1000 bootstrap trajectories for dataspm model fit      
@@ -308,7 +316,7 @@ abline(v=c(bootCI["Harv",colsf]),col=colf,lwd=lwdf,lty=ltyf)
 dynam <- boots$dynam     
 years <- fish[,"year"]     
 nyrs <- length(years)     
-parset()     
+oldp <- parset()     
 ymax <- getmax(c(dynam[,,"predCE"],fish[,"cpue"]))     
 plot(fish[,"year"],fish[,"cpue"],type="n",ylim=c(0,ymax),     
      xlab="Year",ylab="CPUE",yaxs="i",panel.first = grid())     
@@ -318,6 +326,8 @@ points(years,fish[,"cpue"],cex=1.2,pch=16,col=1)
 percs <- apply(dynam[,,"predCE"],2,quants)     
 arrows(x0=years,y0=percs["5\%",],y1=percs["95\%",],length=0.03,     
        angle=90,code=3,col=0)     
+par(oldp)  # return par to old settings; this line not in book  
+
  
 # R-chunk 30  
  #Fit the Fox model to dataspm; note different parameters     
@@ -330,7 +340,7 @@ dynamF <- bootsF$dynam
 # R-chunk 31  
  # bootstrap trajectories from both model fits  Fig 7.14     
  
-parset()     
+oldp <- parset()     
 ymax <- getmax(c(dynam[,,"predCE"],fish[,"cpue"]))     
 plot(fish[,"year"],fish[,"cpue"],type="n",ylim=c(0,ymax),     
      xlab="Year",ylab="CPUE",yaxs="i",panel.first = grid())     
@@ -342,6 +352,8 @@ percs <- apply(dynam[,,"predCE"],2,quants)
 arrows(x0=years,y0=percs["5\%",],y1=percs["95\%",],length=0.03,     
        angle=90,code=3,col=0)     
 legend(1985,0.35,c("Schaefer","Fox"),col=c(8,1),bty="n",lwd=3)     
+par(oldp)  # return par to old settings; this line not in book  
+
  
 ### Parameter Correlations     
 # R-chunk 32  
@@ -400,8 +412,8 @@ mvnpar <- cbind(mvnpar,msy,depletion) # try head(mvnpar,10)
 # R-chunk 38  
  #data and trajectories from 1000 MVN parameter vectors   Fig 7.16     
  
-plot1(fish[,"year"],fish[,"cpue"],type="p",xlab="Year",ylab="CPUE",     
-      maxy=2.0)     
+oldp <-  plot1(fish[,"year"],fish[,"cpue"],type="p",xlab="Year",
+              ylab="CPUE",maxy=2.0)     
 for (i in 1:N) lines(fish[,"year"],mvncpue[i,],col="grey",lwd=1)     
 points(fish[,"year"],fish[,"cpue"],pch=1,cex=1.3,col=1,lwd=2) # data     
 lines(fish[,"year"],exp(simpspm(optpar,fish)),lwd=2,col=1)# pred      
@@ -409,23 +421,26 @@ percs <- apply(mvncpue,2,quants)  # obtain the quantiles
 arrows(x0=fish[,"year"],y0=percs["5\%",],y1=percs["95\%",],length=0.03,     
        angle=90,code=3,col=1) #add 90\% quantiles     
 msy <- mvnpar[,"r"]*mvnpar[,"K"]/4  # 1000 MSY estimates     
-text(2010,1.75,paste0("MSY ",round(mean(msy),3)),cex=1.25,font=7)     
+text(2010,1.75,paste0("MSY ",round(mean(msy),3)),cex=1.25,font=7) 
+par(oldp)  # return par to old settings; this line not in book      
  
 # R-chunk 39  
  #Isolate errant cpue trajectories Fig 7.17     
  
 pickd <- which(mvncpue[,"2016"] < 0.40)     
-plot1(fish[,"year"],fish[,"cpue"],type="n",xlab="Year",ylab="CPUE",     
-      maxy=6.25)     
+oldp <- plot1(fish[,"year"],fish[,"cpue"],type="n",xlab="Year",
+              ylab="CPUE",maxy=6.25)     
 for (i in 1:length(pickd))      
   lines(fish[,"year"],mvncpue[pickd[i],],col=1,lwd=1)     
 points(fish[,"year"],fish[,"cpue"],pch=16,cex=1.25,col=4)      
 lines(fish[,"year"],exp(simpspm(optpar,fish)),lwd=3,col=2,lty=2)      
+par(oldp)  # return par to old settings; this line not in book  
+
  
 # R-chunk 40  
  #Use adhoc function to plot errant parameters Fig 7.18     
  
-parset(plots=c(2,2),cex=0.85)     
+oldp <- parset(plots=c(2,2),cex=0.85)     
 outplot <- function(var1,var2,pickdev) {     
   plot1(mvnpar[,var1],mvnpar[,var2],type="p",pch=16,cex=1.0,     
         defpar=FALSE,xlab=var1,ylab=var2,col=8)     
@@ -434,7 +449,8 @@ outplot <- function(var1,var2,pickdev) {
 outplot("r","K",pickd) # assumes mvnpar in working environment     
 outplot("sigma","Binit",pickd)     
 outplot("r","Binit",pickd)     
-outplot("K","Binit",pickd)     
+outplot("K","Binit",pickd) 
+par(oldp)  # return par to old settings; this line not in book      
  
 # R-chunk 41  
  #asymptotically sampled parameter vectors  Fig 7.19     
@@ -475,11 +491,12 @@ mvnparA <- matrix(exp(rmvnorm(N,mean=optparA,sigma=vcovA)),
 msy <- mvnparA[,"r"]*mvnparA[,"K"]/4     
 for (i in 1:N) mvncpueA[i,]<-exp(simpspm(log(mvnparA[i,]),fish))     
 mvnparA <- cbind(mvnparA,msy)     
-plot1(fish[,"year"],fish[,"cpue"],type="p",xlab="Year",ylab="CPUE",     
-      maxy=2.5)     
+oldp <- plot1(fish[,"year"],fish[,"cpue"],type="p",xlab="Year",
+              ylab="CPUE",maxy=2.5)     
 for (i in 1:N) lines(fish[,"year"],mvncpueA[i,],col=8,lwd=1)     
 points(fish[,"year"],fish[,"cpue"],pch=16,cex=1.0) #orig data     
-lines(fish[,"year"],exp(simpspm(optparA,fish)),lwd=2,col=0)      
+lines(fish[,"year"],exp(simpspm(optparA,fish)),lwd=2,col=0)    
+par(oldp)  # return par to old settings; this line not in book    
  
 # R-chunk 45  
  #plot asymptotically sampled parameter vectors Figure 7.21     
@@ -526,11 +543,12 @@ pairs(cbind(post1[,1:4],msy),upper.panel = panel.cor,lwd=2,cex=0.2,
 # R-chunk 49  
  # marginal distributions of 3 parameters and msy  Figure 7.24     
  
-parset(plots=c(2,2), cex=0.85)     
+oldp <- parset(plots=c(2,2), cex=0.85)     
 plot(density(post1[,"r"]),lwd=2,main="",xlab="r") #plot has a method     
 plot(density(post1[,"K"]),lwd=2,main="",xlab="K")   #for output from     
 plot(density(post1[,"Binit"]),lwd=2,main="",xlab="Binit")  # density     
-plot(density(msy),lwd=2,main="",xlab="MSY")   #try str(density(msy))     
+plot(density(msy),lwd=2,main="",xlab="MSY")   #try str(density(msy)) 
+par(oldp)  # return par to old settings; this line not in book      
  
 # R-chunk 50  
  #MCMC r and K parameters, approx 50 + 90\% contours. Fig7.25     
@@ -541,7 +559,7 @@ puttxt <- function(xs,xvar,ys,yvar,lvar,lab="",sigd=0) {
 } # end of puttxt - a quick utility function     
 kran <- range(post1[,"K"]);  rran <- range(post1[,"r"])     
 mran <- range(msy)         #ranges used in the plots     
-parset(plots=c(1,2),margin=c(0.35,0.35,0.05,0.1)) #plot r vs K     
+oldp <- parset(plots=c(1,2),margin=c(0.35,0.35,0.05,0.1)) #plot r vs K     
 plot(post1[,"K"],post1[,"r"],type="p",cex=0.5,xlim=kran,     
      ylim=rran,col="grey",xlab="K",ylab="r",panel.first=grid())     
 points(optpar[2],optpar[1],pch=16,col=1,cex=1.75) # center     
@@ -554,13 +572,14 @@ plot(post1[,"K"],msy,type="p",cex=0.5,xlim=kran,  # K vs msy
 points(optpar[2],getMSY(optpar,p),pch=16,col=1,cex=1.75)#center     
 addcontours(post1[,"K"],msy,kran,mran,contval=c(0.5,0.9),lwd=2,col=1)     
 puttxt(0.6,kran,0.99,mran,kran,"K= ",sigd=0)     
-puttxt(0.6,kran,0.97,mran,mran,"MSY= ",sigd=3)     
+puttxt(0.6,kran,0.97,mran,mran,"MSY= ",sigd=3) 
+par(oldp)  # return par to old settings; this line not in book      
  
 # R-chunk 51  
  #Traces for the Fox model parameters from the MCMC  Fig7.26     
  
-parset(plots=c(4,1),margin=c(0.3,0.45,0.05,0.05),     
-       outmargin = c(1,0,0,0),cex=0.85)     
+oldp <- parset(plots=c(4,1),margin=c(0.3,0.45,0.05,0.05),     
+               outmargin = c(1,0,0,0),cex=0.85)     
 label <- colnames(post1)     
 N <- dim(post1)[1]     
 for (i in 1:3) {     
@@ -571,6 +590,7 @@ msy <- post1[,1]*post1[,2]/4
 plot(1:N,msy,type="l",lwd=1,ylab="MSY",xlab="")     
 abline(h=median(msy),col=2)     
 mtext("Step",side=1,outer=T,line=0.0,font=7,cex=1.1)     
+par(oldp)  # return par to old settings; this line not in book  
  
 # R-chunk 52  
  #Do five chains of the same length for the Fox model     
@@ -588,7 +608,7 @@ cat("acceptance rate = ",result$arate," \n") # always check this
 # R-chunk 53  
  #Now plot marginal posteriors from 5 Fox model chains    Fig7.27     
  
-parset(plots=c(2,1),cex=0.85,margin=c(0.4,0.4,0.05,0.05))     
+oldp <- parset(plots=c(2,1),cex=0.85,margin=c(0.4,0.4,0.05,0.05))     
 post <- result[[1]][[1]]     
 plot(density(post[,"K"]),lwd=2,col=1,main="",xlab="K",     
      ylim=c(0,4.4e-04),panel.first=grid())     
@@ -602,7 +622,8 @@ for (i in 2:5) {
   post <- result$result[[i]]     
   msy <-  post[,"r"]*post[,"K"]/((p + 1)^((p+1)/p))     
   lines(density(msy),lwd=2,col=i)     
-}     
+}
+par(oldp)  # return par to old settings; this line not in book       
  
 # R-chunk 54  
  # get qunatiles of each chain     
@@ -699,9 +720,10 @@ cat("Acceptance Rate = ",result[[2]],"\n")
 # R-chunk 65  
  # auto-correlation, or lack of, and the K trace Fig 7.32     
  
-parset(plots=c(2,1),cex=0.85)      
+oldp <- parset(plots=c(2,1),cex=0.85)      
 acf(parB[,2],lwd=2)     
-plot(1:N,parB[,2],type="l",ylab="K",ylim=c(8000,19000),xlab="")     
+plot(1:N,parB[,2],type="l",ylab="K",ylim=c(8000,19000),xlab="")   
+par(oldp)  # return par to old settings; this line not in book    
  
 # R-chunk 66  
  #  Fig 7.33     

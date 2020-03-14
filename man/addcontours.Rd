@@ -51,9 +51,8 @@ addcontours is used to add contours to a dense plot of
     the xy plot.
 }
 \examples{
-\dontrun{
-# library(mvtnorm)
-# library(MASS)
+ library(mvtnorm)
+ library(MASS)
  data(abdat)
  param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05)) 
  bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=abdat, 
@@ -71,5 +70,4 @@ addcontours is used to add contours to a dense plot of
  plot(xv,yv,type="p") # use default 0.5 and 0.9 contours.
  addcontours(xv,yv,range(xv),range(yv),lwd=2,col=2)
  points(mean(xv),mean(yv),pch=16,cex=1.5,col=2)
-}
 }

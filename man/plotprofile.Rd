@@ -37,9 +37,11 @@ mean at the top of the plot.}
 log-likelihood}
 
 \item{defpar}{logical, should the par values be assumed or defined, 
-defaults to TRUE, so only one plot will be produced. If part of 
-a multiple plot define the formatting before calling and set this
-to FALSE}
+defaults to TRUE, so only one plot will be produced and any old
+par values will be restored afterwards. If part of a multiple 
+plot define the formatting before calling and set this
+to FALSE. This will lead to the oldpar being returned invisibly
+so that eventually the par settings can be reset.}
 
 \item{...}{used for any other graphic parameters used.}
 }
@@ -58,9 +60,8 @@ plotprofile simplifies plotting out the likelihood
     highly unlikely.
 }
 \examples{
-\dontrun{
- data(abdat)
- rval <- seq(0.325,0.45,0.001)
+ data(abdat)    #usually use  ~100 steps in rval, perhaps use
+ rval <- seq(0.325,0.45,0.02)   # seq(0.325,0.45,0.001)
  ntrial <- length(rval)
  columns <- c("r","K","Binit","sigma","-veLL")
  result <- matrix(0,nrow=ntrial,ncol=length(columns),
@@ -76,5 +77,4 @@ plotprofile simplifies plotting out the likelihood
    result[i,] <- c(bestest,bestmodP$minimum)
  }
  plotprofile(result,var="r",defpar=TRUE,lwd=2)
-}
 }

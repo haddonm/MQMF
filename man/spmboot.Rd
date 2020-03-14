@@ -4,14 +4,14 @@
 \alias{spmboot}
 \title{spmboot conducts a bootstrap analysis on a spm model}
 \usage{
-spmboot(optpar, fishery, iter = 100, schaefer = TRUE)
+spmboot(optpar, fishery, iter = 1000, schaefer = TRUE)
 }
 \arguments{
 \item{optpar}{The optimum model parameters from an earlier analysis}
 
 \item{fishery}{fishery data containing the original observed cpue values}
 
-\item{iter}{the number of boostrap replicates to be run}
+\item{iter}{the number of boostrap replicates to be run, default=1000}
 
 \item{schaefer}{default=TRUE, should a Schaefer or a Fox model be run}
 }
@@ -21,26 +21,26 @@ a list of two matrices. One containing the bootstrap parameters
     the bootstrap CPUE sample, the Depletion, and annual harvest rate.
 }
 \description{
-spmboot conducts a bootstrap analysis on a spm model. It 
-    does this by saving the original fishery data, estimating the cpue 
-    residuals, and multiplying the optimum predicted CPUE by a bootstrap 
-    sample of the log-normal residuals (Haddon, 2011, p311). This 
-    bootstrap sample of CPUE replaces the original fish[,"cpue"] and the 
-    model is re-fitted. This is repeated iter times and the outputs 
-    reported ready for the derivation of percentile confidence intervals. 
-    The optimum solution is used as the first bootstrap replicate (it is 
-    standard practice to include the original fit in the bootstrap 
-    analysis). If 1000 replicates are run this procedure can take a 
-    couple of minutes on a reasonably fast computer. A comparison of the 
-    mean with the median should provide some notion of any bias in the 
+spmboot conducts a bootstrap analysis on a spm model. 
+    It does this by saving the original fishery data, estimating 
+    the cpue residuals, and multiplying the optimum predicted CPUE 
+    by a bootstrap sample of the log-normal residuals (Haddon, 2011,
+    p311). This bootstrap sample of CPUE replaces the original 
+    fish[,"cpue"] and the model is re-fitted. This is repeated iter 
+    times and the outputs reported ready for the derivation of 
+    percentile confidence intervals. The optimum solution is used 
+    as the first bootstrap replicate (it is standard practice to 
+    include the original fit in the bootstrap analysis). If 1000 
+    replicates are run this procedure can take a couple of minutes 
+    on a reasonably fast computer. A comparison of the mean with 
+    the median should provide some notion of any bias in the 
     mean estimate.
 }
 \examples{
-\dontrun{
  data(dataspm); fish <- as.matrix(dataspm)
  pars <- log(c(r=0.24,K=5150,Binit=2800,0.15))
  ans <- fitSPM(pars,dataspm,schaefer=TRUE,maxiter=1000)
- boots <- spmboot(ans$estimate,fishery=fish,iter=500,schaefer=TRUE)
+ boots <- spmboot(ans$estimate,fishery=fish,iter=5,schaefer=TRUE)
  dynam <- boots$dynam
  bootpar <- boots$bootpar
  rows <- colnames(bootpar)
@@ -49,10 +49,9 @@ spmboot conducts a bootstrap analysis on a spm model. It
                 dimnames=list(rows,columns))
  for (i in 1:length(rows)) {
    tmp <- sort(bootpar[,i])
-   qtil <-  quantile(tmp,probs=c(0.025,0.05,0.5,0.95,0.975),na.rm=TRUE)
+   qtil <- quantile(tmp,probs=c(0.025,0.05,0.5,0.95,0.975),na.rm=TRUE)
    bootCI[i,] <- c(qtil,mean(tmp,na.rm=TRUE))
  }
- round(bootCI,3)
- pairs(bootpar[,c("r","K","Binit","MSY")])
-}
+ round(bootCI,3) # we have used only 5 bootstraps, normally use
+ pairs(bootpar[,c("r","K","Binit","MSY")])   # 1000, 2000, or more
 }
