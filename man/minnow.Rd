@@ -31,7 +31,7 @@ minnow is a dataset of mean length against time in weeks for
 
  \itemize{
    \item seasonal growth curves
-   \item von Bertanlanffy
+   \item von Bertalanffy
    \item Model residuals
  }
 }

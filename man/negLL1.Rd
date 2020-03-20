@@ -28,7 +28,7 @@ negLL1 calculates log-normal negative log-likelihoods. It
     expects the input parameters to be log-transformed, so the funk used
     to calculate the log or the predicted values also needs to expect
     log-transformed parameters. In addition to estimating the negative 
-    log-liklelihoods for log-normally distributed data it also places a 
+    log-likelihoods for log-normally distributed data it also places a 
     penalty on the first parameter if that parameter approaches very 
     close to zero; see the function penalty0. With SPM the first 
     parameter is the population growth rate r, which obviously 

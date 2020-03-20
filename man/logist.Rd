@@ -24,7 +24,7 @@ knife-edge selectivity}
 A vector of length(depend) with the predicted logistic values
 }
 \description{
-logist calcualtes a Logistic curve that can be used as a
+logist calculates a Logistic curve that can be used as a
     selectivity function, or maturity curve, of wherever a logistic 
     is required. This version uses the logistic function
     1/(1+exp(-log(19.0)*(lens-inL50)/delta)), which

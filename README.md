@@ -39,7 +39,7 @@ weaknesses. More advanced subjects such as age- and size-structured
 models are not included here as they are not really suited to brief
 treatments.
 
-The primary objective of thios book is that it be useful to workers in
+The primary objective of this book is that it be useful to workers in
 the field. Hopefully, this R package will assist with that objective.
 
 Malcolm Haddon

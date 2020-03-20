@@ -9,7 +9,7 @@ getMSY(pars, p = 1)
 \arguments{
 \item{pars}{the model parameters r, K, Binit, sigma; p is separate}
 
-\item{p}{asymmetry parameter for the polacheck et al 1993 equation,
+\item{p}{asymmetry parameter for the Polacheck et al 1993 equation,
 default=1.0 = Schaefer}
 }
 \value{

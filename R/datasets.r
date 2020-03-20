@@ -209,7 +209,7 @@ NULL
 #' @section Subjects:
 #'  \itemize{
 #'    \item seasonal growth curves
-#'    \item von Bertanlanffy
+#'    \item von Bertalanffy
 #'    \item Model residuals
 #'  }
 #'  
@@ -231,7 +231,7 @@ NULL
 #'     Somers, 1994. It contains the catches, in tonnes, 
 #'     of banana prawns (\emph{Penaeus merguiensis} and \emph{P. indicus}), 
 #'     tiger prawns (brown - \emph{P. esculentus}) and (grooved - \emph{P. 
-#'     semisulcatus}), endeavour prawns, (\emph{Metapenaeus endevaouri} and 
+#'     semisulcatus}), endeavour prawns, (\emph{Metapenaeus endeavouri} and 
 #'     \emph{M. ensis}), king prawns (\emph{P. latisulcatus} and 
 #'     \emph{P. longistylus}), the number of vessels fishing, and 
 #'     the annual effort as boat-days.
@@ -247,7 +247,7 @@ NULL
 #'   \item{tiger}{tiger prawn catches, tonnes.}
 #'   \item{endevaour}{endeavour prawn catches, tonnes.}
 #'   \item{king}{king prawn catches, tonnes.}
-#'   \item{boats}{the number of vessesl fishing in that year.}
+#'   \item{boats}{the number of vessels fishing in that year.}
 #'   \item{boatday}{the total annual effort as boatdays.}
 #' }
 #' 
@@ -285,7 +285,7 @@ NULL
 #'     catch divided by the total effort, a ratio estimate). Initial parameter 
 #'     estimates close to the optimum values for the Schaefer model could be
 #'     param <- log(c(r=0.28,K=2100000,Binit=2400000,sigma=0.16)). With this
-#'     longer time-series the eventuial MSY estimate was somewhat larger than 
+#'     longer time-series the eventual MSY estimate was somewhat larger than 
 #'     when just the schaef data are used.
 #'
 #' @name pttuna
@@ -429,7 +429,7 @@ NULL
 #'  }
 #'  
 #' @source Extracted from Table 2, page 496 of Penn, J.W. and N. Caputi 
-#'     (1986) Spawning stock-recuitment relationships and environmental 
+#'     (1986) Spawning stock-recruitment relationships and environmental 
 #'     influences on the tiger prawn (\emph{Penaeus esculentus}) fishery 
 #'     in Exmouth Gulf, Western Australia. \emph{Australian Journal of 
 #'     Marine and Freshwater Research} 37: 491-505. Sorted on spawning index.
@@ -467,7 +467,7 @@ NULL
 #' 
 #' @format A data.frame of fishery data 
 #' \describe{
-#'   \item{year}{the calander year of fishing}
+#'   \item{year}{the calender year of fishing}
 #'   \item{catch}{the reported catch in tonnes}
 #'   \item{cpue1}{the first index of relative abundance}
 #'   \item{cpue2}{the second index of relative abundance}

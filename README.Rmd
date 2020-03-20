@@ -29,7 +29,7 @@ There are currently no vignettes, although the example code-chunks from the book
 
 This new book is an evolution and adaptation of my book _Modelling and Quantitative Methods in Fisheries_ (Haddon, 2011). It is designed to introduce materials needed to understand the use of R in fisheries and ecology. The book is not really for total beginners to R, and only a brief introduciton to a few less commonly used aspects of R is provided. In terms of fisheries and population ecology, because it covers a wide array of subjects, and hence is limited in the depth in which each can be treated, it should probably be considered an introductory text. Even so, sufficient detail and worked examples are given that anyone should be able to make a good start with simple model fitting, characterizing uncertainty, and other basic fisheries model fitting. Subjects such as maximum likelihood, simple and dynamic model fitting, and the estimation of uncertainty do receive relatively detailed attention. For example, there is a sufficient development around the use of MCMC that anyone should be able to develop a better understanding of its strengths and weaknesses. More advanced subjects such as age- and size-structured models are not included here as they are not really suited to brief treatments.
 
-The primary objective of thios book is that it be useful to workers in the field. Hopefully, this R package will assist with that objective.
+The primary objective of this book is that it be useful to workers in the field. Hopefully, this R package will assist with that objective.
 
 
 Malcolm Haddon

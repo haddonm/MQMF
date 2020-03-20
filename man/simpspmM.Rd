@@ -30,7 +30,7 @@ be a simple Schaefer model (p=1) or approximately a Fox model
 
 \item{year}{the column name within indat containing the years}
 
-\item{cats}{the cloumn name within indat containing the catches}
+\item{cats}{the column name within indat containing the catches}
 
 \item{index}{the prefix in the column names given to the indices of 
 relative abundance used, perhaps 'cpue' as in cpueTW, cpueAL, 

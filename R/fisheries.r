@@ -185,7 +185,7 @@ domed <- function(p,L) {
 #'     initial length and the change in time between tag release and 
 #'     recapture. It then calculates the expected growth increment.
 #'
-#' @param par a vector of at least Linf, and K from teh von Bertalanffy 
+#' @param par a vector of at least Linf, and K from the von Bertalanffy 
 #'     growth curve
 #' @param indat the matrix or data.frame of data columns containing at
 #'     least the initial lengths and the deltaT, time intervals between
@@ -247,7 +247,7 @@ Gz <- function(p, ages) {
 #'     the length difference between the length at half MaxDL, and the
 #'     length at 5% of MaxDL.
 #'
-#' @param par a vector of at least Linf, and K from teh von Bertalanffy 
+#' @param par a vector of at least Linf, and K from the von Bertalanffy 
 #'     growth curve
 #' @param indat the matrix or data.frame of data columns containing at
 #'     least the initial lengths and the deltaT, time intervals between
@@ -283,7 +283,7 @@ invl <- function(par,indat,initL="l1",delT="dt") {
 
 #' @title logist Logistic selectivity function
 #'
-#' @description logist calcualtes a Logistic curve that can be used as a
+#' @description logist calculates a Logistic curve that can be used as a
 #'     selectivity function, or maturity curve, of wherever a logistic 
 #'     is required. This version uses the logistic function
 #'     1/(1+exp(-log(19.0)*(lens-inL50)/delta)), which
@@ -439,7 +439,7 @@ negLL <- function(pars,funk,logobs,...) {
 #'     expects the input parameters to be log-transformed, so the funk used
 #'     to calculate the log or the predicted values also needs to expect
 #'     log-transformed parameters. In addition to estimating the negative 
-#'     log-liklelihoods for log-normally distributed data it also places a 
+#'     log-likelihoods for log-normally distributed data it also places a 
 #'     penalty on the first parameter if that parameter approaches very 
 #'     close to zero; see the function penalty0. With SPM the first 
 #'     parameter is the population growth rate r, which obviously 
@@ -499,7 +499,7 @@ negLL1 <- function(pars,funk,logobs,...) {
 #'     defaults to cpue
 #' @param harvpen default = TRUE, which sets a penalty1 on each of the 
 #'     implied harvest rates to ensure we do not get harvest rates > 1.0
-#' @param ... the continuation ellisis to allow the transfer of other
+#' @param ... the continuation ellipsis to allow the transfer of other
 #'     arguments required by funk
 #'
 #' @return a single scalar as the -ve log-likelihood of the input data
@@ -545,7 +545,7 @@ negLLM <- function(pars,funk,logobs,indat,index="cpue",harvpen=TRUE,...) {
 #'     as an argument, that will calculate predicted values of a 
 #'     variable from a vector of input values. In the example below the
 #'     predicted values are lengths-at-age and the input data are ages.
-#'     Only the arguments used within negNLL are listetd explicitly, 
+#'     Only the arguments used within negNLL are listed explicitly, 
 #'     which leaves the data required to drive the funk to generate the
 #'     predicted values for comparison with the observed to be passed 
 #'     using the ..., so take care with spelling of the variable name
@@ -629,7 +629,7 @@ negnormL <- function(pars,funk,funksig,indat,obs="dl",...){
 #' @title negLLP  -ve log-likelihood for normally distributed variables
 #'
 #' @description negLLP calculates the negative log-likelihood for normally
-#'     distributed variables allowing for some parameters to reamin fiuxed. 
+#'     distributed variables allowing for some parameters to remain fixed. 
 #'     It assumes the presence of a function 'funk' that will calculate 
 #'     predicted values of a dependent variable from a vector of 
 #'     independent values (logobs). By having a separate vector of 

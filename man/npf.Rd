@@ -11,7 +11,7 @@
   \item{tiger}{tiger prawn catches, tonnes.}
   \item{endevaour}{endeavour prawn catches, tonnes.}
   \item{king}{king prawn catches, tonnes.}
-  \item{boats}{the number of vessesl fishing in that year.}
+  \item{boats}{the number of vessels fishing in that year.}
   \item{boatday}{the total annual effort as boatdays.}
 }}
 \source{
@@ -26,7 +26,7 @@ npf is fishery catch data from Australia's Northern
     Somers, 1994. It contains the catches, in tonnes, 
     of banana prawns (\emph{Penaeus merguiensis} and \emph{P. indicus}), 
     tiger prawns (brown - \emph{P. esculentus}) and (grooved - \emph{P. 
-    semisulcatus}), endeavour prawns, (\emph{Metapenaeus endevaouri} and 
+    semisulcatus}), endeavour prawns, (\emph{Metapenaeus endeavouri} and 
     \emph{M. ensis}), king prawns (\emph{P. latisulcatus} and 
     \emph{P. longistylus}), the number of vessels fishing, and 
     the annual effort as boat-days.

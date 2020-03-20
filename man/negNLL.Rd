@@ -31,7 +31,7 @@ negNLL - Calculates the negative log-likelihood for
     as an argument, that will calculate predicted values of a 
     variable from a vector of input values. In the example below the
     predicted values are lengths-at-age and the input data are ages.
-    Only the arguments used within negNLL are listetd explicitly, 
+    Only the arguments used within negNLL are listed explicitly, 
     which leaves the data required to drive the funk to generate the
     predicted values for comparison with the observed to be passed 
     using the ..., so take care with spelling of the variable name

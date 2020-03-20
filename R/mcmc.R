@@ -17,7 +17,7 @@
 #' @param N the number of replicate parameter vectors to be returned from 
 #'     do_MCMC, remember to include the burn-in replicates
 #'
-#' @return the sum of a vector of small constant valus to act as priors. 
+#' @return the sum of a vector of small constant values to act as priors. 
 #' @export
 #'
 #' @examples
@@ -47,7 +47,7 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #'    of iterations to begin with. Multiple chains would be usual and 
 #'    the thinstep would be larger eg. 128, 256, or 512, but it would 
 #'    take 8, 16, or 32 times longer. The scales are usually 
-#'    expirically set to otain an acceptance rate between 20 - 40%. 
+#'    expirically set to obtain an acceptance rate between 20 - 40%. 
 #'    It is also usual to run numerous diagnostic plots on the outputs 
 #'    to ensure convergence on the final stationary distribution. There 
 #'    are three main loops: 1) total number of iterations (N + burnin)* 
@@ -71,7 +71,7 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #' @param calcdat the data used by calcpred to calculate the predicted
 #'     values
 #' @param obsdat the observed data (on the same scale as the predicted)
-#'     agsinst with the predicted values are compared.
+#'     against with the predicted values are compared.
 #' @param priorcalc a function used to calculate the prior probability for
 #'     each of the parameters in each trial parameter vector.
 #' @param scales The re-scaling factors for each parameter to convert the

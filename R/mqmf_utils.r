@@ -415,10 +415,10 @@ gettime <- function() {
 #' @title getvector extracts a vector of numbers from a line of characters
 #'
 #' @description getvector when reading in a csv file using readLines,
-#'     getvector extarcts a line of numbers from a specified line within
+#'     getvector extracts a line of numbers from a specified line within
 #'     the readLine object.This function works out how many numbers there
 #'     are. If you wish to add a comment at the end of a vector of numbers
-#'     it must be separated from tehm by the separator. e.g. a comma
+#'     it must be separated from them by the separator. e.g. a comma
 #' @param indat the readLines object
 #' @param locate the line number from which to extract the numbers
 #' @param sep the separator between numbers, defaults to ","
@@ -680,7 +680,7 @@ makelabel <- function(txt,vect,sep="_",sigdig=3) {
 #' @param digits the number of digits to round the backtransformed 
 #'     parameters. defaults to 5.
 #' @param title character string used to label the output if desired,
-#'     default = empty charcter string
+#'     default = empty character string
 #' @param parnames default="" which means the estimated parameters
 #'     will merely be numbered. If a vector of names is given 
 #'     then this will be used instead, at least, for nlm and optim.
@@ -1026,7 +1026,7 @@ properties <- function(indat,dimout=FALSE) {
 #' @description removeEmpty removes empty strings from a vector of 
 #'     strings. Such spaces often created by spurious commas at the 
 #'     end of lines. It also removes strings made up only of spaces 
-#'     and removes spaces from inside of inidivdual chunks of text. 
+#'     and removes spaces from inside of individual chunks of text. 
 #'     So, should be useful when reading in data from a custom csv 
 #'     file when parsing different formats
 #'

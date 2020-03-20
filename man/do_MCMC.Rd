@@ -41,7 +41,7 @@ values for comparison with obsdat; defaults to simpspm.}
 values}
 
 \item{obsdat}{the observed data (on the same scale as the predicted)
-agsinst with the predicted values are compared.}
+against with the predicted values are compared.}
 
 \item{priorcalc}{a function used to calculate the prior probability for
 each of the parameters in each trial parameter vector.}
@@ -74,7 +74,7 @@ do_MCMC conducts a Gibbs within Metropolis algorithm. One
    of iterations to begin with. Multiple chains would be usual and 
    the thinstep would be larger eg. 128, 256, or 512, but it would 
    take 8, 16, or 32 times longer. The scales are usually 
-   expirically set to otain an acceptance rate between 20 - 40%. 
+   expirically set to obtain an acceptance rate between 20 - 40%. 
    It is also usual to run numerous diagnostic plots on the outputs 
    to ensure convergence on the final stationary distribution. There 
    are three main loops: 1) total number of iterations (N + burnin)* 

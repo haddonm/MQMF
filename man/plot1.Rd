@@ -21,11 +21,11 @@ plot1(
 \item{x}{The single vector of x data}
 
 \item{y}{the single vector of y data. If more are required they can
-be added spearately after calling plot1.}
+be added separately after calling plot1.}
 
-\item{xlab}{the label fot the x-axis, defaults to empty}
+\item{xlab}{the label for the x-axis, defaults to empty}
 
-\item{ylab}{the label fot the y-axis, defaults to empty}
+\item{ylab}{the label for the y-axis, defaults to empty}
 
 \item{type}{the type of plot "l" is for line, the default, "p" is
 points. If you want both plot a line and add points afterwards.}

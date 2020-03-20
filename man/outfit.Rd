@@ -17,7 +17,7 @@ and need back-transforming}
 parameters. defaults to 5.}
 
 \item{title}{character string used to label the output if desired,
-default = empty charcter string}
+default = empty character string}
 
 \item{parnames}{default="" which means the estimated parameters
 will merely be numbered. If a vector of names is given 

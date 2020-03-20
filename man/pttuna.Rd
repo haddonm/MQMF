@@ -25,7 +25,7 @@ pttuna is yellowfin tuna fishery data from Pella-Tomlinson's
     catch divided by the total effort, a ratio estimate). Initial parameter 
     estimates close to the optimum values for the Schaefer model could be
     param <- log(c(r=0.28,K=2100000,Binit=2400000,sigma=0.16)). With this
-    longer time-series the eventuial MSY estimate was somewhat larger than 
+    longer time-series the eventual MSY estimate was somewhat larger than 
     when just the schaef data are used.
 }
 \section{Subjects}{

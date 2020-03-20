@@ -16,7 +16,7 @@ a possibly NULL vector of strings
 removeEmpty removes empty strings from a vector of 
     strings. Such spaces often created by spurious commas at the 
     end of lines. It also removes strings made up only of spaces 
-    and removes spaces from inside of inidivdual chunks of text. 
+    and removes spaces from inside of individual chunks of text. 
     So, should be useful when reading in data from a custom csv 
     file when parsing different formats
 }

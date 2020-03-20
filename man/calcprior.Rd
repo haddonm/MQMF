@@ -13,7 +13,7 @@ calcprior(pars, N)
 do_MCMC, remember to include the burn-in replicates}
 }
 \value{
-the sum of a vector of small constant valus to act as priors.
+the sum of a vector of small constant values to act as priors.
 }
 \description{
 calcprior is used to include a prior probability into 

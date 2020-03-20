@@ -28,7 +28,7 @@ defaults to cpue}
 \item{harvpen}{default = TRUE, which sets a penalty1 on each of the 
 implied harvest rates to ensure we do not get harvest rates > 1.0}
 
-\item{...}{the continuation ellisis to allow the transfer of other
+\item{...}{the continuation ellipsis to allow the transfer of other
 arguments required by funk}
 }
 \value{

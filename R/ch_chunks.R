@@ -2895,7 +2895,7 @@ NULL
 #' rownames(outvcov) <- c(label,"StErr")     
 #'  
 #' # R-chunk 36  
-#'  # tabulate teh variance covariance matrix and StErrs     
+#'  # tabulate the variance covariance matrix and StErrs     
 #'  
 #' kable(outvcov,digits=c(5,5,5,5))     
 #'  

@@ -6,7 +6,7 @@
 \title{twoindex has orange roughy catches with hypothetical cpue}
 \format{A data.frame of fishery data 
 \describe{
-  \item{year}{the calander year of fishing}
+  \item{year}{the calender year of fishing}
   \item{catch}{the reported catch in tonnes}
   \item{cpue1}{the first index of relative abundance}
   \item{cpue2}{the second index of relative abundance}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm.r
 \name{spmCE}
 \alias{spmCE}
-\title{spmCE - calculates the dynamics for nultiple cpue time-series}
+\title{spmCE - calculates the dynamics for multiple cpue time-series}
 \usage{
 spmCE(
   inp,
@@ -17,7 +17,7 @@ spmCE(
 \item{inp}{a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), 
 you would use the latter if it was suspected that the fishery 
 data started after some initial depletion had occurred. Then 
-there should be the same number of sigma values as tehre are 
+there should be the same number of sigma values as there are 
 cpue time-series}
 
 \item{indat}{a matrix with at least columns 'year', 'catch', and 'cpue'}

@@ -17,7 +17,7 @@ coarse grained relative to this.}
 }
 \value{
 a 4 x N matrix of x and y values to be used to plot the fitted 
-    normal probability density function.Combined with estiamtes of 
+    normal probability density function.Combined with estimates of 
     mean(log(indata)) and log(sd(indata))
 }
 \description{

@@ -56,7 +56,7 @@ fitSPM fits a surplus production model (either Schaefer or
     The $estimate values can be used in plotspmmod to plot the 
     outcome, or in spmboot to conduct bootstrap sampling of the residuals 
     from the CPUE model fit to gain an appreciation of any uncertainty 
-    in the analysis. Because it requires log(parametrs) it does not 
+    in the analysis. Because it requires log(parameters) it does not 
     use the magnitude function to set the values of the parscale 
     parameters.
 }

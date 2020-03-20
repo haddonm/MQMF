@@ -43,7 +43,7 @@ the sum of the negative log-likelihoods using a normal PDF
 }
 \description{
 negLLP calculates the negative log-likelihood for normally
-    distributed variables allowing for some parameters to reamin fiuxed. 
+    distributed variables allowing for some parameters to remain fixed. 
     It assumes the presence of a function 'funk' that will calculate 
     predicted values of a dependent variable from a vector of 
     independent values (logobs). By having a separate vector of 

@@ -7,7 +7,7 @@
 invl(par, indat, initL = "l1", delT = "dt")
 }
 \arguments{
-\item{par}{a vector of at least Linf, and K from teh von Bertalanffy 
+\item{par}{a vector of at least Linf, and K from the von Bertalanffy 
 growth curve}
 
 \item{indat}{the matrix or data.frame of data columns containing at
