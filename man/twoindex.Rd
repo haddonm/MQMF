@@ -4,13 +4,15 @@
 \name{twoindex}
 \alias{twoindex}
 \title{twoindex has orange roughy catches with hypothetical cpue}
-\format{A data.frame of fishery data 
+\format{
+A data.frame of fishery data 
 \describe{
   \item{year}{the calender year of fishing}
   \item{catch}{the reported catch in tonnes}
   \item{cpue1}{the first index of relative abundance}
   \item{cpue2}{the second index of relative abundance}
-}}
+}
+}
 \source{
 Catches extracted from Table 4, page 11 of Haddon, M. (2017) 
    Orange Roughy East (Hoplostethus atlanticus) stock assessment

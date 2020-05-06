@@ -4,11 +4,13 @@
 \name{LatA}
 \alias{LatA}
 \title{LatA Simulated length-at-age for 358 female fish}
-\format{A data.frame with 358 rows and 2 variables:
+\format{
+A data.frame with 358 rows and 2 variables:
 \describe{
   \item{age}{simulated ages in years}
   \item{length}{consequent simulated fork length of the fish, in cms}
-}}
+}
+}
 \source{
 The data this simulation is based upon is from length-at-age 
     data for one species collected over many years by the many 

@@ -4,14 +4,16 @@
 \name{dataspm}
 \alias{dataspm}
 \title{dataspm A data.frame of fisheries catch and cpue data}
-\format{A 31 x 5 data.frame
+\format{
+A 31 x 5 data.frame
 \describe{
   \item{year}{the year from 1986 t0 2016}
   \item{catch}{the catch in tonnes to the nearest 100kg}
   \item{cpue}{the standardized cpue scaled to the mean of the series}
   \item{records}{the number of records making up the yearly totals}
   \item{geom}{the naive geometric mean cpue of the raw data as kg/hr, also rescaled to the mean of the series}
-}}
+}
+}
 \source{
 Haddon, M. and M. Sporcic (2017) Catch rate standardizations for 
     selected SESSF Species (data to 2016) pp 43-406 in Tuck, G.N. 

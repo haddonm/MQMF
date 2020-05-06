@@ -4,14 +4,16 @@
 \name{blackisland}
 \alias{blackisland}
 \title{blackisland tagging data from a blacklip abalone population}
-\format{A data.frame of four columns
+\format{
+A data.frame of four columns
 \describe{
   \item{dt}{the time between tagging and recapture, in years}
   \item{l1}{the shell length when tagged in mm}
   \item{l2}{the shell length at recapture in mm}
   \item{dl}{the growth increment between tagging and recapture
                 in mm; there are zero values.}
-}}
+}
+}
 \source{
 Thanks to Dr Craig Mundy and the abalone team at the Institute of Marine and Antarctic Studies, of 
     the University of Tasmania for the use of this data.

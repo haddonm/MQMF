@@ -4,11 +4,13 @@
 \name{minnow}
 \alias{minnow}
 \title{minnow contains weekly growth data for use with seasonal growth curves}
-\format{A data.frame of mean length-at-time data
+\format{
+A data.frame of mean length-at-time data
 \describe{
   \item{week}{the week of sampling minnows for lengths}
   \item{length}{the mean length in the corresponding week in mm}
-}}
+}
+}
 \source{
 data measured from Figure 2, page 602 in Pitcher, T.J., and P.D M. MacDonald. (1973) 
 Two models of seasonal growth. \emph{Journal of Applied Ecology} 10:599–606.

@@ -4,13 +4,15 @@
 \name{schaef}
 \alias{schaef}
 \title{schaef is yellowfin tuna fishery data from Schaefer 1957}
-\format{A data.frame of fisheries data
+\format{
+A data.frame of fisheries data
 \describe{
   \item{year}{the fishing year from 1934 - 1955}
   \item{catch}{the total annual catch, '000s of pounds }
   \item{effort}{the total effort as standard class 4 clipper fishing days}
   \item{cpue}{the catch '000 pounds per standard class 4 day, a ratio cpue}
-}}
+}
+}
 \source{
 from Table 1 page 266 in Schaefer, M.B. (1957) A study of the dynamics of the 
     fishery for yellowfin tuna in the Eastern Tropical Pacific Ocean. 

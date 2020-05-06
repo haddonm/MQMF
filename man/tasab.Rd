@@ -4,13 +4,15 @@
 \name{tasab}
 \alias{tasab}
 \title{tasab is a matrix of abalone maturity-at-length data}
-\format{A data.frame of maturity-at-length data
+\format{
+A data.frame of maturity-at-length data
 \describe{
   \item{site}{an identifier for the two different sites sampled}
   \item{sex}{I = immature, M = male, F = female}
   \item{length}{the shell length in mm}
   \item{mature}{was the animal mature = 1 or not = 0}
-}}
+}
+}
 \source{
 Many thanks to the Institute of Marine and Antarctic Science, 
     which is part of the University of Tasmania, and especially to 

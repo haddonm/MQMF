@@ -4,7 +4,8 @@
 \name{npf}
 \alias{npf}
 \title{npf fishery catch data from Northern Prawn Fishery 1970-1992}
-\format{A data.frame of fisheries data
+\format{
+A data.frame of fisheries data
 \describe{
   \item{year}{the fishing year from 1970 - 1992.}
   \item{banana}{banana prawn catches, tonnes.}
@@ -13,7 +14,8 @@
   \item{king}{king prawn catches, tonnes.}
   \item{boats}{the number of vessels fishing in that year.}
   \item{boatday}{the total annual effort as boatdays.}
-}}
+}
+}
 \source{
 Robins, C. and I. Somers (1994) Appendix A. Fishery 
     Statistics pp 141 - 164 in Pownall, P.C. (ed.) Australia's 

@@ -4,13 +4,15 @@
 \name{pttuna}
 \alias{pttuna}
 \title{pttuna is yellowfin tuna fishery data from Pella-Tomlinson 1969}
-\format{A data.frame of fisheries data
+\format{
+A data.frame of fisheries data
 \describe{
   \item{year}{the fishing year from 1934 - 1955}
   \item{catch}{the total annual catch, '000s of pounds }
   \item{effort}{the total effort as standard class 4 baitboat fishing days}
   \item{cpue}{the catch '000 pounds per standard class 4 day, a ratio cpue}
-}}
+}
+}
 \source{
 from Table 6 page 457 in Pella, J.J. and P.K. Tomlinson (1969) A Generalized Stock Production Model. \emph{Bulletin, Inter-American Tropical Tuna Commission} 13(3): 421-458. Obtainable from \emph{https://www.iattc.org/BulletinsENG.htm}
 }
