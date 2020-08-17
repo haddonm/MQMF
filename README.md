@@ -5,10 +5,17 @@
 
 An R package for the book *Using R for Modelling and Quantitative
 Methods in Fisheries* (2020). ISBN: 9780367469894 due to be published in
-June 2020.
+September 2020.
 
-To install this development version from [GitHub](https://github.com/)
-you can use:
+Hardback and softback versions are available from *www.routledge.com*,
+but is also available for pre-order from Amazon (best to use one’s local
+Amazon site). A gitbook version is under development and once completed
+will at least be available on gitpages. I will annouce here when it is
+ready.
+
+The release version of the **MQMF** package (commit 88bc002499), is
+available on CRAN, but to install this development version from
+[GitHub](https://github.com/) you can use:
 
 ``` r
 if (!require(devtools)){install.packages("devtools")} 

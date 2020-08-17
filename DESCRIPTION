@@ -20,6 +20,6 @@ Imports: MASS,
 Suggests: 
     knitr,
     rmarkdown
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 NeedsCompilation: no
 Language: en-US
