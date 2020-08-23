@@ -17,7 +17,7 @@ a vector of predicted lengths for a vector of ages in 'ages'
 }
 \description{
 mm calculates length-at-age for the generalized 
-    Michaelis-Menton curve.
+    Michaelis-Menton curve. The equation being (a x ages)/(b + ages^c).
 }
 \examples{
  ages <- seq(0,20,1)    # sigma is ignored here

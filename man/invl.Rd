@@ -7,8 +7,8 @@
 invl(par, indat, initL = "l1", delT = "dt")
 }
 \arguments{
-\item{par}{a vector of at least Linf, and K from the von Bertalanffy 
-growth curve}
+\item{par}{a vector of at least MaxDL, L50, and delta from the inverse 
+logistic growth curve}
 
 \item{indat}{the matrix or data.frame of data columns containing at
 least the initial lengths and the deltaT, time intervals between

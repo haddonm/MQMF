@@ -14,7 +14,9 @@ gettime is a function designed to facilitate the measurement
     of time between intervals within R software that are expected to
     take a maximum of hours. It calculates the time as seconds elapsed 
     from the start of each day. As long as the timing of events does not
-    pass from one day to the next accurate results will be generated.
+    pass from one day to the next accurate results will be generated. To 
+    measure the time taken one would store an initial value that would be 
+    subtracted from a final value.
 }
 \examples{
   begin <- gettime()

@@ -1,6 +1,6 @@
 
 
-#' @title calcprior return sum of a vector of constant values as priors
+#' @title calcprior return the sum of a vector of constant values as priors
 #' 
 #' @description calcprior is used to include a prior probability into 
 #'     Bayesian calculations. calcprior is a template for generating 
@@ -11,7 +11,8 @@
 #'     priorcalc at it. Whatever function you define needs to have the 
 #'     same input parameters as this calcprior, i.e. the parameters 
 #'     and N. If something else if required then do_MCMC will need 
-#'     modification inthe two places where priorcalc is used.
+#'     modification in the two places where priorcalc is used. Alternatively, 
+#'     the ellipsis, ..., might be used.
 #'
 #' @param pars the parameters of the model being examined by the MCMC
 #' @param N the number of replicate parameter vectors to be returned from 
@@ -34,29 +35,30 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #'    parameter vectors and associated probabilities are stored, the total
 #'    number of candidate vectors to keep and the step or thinning rate
 #'    between accepting a result into the Markov Chain. One needs to 
-#'    input three functions: 1) infunk to calculate the likelihoods, 
-#'    2) calcpred used within infunk to calculate the predicted values
-#'    used to compare with the observed (found in obsdat), and 
-#'    3) priorcalc used to calculate the prior probabilities of the 
+#'    input three functions: 1) 'infunk' to calculate the likelihoods, 
+#'    2) 'calcpred' used within 'infunk' to calculate the predicted values
+#'    used to compare with the observed (found in 'obsdat'), and 
+#'    3) 'priorcalc' used to calculate the prior probabilities of the 
 #'    various parameters in each trial. (N + burnin) * thinstep iterations 
 #'    are made in total although only N are stored. The jumping
 #'    function uses random normal deviates (mean=0, sd=1) to combine with
 #'    each parameter value (after multiplication by the specific scaling
-#'    factor held in scales). Determination of suitable scaling values
-#'    is generally done empirically, perhaps by trialing a small number 
+#'    factor held in the scales argument). Determination of suitable scaling 
+#'    values is generally done empirically, perhaps by trialing a small number 
 #'    of iterations to begin with. Multiple chains would be usual and 
 #'    the thinstep would be larger eg. 128, 256, or 512, but it would 
-#'    take 8, 16, or 32 times longer. The scales are usually 
-#'    expirically set to obtain an acceptance rate between 20 - 40%. 
+#'    take 8, 16, or 32 times longer, depending on the number of parameters, 
+#'    these numbers are for four parameters only. The scales are usually 
+#'    empirically set to obtain an acceptance rate between 20 - 40%. 
 #'    It is also usual to run numerous diagnostic plots on the outputs 
-#'    to ensure convergence on the final stationary distribution. There 
+#'    to ensure convergence onto the final stationary distribution. There 
 #'    are three main loops: 1) total number of iterations (N + burnin)* 
 #'    thinstep, used by priorcalc, 2) thinstep/(number of parameters) 
 #'    so that at least all parameters are stepped through at least once 
 #'    (thinstep = np) before any combinations are considered for 
 #'    acceptance, this means that the true thinning rate is thinstep/np, 
-#'    and 3) the number of parameters loop that steps through the np 
-#'    parameters varying each one.
+#'    and 3) the number of parameters loop, that steps through the np 
+#'    parameters varying each one, one at a time.
 #'
 #' @param chains the number of independent MCMC chains produced
 #' @param burnin the number of steps made before candidate parameter
@@ -70,8 +72,8 @@ calcprior <- function(pars,N) { # return log(1/N) for all values entered.
 #'     values for comparison with obsdat; defaults to simpspm.
 #' @param calcdat the data used by calcpred to calculate the predicted
 #'     values
-#' @param obsdat the observed data (on the same scale as the predicted)
-#'     against with the predicted values are compared.
+#' @param obsdat the observed data (on the same scale as the predicted, ie
+#'     usually log-transformed), against with the predicted values are compared.
 #' @param priorcalc a function used to calculate the prior probability for
 #'     each of the parameters in each trial parameter vector.
 #' @param scales The re-scaling factors for each parameter to convert the

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mcmc.R
 \name{calcprior}
 \alias{calcprior}
-\title{calcprior return sum of a vector of constant values as priors}
+\title{calcprior return the sum of a vector of constant values as priors}
 \usage{
 calcprior(pars, N)
 }
@@ -25,7 +25,8 @@ calcprior is used to include a prior probability into
     priorcalc at it. Whatever function you define needs to have the 
     same input parameters as this calcprior, i.e. the parameters 
     and N. If something else if required then do_MCMC will need 
-    modification inthe two places where priorcalc is used.
+    modification in the two places where priorcalc is used. Alternatively, 
+    the ellipsis, ..., might be used.
 }
 \examples{
 param <- log(c(0.4,9400,3400,0.05))  

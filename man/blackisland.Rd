@@ -15,8 +15,9 @@ A data.frame of four columns
 }
 }
 \source{
-Thanks to Dr Craig Mundy and the abalone team at the Institute of Marine and Antarctic Studies, of 
-    the University of Tasmania for the use of this data.
+Thanks to Dr Craig Mundy and the abalone team at the Institute of 
+    Marine and Antarctic Studies, of the University of Tasmania for the use 
+    of this data.
 }
 \description{
 A 108 x 4 data.frame containing dt, the time
@@ -35,8 +36,9 @@ A 108 x 4 data.frame containing dt, the time
 
  \itemize{
   \item Tagging data
-  \item Growth of individuals estimation
+  \item Estimation of individual growth
   \item Binomial likelihoods
+  \item Faben's version of the von Bertalanffy curve
  }
 }
 

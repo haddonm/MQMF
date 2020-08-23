@@ -9,13 +9,13 @@ aicbic(model, dat, nLL = TRUE)
 \arguments{
 \item{model}{the optimum model fitted by either optim, nlm, or nlminb}
 
-\item{dat}{the data set used in the modelling or just n the number of
+\item{dat}{the data set used in the modelling, or just n the number of
 observations; it can distinguish between them}
 
 \item{nLL}{uses negative log-likelihood? default=TRUE}
 }
 \value{
-a vector of three numbers, AIC first, then BIC, then negLL or 
+a vector of four numbers, AIC first, then BIC, then negLL or 
     SSQ, depending on nLL, then number of parameters p
 }
 \description{
@@ -34,5 +34,7 @@ modelvb <- nlm(f=negNLL,p=param,funk=fabens,observed=bi$dl,indat=bi,
 aicbic(modelvb,blackisland)  # 588.3382 596.3846 291.1691   3
 }
 \references{
-Burnham, K.P. and D.R. Anderson (2002) \emph{Model Selection and Inference. A Practical Information-Theoretic Approach.} Second Edition Springer-Verlag, New York. 488 p.
+Burnham, K.P. and D.R. Anderson (2002) \emph{Model Selection and 
+    Inference. A Practical Information-Theoretic Approach.} Second Edition 
+    Springer-Verlag, New York. 488 p.
 }

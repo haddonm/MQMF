@@ -13,7 +13,8 @@ countNAs(invect)
 A single value of zero or the number of NAs
 }
 \description{
-countNAs used in apply to count the number of NAs in a vector
+countNAs used in the base function 'apply', or 'tapply' to count 
+    the number of NAs in a vector
 }
 \examples{
 x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)

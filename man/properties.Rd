@@ -2,28 +2,27 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{properties}
 \alias{properties}
-\title{properties - used to check a data.frame before standardization}
+\title{properties - used to examine the properties of a data.frame}
 \usage{
 properties(indat, dimout = FALSE)
 }
 \arguments{
-\item{indat}{the data.frame containing the data fields to be used
-in the subsequent standardization. It tabulates the number of
-NAs and the number of unique values for each variable and finds
-the minimum and maximum of the numeric variables}
+\item{indat}{the data.frame containing the columns to be examined.}
 
-\item{dimout}{determines whether or noth the dimensions of the data.frame
+\item{dimout}{determines whether or not the dimensions of the data.frame
 are printed to the screen or not; defaults to FALSE}
 }
 \value{
 a data.frame with the rows being each variable from the 
     input data.frame and the columns being the number of NAs, the
-    number of unique values, and minimum and maximum (where 
-    possible).
+    number of unique values, the class of variable, and minimum and maximum 
+    (where the columns are numeric), and an example value.
 }
 \description{
-properties used to check a data.frame before
-    standardization
+properties examines some of the properties of a data.frame 
+    and outputs for each column an index for each variable, how many NAs 
+    there are, how many unique values there are, the class of each variable,
+    the minimum and maximum (of all numeric variables), and an example value.
 }
 \examples{
 data(abdat)

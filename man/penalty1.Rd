@@ -2,7 +2,7 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{penalty1}
 \alias{penalty1}
-\title{penalty1 enables the adding of a large penalty as one approaches 1.0}
+\title{penalty1 adds an increasingly large penalty as a value approaches 1.0}
 \usage{
 penalty1(x)
 }

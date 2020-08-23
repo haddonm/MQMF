@@ -18,7 +18,7 @@ a single scalar value
 mnnegLL a generic multinomial negative log-likelihood 
     that requires observed frequencies and predicted frequencies, 
     although the predicted frequencies could also be the final 
-    proportions, as long as they summed to one. It checks that the 
+    proportions, as long as they sum to one. It checks that the 
     number of predicted values matches the number of observed values
 }
 \examples{

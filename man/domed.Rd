@@ -34,5 +34,8 @@ domed uses 6 parameters and a set of mean size or age
   plot1(L,sel,xlab="Age",ylab="Selectivity",lwd=2)
 }
 \references{
-Methot, R.D. and C.R, Wetzel (2013) Stock synthesis: A biological and statistical framework for fish stock assessment and fishery management. Supplementary material, Appendix A. Equs A1.30 onwards. \emph{Fisheries Research} 142:86-99.
+Methot, R.D. and C.R, Wetzel (2013) Stock synthesis: A biological 
+    and statistical framework for fish stock assessment and fishery management. 
+    Supplementary material, Appendix A. Equs A1.30 onwards. 
+    \emph{Fisheries Research} 142:86-99.
 }

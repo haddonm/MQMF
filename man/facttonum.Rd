@@ -21,11 +21,11 @@ facttonum converts a vector of numeric factors into numbers.
 \examples{
  DepCat <- as.factor(rep(seq(100,600,100),2))
  print(DepCat)
- 5 * DepCat[3]   # throws an error, cannot multiply a factor
+ 5 * DepCat[3]    # throws an error, cannot multiply a factor
  as.numeric(DepCat) # ordinal values of the factors
  as.numeric(levels(DepCat)) #converts the levels not the replicates
  DepCat <- facttonum(DepCat)
  DepCat / 2.0     # now all values back to values
  x <- factor(letters) 
- facttonum(x) # this would be silly, characters are not numbers
+ facttonum(x)     # this would be silly, characters are not numbers
 }

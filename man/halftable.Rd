@@ -2,9 +2,9 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{halftable}
 \alias{halftable}
-\title{halftable halves the height of a tall narrow data.frame}
+\title{halftable halves the height of a tall narrow data.frame for printing}
 \usage{
-halftable(inmat, yearcol = "year", subdiv = 3)
+halftable(inmat, yearcol = "year", subdiv = 2)
 }
 \arguments{
 \item{inmat}{the data.frame to be subdivided}
@@ -12,7 +12,7 @@ halftable(inmat, yearcol = "year", subdiv = 3)
 \item{yearcol}{the column name of the year field default="year"}
 
 \item{subdiv}{the number of times the data.frame should be subdivided;
-the default is 3 but the numbers can only be 2 or 3.}
+the default is 2 but the numbers can only be 2 or 3.}
 }
 \value{
 a data.frame half the height and double the width of the original

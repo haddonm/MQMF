@@ -20,7 +20,7 @@ from the independent values passed using the ellipsis.}
 will predict to compare with each of the input observed values.}
 
 \item{...}{required to allow funk to access its other input data
-without having to explicitly declare them in negNLL}
+without having to explicitly define them in negNLL}
 }
 \value{
 the sum of the negative log-likelihoods using a normal PDF

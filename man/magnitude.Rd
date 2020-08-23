@@ -2,7 +2,7 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{magnitude}
 \alias{magnitude}
-\title{magnitude returns the magnitude of numbers}
+\title{magnitude returns the magnitude of numbers in base 10}
 \usage{
 magnitude(x)
 }

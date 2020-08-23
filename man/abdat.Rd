@@ -25,7 +25,7 @@ A dataset of fishery data for blacklip abalone
     model. Workable initial parameter values, before log-transformation 
     might be: r= 0.4, K=9400, Binit=3400, sigma=0.05 for the 
     Schaefer version, while these also work for the Fox model 
-    one could use r=0.3, K=12000, Binit=4000, sigma=0.05.
+    one could more efficiently use r=0.3, K=12000, Binit=4000, sigma=0.05.
 }
 \section{Subjects}{
 

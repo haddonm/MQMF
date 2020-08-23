@@ -34,7 +34,7 @@ bracket scans through a series of predicted values for
 \examples{
  L = seq(60,160,1)
  p=c(a=0.075,b=0.075,c=1.0,alpha=100)
- asym <- srug(p=p,sizeage=L)
+ asym <- srug(p=p,sizeage=L) # Schnute and Richards unified growth curve
  L25 <- linter(bracket(0.25,asym,L)) 
  L50 <- linter(bracket(0.5,asym,L)) 
  L75 <- linter(bracket(0.75,asym,L)) 

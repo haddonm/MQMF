@@ -17,15 +17,15 @@ getvector(indat, locate, sep = ",")
 a vector of numbers
 }
 \description{
-getvector when reading in a csv file using readLines,
+getvector, when reading in a csv file using readLines,
     getvector extracts a line of numbers from a specified line within
     the readLine object.This function works out how many numbers there
     are. If you wish to add a comment at the end of a vector of numbers
     it must be separated from them by the separator. e.g. a comma
 }
 \examples{
-x <- "12.3, 15.1, 8.7,10.3,  # this is a vector of numbers"
-y <- "21.3 # 22.3 # 8.7 # 10.3 # here are four numbers"
+x <- "12.3, 15.1, 8.7,10.3,  # this is a vector of four numbers"
+y <- "21.3 # 22.3 # 8.7 # 10.3 # here are another four numbers"
 getvector(x)    # uses default separator
 getvector(y,sep="#")
 }

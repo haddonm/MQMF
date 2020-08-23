@@ -10,10 +10,11 @@ countgtone(invect)
 \item{invect}{vector of values}
 }
 \value{
-A single value of zero or the number of ones
+the number of values in the vector > 1
 }
 \description{
-countgtone used in apply to count the number > 1 in a vector
+countgtone used in the base function 'apply', or 'tapply' to 
+    count the number > 1 in a vector
 }
 \examples{
 x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)

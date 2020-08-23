@@ -15,7 +15,8 @@ quants(invect, probs = c(0.025, 0.05, 0.5, 0.95, 0.975))
 a vector of the probs quantiles
 }
 \description{
-quants used in 'apply' to estimate quantiles across a vector
+quants used in 'apply' to estimate quantiles across a vector.
+    Can also be used within tapply, etc.
 }
 \examples{
 x <- matrix(rnorm(1000),ncol=10,nrow=100)

@@ -10,15 +10,17 @@
 #'     aicbic can recognize the outputs from optim, nlm, and nlminb.
 #'
 #' @param model the optimum model fitted by either optim, nlm, or nlminb
-#' @param dat the data set used in the modelling or just n the number of
+#' @param dat the data set used in the modelling, or just n the number of
 #'     observations; it can distinguish between them
 #' @param nLL uses negative log-likelihood? default=TRUE
 #'
-#' @return a vector of three numbers, AIC first, then BIC, then negLL or 
+#' @return a vector of four numbers, AIC first, then BIC, then negLL or 
 #'     SSQ, depending on nLL, then number of parameters p
 #' @export
 #' 
-#' @references Burnham, K.P. and D.R. Anderson (2002) \emph{Model Selection and Inference. A Practical Information-Theoretic Approach.} Second Edition Springer-Verlag, New York. 488 p.
+#' @references Burnham, K.P. and D.R. Anderson (2002) \emph{Model Selection and 
+#'     Inference. A Practical Information-Theoretic Approach.} Second Edition 
+#'     Springer-Verlag, New York. 488 p.
 #'
 #' @examples
 #' data(blackisland); bi <- blackisland
@@ -80,7 +82,7 @@ aicbic <- function(model,dat,nLL=TRUE) {  # model <- modelil; dat=bi
 #' @examples
 #'  L = seq(60,160,1)
 #'  p=c(a=0.075,b=0.075,c=1.0,alpha=100)
-#'  asym <- srug(p=p,sizeage=L)
+#'  asym <- srug(p=p,sizeage=L) # Schnute and Richards unified growth curve
 #'  L25 <- linter(bracket(0.25,asym,L)) 
 #'  L50 <- linter(bracket(0.5,asym,L)) 
 #'  L75 <- linter(bracket(0.75,asym,L)) 
@@ -99,11 +101,12 @@ bracket <- function(x,yaxis,xaxis) {
 
 #' @title countgtone used in apply to count the number > 1 in a vector
 #'
-#' @description countgtone used in apply to count the number > 1 in a vector
+#' @description countgtone used in the base function 'apply', or 'tapply' to 
+#'     count the number > 1 in a vector
 #' 
 #' @param invect vector of values
 #' 
-#' @return A single value of zero or the number of ones
+#' @return the number of values in the vector > 1
 #' @export
 #' @examples
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
@@ -114,13 +117,13 @@ countgtone <- function(invect) {
   return(length(pick1))
 } # end of countgtone
 
-#' @title countgtzero used in apply to count how many numbers are
-#'     greater than zero in a vector
+#' @title countgtzero used in apply to count numbers > zero in a vector
 #'
-#' @description countgtzero used in apply to count how many numbers are
-#'     greater than zero in a vector
+#' @description countgtzero used in the base function 'apply', or 'tapply' to 
+#'     count how many numbers are greater than zero in a vector
+#'     
 #' @param invect vector of values
-#' @return A single integer counting how many numbers are > 0
+#' @return An integer counting how many numbers are > 0
 #' @export
 #' @examples
 #' x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)
@@ -134,7 +137,8 @@ countgtzero <- function(invect) {
 
 #' @title countNAs used in apply to count the number of NAs in a vector
 #'
-#' @description countNAs used in apply to count the number of NAs in a vector
+#' @description countNAs used in the base function 'apply', or 'tapply' to count 
+#'     the number of NAs in a vector
 #' @param invect vector of values
 #' @return A single value of zero or the number of NAs
 #' @export
@@ -150,7 +154,8 @@ countNAs <- function(invect) {
 
 #' @title countones used in apply to count the number of ones in a vector
 #'
-#' @description countones used in apply to count the number of ones in a vector
+#' @description countones used in the base function 'apply', or 'tapply' to 
+#'     count the number of ones in a vector
 #' @param invect vector of values
 #' @return A single value of zero or the number of ones
 #' @export
@@ -165,7 +170,8 @@ countones <- function(invect) {
 
 #' @title countzeros used in apply to count the number of zeros in a vector
 #'
-#' @description countzeros used in apply to count the number of zeros in a vector
+#' @description countzeros used in the base function 'apply', or 'tapply' to 
+#'     count the number of zeros in a vector
 #' @param invect vector of values
 #' @return A single value of zero or the number of zeros
 #' @export
@@ -193,13 +199,13 @@ countzeros <- function(invect) {
 #' @examples
 #'  DepCat <- as.factor(rep(seq(100,600,100),2))
 #'  print(DepCat)
-#'  5 * DepCat[3]   # throws an error, cannot multiply a factor
+#'  5 * DepCat[3]    # throws an error, cannot multiply a factor
 #'  as.numeric(DepCat) # ordinal values of the factors
 #'  as.numeric(levels(DepCat)) #converts the levels not the replicates
 #'  DepCat <- facttonum(DepCat)
 #'  DepCat / 2.0     # now all values back to values
 #'  x <- factor(letters) 
-#'  facttonum(x) # this would be silly, characters are not numbers
+#'  facttonum(x)     # this would be silly, characters are not numbers
 facttonum <- function(invect){
   if (class(invect) == "factor") {
     outvect <- suppressWarnings(as.numeric(levels(invect))[invect])
@@ -234,11 +240,11 @@ freqMean <- function(values,infreqs) {
       ans <- c(NA,NA)
       names(ans) <- c("mean","stdev")
    } else {
-      nobs <- sum(infreqs,na.rm=T)
-      sumX <- sum(values * infreqs,na.rm=T)
+      nobs <- sum(infreqs,na.rm=TRUE)
+      sumX <- sum(values * infreqs,na.rm=TRUE)
       av <- sumX/nobs
       if (nobs > 1) {
-         sumX2 <- sum(values * values * infreqs,na.rm=T)
+         sumX2 <- sum(values * values * infreqs,na.rm=TRUE)
          stdev <- sqrt((sumX2 - (sumX * sumX)/nobs)/(nobs-1))
       } else { stdev <- NA
       }
@@ -248,12 +254,12 @@ freqMean <- function(values,infreqs) {
    return(ans)
 } # end of freq_Mean
 
-#' @title getmin generates the lower bound for a plot
+#' @title getmin can be used to define the lower bound for a plot
 #'
 #' @description getmin generates a lower bound for a plot where it is unknown
 #'     whether the minumum is less than zero of not. If less than 0 then
 #'     multiplying by the default mult of 1.05 works well but if the outcome if
-#'     > 0 then the multiplier needs to be adjusted appropriately so the minimum
+#'     > 0 then the multiplier is adjusted appropriately so that the minimum
 #'     is slightly lower than the minimum of the data
 #'
 #' @param x the vector of data to be tested for its minimum
@@ -265,7 +271,8 @@ freqMean <- function(values,infreqs) {
 #' @examples
 #' vect <- rnorm(10,mean=0,sd=2)
 #' sort(vect)
-#' getmin(vect,mult=1.0)
+#' getmin(vect)
+#' getmin(vect,mult=1.0)  # finds actual minimum
 getmin <- function(x,mult=1.05) {
    ymin <- min(x,na.rm=TRUE)
    if (ymin < 0) {
@@ -276,7 +283,7 @@ getmin <- function(x,mult=1.05) {
    return(ymin)
 } # end of getmin
 
-#' @title getmax generates the upper bound for a plot
+#' @title getmax can be used to define the upper bound for a plot
 #'
 #' @description getmax generates an upper bound for a plot where it 
 #'     is unknown whether the maximum is greater than zero of not. 
@@ -328,13 +335,13 @@ getname <- function(x) {
 #' @title getseed generates a random number seed
 #' 
 #' @description getseed generates a seed for use within set.seed. 
-#'     It produces up to a 6 digit integer from the Sys.time. This
+#'     It produces up to a 7 digit integer from the Sys.time. 
 #'     Initially, at the start of a session there is no seed; a new one 
 #'     is created from the current time and the process ID when one is 
 #'     first required. Here, in getseed, we do not use the process ID so 
 #'     the process is not identical but this at least allows the 
 #'     set.seed value to be stored should the need to repeat a set of 
-#'     simulations arise. The process generates up to a six digit number
+#'     simulations arise. The process generates up to a seve digit number
 #'     it then randomly reorders those digits and that becomes the seed.
 #'     That way, if you were to call getseed in quick succession the
 #'     seeds generated should differ even when they are generated close
@@ -366,9 +373,11 @@ getseed <- function() {
 #' @title getsingle extracts one number from an input line of characters
 #'
 #' @description getsingle splits up a text line and translates the 
-#'     first non-empty character string into a number.
+#'     first non-empty character string into a number. This function can be
+#'     useful when parsing an input data file.
 #'
-#' @param inline the line of text, usually taken after using readLines
+#' @param inline the line of text, usually taken after using readLines to read 
+#'     in a text file
 #' @param sep the separator used to divide the numbers from descriptive 
 #'     text, defaults to a comma.
 #'
@@ -394,7 +403,9 @@ getsingle <- function(inline,sep=",") {  # inline=dat[41]
 #'     of time between intervals within R software that are expected to
 #'     take a maximum of hours. It calculates the time as seconds elapsed 
 #'     from the start of each day. As long as the timing of events does not
-#'     pass from one day to the next accurate results will be generated.
+#'     pass from one day to the next accurate results will be generated. To 
+#'     measure the time taken one would store an initial value that would be 
+#'     subtracted from a final value.
 #'
 #' @return the time in seconds from the start of a day
 #' @export
@@ -414,7 +425,7 @@ gettime <- function() {
 
 #' @title getvector extracts a vector of numbers from a line of characters
 #'
-#' @description getvector when reading in a csv file using readLines,
+#' @description getvector, when reading in a csv file using readLines,
 #'     getvector extracts a line of numbers from a specified line within
 #'     the readLine object.This function works out how many numbers there
 #'     are. If you wish to add a comment at the end of a vector of numbers
@@ -427,8 +438,8 @@ gettime <- function() {
 #' @export
 #'
 #' @examples
-#' x <- "12.3, 15.1, 8.7,10.3,  # this is a vector of numbers"
-#' y <- "21.3 # 22.3 # 8.7 # 10.3 # here are four numbers"
+#' x <- "12.3, 15.1, 8.7,10.3,  # this is a vector of four numbers"
+#' y <- "21.3 # 22.3 # 8.7 # 10.3 # here are another four numbers"
 #' getvector(x)    # uses default separator
 #' getvector(y,sep="#")
 getvector <- function(indat,locate,sep=",") { 
@@ -445,7 +456,7 @@ getvector <- function(indat,locate,sep=",") {
   return(vect)
 }
 
-#' @title halftable halves the height of a tall narrow data.frame
+#' @title halftable halves the height of a tall narrow data.frame for printing
 #'
 #' @description halftable would be used when printing a table using kable
 #'     from knitr where one of the columns was Year. The objective would be to
@@ -456,7 +467,7 @@ getvector <- function(indat,locate,sep=",") {
 #' @param inmat the data.frame to be subdivided
 #' @param yearcol the column name of the year field default="year"
 #' @param subdiv the number of times the data.frame should be subdivided;
-#'     the default is 3 but the numbers can only be 2 or 3.
+#'     the default is 2 but the numbers can only be 2 or 3.
 #'
 #' @return a data.frame half the height and double the width of the original
 #' @export
@@ -470,7 +481,7 @@ getvector <- function(indat,locate,sep=",") {
 #' x1 <- rbind(x,x[1,])
 #' x1[21,"V1"] <- 2006
 #' halftable(x1,yearcol="V1",subdiv=3)
-halftable <- function(inmat,yearcol="year",subdiv=3) {
+halftable <- function(inmat,yearcol="year",subdiv=2) {
    if (!(subdiv %in% c(2,3))) stop("\n subdiv must be 2 or 3 \n")
    numrow <- dim(inmat)[1]
    numcol <- dim(inmat)[2]
@@ -506,10 +517,10 @@ halftable <- function(inmat,yearcol="year",subdiv=3) {
    return(outmat)
 } # end of halftable
 
-#' @title incol is a utility to determine is a column is present in a matrix
+#' @title incol is a utility to determine if a column is present in a matrix
 #'
-#' @description incol is a utility to determine whether a names columns is
-#'     present in a given matrix or data.frame.
+#' @description incol is a utility to determine whether a named column is
+#'     present in a given matrix or data.frame. Is case sensitive
 #'
 #' @param incol the name of the column; defaults to "year" as an example
 #' @param inmat the matrix or data.frame within which to search for incol
@@ -587,7 +598,6 @@ likeratio <- function(nLL1,nLL2,df=1) {
 #'     target. So, left and right are sequential values on the x-axis, 
 #'     bottom and top are the corresponding sequential values on the 
 #'     y-axis, and target is the value we are looking for on the y-axis.
-#'     
 #'
 #' @param pars a vector of 5 values, left, right, bottom, top and target
 #'     
@@ -618,9 +628,7 @@ linter <- function(pars) {
   return(ans)
 } # end of linter
 
-
-
-#' @title magnitude returns the magnitude of numbers
+#' @title magnitude returns the magnitude of numbers in base 10
 #'
 #' @description magnitude is useful when using an
 #'     optimizer such as optim, which uses a parscale parameter.
@@ -658,6 +666,7 @@ magnitude <- function(x) {
 #' @examples
 #' pars <- c(18.3319532,33.7935124,3.0378107,6.0194465,0.5815360,0.4270468)
 #' makelabel("Cohort1",pars[c(1,3,5)],sep="__")
+#' makelabel("Cohort1",pars[c(1,3,5)],sep="__",sigdig=4)
 makelabel <- function(txt,vect,sep="_",sigdig=3) {
    tmp <- NULL
    nnum <- length(vect)
@@ -783,7 +792,7 @@ penalty0 <- function(x){
   return(ans)
 } # end of penalty0
 
-#' @title penalty1 enables the adding of a large penalty as one approaches 1.0
+#' @title penalty1 adds an increasingly large penalty as a value approaches 1.0
 #'
 #' @description penalty1 allows for the option of adding a large penalty as
 #'     a parameter approaches 1.0 and moves to become larger than 1. For 
@@ -898,8 +907,8 @@ plotfishM <- function(fish,spsname="",ce=TRUE,title=TRUE,fnt=7,both=TRUE,
 #'     proportion of total observations in each cohort expect
 #'     the last, which is obtained through subtraction. 
 #' @param n the sum of counts observed from nature
-#' @param sizecl a representation of the sizeclasses used, these 
-#'     can be the nid-points of each size-class or the lower and
+#' @param sizecl a representation of the size-classes used, these 
+#'     can be the mid-points of each size-class or the lower and
 #'     upper bounds of each class.
 #' @param midval if TRUE, the default, the approximate analytical
 #'     approach will be used.
@@ -969,21 +978,20 @@ printV <- function(invect,label=c("index","value")) {
    return(outvect)
 } # end of print_V
 
-#' @title properties - used to check a data.frame before standardization
+#' @title properties - used to examine the properties of a data.frame
 #'
-#' @description properties used to check a data.frame before
-#'     standardization
-#' @param indat the data.frame containing the data fields to be used
-#'     in the subsequent standardization. It tabulates the number of
-#'     NAs and the number of unique values for each variable and finds
-#'     the minimum and maximum of the numeric variables
-#' @param dimout determines whether or noth the dimensions of the data.frame
+#' @description properties examines some of the properties of a data.frame 
+#'     and outputs for each column an index for each variable, how many NAs 
+#'     there are, how many unique values there are, the class of each variable,
+#'     the minimum and maximum (of all numeric variables), and an example value.
+#' @param indat the data.frame containing the columns to be examined.
+#' @param dimout determines whether or not the dimensions of the data.frame
 #'     are printed to the screen or not; defaults to FALSE
 #'     
 #' @return a data.frame with the rows being each variable from the 
 #'     input data.frame and the columns being the number of NAs, the
-#'     number of unique values, and minimum and maximum (where 
-#'     possible).
+#'     number of unique values, the class of variable, and minimum and maximum 
+#'     (where the columns are numeric), and an example value.
 #' @export
 #' 
 #' @examples
@@ -1024,10 +1032,10 @@ properties <- function(indat,dimout=FALSE) {
 #' @title removeEmpty removes empty strings from a vector of strings
 #'
 #' @description removeEmpty removes empty strings from a vector of 
-#'     strings. Such spaces often created by spurious commas at the 
-#'     end of lines. It also removes strings made up only of spaces 
+#'     strings. Such spaces can be created by spurious commas at the 
+#'     end of parsed lines. It also removes strings made up only of spaces 
 #'     and removes spaces from inside of individual chunks of text. 
-#'     So, should be useful when reading in data from a custom csv 
+#'     This should be useful when reading in data from a custom csv 
 #'     file when parsing different formats
 #'
 #' @param invect a vector of input strings, possibly containing empty strings
@@ -1042,14 +1050,15 @@ properties <- function(indat,dimout=FALSE) {
 #' length(removeEmpty(x))
 #' removeEmpty(x)
 removeEmpty <- function(invect) {
-  tmp <- gsub(" ","",invect)
-  tmp <- tmp[nchar(tmp) > 0]
+  tmp <- gsub(" ","",invect) # remove all spaces within strings
+  tmp <- tmp[nchar(tmp) > 0] # remove empty strings
   return(tmp)
 }
 
 #' @title quants used in apply to estimate quantiles across a vector
 #'
-#' @description quants used in 'apply' to estimate quantiles across a vector
+#' @description quants used in 'apply' to estimate quantiles across a vector.
+#'     Can also be used within tapply, etc.
 #' 
 #' @param invect vector of values
 #' @param probs a vector of quantile, default=c(0.025,0.05,0.5,0.95,0.975)
@@ -1066,17 +1075,17 @@ quants <- function(invect,probs=c(0.025,0.05,0.5,0.95,0.975)) {
    return(ans)
 }
 
-#' @title which.closest find the number closest to a given value
+#' @title which.closest find a number in a vector closest to a given value
 #'
 #' @description which.closest finds either the number in a vector which is
 #'     closest to the input value or its index value
 #'
 #' @param x the value to lookup
 #' @param invect the vector in which to lookup the value x
-#' @param index should the closest value be returned or its index; default=TRUE
+#' @param index should the index be returned or the closest value; default=TRUE
 #'
 #' @return by default it returns the index in the vector of the value closest to
-#'     the input  value
+#'     the input value x
 #' @export
 #'
 #' @examples
@@ -1085,7 +1094,7 @@ quants <- function(invect,probs=c(0.025,0.05,0.5,0.95,0.975)) {
 #' pick        # the index of the closest
 #' vals[pick]  # its value
 #' which.closest(5.0,vals,index=FALSE) # straight to the value
-which.closest <- function(x,invect,index=T) {
+which.closest <- function(x,invect,index=TRUE) {
    pick <- which.min(abs(invect-x))
    if (index) {
       return(pick)
@@ -1093,8 +1102,6 @@ which.closest <- function(x,invect,index=T) {
       return(invect[pick])
    }
 } # end of which_.closest
-
-
 
 #' @title '\%ni\%' identifies which element in x is NOT in y
 #'

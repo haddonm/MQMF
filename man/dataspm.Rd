@@ -11,24 +11,25 @@ A 31 x 5 data.frame
   \item{catch}{the catch in tonnes to the nearest 100kg}
   \item{cpue}{the standardized cpue scaled to the mean of the series}
   \item{records}{the number of records making up the yearly totals}
-  \item{geom}{the naive geometric mean cpue of the raw data as kg/hr, also rescaled to the mean of the series}
+  \item{geom}{the naive geometric mean cpue of the raw data as kg/hr, also 
+              rescaled to the mean of the series}
 }
 }
 \source{
 Haddon, M. and M. Sporcic (2017) Catch rate standardizations for 
     selected SESSF Species (data to 2016) pp 43-406 in Tuck, G.N. 
-    (\emph{ed}) \emph{Stock Assessment for the Southern and Eastern scalefish and shark
-    fishery 2016 and 2017.} 837 pp. ISBN 978-1-4863-1012-8 data extracted 
-    from Table 7.96 PinkLing4050 page 216.
+    (\emph{ed}) \emph{Stock Assessment for the Southern and Eastern scalefish 
+    and shark fishery 2016 and 2017.} 837 pp. ISBN 978-1-4863-1012-8 data 
+    extracted from Table 7.96 PinkLing4050 page 216.
 }
 \description{
 A data.frame containing 31 years of catch, standardized
     cpue, number of records, and the unstandardized geometric mean
-    cpue. The fisheries data can is used in the surplus production
-    modelling. Initial parameter estimates very close to the 
-    optimum values could be param <- log(c(r=0.25, K=5500, Binit=3000,
-    sigma=0.2)) for the Schaefer model and log(c(r=0.15, K=6500,
-    Binit=3000, sigma=0.2)) for the Fox model
+    cpue for Pink Ling (\emph{Genypterus blacodes}). The fisheries data can 
+    be used in the surplus production modelling in Chapter 7. Initial 
+    parameter estimates very close to the optimum values could be 
+    param <- log(c(r=0.25, K=5500, Binit=3000,sigma=0.2)) for the Schaefer 
+    model and log(c(r=0.15, K=6500, Binit=3000, sigma=0.2)) for the Fox model
 }
 \section{Subjects}{
 

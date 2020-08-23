@@ -14,7 +14,7 @@ observed values will be compared}
 \item{funk}{the function used to calculate the log-predicted values 
 of whatever variable is being used (eg. cpue, catches, etc.)}
 
-\item{logobs}{the observed values log-transformed ready for 
+\item{logobs}{the observed values, log-transformed, ready for 
 comparison with the log-predicted values from funk and pars.}
 
 \item{...}{required to allow funk to access its other arguments 
@@ -34,7 +34,7 @@ negLL calculates log-normal negative log-likelihoods. It
     for which there are values.
 }
 \examples{
-data(abdat)  #expect an answer of -31.65035
+data(abdat)  # expect an answer of -31.65035
 param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
 negLL(pars=param,funk=simpspm,logobs=log(abdat[,"cpue"]),indat=abdat)
 }

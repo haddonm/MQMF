@@ -7,7 +7,7 @@
 Gz(p, ages)
 }
 \arguments{
-\item{p}{is a vector the first three cells of which are a, b, c, for
+\item{p}{is a vector the first three values of which are a, b, c, for
 the Gz curve.}
 
 \item{ages}{is a vector of ages; could be a single number}

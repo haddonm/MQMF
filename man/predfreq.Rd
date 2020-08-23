@@ -14,8 +14,8 @@ the last, which is obtained through subtraction.}
 
 \item{n}{the sum of counts observed from nature}
 
-\item{sizecl}{a representation of the sizeclasses used, these 
-can be the nid-points of each size-class or the lower and
+\item{sizecl}{a representation of the size-classes used, these 
+can be the mid-points of each size-class or the lower and
 upper bounds of each class.}
 
 \item{midval}{if TRUE, the default, the approximate analytical

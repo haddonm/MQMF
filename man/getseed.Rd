@@ -11,13 +11,13 @@ an integer up to 7 digits long
 }
 \description{
 getseed generates a seed for use within set.seed. 
-    It produces up to a 6 digit integer from the Sys.time. This
+    It produces up to a 7 digit integer from the Sys.time. 
     Initially, at the start of a session there is no seed; a new one 
     is created from the current time and the process ID when one is 
     first required. Here, in getseed, we do not use the process ID so 
     the process is not identical but this at least allows the 
     set.seed value to be stored should the need to repeat a set of 
-    simulations arise. The process generates up to a six digit number
+    simulations arise. The process generates up to a seve digit number
     it then randomly reorders those digits and that becomes the seed.
     That way, if you were to call getseed in quick succession the
     seeds generated should differ even when they are generated close

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{getmin}
 \alias{getmin}
-\title{getmin generates the lower bound for a plot}
+\title{getmin can be used to define the lower bound for a plot}
 \usage{
 getmin(x, mult = 1.05)
 }
@@ -18,11 +18,12 @@ a suitable lower bound for a plot if required
 getmin generates a lower bound for a plot where it is unknown
     whether the minumum is less than zero of not. If less than 0 then
     multiplying by the default mult of 1.05 works well but if the outcome if
-    > 0 then the multiplier needs to be adjusted appropriately so the minimum
+    > 0 then the multiplier is adjusted appropriately so that the minimum
     is slightly lower than the minimum of the data
 }
 \examples{
 vect <- rnorm(10,mean=0,sd=2)
 sort(vect)
-getmin(vect,mult=1.0)
+getmin(vect)
+getmin(vect,mult=1.0)  # finds actual minimum
 }

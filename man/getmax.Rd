@@ -2,7 +2,7 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{getmax}
 \alias{getmax}
-\title{getmax generates the upper bound for a plot}
+\title{getmax can be used to define the upper bound for a plot}
 \usage{
 getmax(x, mult = 1.05)
 }

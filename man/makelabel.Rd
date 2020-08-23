@@ -27,4 +27,5 @@ It is common to want a label with text and a series of
 \examples{
 pars <- c(18.3319532,33.7935124,3.0378107,6.0194465,0.5815360,0.4270468)
 makelabel("Cohort1",pars[c(1,3,5)],sep="__")
+makelabel("Cohort1",pars[c(1,3,5)],sep="__",sigdig=4)
 }

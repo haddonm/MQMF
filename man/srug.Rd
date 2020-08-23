@@ -20,7 +20,7 @@ A vector of predicted proportion mature (proportion of 1.0)
 \description{
 srug implements the Schnute and Richards (1990) unified 
     growth curve that can be used to describe fish growth, 
-    maturation, and survivorship data. It is a very general curve 
+    maturation, and survivorship data. It is a curve 
     that generalizes the classical logistic model used for maturity 
     as well the growth models by Gompertz (1825), von Bertalanffy 
     (1938), Richards (1959), Chapman (1961), and Schnute (1981). As
@@ -28,7 +28,10 @@ srug implements the Schnute and Richards (1990) unified
     obtain a stable fit of this curve to data. Here the model is
     implemented to range between 0 - 1, if you want to use it to 
     describe growth then re-cast the function and add a fifth
-    parameter to replace the 1.0 on top of the divisor.
+    parameter to replace the 1.0 on top of the divisor. The main point of the
+    curve, however, was to demonstrate how the different equations were 
+    related to one another. In working situations it is most efficient 
+    to use the original, simpler, curve/qeuation.
 }
 \examples{
  L <- seq(50,160,1)

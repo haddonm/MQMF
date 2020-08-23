@@ -2,20 +2,20 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{which.closest}
 \alias{which.closest}
-\title{which.closest find the number closest to a given value}
+\title{which.closest find a number in a vector closest to a given value}
 \usage{
-which.closest(x, invect, index = T)
+which.closest(x, invect, index = TRUE)
 }
 \arguments{
 \item{x}{the value to lookup}
 
 \item{invect}{the vector in which to lookup the value x}
 
-\item{index}{should the closest value be returned or its index; default=TRUE}
+\item{index}{should the index be returned or the closest value; default=TRUE}
 }
 \value{
 by default it returns the index in the vector of the value closest to
-    the input  value
+    the input value x
 }
 \description{
 which.closest finds either the number in a vector which is

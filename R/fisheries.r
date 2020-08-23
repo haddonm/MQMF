@@ -5,7 +5,7 @@
 #' @description bce the Baranov Catch Equation. The total mortality of
 #'     fish in an exploited population is made up of fish being killed 
 #'     by fishing and others dying naturally. We use the bce to estimate 
-#'     the catch (those killed by fishing). The problem is that some 
+#'     the catch (those killed by fishing). The bce has value because some 
 #'     fish that would be expected to die naturally can be expected to 
 #'     be caught and killed by fishing so estimating the catch is 
 #'     slightly more complex than numbers of fish available times the 
@@ -20,7 +20,8 @@
 #' @param Nt The population numbers-at-age at the start of time t
 #' @param ages the ages 0:maxage used in the calculations
 #' 
-#' @return a matrix of numbers-, natural mortality-, and catch-at-age
+#' @return a matrix of surviving numbers-at age, total mortality-at-age, and 
+#'     catch-at-age
 #' @export
 #'
 #' @examples
@@ -65,7 +66,7 @@ bce <- function(M,Fat,Nt,ages) {
 #' @param p a vector of the a and b parameters
 #' @param B a vector, possibly of length 1, of spawning biomass levels
 #'
-#' @return a vector equal in length to B of the predicted recruitment(s)
+#' @return a vector, the same length as B, of the predicted recruitment(s)
 #' @export
 #'
 #' @examples
@@ -77,15 +78,15 @@ bh <- function(p,B) {
   return(rec)
 } # end of Beverton-Holt
 
-#' @title discretelogistic example and figure  3.2 Discrete logistic model
+#' @title discretelogistic example and figure 3.2 Discrete logistic model
 #'
 #' @description discretelogistic is an implementation of equation 3.1
-#'     in the Simple Population Models chapter. It enables the 
+#'     in the Simple Population Models chapter 3. It enables the 
 #'     exploration of the dynamics of the Discrete logistic model, 
 #'     based around the classical Schaefer model. 
 #'     
 #'     The time-series nature of population growth is clear from 
-#'     the fact that Nt+1 is a function of Nt. One can expect serial
+#'     the fact that Nt+1 is a function of Nt. One can thus expect serial
 #'     correlation. Setting the r parameter to <= 1.0, would 
 #'     generate monotonically damped equilibria. r values between 
 #'     1 < r < 2.03 would generate damped oscillatory equilibria, r 
@@ -100,8 +101,11 @@ bh <- function(p,B) {
 #'     an empty nt1 row. 
 #'
 #' @param r intrinsic rate of population increase; default = 0.5
-#' @param K carrying capacity; default = 1000
-#' @param N0 Initial population size; default=50 = 5 percent depletion
+#' @param K carrying capacity; default = 1000.0
+#' @param N0 Initial population size; default=50.0 = 5 percent depletion. Note
+#'     that the term 'depletion' can be confusing. Surely 50 remaining from 1000
+#'     should be a depletion of 95 precent? But no, it is deemed to be the 
+#'     complement of 5 percent. 
 #' @param Ct annual catch default = 0.0
 #' @param Yrs years of population growth, default=50
 #' @param p the production curve asymmetry parameter. the default 
@@ -155,7 +159,10 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
 #' @return a vector of selectivities
 #' @export
 #' 
-#' @references Methot, R.D. and C.R, Wetzel (2013) Stock synthesis: A biological and statistical framework for fish stock assessment and fishery management. Supplementary material, Appendix A. Equs A1.30 onwards. \emph{Fisheries Research} 142:86-99.
+#' @references Methot, R.D. and C.R, Wetzel (2013) Stock synthesis: A biological 
+#'     and statistical framework for fish stock assessment and fishery management. 
+#'     Supplementary material, Appendix A. Equs A1.30 onwards. 
+#'     \emph{Fisheries Research} 142:86-99.
 #'
 #' @examples
 #'   L <- seq(1,30,1)
@@ -220,7 +227,7 @@ fabens <- function(par,indat,initL="l1",delT="dt") {
 #'     This curve can have an inflection near the origin as well
 #'     as at an age where growth slows due to maturity occurring.
 #'
-#' @param p is a vector the first three cells of which are a, b, c, for
+#' @param p is a vector the first three values of which are a, b, c, for
 #'     the Gz curve.
 #' @param ages is a vector of ages; could be a single number
 #'
@@ -247,8 +254,8 @@ Gz <- function(p, ages) {
 #'     the length difference between the length at half MaxDL, and the
 #'     length at 5% of MaxDL.
 #'
-#' @param par a vector of at least Linf, and K from the von Bertalanffy 
-#'     growth curve
+#' @param par a vector of at least MaxDL, L50, and delta from the inverse 
+#'     logistic growth curve
 #' @param indat the matrix or data.frame of data columns containing at
 #'     least the initial lengths and the deltaT, time intervals between
 #'     tag release and recapture.
@@ -348,7 +355,7 @@ mature <- function(a,b,sizeage) {
 #' @title mm calculates the predicted Michaelis-Menton length-at-age
 #'
 #' @description mm calculates length-at-age for the generalized 
-#'     Michaelis-Menton curve.
+#'     Michaelis-Menton curve. The equation being (a x ages)/(b + ages^c).
 #'
 #' @param p is a vector the first three cells of which are a, b, c
 #'    for the mm curve.
@@ -370,7 +377,7 @@ mm <- function(p, ages) {
 #' @description mnnegLL a generic multinomial negative log-likelihood 
 #'     that requires observed frequencies and predicted frequencies, 
 #'     although the predicted frequencies could also be the final 
-#'     proportions, as long as they summed to one. It checks that the 
+#'     proportions, as long as they sum to one. It checks that the 
 #'     number of predicted values matches the number of observed values
 #'
 #' @param obs the original observed frequencies
@@ -408,7 +415,7 @@ mnnegLL <- function(obs,predf) {
 #'     observed values will be compared
 #' @param funk the function used to calculate the log-predicted values 
 #'     of whatever variable is being used (eg. cpue, catches, etc.)
-#' @param logobs the observed values log-transformed ready for 
+#' @param logobs the observed values, log-transformed, ready for 
 #'     comparison with the log-predicted values from funk and pars.
 #' @param ... required to allow funk to access its other arguments 
 #'     without having to explicitly declare them in negLL. In the 
@@ -418,7 +425,7 @@ mnnegLL <- function(obs,predf) {
 #' @export
 #'
 #' @examples
-#' data(abdat)  #expect an answer of -31.65035
+#' data(abdat)  # expect an answer of -31.65035
 #' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
 #' negLL(pars=param,funk=simpspm,logobs=log(abdat[,"cpue"]),indat=abdat)
 negLL <- function(pars,funk,logobs,...) {
@@ -441,9 +448,9 @@ negLL <- function(pars,funk,logobs,...) {
 #'     log-transformed parameters. In addition to estimating the negative 
 #'     log-likelihoods for log-normally distributed data it also places a 
 #'     penalty on the first parameter if that parameter approaches very 
-#'     close to zero; see the function penalty0. With SPM the first 
+#'     close to zero; see the help page for penalty0. With SPM the first 
 #'     parameter is the population growth rate r, which obviously 
-#'     should never be negative. The use of penalty0 prevents this.
+#'     should never be negative. The use of penalty0 prevents this happening.
 #'
 #' @param pars the log-transformed parameters to be used in the funk for
 #'     calculating the log of the predicted values against which the log
@@ -481,26 +488,27 @@ negLL1 <- function(pars,funk,logobs,...) {
 #'     log-likelihoods to fit surplus production models that only have 
 #'     a single index of relative abundance, but there are many fisheries
 #'     that have more than one index of relative abundance. negLLM is
-#'     for those cases that have multiple (M) time-series of indices. It
+#'     for those cases that have multiple (M) time-series of such indices. It
 #'     is used in conjunction with simpspmM and spmCE.
 #'
 #' @param pars the log-transformed parameter starting points. For a 
 #'     surplus production model these are r, K, Binit (if initial 
 #'     depletion is likely, otherwise omit this and it will be set =K
 #'     inside the function), then as many sigma values as there are 
-#'     time-series of indices; these are the associated standard 
+#'     time-series of abundance indices; these are the associated standard 
 #'     deviations of the log-normal residuals.
 #' @param funk the function that generates the predicted cpue values.
 #'     for multiple time-series in a SPM use simpspmM
 #' @param logobs the log-transformed observed cpue columns in indat,
-#'     the data needed by funk tranferred inside the ...
+#'     the data needed by funk, tranferred inside the ...
 #' @param indat the fisheries data used in the analysis 
 #' @param index the prefix of the columns of each of the indices, 
 #'     defaults to cpue
 #' @param harvpen default = TRUE, which sets a penalty1 on each of the 
 #'     implied harvest rates to ensure we do not get harvest rates > 1.0
 #' @param ... the continuation ellipsis to allow the transfer of other
-#'     arguments required by funk
+#'     arguments required by funk. The argument 'schaefer' in the example below
+#'     illustrates such usage.
 #'
 #' @return a single scalar as the -ve log-likelihood of the input data
 #' @export
@@ -536,8 +544,6 @@ negLLM <- function(pars,funk,logobs,indat,index="cpue",harvpen=TRUE,...) {
   return(LL)
 } # end of negLLM
 
-
-
 #' @title negNLL  -ve log-likelihood for normally distributed variables
 #'
 #' @description negNLL - Calculates the negative log-likelihood for
@@ -550,7 +556,7 @@ negLLM <- function(pars,funk,logobs,indat,index="cpue",harvpen=TRUE,...) {
 #'     predicted values for comparison with the observed to be passed 
 #'     using the ..., so take care with spelling of the variable name
 #'     required by whatever funk is being used.
-
+#'     
 #' @param pars a vector containing the parameters being used in funk, 
 #'     plus the sigma, which is the standard deviation of the normal 
 #'     random likelihoods in dnorm, an extra estimated parameter.
@@ -561,7 +567,7 @@ negLLM <- function(pars,funk,logobs,indat,index="cpue",harvpen=TRUE,...) {
 #' @param observed the observed values of the variable that the model 
 #'     will predict to compare with each of the input observed values.
 #' @param ... required to allow funk to access its other input data
-#'     without having to explicitly declare them in negNLL
+#'     without having to explicitly define them in negNLL
 #'     
 #' @return the sum of the negative log-likelihoods using a normal PDF
 #' @export
@@ -592,7 +598,8 @@ negNLL <- function(pars,funk,observed,...) {
 #'     to calculate the predicted values using funk, and funksig to
 #'     calculate the changing sigma values relative to the predicted
 #'     values. The example code illustrates an example funksig that
-#'     does nothing to the sigma value.
+#'     does nothing to the sigma value. See the chapter on Static Models to see
+#'     further examples.
 #'
 #' @param pars  the vector of parameters, with sigma, the standard
 #'     deviation of the normal random deviates at the end.
@@ -692,6 +699,9 @@ negnormL <- function(pars,funk,funksig,indat,obs="dl",...){
 #'    result[i,] <- c(bestest,bestmodP$minimum)  # store each result
 #'  }
 #'  result   #Now you can plot -veLL againt r values for the profile
+#'  # parset()
+#'  # plot(result[,"r"],result[,"-veLL"],type="l",lwd=2,panel.first=grid())
+#'  # points(result[,"r"],result[,"-veLL"],pch=16,cex=1.1)
 negLLP <- function(pars, funk, indat, logobs, initpar=pars,
                    notfixed=c(1:length(pars)),...) {
   usepar <- initpar
@@ -711,13 +721,13 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
 #' @title ricker one version of the Ricker stock recruitment
 #' 
 #' @description ricker implements the Ricker stock recruitment
-#'    equation where R = aBexp(-bxB), where R is the recruitment, 
+#'    equation where R = aBexp(-bxB), R is the recruitment, 
 #'    a and b are the parameters and B is the spawning biomass. 
 #'    a is recruits-per-spawner at low stock levels, and b
 #'    relates to the decline in recruitment as spawning biomass
 #'    increases.
 #'
-#' @param p a vector of the a and b parameters
+#' @param p a vector of length two of the a and b parameters
 #' @param B a vector, possibly of length 1, of spawning biomass 
 #'     levels
 #'
@@ -739,7 +749,7 @@ ricker <- function(p,B) {
 #' 
 #' @description srug implements the Schnute and Richards (1990) unified 
 #'     growth curve that can be used to describe fish growth, 
-#'     maturation, and survivorship data. It is a very general curve 
+#'     maturation, and survivorship data. It is a curve 
 #'     that generalizes the classical logistic model used for maturity 
 #'     as well the growth models by Gompertz (1825), von Bertalanffy 
 #'     (1938), Richards (1959), Chapman (1961), and Schnute (1981). As
@@ -747,7 +757,10 @@ ricker <- function(p,B) {
 #'     obtain a stable fit of this curve to data. Here the model is
 #'     implemented to range between 0 - 1, if you want to use it to 
 #'     describe growth then re-cast the function and add a fifth
-#'     parameter to replace the 1.0 on top of the divisor.
+#'     parameter to replace the 1.0 on top of the divisor. The main point of the
+#'     curve, however, was to demonstrate how the different equations were 
+#'     related to one another. In working situations it is most efficient 
+#'     to use the original, simpler, curve/qeuation.
 #'
 #' @param p a vector of four parameters begin Schnute and Richards' 
 #'     a, b, c, and alpha, in that order.

@@ -12,7 +12,7 @@ bh(p, B)
 \item{B}{a vector, possibly of length 1, of spawning biomass levels}
 }
 \value{
-a vector equal in length to B of the predicted recruitment(s)
+a vector, the same length as B, of the predicted recruitment(s)
 }
 \description{
 bh implements the Beverton-Holt stock recruitment

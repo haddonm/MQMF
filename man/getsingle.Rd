@@ -7,7 +7,8 @@
 getsingle(inline, sep = ",")
 }
 \arguments{
-\item{inline}{the line of text, usually taken after using readLines}
+\item{inline}{the line of text, usually taken after using readLines to read 
+in a text file}
 
 \item{sep}{the separator used to divide the numbers from descriptive 
 text, defaults to a comma.}
@@ -17,7 +18,8 @@ a single number
 }
 \description{
 getsingle splits up a text line and translates the 
-    first non-empty character string into a number.
+    first non-empty character string into a number. This function can be
+    useful when parsing an input data file.
 }
 \examples{
 x <- "12.3 , this is a number"

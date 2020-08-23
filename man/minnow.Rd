@@ -8,7 +8,7 @@
 A data.frame of mean length-at-time data
 \describe{
   \item{week}{the week of sampling minnows for lengths}
-  \item{length}{the mean length in the corresponding week in mm}
+  \item{length}{the estimated mean length in the corresponding week in mm}
 }
 }
 \source{

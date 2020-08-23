@@ -19,13 +19,14 @@ at age.}
 \item{ages}{the ages 0:maxage used in the calculations}
 }
 \value{
-a matrix of numbers-, natural mortality-, and catch-at-age
+a matrix of surviving numbers-at age, total mortality-at-age, and 
+    catch-at-age
 }
 \description{
 bce the Baranov Catch Equation. The total mortality of
     fish in an exploited population is made up of fish being killed 
     by fishing and others dying naturally. We use the bce to estimate 
-    the catch (those killed by fishing). The problem is that some 
+    the catch (those killed by fishing). The bce has value because some 
     fish that would be expected to die naturally can be expected to 
     be caught and killed by fishing so estimating the catch is 
     slightly more complex than numbers of fish available times the 

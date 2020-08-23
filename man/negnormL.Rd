@@ -36,7 +36,8 @@ negnormL is an alternative to negNLL to produce
     to calculate the predicted values using funk, and funksig to
     calculate the changing sigma values relative to the predicted
     values. The example code illustrates an example funksig that
-    does nothing to the sigma value.
+    does nothing to the sigma value. See the chapter on Static Models to see
+    further examples.
 }
 \examples{
  data(blackisland)

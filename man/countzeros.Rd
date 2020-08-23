@@ -13,7 +13,8 @@ countzeros(invect)
 A single value of zero or the number of zeros
 }
 \description{
-countzeros used in apply to count the number of zeros in a vector
+countzeros used in the base function 'apply', or 'tapply' to 
+    count the number of zeros in a vector
 }
 \examples{
 x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)

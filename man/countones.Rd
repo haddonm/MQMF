@@ -13,7 +13,8 @@ countones(invect)
 A single value of zero or the number of ones
 }
 \description{
-countones used in apply to count the number of ones in a vector
+countones used in the base function 'apply', or 'tapply' to 
+    count the number of ones in a vector
 }
 \examples{
 x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)

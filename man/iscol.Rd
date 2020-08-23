@@ -2,7 +2,7 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{iscol}
 \alias{iscol}
-\title{incol is a utility to determine is a column is present in a matrix}
+\title{incol is a utility to determine if a column is present in a matrix}
 \usage{
 iscol(incol = "year", inmat)
 }
@@ -15,8 +15,8 @@ iscol(incol = "year", inmat)
 TRUE or FALSE
 }
 \description{
-incol is a utility to determine whether a names columns is
-    present in a given matrix or data.frame.
+incol is a utility to determine whether a named column is
+    present in a given matrix or data.frame. Is case sensitive
 }
 \examples{
 x <- 1:10

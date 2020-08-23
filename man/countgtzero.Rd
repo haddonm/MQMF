@@ -2,8 +2,7 @@
 % Please edit documentation in R/mqmf_utils.r
 \name{countgtzero}
 \alias{countgtzero}
-\title{countgtzero used in apply to count how many numbers are
-    greater than zero in a vector}
+\title{countgtzero used in apply to count numbers > zero in a vector}
 \usage{
 countgtzero(invect)
 }
@@ -11,11 +10,11 @@ countgtzero(invect)
 \item{invect}{vector of values}
 }
 \value{
-A single integer counting how many numbers are > 0
+An integer counting how many numbers are > 0
 }
 \description{
-countgtzero used in apply to count how many numbers are
-    greater than zero in a vector
+countgtzero used in the base function 'apply', or 'tapply' to 
+    count how many numbers are greater than zero in a vector
 }
 \examples{
 x <- matrix(trunc(runif(20)*10),nrow=4,ncol=5)

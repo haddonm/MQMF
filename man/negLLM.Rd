@@ -11,14 +11,14 @@ negLLM(pars, funk, logobs, indat, index = "cpue", harvpen = TRUE, ...)
 surplus production model these are r, K, Binit (if initial 
 depletion is likely, otherwise omit this and it will be set =K
 inside the function), then as many sigma values as there are 
-time-series of indices; these are the associated standard 
+time-series of abundance indices; these are the associated standard 
 deviations of the log-normal residuals.}
 
 \item{funk}{the function that generates the predicted cpue values.
 for multiple time-series in a SPM use simpspmM}
 
 \item{logobs}{the log-transformed observed cpue columns in indat,
-the data needed by funk tranferred inside the ...}
+the data needed by funk, tranferred inside the ...}
 
 \item{indat}{the fisheries data used in the analysis}
 
@@ -29,7 +29,8 @@ defaults to cpue}
 implied harvest rates to ensure we do not get harvest rates > 1.0}
 
 \item{...}{the continuation ellipsis to allow the transfer of other
-arguments required by funk}
+arguments required by funk. The argument 'schaefer' in the example below
+illustrates such usage.}
 }
 \value{
 a single scalar as the -ve log-likelihood of the input data
@@ -39,7 +40,7 @@ negLLM we have negLL and negLL1 for use when using -ve
     log-likelihoods to fit surplus production models that only have 
     a single index of relative abundance, but there are many fisheries
     that have more than one index of relative abundance. negLLM is
-    for those cases that have multiple (M) time-series of indices. It
+    for those cases that have multiple (M) time-series of such indices. It
     is used in conjunction with simpspmM and spmCE.
 }
 \examples{

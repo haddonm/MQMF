@@ -2,16 +2,19 @@
 % Please edit documentation in R/fisheries.r
 \name{discretelogistic}
 \alias{discretelogistic}
-\title{discretelogistic example and figure  3.2 Discrete logistic model}
+\title{discretelogistic example and figure 3.2 Discrete logistic model}
 \usage{
 discretelogistic(r = 0.5, K = 1000, N0 = 50, Ct = 0, Yrs = 50, p = 1)
 }
 \arguments{
 \item{r}{intrinsic rate of population increase; default = 0.5}
 
-\item{K}{carrying capacity; default = 1000}
+\item{K}{carrying capacity; default = 1000.0}
 
-\item{N0}{Initial population size; default=50 = 5 percent depletion}
+\item{N0}{Initial population size; default=50.0 = 5 percent depletion. Note
+that the term 'depletion' can be confusing. Surely 50 remaining from 1000
+should be a depletion of 95 precent? But no, it is deemed to be the 
+complement of 5 percent.}
 
 \item{Ct}{annual catch default = 0.0}
 
@@ -27,12 +30,12 @@ invisibly returns a matrix of year, nt, and nt1
 }
 \description{
 discretelogistic is an implementation of equation 3.1
-    in the Simple Population Models chapter. It enables the 
+    in the Simple Population Models chapter 3. It enables the 
     exploration of the dynamics of the Discrete logistic model, 
     based around the classical Schaefer model. 
     
     The time-series nature of population growth is clear from 
-    the fact that Nt+1 is a function of Nt. One can expect serial
+    the fact that Nt+1 is a function of Nt. One can thus expect serial
     correlation. Setting the r parameter to <= 1.0, would 
     generate monotonically damped equilibria. r values between 
     1 < r < 2.03 would generate damped oscillatory equilibria, r 

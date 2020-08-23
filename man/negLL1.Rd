@@ -30,9 +30,9 @@ negLL1 calculates log-normal negative log-likelihoods. It
     log-transformed parameters. In addition to estimating the negative 
     log-likelihoods for log-normally distributed data it also places a 
     penalty on the first parameter if that parameter approaches very 
-    close to zero; see the function penalty0. With SPM the first 
+    close to zero; see the help page for penalty0. With SPM the first 
     parameter is the population growth rate r, which obviously 
-    should never be negative. The use of penalty0 prevents this.
+    should never be negative. The use of penalty0 prevents this happening.
 }
 \examples{
 data(abdat)  #expect an answer of -31.65035

@@ -87,4 +87,7 @@ negLLP calculates the negative log-likelihood for normally
    result[i,] <- c(bestest,bestmodP$minimum)  # store each result
  }
  result   #Now you can plot -veLL againt r values for the profile
+ # parset()
+ # plot(result[,"r"],result[,"-veLL"],type="l",lwd=2,panel.first=grid())
+ # points(result[,"r"],result[,"-veLL"],pch=16,cex=1.1)
 }
