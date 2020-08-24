@@ -1,7 +1,7 @@
 Package: MQMF
 Title: Modelling and Quantitative Methods in Fisheries
-Version: 0.1.0.900
-Date: 2020-08-23
+Version: 0.1.0.850
+Date: 2020-08-24
 Authors@R: person("Malcolm", "Haddon", role = c("aut", "cre"), 
                   email = "malcolm.haddon@gmail.com")
 Maintainer: Malcolm Haddon <malcolm.haddon@gmail.com>

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotfuns.R
 \name{panel.cor}
 \alias{panel.cor}
-\title{panel.cor is a version of function given in the pairs help}
+\title{panel.cor is a version of a function given in the help for pairs}
 \usage{
 panel.cor(x, y, digits = 3, ...)
 }

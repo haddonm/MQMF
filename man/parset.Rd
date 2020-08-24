@@ -22,25 +22,26 @@ Times, 1 is Sans and 2 is Sans Bold.}
 
 \item{outmargin}{defines whether to leave extra space on the bottom, 
 left, top, or right hand sides of the plot. Used when plots 
-!= c(1,1). Allows room for mtexting}
+!= c(1,1). Allows room for mtext statements.}
 
 \item{margin}{defines the space allowed for labels on axes. Again,
 likely needs to change is having more than one plot}
 }
 \value{
 nothing but it changes the base graphics par settings. The 
-    original par values are returned invisibly if user wishes to reset.
+    original par values are returned invisibly if user wishes to reset
+    after plotting their graphic.
 }
 \description{
 parset alters the current base graphics par settings
     to suit a single standard plot. It is merely here to simplify
     and speed the coding for exploratory base graphics. The font
-    and its size default to 0.85 and font 7 (Times bold). The
+    and its font size defaults to 0.75 and font 7 (Times bold). The
     default values can be seen by typing parset with no brackets in
-    the console. If a different
-    set of par values are needed then the function parsyn() can be
-    used to act as a prompt for the correct syntax. The output to
-    the console can be copied to your script and modified to suit.
+    the console or use args(parset). If a different set of par values
+    are wanted then the parset arguments can be modified, or the function 
+    parsyn() can be used to act as a prompt to the console for the correct 
+    syntax. The console output can be copied to your script and modified.
 }
 \examples{
  x <- rnorm(100,mean=5,sd=0.5)

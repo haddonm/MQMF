@@ -53,7 +53,7 @@ plotprofile simplifies plotting out the likelihood
     profiles of single parameters or variables. It is necessary to 
     pass the function the output from the profile calculations, 
     identifying the variable name against which to plot the 
-    likelihood. Identifying the name of the -ve log-likelihood 
+    likelihood while also identifying the name of the -ve log-likelihood 
     column. Facilities are provided for defining the x and y axis 
     labels. We need to use the function which.closest because we
     use a sequence of parameter values so an exact match would be

@@ -11,7 +11,7 @@ uphist(x, maxval = NA, ...)
 
 \item{maxval}{the maximum value to be retained in the plotted data}
 
-\item{...}{all the other arguments used by the base hist function}
+\item{...}{any of the other arguments used by the base hist function}
 }
 \value{
 nothing, but it does plot a histogram
@@ -26,7 +26,7 @@ uphist is merely a wrapper around the base hist
     available data. If a maximum value is selected which 
     accidently eliminates all available data the script stops with
     an appropriate warning. If a value is selected which fails to 
-    eliminate any data then all data are used.
+    eliminate any data then all data are used with no warning.
 }
 \examples{
   x <- rlnorm(5000, meanlog=2, sdlog=1)

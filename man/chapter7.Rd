@@ -153,7 +153,7 @@ ansS <- fitSPM(pars=param,fish=schaef,schaefer=TRUE,    #use
  #getseed() #generates random seed for repeatable results     
 set.seed(777852) #sets random number generator with a known seed     
 robout <- robustSPM(inpar=ansS$estimate,fish=schaef,N=reps,     
-                    scaler=40,console=FALSE,schaefer=TRUE,     
+                    scaler=40,verbose=FALSE,schaefer=TRUE,     
                     funk=simpspm,funkone=FALSE)      
  #use str(robout) to see the components included in the output     
  
@@ -169,7 +169,7 @@ kable(robout$results[,6:11],digits=c(3,4,3,4,5,0))
  
 set.seed(777854)     
 robout2 <- robustSPM(inpar=ansS$estimate,fish=schaef,N=100,     
-                     scaler=25,console=FALSE,schaefer=TRUE,     
+                     scaler=25,verbose=FALSE,schaefer=TRUE,     
                      funk=simpspm,funkone=TRUE,steptol=1e-06)      
 lastbits <- tail(robout2$results[,6:11],10)     
  
@@ -204,7 +204,7 @@ param <- log(c(r=0.24,K=5174,Binit=2846,sigma=0.164))
 ans <- fitSPM(pars=param,fish=fish,schaefer=TRUE,maxiter=1000,     
              funkone=TRUE)      
 out <- robustSPM(ans$estimate,fish,N=100,scaler=15, #making     
-                console=FALSE,funkone=TRUE) #scaler=10 gives     
+                verbose=FALSE,funkone=TRUE) #scaler=10 gives     
 result <- tail(out$results[,6:11],10) #16 sub-optimal results     
  
  

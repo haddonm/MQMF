@@ -64,10 +64,12 @@ defaults to TRUE}
 a matrix of values and counts is returned invisibly
 }
 \description{
-inthist a replacement for the hist function for use with
-   integers because the ordinary function fails to count them correctly. 
-   The function is designed for integers and if it is given real numbers
-    it will issue a warning and then round all values before plotting.
+inthist is a replacement for the 'hist' function for use with
+   integers because the ordinary function fails to count them correctly. It
+   treats integers (counts) as if they were real numbers. The function is 
+   designed for integers and if it is given real numbers it will issue a 
+   warning and then round all values before plotting. It can accept a vector 
+   of integers to be counts, or a matrix of values and associated counts.
 }
 \examples{
  oldpar <- par(no.readonly=TRUE)

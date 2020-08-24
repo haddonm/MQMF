@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotfuns.R
 \name{addcontours}
 \alias{addcontours}
-\title{addcontours eases adding contours to an xy plot of points}
+\title{addcontours simplifies adding contours to an xy plot of points}
 \usage{
 addcontours(
   xval,
@@ -42,8 +42,8 @@ addcontours is used to add contours to a dense plot of
     xy points such as might be generated when conducting an analysis 
     of the the uncertainty associated with a stock assessment, or 
     other analysis using a bootstrap, a Bayesian MCMC, or even using 
-    asymptotic errors and sampling from a multi-variate normal. 
-    addcoutours first uses the kde2d function from the MASS package 
+    asymptotic errors and sampling from a multi-variate normal distribution. 
+    addcontours first uses the kde2d function from the MASS package 
     to translate the density of points into 2-D kernal densities, and 
     then searches through the resulting densities for those points 
     that would identify approximate contours. Finally it calls the 

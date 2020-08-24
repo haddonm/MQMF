@@ -1,12 +1,12 @@
 
-#' @title addcontours eases adding contours to an xy plot of points
+#' @title addcontours simplifies adding contours to an xy plot of points
 #' 
 #' @description addcontours is used to add contours to a dense plot of 
 #'     xy points such as might be generated when conducting an analysis 
 #'     of the the uncertainty associated with a stock assessment, or 
 #'     other analysis using a bootstrap, a Bayesian MCMC, or even using 
-#'     asymptotic errors and sampling from a multi-variate normal. 
-#'     addcoutours first uses the kde2d function from the MASS package 
+#'     asymptotic errors and sampling from a multi-variate normal distribution. 
+#'     addcontours first uses the kde2d function from the MASS package 
 #'     to translate the density of points into 2-D kernal densities, and 
 #'     then searches through the resulting densities for those points 
 #'     that would identify approximate contours. Finally it calls the 
@@ -157,10 +157,13 @@ addlnorm <- function(inhist,xdata,inc=0.01) {
 
 #' @title inthist a replacement for the hist function for use with integers
 #'
-#' @description inthist a replacement for the hist function for use with
-#'    integers because the ordinary function fails to count them correctly. 
-#'    The function is designed for integers and if it is given real numbers
-#'     it will issue a warning and then round all values before plotting.
+#' @description inthist is a replacement for the 'hist' function for use with
+#'    integers because the ordinary function fails to count them correctly. It
+#'    treats integers (counts) as if they were real numbers. The function is 
+#'    designed for integers and if it is given real numbers it will issue a 
+#'    warning and then round all values before plotting. It can accept a vector 
+#'    of integers to be counts, or a matrix of values and associated counts.
+#'    
 #' @param x the vector of integers to be counted and plotted OR a matrix 
 #'     of values in column 1 and counts in column 2
 #' @param col the colour of the fill; defaults to black = 1, set this to 0
@@ -261,7 +264,7 @@ inthist <- function(x,col=1,border=1,width=1,xlabel="",ylabel="",
 }  # end of inthist
 
 
-#' @title panel.cor is a version of function given in the pairs help
+#' @title panel.cor is a version of a function given in the help for pairs
 #' 
 #' @description panel.cor is a panel function modified from that 
 #'     described in the help file for the pairs function from the 
@@ -295,12 +298,12 @@ panel.cor <- function(x, y, digits = 3, ...) {
 #' @description parset alters the current base graphics par settings
 #'     to suit a single standard plot. It is merely here to simplify
 #'     and speed the coding for exploratory base graphics. The font
-#'     and its size default to 0.85 and font 7 (Times bold). The
+#'     and its font size defaults to 0.75 and font 7 (Times bold). The
 #'     default values can be seen by typing parset with no brackets in
-#'     the console. If a different
-#'     set of par values are needed then the function parsyn() can be
-#'     used to act as a prompt for the correct syntax. The output to
-#'     the console can be copied to your script and modified to suit.
+#'     the console or use args(parset). If a different set of par values
+#'     are wanted then the parset arguments can be modified, or the function 
+#'     parsyn() can be used to act as a prompt to the console for the correct 
+#'     syntax. The console output can be copied to your script and modified.
 #'
 #' @param plots vector of number of rows and columns, defaults to c(1,1)
 #' @param cex the size of the font used, defaults to 0.75
@@ -308,12 +311,13 @@ panel.cor <- function(x, y, digits = 3, ...) {
 #'     Times, 1 is Sans and 2 is Sans Bold.
 #' @param outmargin defines whether to leave extra space on the bottom, 
 #'     left, top, or right hand sides of the plot. Used when plots 
-#'     != c(1,1). Allows room for mtexting
+#'     != c(1,1). Allows room for mtext statements.
 #' @param margin defines the space allowed for labels on axes. Again,
 #'     likely needs to change is having more than one plot
 #'
 #' @return nothing but it changes the base graphics par settings. The 
-#'     original par values are returned invisibly if user wishes to reset.
+#'     original par values are returned invisibly if user wishes to reset
+#'     after plotting their graphic.
 #' @export
 #'
 #' @examples
@@ -368,7 +372,7 @@ parsyn <- function() {
 #' @param xlab the label for the x-axis, defaults to empty
 #' @param ylab the label for the y-axis, defaults to empty
 #' @param type the type of plot "l" is for line, the default, "p" is
-#'     points. If you want both plot a line and add points afterwards.
+#'     points. If you want both, then plot a line and add points afterwards.
 #' @param usefont which font to use, defaults to 7 which is Times bold
 #' @param cex the size of the fonts used. defaults to 0.75
 #' @param maxy defaults to 0, which does nothing. If a value is given
@@ -376,7 +380,7 @@ parsyn <- function() {
 #' @param defpar if TRUE then plot1 will declare a par statement. If false 
 #'     it will expect one outside the function. In this way plot1 can be
 #'     used when plotting multiple graphs, perhaps as mfrow=c(2,2)
-#' @param ...  required to allow funk to access its other parameters 
+#' @param ...  required to allow the plot to access other parameters 
 #'     without having to explicitly declare them in plot1, these include
 #'     col, default = black, pch, if the type = "p", lwd, etc.
 #'
@@ -389,6 +393,8 @@ parsyn <- function() {
 #'  x <- rnorm(20,mean=5,sd=1)
 #'  oldpar <- plot1(x,x,xlab="x-values",ylab="yvalues")
 #'  points(x,x,pch=16,cex=1.5)
+#'  y <- rnorm(20,mean=5,sd=1)
+#'  plot1(x,y,type="p",cex=1.2,panel.first=grid())
 #'  par(oldpar)
 plot1 <- function(x,y,xlab="",ylab="",type="l",usefont=7,cex=0.75,
                   maxy=0,defpar=TRUE,...){
@@ -401,7 +407,7 @@ plot1 <- function(x,y,xlab="",ylab="",type="l",usefont=7,cex=0.75,
   if (maxy > 0) ymax <- maxy  else ymax <- getmax(y)
   if (min(y,na.rm=TRUE) < 0.0) ymin <- getmin(y) else ymin <- 0.0
   plot(x,y,type=type,ylim=c(ymin,ymax),yaxs="i",
-       ylab=ylab,xlab=xlab,cex=cex,panel.first=grid(),...)
+       ylab=ylab,xlab=xlab,cex=cex,...)
   return(invisible(oldpar))
 } # end of plot1
 
@@ -410,7 +416,7 @@ plot1 <- function(x,y,xlab="",ylab="",type="l",usefont=7,cex=0.75,
 #' @description plot.dynpop an S3 method for plotting dynpop objects
 #'     which are generated by the function discretelogistic. It 
 #'     generates a plot of the numbers through time, that is year x Nt,
-#'     and a second plotthat is a phase plot of Nt+1 vs Nt, to better
+#'     and a second plot that is a phase plot of Nt+1 vs Nt, to better
 #'     illustrate the dynamics and simplify the search for equilibria.
 #'     The input is designed to be the invisibly produced output from
 #'     the MQMF function discretelogistic, but as long as there is at
@@ -463,23 +469,24 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
   mtext("Phase Plot",side=3,line=0.0,cex=cex,font=font,outer=FALSE)
   mtext(main,side=3,line=1.0,cex=cex,font=font,outer=TRUE)
   invisible(x)
-} # end of S3 method plot.dlpop
+} # end of S3 method plot.dynpop
 
-#' @title plotprep: sets up a window and the par values for plotting
+#' @title plotprep sets up a window and the par values for plotting
 #'
-#' @description plotprep: sets up a window and changes the par values 
+#' @description plotprep sets up a window and changes the par values 
 #'     for plots. This is simply a utility function to save typing the
 #'     standard syntax. Some of the defaults can be changed. Typing 
 #'     the name without () will provide a template for modification. 
 #'     If different par values are wanted then just include a par 
 #'     statement after plotprep(). Calling plotprep saves the current 
 #'     par settings and returns them invisibly. So to recover the 
-#'     original par settings after oldpar <- plotprep(), and you have 
+#'     original par settings use oldpar <- plotprep(), and, once you have 
 #'     completed your plot, you can include a par(oldpar) to recover 
-#'     your original settings.
+#'     your original settings. The default ratio of width to height 
+#'     approximates the golden ratio = (width x height)/width
 #'   
 #' @param width defaults to 6 inches = 15.24cm - width of plot
-#' @param height defaults to 3.6 inches = 9.14cm - height of plot
+#' @param height defaults to 3.7 inches = 9.38cm - height of plot
 #' @param usefont default=7 (bold Times) 1=sans serif, 2=sans serif bold
 #' @param cex default=0.75, size of font used for text within the plots
 #' @param newdev reuse a previously defined graphics device or make a 
@@ -488,7 +495,7 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
 #'     is defined it makes that file as a png file with resolution resol
 #' @param resol resolution of the png file, if defined, default=300
 #' @param verbose set this to TRUE to turn on the reminder to 
-#'     include a graphics.off() command after the plot. Default=FALSE
+#'     include a graphics.off() command after tsaving a png file. Default=FALSE
 #' 
 #' @return sets up a graphics device, if needed, and resets the default 
 #'     plotting par values. This changes the current plotting options! 
@@ -504,7 +511,7 @@ plot.dynpop <- function(x, y=NULL,main="",cex=0.9,font=7, ...) {
 #'  hist(x,breaks=20,main="",col=2)
 #'  hist(x,breaks=30,main="",col=3)
 #'  par(oldpar)
-plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
+plotprep <- function(width=6,height=3.7,usefont=7,cex=0.75,
                      newdev=FALSE,filename="",resol=300,
                      verbose=FALSE) {
   if  ((names(dev.cur()) != "null device") & (newdev)) 
@@ -525,7 +532,7 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
   if ((lenfile > 0) & (verbose))
       cat("\n Remember to place 'graphics.off()' after plot \n")
   return(invisible(oldpar))
-} # end of plot_prep
+} # end of plotprep
 
 #' @title plotprofile simplifies plotting single likelihood profiles
 #' 
@@ -533,7 +540,7 @@ plotprep <- function(width=6,height=3.6,usefont=7,cex=0.75,
 #'     profiles of single parameters or variables. It is necessary to 
 #'     pass the function the output from the profile calculations, 
 #'     identifying the variable name against which to plot the 
-#'     likelihood. Identifying the name of the -ve log-likelihood 
+#'     likelihood while also identifying the name of the -ve log-likelihood 
 #'     column. Facilities are provided for defining the x and y axis 
 #'     labels. We need to use the function which.closest because we
 #'     use a sequence of parameter values so an exact match would be
@@ -607,17 +614,18 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
 #' @title setpalette is a shortcut for altering the palette to R4
 #' 
 #' @description setpalette is a shortcut for changing the 
-#'     default color palette to the proposed new R version 4.0.0 
-#'     version before it comes out. The new palette was described in a
-#'     blog post at developer.r-project.org and provides less 
-#'     garish and a more visible set of default colours that can
-#'     be called using the numbers 1 - 8. An important point is 
-#'     that this alters the default colours for all sessions
-#'     until a restart of R. Using something similar you can 
-#'     define your own preferred palettes should you wish to.     
+#'     color palette to the R 4.0.0 default version. The R4 palette 
+#'     provides a less garish and a more visible set of default colours 
+#'     that can be called using the numbers 1 - 8. An important point is 
+#'     that this alters the default colours for all sessions until a 
+#'     restart of R. Using something similar you can define your own 
+#'     preferred palettes should you wish to. In addition, it can be 
+#'     used to revert to the old R3 default colour scheme should you 
+#'     wish. Alternatively, you could define your own palettes and
+#'     switch between them using setpalette.     
 #'     
 #' @param x either "default", "R3", or "R4", with R4 as the 
-#'     default value. Use "default" or "R3" to revert back to the
+#'     default value. Use "R3" to revert back to the
 #'     standard R version 3. values.
 #'
 #' @return nothing but it does alter the base colour palette
@@ -626,7 +634,7 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
 #' @examples
 #'    setpalette("R3")
 #'    plot(1:8,rep(0.25,8),type="p",pch=16,cex=5,col=c(1:8))
-#'    text(1,0.2,"Default R3.0.0 - some garish or pale",cex=1.5,
+#'    text(1,0.2,"R3.0.0 - some garish or pale",cex=1.5,
 #'         font=7,pos=4)
 #'    setpalette("R4")
 #'    points(1:8,rep(0.3,8),pch=16,cex=5,col=c(1:8)) #toprow
@@ -635,12 +643,13 @@ plotprofile <- function(prof,var,digit=c(3,3,3),xlabel=var,
 setpalette <- function(x="R4") { # x="R4"
   choice <- c("default","R3","R4")
   if (x %in% choice) {
-    if ((x == "R3") | (x == "default")) {
-      palette("default")
+    if ((x == "R3")) {
+      palette(c("black","red","green3","blue","cyan","magenta",
+                "yellow","grey"))
     }
-    if (x == "R4") {
+    if ((x == "R4") | (x == "default")) {
       palette(c("#000000", "#DF536B", "#61D04F", "#2297E6",
-                "#28E2E5", "#CD0BBC", "#EEC21F", "#9E9E9E"))
+                "#28E2E5", "#CD0BBC", "#EEC21F", "gray62"))
     }
   } else {
     cat("Currently options are default, R3, or R4 \n")
@@ -658,11 +667,11 @@ setpalette <- function(x="R4") { # x="R4"
 #'     available data. If a maximum value is selected which 
 #'     accidently eliminates all available data the script stops with
 #'     an appropriate warning. If a value is selected which fails to 
-#'     eliminate any data then all data are used.
+#'     eliminate any data then all data are used with no warning.
 #'
 #' @param x the vector of values to be plotted as a histogram
 #' @param maxval the maximum value to be retained in the plotted data
-#' @param ... all the other arguments used by the base hist function
+#' @param ... any of the other arguments used by the base hist function
 #'
 #' @return nothing, but it does plot a histogram
 #' @export

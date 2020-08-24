@@ -8,7 +8,7 @@ setpalette(x = "R4")
 }
 \arguments{
 \item{x}{either "default", "R3", or "R4", with R4 as the 
-default value. Use "default" or "R3" to revert back to the
+default value. Use "R3" to revert back to the
 standard R version 3. values.}
 }
 \value{
@@ -16,19 +16,20 @@ nothing but it does alter the base colour palette
 }
 \description{
 setpalette is a shortcut for changing the 
-    default color palette to the proposed new R version 4.0.0 
-    version before it comes out. The new palette was described in a
-    blog post at developer.r-project.org and provides less 
-    garish and a more visible set of default colours that can
-    be called using the numbers 1 - 8. An important point is 
-    that this alters the default colours for all sessions
-    until a restart of R. Using something similar you can 
-    define your own preferred palettes should you wish to.
+    color palette to the R 4.0.0 default version. The R4 palette 
+    provides a less garish and a more visible set of default colours 
+    that can be called using the numbers 1 - 8. An important point is 
+    that this alters the default colours for all sessions until a 
+    restart of R. Using something similar you can define your own 
+    preferred palettes should you wish to. In addition, it can be 
+    used to revert to the old R3 default colour scheme should you 
+    wish. Alternatively, you could define your own palettes and
+    switch between them using setpalette.
 }
 \examples{
    setpalette("R3")
    plot(1:8,rep(0.25,8),type="p",pch=16,cex=5,col=c(1:8))
-   text(1,0.2,"Default R3.0.0 - some garish or pale",cex=1.5,
+   text(1,0.2,"R3.0.0 - some garish or pale",cex=1.5,
         font=7,pos=4)
    setpalette("R4")
    points(1:8,rep(0.3,8),pch=16,cex=5,col=c(1:8)) #toprow
