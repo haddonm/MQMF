@@ -20,7 +20,7 @@ fitSPM(
 optimum. These need to be on the log-scale (log-transformed)}
 
 \item{fish}{the matrix containing the fishery data 'year', 'catch', and
-'cpue' as a minimum. These exact headings are required.}
+'cpue' as a minimum. These exact column names are required.}
 
 \item{schaefer}{if TRUE, the default, then simpspm is used to fit the
 Schaefer model. If FALSE then the approximate Fox model is fitted 
@@ -44,18 +44,18 @@ an nlm output object as a list
 }
 \description{
 fitSPM fits a surplus production model (either Schaefer or 
-    Fox) by applying first optim (using Nelder-Mead) and then nlm. Being 
+    Fox) by first applying optim (using Nelder-Mead) and then nlm. Being 
     automated it is recommended that this only be used once plausible 
     initial parameters have been identified (through rules of thumb or 
     trial and error). It uses negLL1 to apply a negative log-likelihood, 
     assuming log-normal residual errors and uses a penalty to prevent 
-    the first parameter from becoming < 0.0. If that is not wanted then
+    the first parameter (r) from becoming < 0.0. If that is not wanted then
     set funkone to FALSE, which would then use negLL by itself.
     The output object is the usual object output from nlm, which can 
     be neatly printed using the MQMF function outfit.
     The $estimate values can be used in plotspmmod to plot the 
     outcome, or in spmboot to conduct bootstrap sampling of the residuals 
-    from the CPUE model fit to gain an appreciation of any uncertainty 
+    from the CPUE model fit, to gain an appreciation of any uncertainty 
     in the analysis. Because it requires log(parameters) it does not 
     use the magnitude function to set the values of the parscale 
     parameters.

@@ -13,7 +13,7 @@ chapter2 contains no active function but rather acts
 # All the example code from  # A Non-Introduction to R
 ### Using Functions
 
-# R-chunk 1
+# R-chunk 1  Page 18
 #make a function called countones2, don't overwrite original
 
 countones2 <- function(x) return(length(which(x == 1)))  # or
@@ -28,7 +28,7 @@ apply(matdat,2,countones3)  # apply countones3 to 8 columns
 apply(matdat,1,countones3)  # apply countones3 to 5 rows
 
 
-# R-chunk 2
+# R-chunk 2 Page 19
  #A more complex function prepares to plot a single base graphic
  #It has the syntax for opening a window outside of Rstudio and
  #defining a base graphic. It includes oldpar<-par(no.readonly=TRUE)
@@ -50,7 +50,7 @@ plotprep2 <- function(plots=c(1,1),width=6, height=3.75,usefont=7,
 
 
 ### Random Number Generation
-# R-chunk 3
+# R-chunk 3 pages 20 - 21
 #Examine the use of random seeds.
 
 seed <- getseed()  # you will very likely get different naswers
@@ -62,7 +62,7 @@ set.seed(seed)
 round(rnorm(5),5)
 
 ### Plotting in R
-# R-chunk 4
+# R-chunk 4  page 22
 #library(MQMF)   # The development of a simple graph  see Fig. 2.1
 #The statements below open the RStudio graphics window, but opening
 #a separate graphics window using plotprep is sometimes clearer.
@@ -81,7 +81,7 @@ hist(LatA$age, breaks=30,col=2, main="", xlim=c(0,43), #2=red
 par(oldpar)  # not in the book's example
 
 ### Dealing with Factors
-# R-chunk 5
+# R-chunk 5  pages 23 - 24
 #Dealing with factors/categories can be tricky
 
 DepCat <- as.factor(rep(seq(300,600,50),2)); DepCat
@@ -95,7 +95,7 @@ DepCat <- as.factor(rep(seq(300,600,50),2)); DepCat
 facttonum(DepCat)
 
 ## Writing Functions
-# R-chunk 6
+# R-chunk 6  page 25
 #Outline of a function's structure
 
 functionname <- function(argument1, fun,...) {
@@ -112,7 +112,7 @@ functionname <- function(argument1, fun,...) {
 functionname(c(1,2,3,4,5),mean)  # = mean(1,2,3,4,5)= 3 + 2 = 5
 
 ### Simple Functions
-# R-chunk 7
+# R-chunk 7  page 26
 # Implement the von Bertalanffy curve in multiple ways
 
 ages <- 1:20
@@ -132,13 +132,14 @@ funLt <- vB(c(Linf,K,t0),ages)
 ans <- cbind(ages,funLt,vecLt,loopLt)
 
 
-# R-chunk 8
+# R-chunk 8  page 26 - code not shown in book.
 # Tabulate the ans from chunk 7
 
 library(knitr)  # needed for the function knitr - pretty tables
 kable(halftable(ans,yearcol="ages",subdiv=2),digits=c(0,3,3,3,0,3,3,3))
 
-# R-chunk 9
+
+# R-chunk 9  page 27
 #A vB function with some input error checking
 
 vB <- function(pars,inages) { # requires pars=c(Linf,K,t0)
@@ -153,7 +154,7 @@ halftable(cbind(ages,funLt))
 
 
 ### Scoping of Objects
-# R-chunk 10
+# R-chunk 10   page 29
 # demonstration that the globel environment is 'visible' inside a
 # a function it calls, but the function's environment remains
 # invisible to the global or calling environment
@@ -169,18 +170,18 @@ try(rhside)    # note the use of try() which can trap errors ?try
 
 
 ### Function Inputs and Outputs
-# R-chunk 11
+# R-chunk 11  page 30
 #Bring the data-set schaef into the working of global environment
 
 data(schaef)
 
 
-# R-chunk 12
+# R-chunk 12   page 30  Table 2.2 code not shown
 #Tabulate the data held in schaef. Needs knitr
 
 kable(halftable(schaef,yearcol="year",subdiv=2),digits=c(0,0,0,4))
 
-# R-chunk 13
+# R-chunk 13  page 30
 #examine the properties of the data-set schaef
 
 class(schaef)
@@ -193,7 +194,8 @@ mschaef[1:5,"catch"]  # ok
 d <- try(mschaef$catch[1:5]) #invalid for matrices
 d  # had we not used try()eveerything would have stopped.
 
-# R-chunk 14
+
+# R-chunk 14  page 31
 #Convert column names of a data.frame or matrix to lowercase
 
 dolittle <- function(indat) {
@@ -205,7 +207,8 @@ colnames(schaef) <- toupper(colnames(schaef))
 out <- dolittle(schaef)
 str(out, width=63, strict.width="cut")
 
-# R-chunk 15
+
+# R-chunk 15  page 32
 #Could have used an S3 plot method had we defined a class   Fig.2.2
 
 plotspmdat(schaef) # examine the code as an eg of a custom plot

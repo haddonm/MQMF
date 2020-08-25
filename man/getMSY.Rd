@@ -7,7 +7,7 @@
 getMSY(pars, p = 1)
 }
 \arguments{
-\item{pars}{the model parameters r, K, Binit, sigma; p is separate}
+\item{pars}{the model parameters r, K, Binit, sigma; p is kept separate}
 
 \item{p}{asymmetry parameter for the Polacheck et al 1993 equation,
 default=1.0 = Schaefer}
@@ -19,7 +19,7 @@ the MSY
 getMSY calculates the MSY for the Polacheck et al 1993 
     generalized surplus production equation. This simplifies to rK/4 
     when p = 1.0. But this is a general equation that covers off for 
-    all values of p.
+    all positive values of p.
 }
 \examples{
 param <- c(r=1.1,K=1000.0,Binit=800.0,sigma=0.075)

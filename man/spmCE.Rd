@@ -16,9 +16,10 @@ spmCE(
 \arguments{
 \item{inp}{a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), 
 you would use the latter if it was suspected that the fishery 
-data started after some initial depletion had occurred. Then 
-there should be the same number of sigma values as there are 
-cpue time-series}
+data started after some initial depletion had occurred. In addition,  
+there should then be the same number of sigma values as there are 
+cpue time-series. For two cpue series with an initial depletion we 
+would expect to have r, K, Binit, sigma1 and sigma2}
 
 \item{indat}{a matrix with at least columns 'year', 'catch', and 'cpue'}
 
@@ -26,11 +27,12 @@ cpue time-series}
 simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
 The default is TRUE}
 
-\item{year}{the column name within indat containing the years}
+\item{year}{column name within indat containing the years, default='year'}
 
-\item{cats}{the column name within indat containing the catches}
+\item{cats}{column name within indat containing the catches, default='catch'}
 
-\item{index}{the column name within indat containing the cpue.}
+\item{index}{column name within indat containing the prefix for cpue,
+default='cpue'}
 }
 \value{
 a list of five objects; outmat the matrix with the dynamics 
@@ -39,15 +41,14 @@ a list of five objects; outmat the matrix with the dynamics
     q, Depl, FinalB, and InitDepl
 }
 \description{
-spmCE calculates the dynamics using a Schaefer of Fox 
+spmCE calculates the full dynamics using a Schaefer of Fox 
     model and is used instead of spm when there are multiple index 
     vectors. The outputs include  predicted Biomass, year, catch, 
     cpue, predicted cpue, contributions to q, ssq, and depletion 
-    levels. Generally it would be more sensible to use simpspm when 
-    fitting a Schaefer model and simpfox when fitting a Fox model
-    as those functions are designed to generate only the predicted 
-    cpue required by the functions ssq and negLLM, but the example 
-    shows how it could be used.
+    levels. Generally it would be more sensible to use simpspmM when 
+    fitting a Schaefer or Fox model as that function is designed to 
+    generate only the predicted cpue vectors required by the function 
+    negLLM, nevertheless, the example shows how it could be used.
 }
 \examples{
  data(twoindex)

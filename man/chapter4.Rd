@@ -2,11 +2,11 @@
 % Please edit documentation in R/ch_chunks.R
 \name{chapter4}
 \alias{chapter4}
-\title{chapter4 The 49 R-code chunks from Model Parameter Estimation}
+\title{chapter4 The 47 R-code chunks from Model Parameter Estimation}
 \description{
 chapter4 is not an active function but rather acts 
     as a repository for the various example code chunks found in 
-    chapter4. There are 49 r-code chunks in chapter3.
+    chapter4. There are 47 r-code chunks in chapter3.
 }
 \examples{
 \dontrun{
@@ -21,8 +21,9 @@ chapter4 is not an active function but rather acts
 ### Alternative Models of Growth    
 ## Sum of Squared Residual Deviations    
 ### Assumptions of Least-Squares    
-### Numerical Solutions    
-# R-chunk 2 
+### Numerical Solutions   
+ 
+# R-chunk 1  Page 75 
 #setup optimization using growth and ssq    
 #convert equations 4.4 to 4.6 into vectorized R functions    
 #These will over-write the same functions in the MQMF package    
@@ -42,7 +43,7 @@ ssq(p=pars, funk=vB, agedata=LatA$age, observed=LatA$length)
 # try misspelling LatA$Length with a capital. What happens?    
 
 ### Passing Functions as Arguments to other Functions    
-# R-chunk 3 
+# R-chunk 2  Page 76 
 # Illustrates use of names within function arguments    
 
 vB <- function(p,ages) return(p[1]*(1-exp(-p[2] *(ages-p[3]))))    
@@ -55,14 +56,14 @@ ssq(p=pars, funk=vB, ages=LatA$age, observed=LatA$length) #if no
 ssq(vB,LatA$length,pars,LatA$age) # name order is now vital!    
 
 
-# R-chunk 4 
+# R-chunk 3  Page 77
 # Illustrate a problem with calling a function in a function    
 # LatA$age is typed as LatA$Age but no error, and result = 0    
 
 ssq(funk=vB, observed=LatA$length, p=pars, ages=LatA$Age) # !!!    
 
 ### Fitting the Models    
-# R-chunk 5 
+# R-chunk 4  Page 77
 #plot the LatA data set   Figure 4.2    
 
 oldpar <- parset()   # parset and getmax are two MQMF functions     
@@ -73,7 +74,7 @@ plot(LatA$age,LatA$length,type="p",pch=16,cex=1.2,xlab="Age Years",
      xlim=c(0,44),panel.first=grid()) 
 par(oldpar) # this line not in book   
 
-# R-chunk 6 
+# R-chunk 5  Pages 78 - 79 
 # use nlm to fit 3 growth curves to LatA, only p and funk change   
 
 ages <- 1:max(LatA$age) # used in comparisons     
@@ -94,13 +95,13 @@ bestMM2 <- nlm(f=ssq,funk=mm,observed=LatA$length,p=pars,
                ages=LatA$age,typsize=magnitude(pars))    
 outfit(bestMM2,backtran=FALSE,title="MM2"); cat("\n")     
 
-# R-chunk 7 
+# R-chunk 6  Page 81 
 #The use of args() and formals()     
 
 args(nlm) # formals(nlm) uses more screen space. Try yourself.    
 
 
-# R-chunk 8 
+# R-chunk 7  Page 81, code not in the book 
 #replacement for args(nlm) to keep within page borders without truncation   
 
 {cat("function (f, p, ..., hessian = FALSE, typsize = rep(1,\n")    
@@ -110,7 +111,7 @@ args(nlm) # formals(nlm) uses more screen space. Try yourself.
   cat("  iterlim = 100, check.analyticals = TRUE)\n")}    
 
 
-# R-chunk 9 
+# R-chunk 8  Pages 81 - 82 
 #Female length-at-age + 3 growth fitted curves Figure 4.3    
 
 predvB <- vB(bestvB$estimate,ages) #get optimumpredicted lengths    
@@ -132,7 +133,7 @@ par(oldpar)  # this line not in book
 
 ### Objective Model Selection    
 ### The Influence of Residual Error Choice on Model Fit    
-# R-chunk 10 
+# R-chunk 9  Page 84 - 85 
 # von Bertalanffy     
 
 pars <- c(27.25,0.15,-3.0)    
@@ -149,7 +150,7 @@ bestvBLN <- nlm(f=ssqL,funk=vB,observed=LatA$length,p=pars,
 outfit(bestvBLN,backtran=FALSE,title="Log-Normal errors")    
 
 
-# R-chunk 11 
+# R-chunk 10  Pages 85 - 86
 # Now plot the resultibng two curves and the data Fig 4.4    
 
 predvBN <- vB(bestvBN$estimate,ages)     
@@ -169,7 +170,7 @@ par(oldpar)
 ### Remarks on Initial Model Fitting    
 ## Maximum Likelihood     
 ### Introductory Examples    
-# R-chunk 12 
+# R-chunk 11  Page 88
 # Illustrate Normal random likelihoods. see Table 4.1    
 
 set.seed(12345)       # make the use of random numbers repeatable    
@@ -184,12 +185,12 @@ rownames(result) <- c(1:10,"product")
 colnames(result) <- c("x","original","estimated","est > orig")    
 
 
-# R-chunk 13 
+# R-chunk 12  page 88, Table 4.1, code not shown in book.
 #tabulate results of Normal Likelihoods    
 
 kable(result,digits=c(4,8,8,0),row.names = TRUE, caption='(ref:tab401)')    
 
-# R-chunk 14 
+# R-chunk 13  Page 89 
 # some examples of pnorm, dnorm, and qnorm, all mean = 0    
 
 cat("x = 0.0        Likelihood =",dnorm(0.0,mean=0,sd=1),"\n")     
@@ -205,7 +206,7 @@ cat("x = 0.975      Quantile =",qnorm(0.975),"\n") # expect ~1.96
 # try x <- seq(-5,5,0.2); round(dnorm(x,mean=0.0,sd=1.0),5)    
 
 ## Likelihoods from the Normal Distribution    
-# R-chunk 15 
+# R-chunk 14   Page 90
 # Density plot and cumulative distribution for Normal   Fig 4.5    
 
 x <- seq(-5,5,0.1)  # a sequence of values around a mean of 0.0    
@@ -216,7 +217,7 @@ lines(x,NL,lwd=3,col=2,lty=3) # dashed line as these are points
 abline(h=0.5,col=4,lwd=1)  
 par(oldp)  
 
-# R-chunk 16 
+# R-chunk 15  Pages 91 - 92 
 #function facilitates exploring different polygons Fig 4.6    
 
 plotpoly <- function(mid,delta,av=5.0,stdev=1.0) {    
@@ -248,7 +249,7 @@ par(oldpar)  # this line not in the book
 
 ### Equivalence with Sum-of-Squares     
 ### Fitting a Model to Data using Normal Likelihoods    
-# R-chunk 17 
+# R-chunk 16  Page 94 
 #plot of length-at-age data  Fig 4.7    
 
 data(LatA) # load the redfish data set into memory and plot it    
@@ -258,7 +259,7 @@ oldpar <- plot1(ages,lengths,xlab="Age",ylab="Length",type="p",cex=0.8,
 par(oldpar)
 
 
-# R-chunk 18 
+# R-chunk 17  Page 95
 # Fit the vB growth curve using maximum likelihood    
 
 pars <- c(Linf=27.0,K=0.15,t0=-3.0,sigma=2.5) # starting values    
@@ -267,7 +268,7 @@ ansvB <- nlm(f=negNLL,p=pars,funk=vB,observed=lengths,ages=ages,
              typsize=magnitude(pars))    
 outfit(ansvB,backtran=FALSE,title="vB by minimum -veLL")    
 
-# R-chunk 19 
+# R-chunk 18 Page 96
 #Now fit the Michaelis-Menton curve    
 
 pars <- c(a=23.0,b=1.0,c=1.0,sigma=3.0) # Michaelis-Menton  
@@ -275,7 +276,7 @@ ansMM <- nlm(f=negNLL,p=pars,funk=mm,observed=lengths,ages=ages,
              typsize=magnitude(pars))    
 outfit(ansMM,backtran=FALSE,title="MM by minimum -veLL")    
 
-# R-chunk 20 
+# R-chunk 19  Page 96 
 #plot optimum solutions for vB and mm. Fig 4.8    
 
 Age <- 1:max(ages) # used in comparisons     
@@ -290,7 +291,7 @@ legend("bottomright",c("von Bertalanffy","Michaelis-Menton"),
        col=c(4,1),lwd=3,bty="n",cex=1.2,lty=c(1,2)) 
 par(oldpar)   
 
-# R-chunk 21 
+# R-chunk 20   Pages 96 - 97
 # residual plot for vB curve   Fig 4.9    
 
 predvB <- vB(ansvB$estimate,ages) # predicted values for age data    
@@ -303,7 +304,7 @@ par(oldpar)
 ## Log-Normal Likelihoods     
 ### Simplification of Log-Normal Likelihoods    
 ### Log-Normal Properties    
-# R-chunk 22 
+# R-chunk 21  Page 100 
 # meanlog and sdlog affects on mode and spread of lognormal Fig 4.10     
 
 x <- seq(0.05,5.0,0.01)  # values must be greater than 0.0    
@@ -326,7 +327,8 @@ lines(log(x),y2,lwd=2,col=3,lty=3)
 lines(log(x),y4,lwd=2,col=4,lty=4)  
 par(oldpar)  # return par to old settings; this line not in book
 
-# R-chunk 23 
+
+# R-chunk 22  Pages 100 - 101
 
 set.seed(12354) # plot random log-normal numbers as Fig 4.11    
 meanL <- 0.7;   sdL <- 0.5  # generate 5000 random log-normal     
@@ -343,7 +345,8 @@ hans <- addnorm(outh,log(x)) #MQMF function; try  ?addnorm
 lines(hans$x,hans$y,lwd=3,col=1) # type addnorm into the console 
 par(oldpar)  # return par to old settings; this line not in book   
 
-# R-chunk 24 
+
+# R-chunk 23  Page 101  
 #examine log-normal propoerties. It is a bad idea to reuse     
 
 set.seed(12345) #'random' seeds, use getseed() for suggestions    
@@ -358,7 +361,7 @@ cat("Mean(log(x) =  0.7     ",meanx,"\n")
 cat("sd(log(x)   =  0.5     ",sdx,"\n")    
 
 ### Fitting a Curve using Log-Normal Likelihoods    
-# R-chunk 25 
+# R-chunk 24  Page 103 
 # fit a Beverton-Holt recruitment curve to tigers data Table 4.2    
 
 data(tigers)   # use the tiger prawn data set    
@@ -372,7 +375,7 @@ predR <- exp(lbh(best$estimate,tigers$Spawn))
 #note exp(lbh(...)) is the median because no bias adjustment    
 result <- cbind(tigers,predR,tigers$Recruit/predR)    
 
-# R-chunk 26 
+# R-chunk 25  Page 103 
 # Fig 4.12 visual examination of the fit to the tigers data    
 
 oldp <- plot1(tigers$Spawn,predR,xlab="Spawning Biomass","Recruitment",    
@@ -380,20 +383,20 @@ oldp <- plot1(tigers$Spawn,predR,xlab="Spawning Biomass","Recruitment",
 points(tigers$Spawn,tigers$Recruit,pch=16,cex=1.1,col=2)  
 par(oldp)  # return par to old settings; this line not in book   
 
-# R-chunk 27 
+# R-chunk 26  page 104, Table 4.12, code not shown in book. 
 #tabulating observed, predicted and residual recruitment    
 
 colnames(result) <- c("SpawnB","Recruit","PredR","Residual")    
 kable(result,digits=c(1,1,3,4), caption='(ref:tab402)')    
 
 ### Fitting a Dynamic Model using Log-Normal Errors    
-# R-chunk 28 
+# R-chunk 27  Page 106
 
 data(abdat)  # plot abdat fishery data using a MQMF helper  Fig 4.13    
 plotspmdat(abdat) # function to quickly plot catch and cpue  
 
 
-# R-chunk 29 
+# R-chunk 28  Pages 106 - 107 
 # Use log-transformed parameters for increased stability when    
 # fitting the surplus production model to the abdat data-set    
 
@@ -404,7 +407,8 @@ bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=as.matrix(abdat),
 #backtransform estimates, outfit's default, as log-transformed     
 outfit(bestmod,backtran = TRUE,title="abdat")        # in param    
 
-# R-chunk 30 
+
+# R-chunk 29  Pages 107 - 108 
 # Fig 4.14 Examine fit of predicted to data    
 
 predce <- simpspm(bestmod$estimate,abdat) #compare obs vs pred    
@@ -414,9 +418,10 @@ oldp <- plot1(abdat$year,obslog,type="p",maxy=ymax,ylab="Log(CPUE)",
 lines(abdat$year,predce,lwd=2,col=2) 
 par(oldp)  # return par to old settings; this line not in book    
 
+
 ## Likelihoods from the Binomial Distribution    
 ### An Example using Binomial Likelihoods    
-# R-chunk 31 
+# R-chunk 30  Page 109 
 #Use Binomial distribution to test biased sex-ratio Fig 4.15    
 
 n <- 60    # a sample of 60 animals    
@@ -428,7 +433,8 @@ oldp <- plot1(m,binom,type="h",xlab="Number of Males",ylab="Probability")
 abline(v=which.closest(0.025,cumbin),col=2,lwd=2) # lower 95\% CI    
 par(oldp)  # return par to old settings; this line not in book  
 
-# R-chunk 32 
+
+# R-chunk 31  Page 111 
 # plot relative likelihood of different p values Fig 4.16    
 
 n <- 60  # sample size; should really plot points as each independent     
@@ -439,7 +445,7 @@ oldp <- plot1(p,lik,type="l",xlab="Prob. of 20 Males",ylab="Prob.")
 abline(v=p[which.max(lik)],col=2,lwd=2) # try "p" instead of "l" 
 par(oldp)  # return par to old settings; this line not in book     
 
-# R-chunk 33 
+# R-chunk 32  Page 111 
 # find best estimate using optimize to finely search an interval    
 
 n <- 60; m <- 20  # trials and successes    
@@ -447,7 +453,7 @@ p <- c(0.1,0.6) #range of probability we find a male
 optimize(function(p) {dbinom(m,n,p)},interval=p,maximum=TRUE)    
 
 ### Open Bay Juvenile Fur Seal Population Size    
-# R-chunk 34 
+# R-chunk 33  Page 112 
 # Juvenile furseal data-set Greaves, 1992.  Table 4.3    
 
 furseal <- c(32,222,1020,704,1337,161.53,31,181,859,593,1125,    
@@ -459,7 +465,7 @@ furs <- matrix(furseal,nrow=3,ncol=6,dimnames=list(NULL,columns),
 #tabulate fur seal data Table 4.3    
 kable(furs, caption='(ref:tab403)')    
 
-# R-chunk 36 
+# R-chunk 34  Pages 113 - 114 
 # analyse two pup counts 32 from 222, and 31 from 181, rows 1-2 in    
 # Table 4.3.   Now set-up storage for solutions    
 
@@ -481,7 +487,7 @@ totlik <- lik1 * lik2 #Joint likelihood of 2 vectors
 optsol[2,] <- unlist(optimize(function(p) {dbinom(m,n,p)},p,    
                               maximum=TRUE))    
 
-# R-chunk 37 
+# R-chunk 35  Page 114
 # Compare outcome for 2 independent seal estimates Fig 4.17    
 # Should plot points not a line as each are independent     
 
@@ -497,7 +503,7 @@ par(oldp)  # return par to old settings; this line not in book
 
 ### Using Multiple Independent Samples    
 
-# R-chunk 38 
+# R-chunk 36  Pages 114 - 115 
 #Combined likelihood from 2 independent samples Fig 4.18    
 
 totlik <- totlik/sum(totlik) # rescale so the total sums to one    
@@ -519,7 +525,7 @@ par(oldp)  # return par to old settings; this line not in book
 ## Other Distributions    
 ## Likelihoods from the Multinomial Distribution    
 ### Using the Multinomial Distribution    
-# R-chunk 39 
+# R-chunk 37  Page 119 
 #plot counts x shell-length of 2 cohorts   Figure 4.19    
 
 cw <- 2  # 2 mm size classes, of which mids are the centers    
@@ -532,7 +538,7 @@ inthist(dat,col=2,border=3,width=1.8, #histogram of integers
         xlabel="Shell Length mm",ylabel="Frequency",xmin=7,xmax=55)   
 par(oldp)  # return par to old settings; this line not in book    
 
-# R-chunk 40 
+# R-chunk 38  Page 121
 #cohort data with 2 guess-timated normal curves Fig 4.20    
 
 oldp <- parset()  # set up the required par declaration    
@@ -550,7 +556,7 @@ lines(mids,cohort1,lwd=2,col=1)
 lines(mids,cohort2,lwd=2,col=4) 
 par(oldp)  # return par to old settings; this line not in book     
 
-# R-chunk 41 
+# R-chunk 39 Page 122 
 #wrapper function for calculating the multinomial log-likelihoods    
 #using predfreq and mnnegLL, Use ? and examine their code    
 
@@ -565,7 +571,7 @@ phi1 <- 0.55      # proportion of observations in cohort 1
 pars <-c(av,stdev,phi1)  # combine parameters into a vector    
 wrapper(pars,obs=obs,sizecl=mids) # calculate total -veLL    
 
-# R-chunk 42 
+# R-chunk 40  Page 122 
 # First use the midpoints    
 
 bestmod <- nlm(f=wrapper,p=pars,obs=obs,sizecl=mids,midval=TRUE,     
@@ -578,7 +584,7 @@ bestmodb <- nlm(f=wrapper,p=bestmod$estimate,obs=obs,sizecl=X,
                 midval=FALSE,typsize=magnitude(pars))    
 outfit(bestmodb,backtran=FALSE,title="Using size-class bounds")     
 
-# R-chunk 43 
+# R-chunk 41 Page 123 
 #prepare the predicted Normal distribution curves    
 
 pars <- bestmod$estimate # best estimate using mid-points    
@@ -591,7 +597,7 @@ cohort1b <- (cump1[2:nedge] - cump1[1:(nedge-1)])
 cump2 <- (n*(1-pars[5]))*pnorm(X,pars[2],pars[4])  # cohort 2    
 cohort2b <- (cump2[2:nedge] - cump2[1:(nedge-1)])    
 
-# R-chunk 44 
+# R-chunk 42  Page 123 
 #plot the alternate model fits to cohorts  Fig 4.21    
 
 oldp <- parset() #set up required par declaration; then plot curves    
@@ -605,7 +611,7 @@ legend("topleft",legend=label,lwd=3,col=c(1,4),bty="n",
        cex=1.2,lty=c(2,1))    
 par(oldp)  # return par to old settings; this line not in book  
 
-# R-chunk 45 
+# R-chunk 43  Page 124 
 # setup table of results for comparison of fitting strategies    
 
 predmid <- rowSums(cbind(cohort1,cohort2))    
@@ -615,14 +621,14 @@ colnames(result) <- c("mids","Obs","Predmid","Predbnd","Difference")
 result <- rbind(result,c(NA,colSums(result,na.rm=TRUE)[2:5]))    
 
 
-# R-chunk 46 
+# R-chunk 44  page 125, Table 4.4, code not shown in book. 
 #tabulate the results of fitting cohort data  in two ways    
 
 kable(result,digits=c(0,0,4,4,4),align=c("r","r","r","r","r"))    
 
 ## Likelihoods from the Gamma Distribution    
 
-# R-chunk 47 
+# R-chunk 45  Pages 126 - 127 
 #Illustrate different Gamma function curves  Figure 4.22    
 
 X <- seq(0.0,10,0.1) #now try different shapes and scale values    
@@ -637,7 +643,7 @@ mtext("Scale c = 1",side=3,outer=FALSE,line=-1.1,cex=1.0,font=7)
 par(oldp)  # return par to old settings; this line not in book  
 
 ## Likelihoods from the Beta Distribution    
-# R-chunk 48 
+# R-chunk 46  Pages 127 - 128
 #Illustrate different Beta function curves. Figure 4.23    
 
 x <- seq(0, 1, length = 1000)    
@@ -656,7 +662,7 @@ par(oldp)  # return par to old settings; this line not in book
 ### Introduction    
 ### Bayesian Methods    
 ### Prior Probabilities    
-# R-chunk 49 
+# R-chunk 47  Pages 132 - 133 
 # can prior probabilities ever be uniniformative?  Figure 4.24    
 
 x <- 1:1000    

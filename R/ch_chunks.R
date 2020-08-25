@@ -14,7 +14,7 @@
 #' # All the example code from  # A Non-Introduction to R
 #' ### Using Functions
 #' 
-#' # R-chunk 1
+#' # R-chunk 1  Page 18
 #' #make a function called countones2, don't overwrite original
 #' 
 #' countones2 <- function(x) return(length(which(x == 1)))  # or
@@ -29,7 +29,7 @@
 #' apply(matdat,1,countones3)  # apply countones3 to 5 rows
 #' 
 #' 
-#' # R-chunk 2
+#' # R-chunk 2 Page 19
 #'  #A more complex function prepares to plot a single base graphic
 #'  #It has the syntax for opening a window outside of Rstudio and
 #'  #defining a base graphic. It includes oldpar<-par(no.readonly=TRUE)
@@ -51,7 +51,7 @@
 #' 
 #' 
 #' ### Random Number Generation
-#' # R-chunk 3
+#' # R-chunk 3 pages 20 - 21
 #' #Examine the use of random seeds.
 #' 
 #' seed <- getseed()  # you will very likely get different naswers
@@ -63,7 +63,7 @@
 #' round(rnorm(5),5)
 #'
 #' ### Plotting in R
-#' # R-chunk 4
+#' # R-chunk 4  page 22
 #' #library(MQMF)   # The development of a simple graph  see Fig. 2.1
 #' #The statements below open the RStudio graphics window, but opening
 #' #a separate graphics window using plotprep is sometimes clearer.
@@ -82,7 +82,7 @@
 #' par(oldpar)  # not in the book's example
 #' 
 #' ### Dealing with Factors
-#' # R-chunk 5
+#' # R-chunk 5  pages 23 - 24
 #' #Dealing with factors/categories can be tricky
 #' 
 #' DepCat <- as.factor(rep(seq(300,600,50),2)); DepCat
@@ -96,7 +96,7 @@
 #' facttonum(DepCat)
 #' 
 #' ## Writing Functions
-#' # R-chunk 6
+#' # R-chunk 6  page 25
 #' #Outline of a function's structure
 #' 
 #' functionname <- function(argument1, fun,...) {
@@ -113,7 +113,7 @@
 #' functionname(c(1,2,3,4,5),mean)  # = mean(1,2,3,4,5)= 3 + 2 = 5
 #' 
 #' ### Simple Functions
-#' # R-chunk 7
+#' # R-chunk 7  page 26
 #' # Implement the von Bertalanffy curve in multiple ways
 #' 
 #' ages <- 1:20
@@ -133,13 +133,14 @@
 #' ans <- cbind(ages,funLt,vecLt,loopLt)
 #' 
 #' 
-#' # R-chunk 8
+#' # R-chunk 8  page 26 - code not shown in book.
 #' # Tabulate the ans from chunk 7
 #' 
 #' library(knitr)  # needed for the function knitr - pretty tables
 #' kable(halftable(ans,yearcol="ages",subdiv=2),digits=c(0,3,3,3,0,3,3,3))
 #' 
-#' # R-chunk 9
+#' 
+#' # R-chunk 9  page 27
 #' #A vB function with some input error checking
 #' 
 #' vB <- function(pars,inages) { # requires pars=c(Linf,K,t0)
@@ -154,7 +155,7 @@
 #' 
 #' 
 #' ### Scoping of Objects
-#' # R-chunk 10
+#' # R-chunk 10   page 29
 #' # demonstration that the globel environment is 'visible' inside a
 #' # a function it calls, but the function's environment remains
 #' # invisible to the global or calling environment
@@ -170,18 +171,18 @@
 #' 
 #' 
 #' ### Function Inputs and Outputs
-#' # R-chunk 11
+#' # R-chunk 11  page 30
 #' #Bring the data-set schaef into the working of global environment
 #' 
 #' data(schaef)
 #' 
 #' 
-#' # R-chunk 12
+#' # R-chunk 12   page 30  Table 2.2 code not shown
 #' #Tabulate the data held in schaef. Needs knitr
 #' 
 #' kable(halftable(schaef,yearcol="year",subdiv=2),digits=c(0,0,0,4))
 #' 
-#' # R-chunk 13
+#' # R-chunk 13  page 30
 #' #examine the properties of the data-set schaef
 #' 
 #' class(schaef)
@@ -194,7 +195,8 @@
 #' d <- try(mschaef$catch[1:5]) #invalid for matrices
 #' d  # had we not used try()eveerything would have stopped.
 #' 
-#' # R-chunk 14
+#' 
+#' # R-chunk 14  page 31
 #' #Convert column names of a data.frame or matrix to lowercase
 #' 
 #' dolittle <- function(indat) {
@@ -206,7 +208,8 @@
 #' out <- dolittle(schaef)
 #' str(out, width=63, strict.width="cut")
 #' 
-#' # R-chunk 15
+#' 
+#' # R-chunk 15  page 32
 #' #Could have used an S3 plot method had we defined a class   Fig.2.2
 #' 
 #' plotspmdat(schaef) # examine the code as an eg of a custom plot
@@ -227,7 +230,7 @@ NULL
 #' @examples
 #' \dontrun{
 #' ### The Discrete Logistic Model    
-#' # R-chunk 1 
+#' # R-chunk 1 page 36
 #' # Code to produce Figure 3.1. Note the two one-line functions 
 #'    
 #' surprod <- function(Nt,r,K) return((r*Nt)*(1-(Nt/K)))    
@@ -242,8 +245,10 @@ NULL
 #' plot1(Nt,densdep(Nt,K),xlab="Population Nt",defpar=FALSE,    
 #'       ylab="Density-Dependence")    
 #' par(oldpar)  # this line not in book
+#' 
+#' 
 #' ### Dynamic Behaviour    
-#' # R-chunk 2 
+#' # R-chunk 2 page 38
 #' #Code for Figure 3.2. Try varying the value of rv from 0.5-2.8 
 #'    
 #' yrs <- 100; rv=2.8;  Kv <- 1000.0; Nz=100; catch=0.0; p=1.0    
@@ -253,19 +258,22 @@ NULL
 #' oldpar <- par(no.readonly=TRUE) # this line not in book
 #' plot(ans, main=label, cex=0.9, font=7) #Schaefer dynamics    
 #' par(oldpar)   # this line not in book
-#' # R-chunk 3 
+#' 
+#' 
+#' # R-chunk 3 page 39
 #' #run discrete logistic dynamics for 600 years  
 #'   
 #' yrs=600    
 #' ans <- discretelogistic(r=2.55,K=1000.0,N0=100,Ct=0.0,Yrs=yrs)    
 #' 
-#' # R-chunk 4 
+#' # R-chunk 4  page 40, code not in the book
 #' #tabulate the last 30 years of the dynamics   needs knitr
 #' library(knitr) 
 #' kable(halftable(ans[(yrs-29):yrs,],yearcol="year",subdiv=3),digits=c(0,1,1,0,1,1,0,1,1))    
 #' 
+#' 
 #' ### Finding Boundaries between Behaviours.    
-#' # R-chunk 5 
+#' # R-chunk 5 page 40
 #' #run discretelogistic and search for repeated values of Nt    
 #' 
 #' yrs <- 600    
@@ -274,7 +282,7 @@ NULL
 #' count <- table(avt)    
 #' count[count > 1] # with r=2.55 you should find an 8-cycle limit    
 #' 
-#' # R-chunk 6 
+#' # R-chunk 6  page 41
 #' #searches for unique solutions given an r value  see Table 3.2  
 #' 
 #' testseq <- seq(1.9,2.59,0.01)    
@@ -291,14 +299,14 @@ NULL
 #' }    
 #' 
 #' 
-#' # R-chunk 7 
+#' # R-chunk 7  page 41 - 42, Table 3.2. Code not in the book.
 #' #unique repeated Nt values 100 = non-equilibrium or chaos   
 #'  
 #' kable(halftable(result,yearcol = "r"),)    
 #' 
 #' 
 #' ### Classical Bifurcation Diagram of Chaos    
-#' # R-chunk 8 
+#' # R-chunk 8 pages 42 - 43
 #' #the R code for the bifurcation function   
 #'  
 #' bifurcation <- function(testseq,taill=100,yrs=1000,limy=0,incx=0.001){    
@@ -327,7 +335,7 @@ NULL
 #' } # end of bifurcation    
 #' 
 #' 
-#' # R-chunk 9 
+#' # R-chunk 9 page 43 
 #' #Alternative r value arrangements for you to try; Fig 3.3    
 #' #testseq <- seq(2.847,2.855,0.00001) #hash/unhash as needed    
 #' #bifurcation(testseq,limy=c(600,740),incx=0.0001) # t    
@@ -339,7 +347,7 @@ NULL
 #' 
 #' 
 #' ### The Effect of Fishing on Dynamics    
-#' # R-chunk 10 
+#' # R-chunk 10  page 43 - 44.
 #' #Effect of catches on stability properties of discretelogistic   
 #'  
 #' yrs=50; Kval=1000.0    
@@ -349,7 +357,7 @@ NULL
 #' catch300 <- discretelogistic(r=2.56,K=Kval,N0=500,Ct=300,Yrs=yrs)    
 #' 
 #' 
-#' # R-chunk 11 
+#' # R-chunk 11 page 45
 #' #Effect of different catches on n-cyclic behaviour Fig3.4   
 #'  
 #' plottime <- function(x,ylab) {    
@@ -369,7 +377,7 @@ NULL
 #' mtext("years",side=1,outer=TRUE,line=-0.2,font=7,cex=1.0)     
 #' par(oldpar)
 #' 
-#' # R-chunk 12 
+#' # R-chunk 12 page 46
 #' #Phase plot for Schaefer model Fig 3.5    
 #' 
 #' plotphase <- function(x,label,ymax=0) { #x from discretelogistic    
@@ -397,7 +405,7 @@ NULL
 #' ### Determinism    
 #' ## Age-Structured Modelling Concepts    
 #' ### Survivorship in a Cohort    
-#' # R-chunk 13 
+#' # R-chunk 13 pages 48 - 49
 #' #Exponential population declines under different Z. Fig 3.6   
 #'  
 #' yrs <- 50;  yrs1 <- yrs + 1 # to leave room for B[0]    
@@ -415,7 +423,7 @@ NULL
 #' par(oldp)  # this line not in book
 #' 
 #' ### Instantaneous vs Annual Mortality Rates    
-#' # R-chunk 14 
+#' # R-chunk 14 page 51
 #' #Prepare matrix of harvest rate vs time to appoximate F   
 #'  
 #' Z <- -log(0.5)    
@@ -434,13 +442,13 @@ NULL
 #' }    
 #' 
 #' 
-#' # R-chunk 15 
+#' # R-chunk 15 page 51 Table 3.3, code not shown in book
 #' #output of constant Z for shorter and shorter periods    
 #' 
 #' kable(result,digits=c(10,0,8,4))    
 #' 
 #' 
-#' # R-chunk 16 
+#' # R-chunk 16 page 51
 #' #Annual harvest rate against instantaneous F, Fig 3.7  
 #'   
 #' Fi <- seq(0.001,2,0.001)    
@@ -451,8 +459,9 @@ NULL
 #' lines(c(0,1),c(0,1),lwd=2,lty=2,col=2)    
 #' par(oldpar)   # this line not in book
 #' 
+#' 
 #' ## Simple Yield per Recruit    
-#' # R-chunk 17 
+#' # R-chunk 17  page 53
 #' # Simple Yield-per-Recruit see Russell (1942)   
 #'  
 #' age <- 1:11;  nage <- length(age); N0 <- 1000  # some definitions    
@@ -474,32 +483,32 @@ NULL
 #' totC <- t(colSums(CatchW,na.rm=TRUE))   # simplify later printing    
 #' 
 #' 
-#' # R-chunk 18 
+#' # R-chunk 18 page 54 Table 3.4 code not shown in book
 #' #Tabulate numbers-at-age for different harvest rates  needs knitr
 #'   
 #' kable(NaA,digits=c(0,0,0,0,0,0,0,0,1,1),row.names=TRUE)    
 #' 
 #' 
-#' # R-chunk 19 
+#' # R-chunk 19 page 54, Table 3.5, code not shown in book.
 #' #Tabulate Weight-at-age for different harvest rates   
 #'  
 #' kable(CatchW[2:11,],digits=c(2,2,2,2,2,2,2,2,2,2),row.names=TRUE)    
 #' 
 #' 
-#' # R-chunk 20 
+#' # R-chunk 20 page 54, Table 3.6, code not shown in book.
 #' #Total weights vs Harvest rate   
 #'  
 #' kable(totC,digits=c(1,1,1,1,1,1,1,1,1,1))    
 #' 
 #' 
-#' # R-chunk 21 
+#' # R-chunk 21 page 55
 #' #Use MQMF::plot1 for a quick plot of the total catches. Figure 3.8    
 #' 
 #' oldpar <- plot1(H,totC,xlab="Harvest Rate",ylab="Total Yield",lwd=2)    
 #' par(oldpar) # to reset the par values if desired
 #' 
 #' ### Selectivity in Yield-per-Recruit    
-#' # R-chunk 22 
+#' # R-chunk 22 Page 56
 #' #Logistic S shaped cureve for maturity    
 #' 
 #' ages <- seq(0,50,1)    
@@ -516,7 +525,7 @@ NULL
 #' par(oldp)
 #' 
 #' ### The Baranov Catch Equation    
-#' # R-chunk 23 
+#' # R-chunk 23 Page 58
 #' # Baranov catch equation  
 #'   
 #' age <- 0:12;  nage <- length(age)     
@@ -528,7 +537,7 @@ NULL
 #' out <- cbind(bce(M,Ft,N0,age),"Select"=sa)  # out becomes Table 3.7    
 #' 
 #' 
-#' # R-chunk 24 
+#' # R-chunk 24 page 59, Table 3.7, code not shown in book.
 #' #tabulate output from Baranov Catch Equations     
 #' 
 #' kable(out,digits=c(3,3,3,3))    
@@ -536,7 +545,7 @@ NULL
 #' 
 #' ### Growth and Weight-at-Age   
 #' ## Full Yield-per-Recruit    
-#' # R-chunk 25 
+#' # R-chunk 25 Page 60 - 61
 #' # A more complete YPR analysis    
 #' 
 #' age <- 0:20;  nage <- length(age) #storage vectors and matrices    
@@ -562,7 +571,7 @@ NULL
 #' } # end of sel loop    
 #' 
 #' 
-#' # R-chunk 26 
+#' # R-chunk 26  Page 61
 #' #A full YPR analysis  Figure 3.10    
 #' 
 #' oldp <- plot1(H,yield[,3],xlab="Harvest Rate",ylab="Yield",cex=0.75,lwd=2)    
@@ -572,7 +581,7 @@ NULL
 #'        cex=1.0,lty=c(3,2,1))     
 #' par(oldp)
 #' 
-#' # R-chunk 27 
+#' # R-chunk 27 page 62, Table 3.8, code not shown in book.
 #' #Tabulate yield-per-recruit using Baranoc catch equation   
 #'  
 #' kable(yield,digits=c(2,3,3,3))    
@@ -583,11 +592,11 @@ NULL
 
 # chapter4 --------
 
-#' @title chapter4 The 49 R-code chunks from Model Parameter Estimation
+#' @title chapter4 The 47 R-code chunks from Model Parameter Estimation
 #'
 #' @description chapter4 is not an active function but rather acts 
 #'     as a repository for the various example code chunks found in 
-#'     chapter4. There are 49 r-code chunks in chapter3.
+#'     chapter4. There are 47 r-code chunks in chapter3.
 #'     
 #' @name chapter4
 #'
@@ -604,8 +613,9 @@ NULL
 #' ### Alternative Models of Growth    
 #' ## Sum of Squared Residual Deviations    
 #' ### Assumptions of Least-Squares    
-#' ### Numerical Solutions    
-#' # R-chunk 2 
+#' ### Numerical Solutions   
+#'  
+#' # R-chunk 1  Page 75 
 #' #setup optimization using growth and ssq    
 #' #convert equations 4.4 to 4.6 into vectorized R functions    
 #' #These will over-write the same functions in the MQMF package    
@@ -625,7 +635,7 @@ NULL
 #' # try misspelling LatA$Length with a capital. What happens?    
 #' 
 #' ### Passing Functions as Arguments to other Functions    
-#' # R-chunk 3 
+#' # R-chunk 2  Page 76 
 #' # Illustrates use of names within function arguments    
 #' 
 #' vB <- function(p,ages) return(p[1]*(1-exp(-p[2] *(ages-p[3]))))    
@@ -638,14 +648,14 @@ NULL
 #' ssq(vB,LatA$length,pars,LatA$age) # name order is now vital!    
 #' 
 #' 
-#' # R-chunk 4 
+#' # R-chunk 3  Page 77
 #' # Illustrate a problem with calling a function in a function    
 #' # LatA$age is typed as LatA$Age but no error, and result = 0    
 #' 
 #' ssq(funk=vB, observed=LatA$length, p=pars, ages=LatA$Age) # !!!    
 #' 
 #' ### Fitting the Models    
-#' # R-chunk 5 
+#' # R-chunk 4  Page 77
 #' #plot the LatA data set   Figure 4.2    
 #' 
 #' oldpar <- parset()   # parset and getmax are two MQMF functions     
@@ -656,7 +666,7 @@ NULL
 #'      xlim=c(0,44),panel.first=grid()) 
 #' par(oldpar) # this line not in book   
 #' 
-#' # R-chunk 6 
+#' # R-chunk 5  Pages 78 - 79 
 #' # use nlm to fit 3 growth curves to LatA, only p and funk change   
 #' 
 #' ages <- 1:max(LatA$age) # used in comparisons     
@@ -677,13 +687,13 @@ NULL
 #'                ages=LatA$age,typsize=magnitude(pars))    
 #' outfit(bestMM2,backtran=FALSE,title="MM2"); cat("\n")     
 #' 
-#' # R-chunk 7 
+#' # R-chunk 6  Page 81 
 #' #The use of args() and formals()     
 #' 
 #' args(nlm) # formals(nlm) uses more screen space. Try yourself.    
 #' 
 #' 
-#' # R-chunk 8 
+#' # R-chunk 7  Page 81, code not in the book 
 #' #replacement for args(nlm) to keep within page borders without truncation   
 #' 
 #' {cat("function (f, p, ..., hessian = FALSE, typsize = rep(1,\n")    
@@ -693,7 +703,7 @@ NULL
 #'   cat("  iterlim = 100, check.analyticals = TRUE)\n")}    
 #' 
 #' 
-#' # R-chunk 9 
+#' # R-chunk 8  Pages 81 - 82 
 #' #Female length-at-age + 3 growth fitted curves Figure 4.3    
 #' 
 #' predvB <- vB(bestvB$estimate,ages) #get optimumpredicted lengths    
@@ -715,7 +725,7 @@ NULL
 #' 
 #' ### Objective Model Selection    
 #' ### The Influence of Residual Error Choice on Model Fit    
-#' # R-chunk 10 
+#' # R-chunk 9  Page 84 - 85 
 #' # von Bertalanffy     
 #' 
 #' pars <- c(27.25,0.15,-3.0)    
@@ -732,7 +742,7 @@ NULL
 #' outfit(bestvBLN,backtran=FALSE,title="Log-Normal errors")    
 #' 
 #' 
-#' # R-chunk 11 
+#' # R-chunk 10  Pages 85 - 86
 #' # Now plot the resultibng two curves and the data Fig 4.4    
 #' 
 #' predvBN <- vB(bestvBN$estimate,ages)     
@@ -752,7 +762,7 @@ NULL
 #' ### Remarks on Initial Model Fitting    
 #' ## Maximum Likelihood     
 #' ### Introductory Examples    
-#' # R-chunk 12 
+#' # R-chunk 11  Page 88
 #' # Illustrate Normal random likelihoods. see Table 4.1    
 #' 
 #' set.seed(12345)       # make the use of random numbers repeatable    
@@ -767,12 +777,12 @@ NULL
 #' colnames(result) <- c("x","original","estimated","est > orig")    
 #' 
 #' 
-#' # R-chunk 13 
+#' # R-chunk 12  page 88, Table 4.1, code not shown in book.
 #' #tabulate results of Normal Likelihoods    
 #' 
 #' kable(result,digits=c(4,8,8,0),row.names = TRUE, caption='(ref:tab401)')    
 #' 
-#' # R-chunk 14 
+#' # R-chunk 13  Page 89 
 #' # some examples of pnorm, dnorm, and qnorm, all mean = 0    
 #' 
 #' cat("x = 0.0        Likelihood =",dnorm(0.0,mean=0,sd=1),"\n")     
@@ -788,7 +798,7 @@ NULL
 #' # try x <- seq(-5,5,0.2); round(dnorm(x,mean=0.0,sd=1.0),5)    
 #' 
 #' ## Likelihoods from the Normal Distribution    
-#' # R-chunk 15 
+#' # R-chunk 14   Page 90
 #' # Density plot and cumulative distribution for Normal   Fig 4.5    
 #' 
 #' x <- seq(-5,5,0.1)  # a sequence of values around a mean of 0.0    
@@ -799,7 +809,7 @@ NULL
 #' abline(h=0.5,col=4,lwd=1)  
 #' par(oldp)  
 #' 
-#' # R-chunk 16 
+#' # R-chunk 15  Pages 91 - 92 
 #' #function facilitates exploring different polygons Fig 4.6    
 #' 
 #' plotpoly <- function(mid,delta,av=5.0,stdev=1.0) {    
@@ -831,7 +841,7 @@ NULL
 #' 
 #' ### Equivalence with Sum-of-Squares     
 #' ### Fitting a Model to Data using Normal Likelihoods    
-#' # R-chunk 17 
+#' # R-chunk 16  Page 94 
 #' #plot of length-at-age data  Fig 4.7    
 #' 
 #' data(LatA) # load the redfish data set into memory and plot it    
@@ -841,7 +851,7 @@ NULL
 #' par(oldpar)
 #' 
 #' 
-#' # R-chunk 18 
+#' # R-chunk 17  Page 95
 #' # Fit the vB growth curve using maximum likelihood    
 #' 
 #' pars <- c(Linf=27.0,K=0.15,t0=-3.0,sigma=2.5) # starting values    
@@ -850,7 +860,7 @@ NULL
 #'              typsize=magnitude(pars))    
 #' outfit(ansvB,backtran=FALSE,title="vB by minimum -veLL")    
 #' 
-#' # R-chunk 19 
+#' # R-chunk 18 Page 96
 #' #Now fit the Michaelis-Menton curve    
 #' 
 #' pars <- c(a=23.0,b=1.0,c=1.0,sigma=3.0) # Michaelis-Menton  
@@ -858,7 +868,7 @@ NULL
 #'              typsize=magnitude(pars))    
 #' outfit(ansMM,backtran=FALSE,title="MM by minimum -veLL")    
 #' 
-#' # R-chunk 20 
+#' # R-chunk 19  Page 96 
 #' #plot optimum solutions for vB and mm. Fig 4.8    
 #' 
 #' Age <- 1:max(ages) # used in comparisons     
@@ -873,7 +883,7 @@ NULL
 #'        col=c(4,1),lwd=3,bty="n",cex=1.2,lty=c(1,2)) 
 #' par(oldpar)   
 #' 
-#' # R-chunk 21 
+#' # R-chunk 20   Pages 96 - 97
 #' # residual plot for vB curve   Fig 4.9    
 #' 
 #' predvB <- vB(ansvB$estimate,ages) # predicted values for age data    
@@ -886,7 +896,7 @@ NULL
 #' ## Log-Normal Likelihoods     
 #' ### Simplification of Log-Normal Likelihoods    
 #' ### Log-Normal Properties    
-#' # R-chunk 22 
+#' # R-chunk 21  Page 100 
 #' # meanlog and sdlog affects on mode and spread of lognormal Fig 4.10     
 #' 
 #' x <- seq(0.05,5.0,0.01)  # values must be greater than 0.0    
@@ -909,7 +919,8 @@ NULL
 #' lines(log(x),y4,lwd=2,col=4,lty=4)  
 #' par(oldpar)  # return par to old settings; this line not in book
 #' 
-#' # R-chunk 23 
+#' 
+#' # R-chunk 22  Pages 100 - 101
 #' 
 #' set.seed(12354) # plot random log-normal numbers as Fig 4.11    
 #' meanL <- 0.7;   sdL <- 0.5  # generate 5000 random log-normal     
@@ -926,7 +937,8 @@ NULL
 #' lines(hans$x,hans$y,lwd=3,col=1) # type addnorm into the console 
 #' par(oldpar)  # return par to old settings; this line not in book   
 #' 
-#' # R-chunk 24 
+#' 
+#' # R-chunk 23  Page 101  
 #' #examine log-normal propoerties. It is a bad idea to reuse     
 #' 
 #' set.seed(12345) #'random' seeds, use getseed() for suggestions    
@@ -941,7 +953,7 @@ NULL
 #' cat("sd(log(x)   =  0.5     ",sdx,"\n")    
 #' 
 #' ### Fitting a Curve using Log-Normal Likelihoods    
-#' # R-chunk 25 
+#' # R-chunk 24  Page 103 
 #' # fit a Beverton-Holt recruitment curve to tigers data Table 4.2    
 #' 
 #' data(tigers)   # use the tiger prawn data set    
@@ -955,7 +967,7 @@ NULL
 #' #note exp(lbh(...)) is the median because no bias adjustment    
 #' result <- cbind(tigers,predR,tigers$Recruit/predR)    
 #' 
-#' # R-chunk 26 
+#' # R-chunk 25  Page 103 
 #' # Fig 4.12 visual examination of the fit to the tigers data    
 #' 
 #' oldp <- plot1(tigers$Spawn,predR,xlab="Spawning Biomass","Recruitment",    
@@ -963,20 +975,20 @@ NULL
 #' points(tigers$Spawn,tigers$Recruit,pch=16,cex=1.1,col=2)  
 #' par(oldp)  # return par to old settings; this line not in book   
 #' 
-#' # R-chunk 27 
+#' # R-chunk 26  page 104, Table 4.12, code not shown in book. 
 #' #tabulating observed, predicted and residual recruitment    
 #' 
 #' colnames(result) <- c("SpawnB","Recruit","PredR","Residual")    
 #' kable(result,digits=c(1,1,3,4), caption='(ref:tab402)')    
 #' 
 #' ### Fitting a Dynamic Model using Log-Normal Errors    
-#' # R-chunk 28 
+#' # R-chunk 27  Page 106
 #' 
 #' data(abdat)  # plot abdat fishery data using a MQMF helper  Fig 4.13    
 #' plotspmdat(abdat) # function to quickly plot catch and cpue  
 #' 
 #' 
-#' # R-chunk 29 
+#' # R-chunk 28  Pages 106 - 107 
 #' # Use log-transformed parameters for increased stability when    
 #' # fitting the surplus production model to the abdat data-set    
 #' 
@@ -987,7 +999,8 @@ NULL
 #' #backtransform estimates, outfit's default, as log-transformed     
 #' outfit(bestmod,backtran = TRUE,title="abdat")        # in param    
 #' 
-#' # R-chunk 30 
+#' 
+#' # R-chunk 29  Pages 107 - 108 
 #' # Fig 4.14 Examine fit of predicted to data    
 #' 
 #' predce <- simpspm(bestmod$estimate,abdat) #compare obs vs pred    
@@ -997,9 +1010,10 @@ NULL
 #' lines(abdat$year,predce,lwd=2,col=2) 
 #' par(oldp)  # return par to old settings; this line not in book    
 #' 
+#' 
 #' ## Likelihoods from the Binomial Distribution    
 #' ### An Example using Binomial Likelihoods    
-#' # R-chunk 31 
+#' # R-chunk 30  Page 109 
 #' #Use Binomial distribution to test biased sex-ratio Fig 4.15    
 #' 
 #' n <- 60    # a sample of 60 animals    
@@ -1011,7 +1025,8 @@ NULL
 #' abline(v=which.closest(0.025,cumbin),col=2,lwd=2) # lower 95% CI    
 #' par(oldp)  # return par to old settings; this line not in book  
 #' 
-#' # R-chunk 32 
+#' 
+#' # R-chunk 31  Page 111 
 #' # plot relative likelihood of different p values Fig 4.16    
 #' 
 #' n <- 60  # sample size; should really plot points as each independent     
@@ -1022,7 +1037,7 @@ NULL
 #' abline(v=p[which.max(lik)],col=2,lwd=2) # try "p" instead of "l" 
 #' par(oldp)  # return par to old settings; this line not in book     
 #' 
-#' # R-chunk 33 
+#' # R-chunk 32  Page 111 
 #' # find best estimate using optimize to finely search an interval    
 #' 
 #' n <- 60; m <- 20  # trials and successes    
@@ -1030,7 +1045,7 @@ NULL
 #' optimize(function(p) {dbinom(m,n,p)},interval=p,maximum=TRUE)    
 #' 
 #' ### Open Bay Juvenile Fur Seal Population Size    
-#' # R-chunk 34 
+#' # R-chunk 33  Page 112 
 #' # Juvenile furseal data-set Greaves, 1992.  Table 4.3    
 #' 
 #' furseal <- c(32,222,1020,704,1337,161.53,31,181,859,593,1125,    
@@ -1042,7 +1057,7 @@ NULL
 #' #tabulate fur seal data Table 4.3    
 #' kable(furs, caption='(ref:tab403)')    
 #' 
-#' # R-chunk 36 
+#' # R-chunk 34  Pages 113 - 114 
 #' # analyse two pup counts 32 from 222, and 31 from 181, rows 1-2 in    
 #' # Table 4.3.   Now set-up storage for solutions    
 #' 
@@ -1064,7 +1079,7 @@ NULL
 #' optsol[2,] <- unlist(optimize(function(p) {dbinom(m,n,p)},p,    
 #'                               maximum=TRUE))    
 #' 
-#' # R-chunk 37 
+#' # R-chunk 35  Page 114
 #' # Compare outcome for 2 independent seal estimates Fig 4.17    
 #' # Should plot points not a line as each are independent     
 #' 
@@ -1080,7 +1095,7 @@ NULL
 #' 
 #' ### Using Multiple Independent Samples    
 #' 
-#' # R-chunk 38 
+#' # R-chunk 36  Pages 114 - 115 
 #' #Combined likelihood from 2 independent samples Fig 4.18    
 #' 
 #' totlik <- totlik/sum(totlik) # rescale so the total sums to one    
@@ -1102,7 +1117,7 @@ NULL
 #' ## Other Distributions    
 #' ## Likelihoods from the Multinomial Distribution    
 #' ### Using the Multinomial Distribution    
-#' # R-chunk 39 
+#' # R-chunk 37  Page 119 
 #' #plot counts x shell-length of 2 cohorts   Figure 4.19    
 #' 
 #' cw <- 2  # 2 mm size classes, of which mids are the centers    
@@ -1115,7 +1130,7 @@ NULL
 #'         xlabel="Shell Length mm",ylabel="Frequency",xmin=7,xmax=55)   
 #' par(oldp)  # return par to old settings; this line not in book    
 #' 
-#' # R-chunk 40 
+#' # R-chunk 38  Page 121
 #' #cohort data with 2 guess-timated normal curves Fig 4.20    
 #' 
 #' oldp <- parset()  # set up the required par declaration    
@@ -1133,7 +1148,7 @@ NULL
 #' lines(mids,cohort2,lwd=2,col=4) 
 #' par(oldp)  # return par to old settings; this line not in book     
 #' 
-#' # R-chunk 41 
+#' # R-chunk 39 Page 122 
 #' #wrapper function for calculating the multinomial log-likelihoods    
 #' #using predfreq and mnnegLL, Use ? and examine their code    
 #' 
@@ -1148,7 +1163,7 @@ NULL
 #' pars <-c(av,stdev,phi1)  # combine parameters into a vector    
 #' wrapper(pars,obs=obs,sizecl=mids) # calculate total -veLL    
 #' 
-#' # R-chunk 42 
+#' # R-chunk 40  Page 122 
 #' # First use the midpoints    
 #' 
 #' bestmod <- nlm(f=wrapper,p=pars,obs=obs,sizecl=mids,midval=TRUE,     
@@ -1161,7 +1176,7 @@ NULL
 #'                 midval=FALSE,typsize=magnitude(pars))    
 #' outfit(bestmodb,backtran=FALSE,title="Using size-class bounds")     
 #' 
-#' # R-chunk 43 
+#' # R-chunk 41 Page 123 
 #' #prepare the predicted Normal distribution curves    
 #' 
 #' pars <- bestmod$estimate # best estimate using mid-points    
@@ -1174,7 +1189,7 @@ NULL
 #' cump2 <- (n*(1-pars[5]))*pnorm(X,pars[2],pars[4])  # cohort 2    
 #' cohort2b <- (cump2[2:nedge] - cump2[1:(nedge-1)])    
 #' 
-#' # R-chunk 44 
+#' # R-chunk 42  Page 123 
 #' #plot the alternate model fits to cohorts  Fig 4.21    
 #' 
 #' oldp <- parset() #set up required par declaration; then plot curves    
@@ -1188,7 +1203,7 @@ NULL
 #'        cex=1.2,lty=c(2,1))    
 #' par(oldp)  # return par to old settings; this line not in book  
 #' 
-#' # R-chunk 45 
+#' # R-chunk 43  Page 124 
 #' # setup table of results for comparison of fitting strategies    
 #' 
 #' predmid <- rowSums(cbind(cohort1,cohort2))    
@@ -1198,14 +1213,14 @@ NULL
 #' result <- rbind(result,c(NA,colSums(result,na.rm=TRUE)[2:5]))    
 #' 
 #' 
-#' # R-chunk 46 
+#' # R-chunk 44  page 125, Table 4.4, code not shown in book. 
 #' #tabulate the results of fitting cohort data  in two ways    
 #' 
 #' kable(result,digits=c(0,0,4,4,4),align=c("r","r","r","r","r"))    
 #' 
 #' ## Likelihoods from the Gamma Distribution    
 #' 
-#' # R-chunk 47 
+#' # R-chunk 45  Pages 126 - 127 
 #' #Illustrate different Gamma function curves  Figure 4.22    
 #' 
 #' X <- seq(0.0,10,0.1) #now try different shapes and scale values    
@@ -1220,7 +1235,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book  
 #' 
 #' ## Likelihoods from the Beta Distribution    
-#' # R-chunk 48 
+#' # R-chunk 46  Pages 127 - 128
 #' #Illustrate different Beta function curves. Figure 4.23    
 #' 
 #' x <- seq(0, 1, length = 1000)    
@@ -1239,7 +1254,7 @@ NULL
 #' ### Introduction    
 #' ### Bayesian Methods    
 #' ### Prior Probabilities    
-#' # R-chunk 49 
+#' # R-chunk 47  Pages 132 - 133 
 #' # can prior probabilities ever be uniniformative?  Figure 4.24    
 #' 
 #' x <- 1:1000    
@@ -1280,8 +1295,9 @@ NULL
 #' ## Introduction     
 #' ## Productivity Parameters     
 #' ## Growth     
-#' ### Seasonal Growth Curves     
-#' # R-chunk 1  
+#' ### Seasonal Growth Curves    
+#'  
+#' # R-chunk 1  Page 138
 #'  #vB growth curve fit to Pitcher and Macdonald derived seasonal data     
 #'  
 #' data(minnow); week <- minnow$week; length <- minnow$length     
@@ -1291,7 +1307,7 @@ NULL
 #' predL <- vB(bestvB$estimate,0:160)     
 #' outfit(bestvB,backtran = FALSE,title="Non-Seasonal vB",parnames=label)     
 #'  
-#' # R-chunk 2  
+#' # R-chunk 2  Page 139
 #'  #plot the non-seasonal fit and its residuals.  Figure 5.1     
 #'  
 #' oldp <- parset(plots=c(2,1),margin=c(0.35,0.45,0.02,0.05))      
@@ -1306,7 +1322,7 @@ NULL
 #' abline(h=0,col=1,lwd=1) 
 #' par(oldp)  # return par to old settings; this line not in book      
 #'      
-#' # R-chunk 3  
+#' # R-chunk 3  Pages 139 - 140
 #'  # Fit seasonal vB curve, parameters = Linf, K, t0, C, s, sigma     
 #'  
 #' svb <- function(p,ages,inc=52) {     
@@ -1320,7 +1336,7 @@ NULL
 #' outfit(bestsvb,backtran = FALSE,title="Seasonal Growth",     
 #'        parnames=c("Linf","K","t0","C","s","sigma"))     
 #'  
-#' # R-chunk 4  
+#' # R-chunk 4  Page 140
 #'  #Plot seasonal growth curve and residuals   Figure 5.2     
 #'  
 #' oldp <- parset(plots=c(2,1))  # MQMF utility wrapper function     
@@ -1336,7 +1352,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book     
 #'  
 #' ### Fabens Method with Tagging Data     
-#' # R-chunk 5  
+#' # R-chunk 5  Pages 142 - 143
 #'  # tagging growth increment data from Black Island, Tasmania     
 #'  
 #' data(blackisland);  bi <- blackisland # just to keep things brief     
@@ -1348,7 +1364,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book     
 #'  
 #' ### Fitting Models to Tagging Data     
-#' # R-chunk 6  
+#' # R-chunk 6  Page 144
 #'  # Fit the vB and Inverse Logistic to the tagging data     
 #'  
 #' linm <- lm(bi$dl ~ bi$l1) # simple linear regression     
@@ -1365,7 +1381,7 @@ NULL
 #' outfit(modelil,backtran = FALSE,title="IL",parnames=label2)     
 #' predil <- invl(modelil$estimate,bi)     
 #'  
-#' # R-chunk 7  
+#' # R-chunk 7  Page 145
 #'  #growth curves and regression fitted to tagging data Fig 5.4     
 #'  
 #' oldp <- parset(margin=c(0.4,0.4,0.05,0.05))     
@@ -1379,7 +1395,7 @@ NULL
 #'                     col=c(1,7,2),lty=c(1,2,2))     
 #' par(oldp)  # return par to old settings; this line not in book  
 #'  
-#' # R-chunk 8  
+#' # R-chunk 8  Pages 145 - 146
 #'  #residuals for vB and inverse logistic for tagging data Fig 5.5     
 #'  
 #' oldp <- parset(plots=c(1,2),outmargin=c(1,1,0,0),margin=c(.25,.25,.05,.05))     
@@ -1397,7 +1413,7 @@ NULL
 #'  
 #' ### A Closer Look at the Fabens Methods     
 #' ### Implementation of Non-Constant Variances     
-#' # R-chunk 9  
+#' # R-chunk 9  Page 149
 #'  # fit the Fabens tag growth curve with and without the option to      
 #'  # modify variation with predicted length. See the MQMF function     
 #'  # negnormL. So first no variation and then linear variation.      
@@ -1422,7 +1438,7 @@ NULL
 #'                 typsize=magnitude(param),iterlim=200)     
 #' outfit(modelvb2,backtran = FALSE,parnames = label,title="vB inverse DeltaL, sigma < 1")     
 #'  
-#' # R-chunk 10  
+#' # R-chunk 10  Page 150
 #'  #plot to two Faben's lines with constant and varying sigma Fig 5.6     
 #'  
 #' predvB <- fabens(modelvb$estimate,bi)     
@@ -1439,7 +1455,7 @@ NULL
 #'  
 #' ## Objective Model Selection     
 #' ### Akiake's Information Criterion     
-#' # R-chunk 11  
+#' # R-chunk 11  Page 152
 #'  #compare the relative model fits of Vb and IL     
 #'  
 #' cat("von Bertalanffy \n")     
@@ -1448,7 +1464,7 @@ NULL
 #' aicbic(modelil,bi)     
 #'  
 #' ### Likelihood Ratio Test     
-#' # R-chunk 12  
+#' # R-chunk 12  Page 154
 #'  # Likelihood ratio comparison of two growth models see Fig 5.4     
 #'  
 #' vb <- modelvb$minimum # their respective -ve log-likelihoods     
@@ -1461,14 +1477,14 @@ NULL
 #' ## Maturity     
 #' ### Introduction     
 #' ### Alternative Maturity Ogives     
-#' # R-chunk 13  
+#' # R-chunk 13  Page 158
 #'  # The Maturity data from tasab data-set     
 #'  
 #' data(tasab)       # see ?tasab for a list of the codes used     
 #' properties(tasab) # summarize properties of columns in tasab     
 #' table(tasab$site,tasab$sex) # sites 1 & 2 vs F, I, and M     
 #'  
-#' # R-chunk 14  
+#' # R-chunk 14  Page 158
 #'  #plot the proportion mature vs shell length  Fig 5.7     
 #'  
 #' propm <- tapply(tasab$mature,tasab$length,mean) #mean maturity at L     
@@ -1477,7 +1493,7 @@ NULL
 #'       ylab="Proportion Mature")     
 #' par(oldp)  # return par to old settings; this line not in book  
 #'      
-#' # R-chunk 15  
+#' # R-chunk 15  Pages 159 - 160
 #'  #Use glm to estimate mature logistic     
 #'  
 #' binglm <- function(x,digits=6) { #function to simplify printing     
@@ -1499,7 +1515,7 @@ NULL
 #' cat("Lm50 = ",-cof[1,1]/cof[2,1],"\n")     
 #' cat("IQ   = ",2*log(3)/cof[2,1],"\n")     
 #'  
-#' # R-chunk 16  
+#' # R-chunk 16  Page 161
 #'  #Add maturity logistics to the maturity data plot Fig 5.8     
 #'  
 #' propm <- tapply(tasab$mature,tasab$length,mean) #prop mature     
@@ -1520,7 +1536,7 @@ NULL
 #' 
 #'  
 #' ### The Assumption of Symmetry     
-#' # R-chunk 17  
+#' # R-chunk 17  Page 163
 #'  #Asymmetrical maturity curve from Schnute and Richard's curve Fig5.9     
 #'  
 #' L = seq(50,160,1)     
@@ -1535,7 +1551,7 @@ NULL
 #' abline(v=c(L25,L50,L75),lwd=c(1,2,1),col=c(1,2,1))  
 #' par(oldp)  # return par to old settings; this line not in book     
 #'  
-#' # R-chunk 18  
+#' # R-chunk 18  Page 164 code not printed in the book     
 #'  #Variation possible using the Schnute and Richard's Curve fig 5.10     
 #'  # This code not printed in the book     
 #'  
@@ -1597,7 +1613,7 @@ NULL
 #' ### Properties of Good Stock Recruitment Relationships     
 #' ### Recruitment Overfishing     
 #' ### Beverton and Holt Recruitment     
-#' # R-chunk 19  
+#' # R-chunk 19  Page 169
 #'  #plot the MQMF bh function for Beverton-Holt recruitment  Fig 5.11     
 #'  
 #' B <- 1:3000     
@@ -1611,7 +1627,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book    
 #'  
 #' ### Ricker Recruitment     
-#' # R-chunk 20  
+#' # R-chunk 20  Page 170
 #'  #plot the MQMF ricker function for Ricker recruitment  Fig 5.12     
 #'  
 #' B <- 1:20000     
@@ -1626,7 +1642,7 @@ NULL
 #'  
 #' ### Deriso's Generalized Model     
 #'  
-#' # R-chunk 21  
+#' # R-chunk 21  Page 172
 #'  # plot of three special cases from Deriso-Schnute curve  Fig. 5.13     
 #' deriso <- function(p,B) return(p[1] * B *(1 - p[2]*p[3]*B)^(1/p[3]))     
 #' B <- 1:10000     
@@ -1645,7 +1661,7 @@ NULL
 #' ## Selectivity     
 #' ### Introduction     
 #' ### Logistic Selection     
-#' # R-chunk 22  
+#' # R-chunk 22  Page 177
 #'  #Selectivity curves from logist and mature functions  See Fig 5.14   
 #'  
 #' ages <- seq(0,50,1);   in50 <- 25.0     
@@ -1664,7 +1680,7 @@ NULL
 #'  
 #'  
 #' ### Dome Shaped Selection     
-#' # R-chunk 23  
+#' # R-chunk 23  Page 179
 #'  #Examples of domed-shaped selectivity curves from domed. Fig.5.15     
 #'  
 #' L <- seq(1,30,1)     
@@ -1696,8 +1712,9 @@ NULL
 #' # On Uncertainty     
 #' ## Introduction     
 #' ### Types of Uncertainty     
-#' ### The Example Model     
-#' # R-chunk 1  
+#' ### The Example Model   
+#'   
+#' # R-chunk 1  Page 189
 #'  #Fit a surplus production model to abdat fisheries data     
 #'  
 #' data(abdat); logce <- log(abdat$cpue)       
@@ -1706,7 +1723,7 @@ NULL
 #' bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=abdat,logobs=logce)     
 #' outfit(bestmod,title="SP-Model",parnames=label) #backtransforms     
 #'  
-#' # R-chunk 2  
+#' # R-chunk 2  Page 190
 #'  #plot the abdat data and the optimum sp-model fit  Fig 6.1     
 #'  
 #' predce <- exp(simpspm(bestmod$estimate,abdat))      
@@ -1721,7 +1738,7 @@ NULL
 #' ## Bootstrapping     
 #' ### Empirical Probability Density Distributions     
 #' ## A Simple Bootstrap Example     
-#' # R-chunk 3  
+#' # R-chunk 3  Page 193
 #'  #regression between catches of NPF prawn species Fig 6.2     
 #'  
 #' data(npf)     
@@ -1736,7 +1753,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book  
 #'   
 #'  
-#' # R-chunk 4  
+#' # R-chunk 4  Page 194
 #' # 5000 bootstrap estimates of correlation coefficient Fig 6.3     
 #'  
 #' set.seed(12321)     # better to use a less obvious seed, if at all     
@@ -1760,7 +1777,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book    
 #'  
 #' ## Bootstrapping Time-Series Data     
-#' # R-chunk 5  
+#' # R-chunk 5  Page 196
 #'  # fitting Schaefer model with log-normal residuals with 24 years      
 #'  
 #' data(abdat); logce <- log(abdat$cpue) # of abalone fisheries data     
@@ -1772,12 +1789,12 @@ NULL
 #' optmsy <- exp(optpar[1])*exp(optpar[2])/4     
 #' sampn <- length(optres)        # number of residuals and of years     
 #'  
-#' # R-chunk 6  
+#' # R-chunk 6  Page 196 Table 6.1 code not included in the book      
 #'  
 #' outtab <- halftable(cbind(abdat,predce,optres),subdiv=2)     
 #' kable(outtab, digits=c(0,0,3,3,3,0,0,3,3,3), caption='(ref:tab601)')     
 #'  
-#' # R-chunk 7  
+#' # R-chunk 7  Pages 196 - 197
 #'  # 1000 bootstrap Schaefer model fits; takes a few seconds     
 #'  
 #' start <- Sys.time() # use of as.matrix faster than using data.frame     
@@ -1797,7 +1814,7 @@ NULL
 #' }     
 #' cat("total time = ",Sys.time()-start, "seconds   \n")     
 #'  
-#' # R-chunk 8  
+#' # R-chunk 8  Page 197
 #'  # bootstrap replicates in grey behind main plot Fig 6.4     
 #'  
 #' oldp <- plot1(abdat[,"year"],abdat[,"cpue"],type="n",xlab="Year",     
@@ -1808,7 +1825,7 @@ NULL
 #' lines(abdat[,"year"],predce,lwd=2,col=1) 
 #' par(oldp)  # return par to old settings; this line not in book      
 #'  
-#' # R-chunk 9  
+#' # R-chunk 9  Pages 198 - 199
 #'  #histograms of bootstrap parameters and model outputs Fig 6.5     
 #'  
 #' dohist <- function(invect,nmvar,bins=30,bootres,avpar) { #adhoc     
@@ -1828,7 +1845,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' ### Parameter Correlation     
-#' # R-chunk 10  
+#' # R-chunk 10  Page 200
 #'  #relationships between parameters and MSY  Fig 6.6     
 #'  
 #' parboot1 <- cbind(parboot,msy)     
@@ -1836,7 +1853,7 @@ NULL
 #' pairs(parboot1,pch=16,col=rgb(red=1,green=0,blue=0,alpha = 1/20))     
 #'  
 #' ## Asymptotic Errors     
-#' # R-chunk 11  
+#' # R-chunk 11  Page 203
 #'  #Fit Schaefer model and generate the Hessian     
 #'  
 #' data(abdat)     
@@ -1858,7 +1875,7 @@ NULL
 #'  
 #' ### Uncertainty about the Model Outputs     
 #' ### Sampling from a Multi-Variate Normal Distribution     
-#' # R-chunk 12  
+#' # R-chunk 12  Page 204
 #'  # Use multi-variate normal to generate percentile CI    Fig 6.7     
 #'  
 #' library(mvtnorm) # use RStudio, or install.packages("mvtnorm")     
@@ -1880,12 +1897,12 @@ NULL
 #' lines(abdat[,"year"],exp(simpspm(optpar,abdat)),lwd=2,col=1)  
 #' par(oldp)  # return par to old settings; this line not in book     
 #'      
-#' # R-chunk 13  
+#' # R-chunk 13  Page 205
 #'  #correlations between parameters when using mvtnorm Fig 6.8     
 #'  
 #' pairs(cbind(mvnpar,msy),pch=16,col=rgb(red=1,0,0,alpha = 1/10))    
 #'  
-#' # R-chunk 14  
+#' # R-chunk 14  Pages 206 - 207
 #'  #N parameter vectors from the multivariate normal Fig 6.9     
 #'  
 #' mvnres <- apply(mvnpar,2,quants)  # table of quantiles     
@@ -1905,14 +1922,14 @@ NULL
 #' plothist(msy,meanmsy,"MSY",msymvn[pick])    
 #' par(oldp)  # return par to old settings; this line not in book   
 #'  
-#' # R-chunk 15  
+#' # R-chunk 15   Page 208 Table 6.2 code not included in the book
 #'  #Tabulate percentile CI from bootstrap (B) and multi-variate (mvn)     
 #'  
 #' kable(cbind(bootres,msyB),digits=c(4,3,3,4,3), caption='(ref:tab602)')     
 #' kable(cbind(mvnres,msymvn),digits=c(4,3,3,4,3))     
 #'  
 #' ## Likelihood Profiles     
-#' # R-chunk 16  
+#' # R-chunk 16  Page 209
 #'  #Fit the Schaefer surplus production model to abdat     
 #'  
 #' data(abdat); logce <- log(abdat$cpue)    # using negLL     
@@ -1920,7 +1937,7 @@ NULL
 #' optmod <- nlm(f=negLL,p=param,funk=simpspm,indat=abdat,logobs=logce)     
 #' outfit(optmod,parnames=c("r","K","Binit","sigma"))     
 #'  
-#' # R-chunk 17  
+#' # R-chunk 17  Page 210
 #'  #the code for MQMF's negLLP function     
 #'  
 #' negLLP <- function(pars, funk, indat, logobs, initpar=pars,     
@@ -1939,14 +1956,14 @@ NULL
 #'   return(LL)     
 #' } # end of negLLP     
 #'  
-#' # R-chunk 18  
+#' # R-chunk 18  Page 211
 #'  #does negLLP give same answers as negLL when no parameters fixed?     
 #'  
 #' param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))      
 #' bestmod <- nlm(f=negLLP,p=param,funk=simpspm,indat=abdat,logobs=logce)     
 #' outfit(bestmod,parnames=c("r","K","Binit","sigma"))     
 #'  
-#' # R-chunk 19  
+#' # R-chunk 19  Page 211
 #'  #Likelihood profile for r values 0.325 to 0.45     
 #'  
 #' rval <- seq(0.325,0.45,0.001)  # set up the test sequence     
@@ -1966,18 +1983,18 @@ NULL
 #' }     
 #' minLL <- min(result[,"-veLL"]) #minimum across r values used.     
 #'  
-#' # R-chunk 20  
+#' # R-chunk 20   Page 212 Table 6.3 code not included in the book
 #'  #tabulate first 12 records from likelihood profile     
 #'  
 #' kable(head(result,12),digits=c(3,3,3,4,5), caption='(ref:tab603)')     
 #'  
 #' ### Likelihood Ratio Based Confidence Intervals     
-#' # R-chunk 21  
+#' # R-chunk 21  Page 213
 #'  #likelihood profile on r from the Schaefer model Fig 6.10     
 #'  
 #' plotprofile(result,var="r",lwd=2)  # review the code      
 #'  
-#' # R-chunk 22  
+#' # R-chunk 22  Page 214
 #'  #Likelihood profile for K values 7200 to 12000     
 #'  
 #' Kval <- seq(7200,12000,10)     
@@ -1999,24 +2016,24 @@ NULL
 #'  #kable(head(result,12),digits=c(4,3,3,4,5))  # if wanted.     
 #'  
 #'  
-#' # R-chunk 23  
+#' # R-chunk 23  Page 214
 #'  #likelihood profile on K from the Schaefer model Fig 6.11     
 #'  
 #' plotprofile(resultK,var="K",lwd=2)     
 #'  
 #' ### -ve Log-Likelihoods or Likelihoods     
-#' # R-chunk 24  
+#' # R-chunk 24  Page 215
 #'  #translate -velog-likelihoods into likelihoods     
 #'  
 #' likes <- exp(-resultK[,"-veLL"])/sum(exp(-resultK[,"-veLL"]),na.rm=TRUE)     
 #' resK <- cbind(resultK,likes,cumlike=cumsum(likes))     
 #'  
-#' # R-chunk 25  
+#' # R-chunk 25   Page 216 Table 6.4 code not included in the book
 #'  #tabulate head of likelihood profile matrix for K     
 #'  
 #' kable(head(resK,8),digits=c(4,0,3,4,5,9,7),caption='(ref:tab604)')     
 #'  
-#' # R-chunk 26  
+#' # R-chunk 26  Page 216 Figure 6.12 code not in the book
 #'  #K parameter likelihood profile  Fig 6.12     
 #'  
 #' oldp <- plot1(resK[,"K"],resK[,"likes"],xlab="K value",     
@@ -2030,7 +2047,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book   
 #'  
 #' ### Percentile Likelihood Profiles for Model Outputs     
-#' # R-chunk 27  
+#' # R-chunk 27  Page 217 - 218
 #'  #examine effect on -veLL of MSY values from 740 - 1050t     
 #'  #need a different negLLP() function, negLLO(): O for output.     
 #'  #now optvar=888.831 (rK/4), the optimum MSY, varval ranges 740-1050      
@@ -2061,13 +2078,13 @@ NULL
 #' }     
 #' minLLO <- min(resultO[,"-veLL"])     
 #'  
-#' # R-chunk 28  
+#' # R-chunk 28   Page 218 Table 6.5 code not included in the book
 #'  #tabulate first and last few records of profile on MSY     
 #'  
 #' kable(head(resultO[,1:7],4),digits=c(3,3,3,4,2,3,2),caption='(ref:tab605)')     
 #' kable(tail(resultO[,1:7],4),digits=c(3,3,3,4,2,3,2))     
 #'  
-#' # R-chunk 29  
+#' # R-chunk 29   Page 219 Figure 6.13 code not included in the book
 #'  #likelihood profile on MSY from the Schaefer model Fig 6.13     
 #'  
 #' plotprofile(resultO,var="TrialMSY",lwd=2)     
@@ -2078,8 +2095,9 @@ NULL
 #' ### The Burn-in Period   
 #' ### Convergence to the Stationary Distribution     
 #' ### The Jumping Distribution     
-#' ### Application of MCMC to the Example      
-#' # R-chunk 30  
+#' ### Application of MCMC to the Example    
+#'   
+#' # R-chunk 30  Page 225
 #'  #activate and plot the fisheries data in abdat  Fig 6.14     
 #'  
 #' data(abdat)   # type abdat in the console to see contents     
@@ -2088,7 +2106,7 @@ NULL
 #'  
 #' ### Markov Chain Monte Carlo     
 #' ### A First Example of an MCMC     
-#' # R-chunk 31  
+#' # R-chunk 31  Pages 228 - 229
 #'  # Conduct MCMC analysis to illustrate burn-in. Fig 6.15     
 #'  
 #' data(abdat);  logce <- log(abdat$cpue)     
@@ -2124,7 +2142,7 @@ NULL
 #' cat("Accept = ",result4[[2]],"\n")     
 #'  
 #'  
-#' # R-chunk 32  
+#' # R-chunk 32  Pages 229 - 230
 #' #first example and start of 3 initial chains for MCMC Fig6.15     
 #'  
 #' oldp <- parset(cex=0.85)        
@@ -2139,14 +2157,14 @@ NULL
 #' points(post3[1:P,"K"],post3[1:P,"r"],pch=2,cex=1.2,col=1)    
 #' par(oldp)  # return par to old settings; this line not in book   
 #'  
-#' # R-chunk 33  
+#' # R-chunk 33  Pages 230 - 231
 #'  #pairs plot of parameters from the first MCMC Fig 6.16     
 #'  
 #' posterior <- result4[[1]][[1]]     
 #' msy <-posterior[,1]*posterior[,2]/4        
 #' pairs(cbind(posterior[,1:4],msy),pch=16,col=rgb(1,0,0,1/50),font=7)     
 #'  
-#' # R-chunk 34  
+#' # R-chunk 34  Pages 231 - 232
 #'  #plot the traces from the first MCMC example Fig 6.17     
 #'  
 #' posterior <- result4[[1]][[1]]  
@@ -2163,7 +2181,7 @@ NULL
 #' }    
 #' par(oldp)  # return par to old settings; this line not in book   
 #'  
-#' # R-chunk 35  
+#' # R-chunk 35  Page 233
 #'  #Use acf to examine auto-correlation with thinstep = 16   Fig 6.18     
 #'  
 #' posterior <- result4[[1]][[1]]     
@@ -2174,7 +2192,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book  
 #'  
 #'  
-#' # R-chunk 36  
+#' # R-chunk 36  Pages 233 - 234
 #'  #setup MCMC with thinstep of 128 per parameter  Fig 6.19     
 #'  
 #' begin=gettime()     
@@ -2194,7 +2212,7 @@ NULL
 #'  
 #'  
 #' ### Marginal Distributions      
-#' # R-chunk 37  
+#' # R-chunk 37  Pages 235 - 236
 #'  # plot marginal distributions from the MCMC  Fig 6.20     
 #'  
 #' dohist <- function(x,xlab) { # to save a little space     
@@ -2230,7 +2248,7 @@ NULL
 #'   
 #'  
 #' ## The Use of Rcpp     
-#' # R-chunk 38  
+#' # R-chunk 38  Pages 236 - 237
 #'  #profile the running of do_MCMC  using the now well known abdat      
 #'  
 #' data(abdat); logce <- log(abdat$cpue); fish <- as.matrix(abdat)       
@@ -2244,14 +2262,14 @@ NULL
 #' outprof <- summaryRprof()     
 #'  
 #'  
-#' # R-chunk 39  
+#' # R-chunk 39   Page 238 Table 6.6 code not included in the book
 #'  #tabulate output of Rprof on do_MCMC function     
 #'  
 #' kable(head(outprof$by.self,12),caption='(ref:tab606)')     
 #'  
 #' ### Addressing Vectors and Matrices     
 #' ### Replacement for simpspm()     
-#' # R-chunk 40  
+#' # R-chunk 40  Page 240
 #'  
 #' library(Rcpp)     
 #'  #Send a text string containing the C++ code to cppFunction this will      
@@ -2290,7 +2308,7 @@ NULL
 #' }')     
 #'  
 #'  
-#' # R-chunk 41  
+#' # R-chunk 41  Page 241
 #'  #Ensure results obtained from simpspm and simpspmC are same     
 #'  
 #' library(microbenchmark)     
@@ -2310,18 +2328,18 @@ NULL
 #' rownames(out2) <- c("simpspm","simpspmC","TimeRatio")     
 #'  
 #'  
-#' # R-chunk 42  
+#' # R-chunk 42   Page 241 Table 6.7 code not included in the book
 #'  #compare results from simpspm and simpspmC     
 #'  
 #' kable(halftable(cbind(spmR,spmC)),row.names=TRUE,digits=c(4,4,4,4,4,4),caption='(ref:tab607)')     
 #'  
 #'  
-#' # R-chunk 43  
+#' # R-chunk 43   Page 242 Table 6.8 code not included in the book
 #'  #output from microbenchmark comparison of simpspm and simpspmC     
 #'  
 #' kable(out2,row.names=TRUE,digits=c(3,3,3,3,3,3,3,0),caption='(ref:tab608)')     
 #'  
-#' # R-chunk 44  
+#' # R-chunk 44  Pages 242 - 243
 #'  #How much does using simpspmC in do_MCMC speed the run time?     
 #'  #Assumes Rcpp code has run, eg source("Rcpp_functions.R")     
 #'  
@@ -2352,7 +2370,7 @@ NULL
 #' cat("Time Ratio = ",timeC/timeR)     
 #'  
 #'  
-#' # R-chunk 45  
+#' # R-chunk 45  Page 243
 #' #compare marginal distributions of the 2 chains  Fig 6.21     
 #'
 #' oldp <- par(no.readonly=TRUE)  # this line not in the book
@@ -2366,7 +2384,7 @@ NULL
 #'   
 #'  
 #' ### Multiple Independent Chains     
-#' # R-chunk 46  
+#' # R-chunk 46  Page 244
 #'  #run multiple = 3 chains     
 #'  
 #' setscale <- c(0.07,0.06,0.07,0.45)  # I only use a seed for      
@@ -2380,7 +2398,7 @@ NULL
 #' cat("time = ",gettime() - beginC," secs  \n")     
 #'  
 #'  
-#' # R-chunk 47  
+#' # R-chunk 47  Pages 244 - 245
 #'  #3 chain run using simpspmC, 10000 reps, thinstep=256 Fig 6.22     
 #' 
 #' oldp <- par(no.readonly=TRUE) 
@@ -2395,7 +2413,7 @@ NULL
 #' } 
 #' par(oldp)  # return par to old settings; this line not in book      
 #'  
-#' # R-chunk 48  
+#' # R-chunk 48  Pages 245 - 246
 #'  #generate summary stats from the 3 MCMC chains     
 #'  
 #' av <- matrix(0,nrow=3,ncol=4,dimnames=list(1:3,label))     
@@ -2416,7 +2434,7 @@ NULL
 #' relsig                                             
 #'  
 #'  
-#' # R-chunk 49  
+#' # R-chunk 49  Pages 246 - 247
 #'  #compare quantile from the 2 most widely separate MCMC chains     
 #'  
 #' tmp <- resultC$result[[2]] # the 10000 values of each parameter     
@@ -2436,7 +2454,7 @@ NULL
 #'  
 #'  
 #' ### Replicates Required to Avoid Serial Correlation     
-#' # R-chunk 50  
+#' # R-chunk 50  Page 248
 #'  #compare two higher thinning rates per parameter in MCMC     
 #'  
 #' param <- log(c(r=0.39,K=9200,Binit=3400,sigma=0.05))     
@@ -2451,7 +2469,7 @@ NULL
 #'                    priorcalc=calcprior,scales=setscale,schaefer=TRUE)     
 #'  
 #'  
-#' # R-chunk 51  
+#' # R-chunk 51  Page 248
 #'  #autocorrelation of 2 different thinning rate chains Fig6.23     
 #'  
 #' posterior1 <- result1$result[[1]]     
@@ -2471,7 +2489,7 @@ NULL
 #' mtext("Lag",side=1,line=-0.1,outer=TRUE,cex=1.2)     
 #' par(oldp)  # return par to old settings; this line not in book    
 #'  
-#' # R-chunk 52  
+#' # R-chunk 52  Page 249
 #' #visual comparison of 2 chains marginal densities  Fig 6.24     
 #'  
 #' oldp <- parset(plots=c(2,2),cex=0.85)      
@@ -2483,7 +2501,7 @@ NULL
 #' }    
 #' par(oldp)  # return par to old settings; this line not in book   
 #'  
-#' # R-chunk 53  
+#' # R-chunk 53  Pages 250 - 251
 #'  #tablulate a summary of the two different thinning rates.     
 #'  
 #' cat("1024 thinning rate \n")     
@@ -2528,14 +2546,16 @@ NULL
 #' ## Introduction     
 #' ### Data Needs     
 #' ### The Need for Contrast     
-#' ### When are Catch-Rates Informative     
-#' # R-chunk 1  
+#' ### When are Catch-Rates Informative   
+#'   
+#' # R-chunk 1  Page 256
 #'  #Yellowfin-tuna data from Schaefer 12957     
 #'  
+#' # R-chunk 2  Page 256 Table 7.1 code not in the book  
 #' data(schaef)     
 #' kable(halftable(schaef,subdiv=2),digits=c(0,0,0,4))     
 #'  
-#' # R-chunk 3  
+#' # R-chunk 3  Page 256
 #'  #schaef fishery data and regress cpue and catch    Fig 7.1     
 #'  
 #' oldp <- parset(plots=c(3,1),margin=c(0.35,0.4,0.05,0.05))     
@@ -2549,7 +2569,7 @@ NULL
 #' abline(model,lwd=2,col=2)   # summary(model) 
 #' par(oldp)  # return par to old settings; this line not in book      
 #'  
-#' # R-chunk 4  
+#' # R-chunk 4  Page 257
 #'  #cross correlation between cpue and catch in schaef Fig 7.2     
 #'  
 #' oldp <- parset(cex=0.85) #sets par values for a tidy base graphic     
@@ -2557,7 +2577,7 @@ NULL
 #'     ylab="Correlation",plot=TRUE) 
 #' par(oldp)  # return par to old settings; this line not in book      
 #'  
-#' # R-chunk 5  
+#' # R-chunk 5  Page 257
 #'  #now plot schaef data with timelag of 2 years on cpue   Fig 7.3     
 #'  
 #' oldp <- parset(plots=c(3,1),margin=c(0.35,0.4,0.05,0.05))     
@@ -2571,14 +2591,14 @@ NULL
 #' abline(model2,lwd=2,col=2) 
 #' par(oldp)  # return par to old settings; this line not in book      
 #'  
-#' # R-chunk 6  
+#' # R-chunk 6  Page 259
 #'  #write out a summary of he regression model2     
 #'  
 #' summary(model2)     
 #'  
 #' ## Some Equations     
 #' ### Production Functions     
-#' # R-chunk 7  
+#' # R-chunk 7  Page 262
 #'  #plot productivity and density-dependence functions Fig7.4     
 #'  
 #' prodfun <- function(r,Bt,K,p) return((r*Bt/p)*(1-(Bt/K)^p))     
@@ -2603,7 +2623,8 @@ NULL
 #' ### The Schaefer Model     
 #' ### Sum of Squared Residuals     
 #' ### Estimating Management Statistics     
-#' # R-chunk 8  
+#' 
+#' # R-chunk 8  Page 266
 #'  #compare Schaefer and Fox MSY estimates for same parameters     
 #'  
 #' param <- c(r=1.1,K=1000.0,Binit=800.0,sigma=0.075)     
@@ -2613,7 +2634,7 @@ NULL
 #' ### The Trouble with Equilibria     
 #' ## Model Fitting     
 #' ### A Possible Workflow for Stock Assessment     
-#' # R-chunk 9  
+#' # R-chunk 9  Page 269
 #'  #Initial model 'fit' to the initial parameter guess  Fig 7.5     
 #'  
 #' data(schaef); schaef <- as.matrix(schaef)     
@@ -2622,7 +2643,7 @@ NULL
 #' ans <- plotspmmod(inp=param,indat=schaef,schaefer=TRUE,     
 #'                  addrmse=TRUE,plotprod=FALSE)     
 #'  
-#' # R-chunk 10  
+#' # R-chunk 10  Pages 270 - 271
 #'  #Fit the model first using optim then nlm in sequence     
 #'  
 #' param <- log(c(0.1,2250000,2250000,0.5))      
@@ -2635,18 +2656,18 @@ NULL
 #'            logobs=log(schaef[,"cpue"]))     
 #' outfit(best2,digits=4,title="nlm",parnames = pnams)     
 #'  
-#' # R-chunk 11  
+#' # R-chunk 11  Page 271
 #'  #optimum fit. Defaults used in plotprod and schaefer Fig 7.6     
 #'  
 #' ans <- plotspmmod(inp=best2$estimate,indat=schaef,addrmse=TRUE,     
 #'                   plotprod=TRUE)     
 #'  
-#' # R-chunk 12  
+#' # R-chunk 12  Page 272
 #'  #the high-level structure of ans; try str(ans$Dynamics)     
 #'  
 #' str(ans, width=65, strict.width="cut",max.level=1)     
 #'  
-#' # R-chunk 13  
+#' # R-chunk 13  Page 273
 #'  #compare the parameteric MSY with the numerical MSY     
 #'  
 #' round(ans$Dynamics$sumout,3)     
@@ -2654,7 +2675,7 @@ NULL
 #' summspm(ans) # the q parameter needs more significantr digits    
 #'  
 #' ### Is the Analysis Robust?     
-#' # R-chunk 14  
+#' # R-chunk 14  Page 274
 #'  #conduct a robustness test on the Schaefer model fit     
 #'  
 #' data(schaef); schaef <- as.matrix(schaef); reps <- 12     
@@ -2669,13 +2690,13 @@ NULL
 #'  #use str(robout) to see the components included in the output     
 #'  
 #'  
-#' # R-chunk 15  
+#' # R-chunk 15  Page 275 Table 7.2 code not in the book 
 #'  #outcome of robustness tests     
 #'  
 #' kable(robout$results[,1:5],digits=c(3,4,3,4,3))     
 #' kable(robout$results[,6:11],digits=c(3,4,3,4,5,0))     
 #'  
-#' # R-chunk 16  
+#' # R-chunk 16 Pages 275 - 276 
 #'  #Repeat robustness test on fit to schaef data 100 times     
 #'  
 #' set.seed(777854)     
@@ -2684,12 +2705,12 @@ NULL
 #'                      funk=simpspm,funkone=TRUE,steptol=1e-06)      
 #' lastbits <- tail(robout2$results[,6:11],10)     
 #'  
-#' # R-chunk 17  
+#' # R-chunk 17  Page 276 Table 7.3 code not in the book 
 #'  #last 10 rows of robustness test showing deviations     
 #'  
 #' kable(lastbits,digits=c(5,1,1,4,5,0))     
 #'  
-#' # R-chunk 18  
+#' # R-chunk 18  Page 276
 #'  # replicates from the robustness test        Fig 7.7     
 #'  
 #' result <- robout2$results     
@@ -2700,13 +2721,13 @@ NULL
 #' hist(result[,"MSY"],breaks=15,col=2,main="",xlab="MSY")   
 #' par(oldp)  # return par to old settings; this line not in book    
 #'  
-#' # R-chunk 19  
+#' # R-chunk 19  Page 277
 #'  #robustSPM parameters against each other  Fig 7.8     
 #'  
 #' pairs(result[,c("r","K","Binit","MSY")],upper.panel=NULL,pch=1)     
 #'  
 #' ### Using Different Data?     
-#' # R-chunk 20  
+#' # R-chunk 20  Page 278
 #'  #Now use the dataspm data-set, which is noisier     
 #'  
 #' set.seed(777854) #other random seeds give different results     
@@ -2719,14 +2740,14 @@ NULL
 #' result <- tail(out$results[,6:11],10) #16 sub-optimal results     
 #'  
 #'  
-#' # R-chunk 21  
+#' # R-chunk 21  Page 279 Table 7.4 code not in the book 
 #'  #last 10 trials of robustness on dataspm fit     
 #'  
 #' kable(result,digits=c(4,2,2,4,4,3))     
 #'  
 #' ## Uncertainty     
 #' ### Likelihood Profiles     
-#' # R-chunk 22  
+#' # R-chunk 22  Page 280
 #'  # Fig 7.9 Fit of optimum to the abdat data-set     
 #'  
 #' data(abdat);     fish <- as.matrix(abdat)     
@@ -2735,7 +2756,7 @@ NULL
 #' ans <- fitSPM(pars,fish,schaefer=TRUE) #Schaefer     
 #' answer <- plotspmmod(ans$estimate,abdat,schaefer=TRUE,addrmse=TRUE)     
 #'  
-#' # R-chunk 23  
+#' # R-chunk 23  Pages 280 - 282
 #'  # likelihood profiles for r and K for fit to abdat  Fig 7.10     
 #'  #doprofile input terms are vector of values, fixed parameter      
 #'  #location, starting parameters, and free parameter locations.     
@@ -2766,7 +2787,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book      
 #'  
 #' ### Bootstrap Confidence Intervals     
-#' # R-chunk 24  
+#' # R-chunk 24  Page 283
 #'  #find optimum Schaefer model fit to dataspm data-set Fig 7.11     
 #'  
 #' data(dataspm)     
@@ -2776,7 +2797,7 @@ NULL
 #' ans <- fitSPM(pars,fish,schaefer=TRUE,maxiter=1000) #Schaefer     
 #' answer <- plotspmmod(ans$estimate,fish,schaefer=TRUE,addrmse=TRUE)     
 #'  
-#' # R-chunk 25  
+#' # R-chunk 25  Page 284
 #'  #bootstrap the log-normal residuals from optimum model fit     
 #'  
 #' set.seed(210368)     
@@ -2786,7 +2807,7 @@ NULL
 #'  #print(Sys.time() - startime) # how long did it take?     
 #' str(boots,max.level=1)     
 #'  
-#' # R-chunk 26  
+#' # R-chunk 26  Page 285
 #'  #Summarize bootstrapped parameter estimates as quantiles  Table 7.6    
 #'  
 #' bootpar <- boots$bootpar     
@@ -2801,7 +2822,7 @@ NULL
 #' }     
 #' kable(bootCI,digits=c(4,4,4,4,4,4))     
 #'  
-#' # R-chunk 28  
+#' # R-chunk 28  Page 286
 #'  #boostrap CI. Note use of uphist to expand scale  Fig 7.12     
 #'  
 #' colf <- c(1,1,1,4); lwdf <- c(1,3,1,3); ltyf <- c(1,1,1,2)     
@@ -2821,7 +2842,7 @@ NULL
 #' abline(v=c(bootCI["Harv",colsf]),col=colf,lwd=lwdf,lty=ltyf)   
 #' par(oldp)  # return par to old settings; this line not in book    
 #'  
-#' # R-chunk 29  
+#' # R-chunk 29  Page 286
 #'  #Fig7.13 1000 bootstrap trajectories for dataspm model fit      
 #'  
 #' dynam <- boots$dynam     
@@ -2840,7 +2861,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book  
 #' 
 #'  
-#' # R-chunk 30  
+#' # R-chunk 30  Page 288
 #'  #Fit the Fox model to dataspm; note different parameters     
 #'  
 #' pars <- log(c(r=0.15,K=6500,Binit=3000,sigma=0.20))     
@@ -2848,7 +2869,7 @@ NULL
 #' bootsF <- spmboot(ansF$estimate,fishery=fish,iter=reps,schaefer=FALSE)     
 #' dynamF <- bootsF$dynam     
 #'  
-#' # R-chunk 31  
+#' # R-chunk 31 Pages 288 - 289 
 #'  # bootstrap trajectories from both model fits  Fig 7.14     
 #'  
 #' oldp <- parset()     
@@ -2867,25 +2888,27 @@ NULL
 #' 
 #'  
 #' ### Parameter Correlations     
-#' # R-chunk 32  
+#' # R-chunk 32  Page 290 
 #'  # plot variables against each other, use MQMF panel.cor  Fig 7.15     
 #'  
 #' pairs(boots$bootpar[,c(1:4,6,7)],lower.panel=panel.smooth,      
 #'       upper.panel=panel.cor,gap=0,lwd=2,cex=0.5)     
 #'  
 #' ### Asymptotic Errors     
-#' # R-chunk 33  
+#' # R-chunk 33  Page 290
 #'  #Start the SPM analysis using asymptotic errors.     
 #'  
 #' data(dataspm)    # Note the use of hess=TRUE in call to fitSPM      
 #' fish <- as.matrix(dataspm)     # using as.matrix for more speed     
 #' colnames(fish) <- tolower(colnames(fish))  # just in case   
 #' pars <- log(c(r=0.25,K=5200,Binit=2900,sigma=0.20))     
-#' ans <- fitSPM(pars,fish,schaefer=TRUE,maxiter=1000,hess=TRUE)      
+#' ans <- fitSPM(pars,fish,schaefer=TRUE,maxiter=1000,hess=TRUE)  
+#' 
+#' # R-chunk 34  page 291         
 #'  #The hessian matrix from the Schaefer fit to the dataspm data     
 #' outfit(ans)     
 #'  
-#' # R-chunk 35  
+#' # R-chunk 35  Page 292
 #'  #calculate the var-covar matrix and the st errors     
 #'  
 #' vcov <- solve(ans$hessian) # calculate variance-covariance matrix     
@@ -2894,12 +2917,12 @@ NULL
 #' outvcov <- rbind(vcov,sqrt(diag(vcov)))     
 #' rownames(outvcov) <- c(label,"StErr")     
 #'  
-#' # R-chunk 36  
+#' # R-chunk 36  Page 290 Table 7.6 code not in the book 
 #'  # tabulate the variance covariance matrix and StErrs     
 #'  
 #' kable(outvcov,digits=c(5,5,5,5))     
 #'  
-#' # R-chunk 37  
+#' # R-chunk 37  Pages 292 - 293
 #'  #generate 1000 parameter vectors from multi-variate normal     
 #'  
 #' library(mvtnorm)   # use RStudio, or install.packages("mvtnorm")     
@@ -2920,7 +2943,7 @@ NULL
 #' }     
 #' mvnpar <- cbind(mvnpar,msy,depletion) # try head(mvnpar,10)     
 #'  
-#' # R-chunk 38  
+#' # R-chunk 38  Page 293
 #'  #data and trajectories from 1000 MVN parameter vectors   Fig 7.16     
 #'  
 #'oldp <-  plot1(fish[,"year"],fish[,"cpue"],type="p",xlab="Year",
@@ -2935,7 +2958,7 @@ NULL
 #' text(2010,1.75,paste0("MSY ",round(mean(msy),3)),cex=1.25,font=7) 
 #' par(oldp)  # return par to old settings; this line not in book      
 #'  
-#' # R-chunk 39  
+#' # R-chunk 39  Pages 293 - 294
 #'  #Isolate errant cpue trajectories Fig 7.17     
 #'  
 #' pickd <- which(mvncpue[,"2016"] < 0.40)     
@@ -2948,7 +2971,7 @@ NULL
 #' par(oldp)  # return par to old settings; this line not in book  
 #' 
 #'  
-#' # R-chunk 40  
+#' # R-chunk 40  Page 294
 #'  #Use adhoc function to plot errant parameters Fig 7.18     
 #'  
 #' oldp <- parset(plots=c(2,2),cex=0.85)     
@@ -2963,14 +2986,14 @@ NULL
 #' outplot("K","Binit",pickd) 
 #' par(oldp)  # return par to old settings; this line not in book      
 #'  
-#' # R-chunk 41  
+#' # R-chunk 41  Page 296
 #'  #asymptotically sampled parameter vectors  Fig 7.19     
 #'  
 #' pairs(mvnpar,lower.panel=panel.smooth, upper.panel=panel.cor,   
 #'       gap=0,cex=0.25,lwd=2)     
 #'  
 #'  
-#' # R-chunk 42  
+#' # R-chunk 42  Page 297
 #'  # Get the ranges of parameters from bootstrap and asymptotic     
 #'  
 #' bt <- apply(bootpar,2,range)[,c(1:4,6,7)]        
@@ -2978,13 +3001,13 @@ NULL
 #' out <- rbind(bt,ay)     
 #' rownames(out) <- c("MinBoot","MaxBoot","MinAsym","MaxAsym")     
 #'  
-#' # R-chunk 43  
+#' # R-chunk 43  Page 297 Table 7.7 code not in the book 
 #'  #tabulate ranges from two approsches     
 #'  
 #' kable(out,digits=c(4,3,3,4,3,4))     
 #'  
 #' ### Sometimes Asymptotic Errors Work     
-#' # R-chunk 44  
+#' # R-chunk 44  Pages 297 - 298
 #'  #repeat asymptotice errors using abdat data-set Figure 7.20     
 #'  
 #' data(abdat)     
@@ -3009,14 +3032,14 @@ NULL
 #' lines(fish[,"year"],exp(simpspm(optparA,fish)),lwd=2,col=0)    
 #' par(oldp)  # return par to old settings; this line not in book    
 #'  
-#' # R-chunk 45  
+#' # R-chunk 45  Page 298
 #'  #plot asymptotically sampled parameter vectors Figure 7.21     
 #'  
 #' pairs(mvnparA,lower.panel=panel.smooth, upper.panel=panel.cor,     
 #'       gap=0,pch=16,col=rgb(red=0,green=0,blue=0,alpha = 1/10))     
 #'  
 #' ### Bayesian Posteriors     
-#' # R-chunk 46  
+#' # R-chunk 46  Page 299
 #'  #Fit the Fox Model to the abdat data Figure 7.22     
 #'  
 #' data(abdat); fish <- as.matrix(abdat)     
@@ -3027,7 +3050,7 @@ NULL
 #' ans <- plotspmmod(inp=foxmod$estimate,indat=fish,schaefer=FALSE,     
 #'                  addrmse=TRUE, plotprod=TRUE)     
 #'  
-#' # R-chunk 47  
+#' # R-chunk 47  Page 301
 #'  # Conduct an MCMC using simpspmC on the abdat Fox SPM     
 #'  # This means you will need to compile simpspmC from appendix     
 #' set.seed(698381) #for repeatability, possibly only on Windows10     
@@ -3045,13 +3068,13 @@ NULL
 #' p <- 1e-08     
 #' msy <- post1[,"r"]*post1[,"K"]/((p + 1)^((p+1)/p))     
 #'  
-#' # R-chunk 48  
+#' # R-chunk 48 Page 302 
 #'  #pairwise comparison for MCMC of Fox model on abdat  Fig 7.23     
 #'  
 #' pairs(cbind(post1[,1:4],msy),upper.panel = panel.cor,lwd=2,cex=0.2,   
 #'       lower.panel=panel.smooth,col=1,gap=0.1)     
 #'  
-#' # R-chunk 49  
+#' # R-chunk 49  Page 302
 #'  # marginal distributions of 3 parameters and msy  Figure 7.24     
 #'  
 #' oldp <- parset(plots=c(2,2), cex=0.85)     
@@ -3061,7 +3084,7 @@ NULL
 #' plot(density(msy),lwd=2,main="",xlab="MSY")   #try str(density(msy)) 
 #' par(oldp)  # return par to old settings; this line not in book      
 #'  
-#' # R-chunk 50  
+#' # R-chunk 50  Page 304
 #'  #MCMC r and K parameters, approx 50 + 90% contours. Fig7.25     
 #'  
 #' puttxt <- function(xs,xvar,ys,yvar,lvar,lab="",sigd=0) {     
@@ -3086,7 +3109,7 @@ NULL
 #' puttxt(0.6,kran,0.97,mran,mran,"MSY= ",sigd=3) 
 #' par(oldp)  # return par to old settings; this line not in book      
 #'  
-#' # R-chunk 51  
+#' # R-chunk 51  Page 305
 #'  #Traces for the Fox model parameters from the MCMC  Fig7.26     
 #'  
 #' oldp <- parset(plots=c(4,1),margin=c(0.3,0.45,0.05,0.05),     
@@ -3103,7 +3126,7 @@ NULL
 #' mtext("Step",side=1,outer=T,line=0.0,font=7,cex=1.1)     
 #' par(oldp)  # return par to old settings; this line not in book  
 #'  
-#' # R-chunk 52  
+#' # R-chunk 52  Page 306
 #'  #Do five chains of the same length for the Fox model     
 #'  
 #' set.seed(6396679)  # Note all chains start from same place, which is      
@@ -3116,7 +3139,7 @@ NULL
 #'                   schaefer=FALSE)     
 #' cat("acceptance rate = ",result$arate," \n") # always check this     
 #'  
-#' # R-chunk 53  
+#' # R-chunk 53  Page 306
 #'  #Now plot marginal posteriors from 5 Fox model chains    Fig7.27     
 #'  
 #' oldp <- parset(plots=c(2,1),cex=0.85,margin=c(0.4,0.4,0.05,0.05))     
@@ -3136,8 +3159,8 @@ NULL
 #' }
 #' par(oldp)  # return par to old settings; this line not in book       
 #'  
-#' # R-chunk 54  
-#'  # get qunatiles of each chain     
+#' # R-chunk 54  Page 307 
+#'  # get quantiles of each chain     
 #'  
 #' probs <- c(0.025,0.05,0.5,0.95,0.975)     
 #' storeQ <- matrix(0,nrow=6,ncol=5,dimnames=list(1:6,probs))     
@@ -3145,7 +3168,7 @@ NULL
 #' x <- apply(storeQ[1:5,],2,range)     
 #' storeQ[6,] <- 100*(x[2,] - x[1,])/x[2,]     
 #'  
-#' # R-chunk 55  
+#' # R-chunk 55 Page 308 Table 7.8 code not in the book  
 #'  #tabulate qunatiles of the five chains     
 #'  
 #' kable(storeQ,digits=c(3,3,3,3,3))     
@@ -3154,8 +3177,9 @@ NULL
 #' ### Two Views of Risk     
 #' ### Harvest Strategies     
 #' ## Risk Assessment Projections     
-#' ### Deterministic Projections     
-#' # R-chunk 56  
+#' ### Deterministic Projections    
+#'  
+#' # R-chunk 56  Pages 310 - 311
 #'  #Prepare Fox model on abdat data for future projections Fig7.28     
 #'  
 #' data(abdat); fish <- as.matrix(abdat)     
@@ -3167,18 +3191,17 @@ NULL
 #'                  target=0.4,addrmse=TRUE, plotprod=FALSE)     
 #'  
 #'  
-#' # R-chunk 57  
-#'  #     
+#' # R-chunk 57 Page 312 
 #'  
 #' out <- spm(bestmod$estimate,indat=fish,schaefer=FALSE)     
 #' str(out, width=65, strict.width="cut")     
 #'  
-#' # R-chunk 58  
+#' # R-chunk 58  Page 312 Table 7.9 code not in the book 
 #'  #     
 #'  
 #' kable(out$outmat[1:10,],digits=c(0,4,4,4,4,4,4))     
 #'  
-#' # R-chunk 59  
+#' # R-chunk 59  Page 313
 #'  #  Fig 7.29     
 #'  
 #' catches <- seq(700,1000,50)   # projyr=10 is the default     
@@ -3186,7 +3209,7 @@ NULL
 #'  
 #' ### Accounting for Uncertainty     
 #' ### Using Asymptotic Errors     
-#' # R-chunk 60  
+#' # R-chunk 60  Page 315
 #'  # generate parameter vectors from a multivariate normal      
 #'  # project dynamics under a constant catch of 900t     
 #'  
@@ -3194,27 +3217,27 @@ NULL
 #' matpar <- parasympt(bestmod,N=1000) #generate parameter vectors     
 #' projs <- spmproj(matpar,fish,projyr=10,constC=900)#do dynamics     
 #'  
-#' # R-chunk 61  
+#' # R-chunk 61  Page 315
 #'  # Fig 7.30  1000 replicate projections asymptotic errors     
 #'  
 #' outp <- plotproj(projs,out,qprob=c(0.1,0.5),refpts=c(0.2,0.4))     
 #'  
 #' ### Using Bootstrap Parameter Vectors     
-#' # R-chunk 62  
+#' # R-chunk 62  Page 316
 #'  #bootstrap generation of plausible parameter vectors for Fox     
 #'  
 #' reps <- 1000      
 #' boots <- spmboot(bestmod$estimate,fishery=fish,iter=reps,schaefer=FALSE)     
 #' matparb <- boots$bootpar[,1:4] #examine using head(matparb,20)     
 #'  
-#' # R-chunk 63  
+#' # R-chunk 63  Page 316
 #'  #bootstrap projections. Lower case b for boostrap  Fig7.31     
 #'  
 #' projb <- spmproj(matparb,fish,projyr=10,constC=900)     
 #' outb <- plotproj(projb,out,qprob=c(0.1,0.5),refpts=c(0.2,0.4))     
 #'  
 #' ### Using Samples from a Bayesian Posterior     
-#' # R-chunk 64  
+#' # R-chunk 64  Pages 317 - 318 
 #'  #Generate 1000 parameter vectors from Bayesian posterior     
 #'  
 #' param <- log(c(r=0.3,K=11500,Binit=3300,sigma=0.05))     
@@ -3228,7 +3251,7 @@ NULL
 #' parB <- result[[1]][[1]] #capital B for Bayesian     
 #' cat("Acceptance Rate = ",result[[2]],"\n")     
 #'  
-#' # R-chunk 65  
+#' # R-chunk 65  Page 318
 #'  # auto-correlation, or lack of, and the K trace Fig 7.32     
 #'  
 #' oldp <- parset(plots=c(2,1),cex=0.85)      
@@ -3236,7 +3259,7 @@ NULL
 #' plot(1:N,parB[,2],type="l",ylab="K",ylim=c(8000,19000),xlab="")   
 #' par(oldp)  # return par to old settings; this line not in book    
 #'  
-#' # R-chunk 66  
+#' # R-chunk 66  Page 318
 #'  #  Fig 7.33     
 #'  
 #' matparB <- as.matrix(parB[,1:4]) # B for Bayesian     
@@ -3245,7 +3268,7 @@ NULL
 #'  
 #' ## Concluding Remarks     
 #' ## Appendix: The Use of Rcpp to Replace simpspm     
-#' # R-chunk 67  
+#' # R-chunk 67  Page 321
 #'  
 #' library(Rcpp)     
 #' cppFunction('NumericVector simpspmC(NumericVector pars,      

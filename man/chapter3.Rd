@@ -11,7 +11,7 @@ chapter3 is not an active function but rather acts
 \examples{
 \dontrun{
 ### The Discrete Logistic Model    
-# R-chunk 1 
+# R-chunk 1 page 36
 # Code to produce Figure 3.1. Note the two one-line functions 
    
 surprod <- function(Nt,r,K) return((r*Nt)*(1-(Nt/K)))    
@@ -26,8 +26,10 @@ plot1(Nt,surprod(Nt,r,K),xlab="Population Nt",defpar=FALSE,
 plot1(Nt,densdep(Nt,K),xlab="Population Nt",defpar=FALSE,    
       ylab="Density-Dependence")    
 par(oldpar)  # this line not in book
+
+
 ### Dynamic Behaviour    
-# R-chunk 2 
+# R-chunk 2 page 38
 #Code for Figure 3.2. Try varying the value of rv from 0.5-2.8 
    
 yrs <- 100; rv=2.8;  Kv <- 1000.0; Nz=100; catch=0.0; p=1.0    
@@ -37,19 +39,22 @@ label <- paste0("r=",rv," K=",Kv," Ct=",catch, " N0=",Nz," p=",p=p)
 oldpar <- par(no.readonly=TRUE) # this line not in book
 plot(ans, main=label, cex=0.9, font=7) #Schaefer dynamics    
 par(oldpar)   # this line not in book
-# R-chunk 3 
+
+
+# R-chunk 3 page 39
 #run discrete logistic dynamics for 600 years  
   
 yrs=600    
 ans <- discretelogistic(r=2.55,K=1000.0,N0=100,Ct=0.0,Yrs=yrs)    
 
-# R-chunk 4 
+# R-chunk 4  page 40, code not in the book
 #tabulate the last 30 years of the dynamics   needs knitr
 library(knitr) 
 kable(halftable(ans[(yrs-29):yrs,],yearcol="year",subdiv=3),digits=c(0,1,1,0,1,1,0,1,1))    
 
+
 ### Finding Boundaries between Behaviours.    
-# R-chunk 5 
+# R-chunk 5 page 40
 #run discretelogistic and search for repeated values of Nt    
 
 yrs <- 600    
@@ -58,7 +63,7 @@ avt <- round(apply(ans[(yrs-100):(yrs-1),2:3],1,mean),2)
 count <- table(avt)    
 count[count > 1] # with r=2.55 you should find an 8-cycle limit    
 
-# R-chunk 6 
+# R-chunk 6  page 41
 #searches for unique solutions given an r value  see Table 3.2  
 
 testseq <- seq(1.9,2.59,0.01)    
@@ -75,14 +80,14 @@ for (i in 1:nseq) {  # i = 31
 }    
 
 
-# R-chunk 7 
+# R-chunk 7  page 41 - 42, Table 3.2. Code not in the book.
 #unique repeated Nt values 100 = non-equilibrium or chaos   
  
 kable(halftable(result,yearcol = "r"),)    
 
 
 ### Classical Bifurcation Diagram of Chaos    
-# R-chunk 8 
+# R-chunk 8 pages 42 - 43
 #the R code for the bifurcation function   
  
 bifurcation <- function(testseq,taill=100,yrs=1000,limy=0,incx=0.001){    
@@ -111,7 +116,7 @@ bifurcation <- function(testseq,taill=100,yrs=1000,limy=0,incx=0.001){
 } # end of bifurcation    
 
 
-# R-chunk 9 
+# R-chunk 9 page 43 
 #Alternative r value arrangements for you to try; Fig 3.3    
 #testseq <- seq(2.847,2.855,0.00001) #hash/unhash as needed    
 #bifurcation(testseq,limy=c(600,740),incx=0.0001) # t    
@@ -123,7 +128,7 @@ bifurcation(testseq,limy=0)
 
 
 ### The Effect of Fishing on Dynamics    
-# R-chunk 10 
+# R-chunk 10  page 43 - 44.
 #Effect of catches on stability properties of discretelogistic   
  
 yrs=50; Kval=1000.0    
@@ -133,7 +138,7 @@ catch200 <- discretelogistic(r=2.56,K=Kval,N0=500,Ct=200,Yrs=yrs)
 catch300 <- discretelogistic(r=2.56,K=Kval,N0=500,Ct=300,Yrs=yrs)    
 
 
-# R-chunk 11 
+# R-chunk 11 page 45
 #Effect of different catches on n-cyclic behaviour Fig3.4   
  
 plottime <- function(x,ylab) {    
@@ -153,7 +158,7 @@ plottime(catch300,"Catch = 300")
 mtext("years",side=1,outer=TRUE,line=-0.2,font=7,cex=1.0)     
 par(oldpar)
 
-# R-chunk 12 
+# R-chunk 12 page 46
 #Phase plot for Schaefer model Fig 3.5    
 
 plotphase <- function(x,label,ymax=0) { #x from discretelogistic    
@@ -181,7 +186,7 @@ par(oldpar)    # this line not in book
 ### Determinism    
 ## Age-Structured Modelling Concepts    
 ### Survivorship in a Cohort    
-# R-chunk 13 
+# R-chunk 13 pages 48 - 49
 #Exponential population declines under different Z. Fig 3.6   
  
 yrs <- 50;  yrs1 <- yrs + 1 # to leave room for B[0]    
@@ -199,7 +204,7 @@ legend("topright",legend=paste0("Z = ",Z),col=1:nZ,lwd=3,
 par(oldp)  # this line not in book
 
 ### Instantaneous vs Annual Mortality Rates    
-# R-chunk 14 
+# R-chunk 14 page 51
 #Prepare matrix of harvest rate vs time to appoximate F   
  
 Z <- -log(0.5)    
@@ -218,13 +223,13 @@ for (i in 1:nfrac) {
 }    
 
 
-# R-chunk 15 
+# R-chunk 15 page 51 Table 3.3, code not shown in book
 #output of constant Z for shorter and shorter periods    
 
 kable(result,digits=c(10,0,8,4))    
 
 
-# R-chunk 16 
+# R-chunk 16 page 51
 #Annual harvest rate against instantaneous F, Fig 3.7  
   
 Fi <- seq(0.001,2,0.001)    
@@ -235,8 +240,9 @@ plot(Fi,H,type="l",lwd=2,panel.first=grid(),xlab="Instantaneous Fishing Mortalit
 lines(c(0,1),c(0,1),lwd=2,lty=2,col=2)    
 par(oldpar)   # this line not in book
 
+
 ## Simple Yield per Recruit    
-# R-chunk 17 
+# R-chunk 17  page 53
 # Simple Yield-per-Recruit see Russell (1942)   
  
 age <- 1:11;  nage <- length(age); N0 <- 1000  # some definitions    
@@ -258,32 +264,32 @@ for (i in 1:nH) {                # loop through the harvest rates
 totC <- t(colSums(CatchW,na.rm=TRUE))   # simplify later printing    
 
 
-# R-chunk 18 
+# R-chunk 18 page 54 Table 3.4 code not shown in book
 #Tabulate numbers-at-age for different harvest rates  needs knitr
   
 kable(NaA,digits=c(0,0,0,0,0,0,0,0,1,1),row.names=TRUE)    
 
 
-# R-chunk 19 
+# R-chunk 19 page 54, Table 3.5, code not shown in book.
 #Tabulate Weight-at-age for different harvest rates   
  
 kable(CatchW[2:11,],digits=c(2,2,2,2,2,2,2,2,2,2),row.names=TRUE)    
 
 
-# R-chunk 20 
+# R-chunk 20 page 54, Table 3.6, code not shown in book.
 #Total weights vs Harvest rate   
  
 kable(totC,digits=c(1,1,1,1,1,1,1,1,1,1))    
 
 
-# R-chunk 21 
+# R-chunk 21 page 55
 #Use MQMF::plot1 for a quick plot of the total catches. Figure 3.8    
 
 oldpar <- plot1(H,totC,xlab="Harvest Rate",ylab="Total Yield",lwd=2)    
 par(oldpar) # to reset the par values if desired
 
 ### Selectivity in Yield-per-Recruit    
-# R-chunk 22 
+# R-chunk 22 Page 56
 #Logistic S shaped cureve for maturity    
 
 ages <- seq(0,50,1)    
@@ -300,7 +306,7 @@ legend("topleft",c("25_15.04","30_10.986","25_9.155"),col=c(1,2,3),
 par(oldp)
 
 ### The Baranov Catch Equation    
-# R-chunk 23 
+# R-chunk 23 Page 58
 # Baranov catch equation  
   
 age <- 0:12;  nage <- length(age)     
@@ -312,7 +318,7 @@ N0 <- 1000
 out <- cbind(bce(M,Ft,N0,age),"Select"=sa)  # out becomes Table 3.7    
 
 
-# R-chunk 24 
+# R-chunk 24 page 59, Table 3.7, code not shown in book.
 #tabulate output from Baranov Catch Equations     
 
 kable(out,digits=c(3,3,3,3))    
@@ -320,7 +326,7 @@ kable(out,digits=c(3,3,3,3))
 
 ### Growth and Weight-at-Age   
 ## Full Yield-per-Recruit    
-# R-chunk 25 
+# R-chunk 25 Page 60 - 61
 # A more complete YPR analysis    
 
 age <- 0:20;  nage <- length(age) #storage vectors and matrices    
@@ -346,7 +352,7 @@ for (sel in 1:length(as50)) {
 } # end of sel loop    
 
 
-# R-chunk 26 
+# R-chunk 26  Page 61
 #A full YPR analysis  Figure 3.10    
 
 oldp <- plot1(H,yield[,3],xlab="Harvest Rate",ylab="Yield",cex=0.75,lwd=2)    
@@ -356,7 +362,7 @@ legend("bottomright",legend=as50,col=c(3,2,1),lwd=3,bty="n",
        cex=1.0,lty=c(3,2,1))     
 par(oldp)
 
-# R-chunk 27 
+# R-chunk 27 page 62, Table 3.8, code not shown in book.
 #Tabulate yield-per-recruit using Baranoc catch equation   
  
 kable(yield,digits=c(2,3,3,3))    

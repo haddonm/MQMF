@@ -7,7 +7,8 @@
 spmboot(optpar, fishery, iter = 1000, schaefer = TRUE)
 }
 \arguments{
-\item{optpar}{The optimum model parameters from an earlier analysis}
+\item{optpar}{The optimum model parameters from fitting a surplus production 
+model}
 
 \item{fishery}{fishery data containing the original observed cpue values}
 
@@ -25,7 +26,8 @@ spmboot conducts a bootstrap analysis on a spm model.
     It does this by saving the original fishery data, estimating 
     the cpue residuals, and multiplying the optimum predicted CPUE 
     by a bootstrap sample of the log-normal residuals (Haddon, 2011,
-    p311). This bootstrap sample of CPUE replaces the original 
+    p311; and the On Uncertainty chapter in the URMQMF book, p195). 
+    This bootstrap sample of CPUE replaces the original 
     fish[,"cpue"] and the model is re-fitted. This is repeated iter 
     times and the outputs reported ready for the derivation of 
     percentile confidence intervals. The optimum solution is used 
@@ -40,7 +42,7 @@ spmboot conducts a bootstrap analysis on a spm model.
  data(dataspm); fish <- as.matrix(dataspm)
  pars <- log(c(r=0.24,K=5150,Binit=2800,0.15))
  ans <- fitSPM(pars,dataspm,schaefer=TRUE,maxiter=1000)
- boots <- spmboot(ans$estimate,fishery=fish,iter=5,schaefer=TRUE)
+ boots <- spmboot(ans$estimate,fishery=fish,iter=5,schaefer=TRUE) 
  dynam <- boots$dynam
  bootpar <- boots$bootpar
  rows <- colnames(bootpar)
@@ -52,6 +54,6 @@ spmboot conducts a bootstrap analysis on a spm model.
    qtil <- quantile(tmp,probs=c(0.025,0.05,0.5,0.95,0.975),na.rm=TRUE)
    bootCI[i,] <- c(qtil,mean(tmp,na.rm=TRUE))
  }
- round(bootCI,3) # we have used only 5 bootstraps, normally use
- pairs(bootpar[,c("r","K","Binit","MSY")])   # 1000, 2000, or more
+ round(bootCI,3) # we used only 5 bootstraps for a speedy example, normally 
+ pairs(bootpar[,c("r","K","Binit","MSY")]) # use 1000, 2000, or more
 }

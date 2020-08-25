@@ -18,7 +18,7 @@ simpspm(
 or c(r, K, sigma), the sigma is required in both cases. Binit is 
 required if the fishery data starts after the stock has been
 depleted. Each parameter must be log-transformed for improved 
-model stability and is transformed inside simpspm.}
+model stability and is back-transformed inside simpspm.}
 
 \item{indat}{the data which needs to include year, catch, and cpue.}
 
@@ -26,14 +26,14 @@ model stability and is transformed inside simpspm.}
 a simple Schaefer model (p=1) or approximately a Fox model 
 (p=1e-08). The default is TRUE = Schaefer model}
 
-\item{year}{the column name within indat containing the years}
+\item{year}{column name within indat containing the years, default='year'}
 
-\item{cats}{the column name within indat containing the catches}
+\item{cats}{column name within indat containing the catches, default='catch'}
 
-\item{index}{the column name within indat containing the cpue.}
+\item{index}{column name within indat containing the cpue. default='cpue'}
 }
 \value{
-a vector of length nyrs of log(cpue)
+a vector of length nyrs of the predicted log(cpue)
 }
 \description{
 simpspm calculates only the predicted log(CPUE) for a 
@@ -47,7 +47,7 @@ simpspm calculates only the predicted log(CPUE) for a
     only a single cpue time-series. simpspm must have at least three 
     parameters, including the sigma, even if sum-of-squared residuals 
     is used as a minimizer, then sigma would just float. The column 
-    titles for year, catch and cpue are included to facilitate ease
+    names for year, catch and cpue are included to facilitate ease
     of use with other data sets.
 }
 \examples{

@@ -17,7 +17,7 @@ robustSPM(
 )
 }
 \arguments{
-\item{inpar}{the parameter set to begin the trials with}
+\item{inpar}{the parameter set with which to begin the trials}
 
 \item{fish}{the fisheries data: at least year, catch, and cpue}
 
@@ -31,7 +31,7 @@ smaller the value the more variable the outcome}
 default = FALSE}
 
 \item{schaefer}{default = TRUE, which sets the analysis to the 
-Schaefer model. setting it to FALSE applies the Fox model}
+Schaefer model. setting it to FALSE applies the approximate Fox model}
 
 \item{funk}{the function used to generate the predicted cpue}
 
@@ -43,8 +43,8 @@ which has a constraint on the first parameter to keep it > 0}
 default value is 1e-06, as usual.}
 }
 \value{
-a list of results from each run, the range of values across 
-    runs, and the median values.
+a list containing the results from each run, the range of values 
+    across runs, and the median values.
 }
 \description{
 robustSPM conducts a robustness test on the quality of 

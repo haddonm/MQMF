@@ -14,3 +14,11 @@ I have been re-reading the help pages for each function and fixing up typos as I
 # MQMF 0.1.0.850 24-08-2020
 
 Further amendments to the help pages within the MQMF functions. Modified plot1 to remove fixed parameters that could be passed via the ellipsis, ..., and modified setpalette in recognition that R4 is fully active so that now it can be used to reset the palette to the old R3 palette, should that be desired. 
+
+# MQMF 0.1.0.800 25-08-2020
+
+Final amendments to the help pages within the MQMF functions. Added the book's page numbers to each of the R code chunks in the example functions for chapter2 - chapter7.
+
+
+
+

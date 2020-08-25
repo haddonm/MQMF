@@ -10,20 +10,21 @@ getrmse(indat, invar = "cpue", inyr = "year")
 \item{indat}{the matrix, spmdat, or data.frame containing both a 'year'
 column and an invar column (default to 'cpue')}
 
-\item{invar}{the column whose rmse is wanted; defaults to 'cpue'}
+\item{invar}{the column name of the variable whose rmse is wanted; defaults 
+to 'cpue'}
 
-\item{inyr}{the column that points to the year name}
+\item{inyr}{the column name that points to the 'year' name}
 }
 \value{
 a list of the rmse and the loess predicted values of the invar 
     for each year in the time-series
 }
 \description{
-getrmse calculates the rmse of the input invar series 
-    (defaults to 'cpue') against an input 'year' time series. This is 
-    primarily designed to generate a more feasible estimate of the 
-    intrinsic variability of a cpue time-series that may be obtained 
-    from a cpue standardization
+getrmse calculates the root mean square error (rmse) of the 
+    input invar series (defaults to 'cpue') against an input 'year' time 
+    series. This is primarily designed to generate an alternative estimate 
+    of the intrinsic variability of a cpue time-series to that which may be 
+    obtained from a cpue standardization
 }
 \examples{
 year <- 1986:1994

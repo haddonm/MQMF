@@ -17,8 +17,9 @@ chapter5 is not an active function but rather acts
 ## Introduction     
 ## Productivity Parameters     
 ## Growth     
-### Seasonal Growth Curves     
-# R-chunk 1  
+### Seasonal Growth Curves    
+ 
+# R-chunk 1  Page 138
  #vB growth curve fit to Pitcher and Macdonald derived seasonal data     
  
 data(minnow); week <- minnow$week; length <- minnow$length     
@@ -28,7 +29,7 @@ bestvB <- nlm(f=negNLL,p=pars,funk=vB,ages=week,observed=length,
 predL <- vB(bestvB$estimate,0:160)     
 outfit(bestvB,backtran = FALSE,title="Non-Seasonal vB",parnames=label)     
  
-# R-chunk 2  
+# R-chunk 2  Page 139
  #plot the non-seasonal fit and its residuals.  Figure 5.1     
  
 oldp <- parset(plots=c(2,1),margin=c(0.35,0.45,0.02,0.05))      
@@ -43,7 +44,7 @@ points(week,resids,pch=16,cex=1.1,col="red")
 abline(h=0,col=1,lwd=1) 
 par(oldp)  # return par to old settings; this line not in book      
      
-# R-chunk 3  
+# R-chunk 3  Pages 139 - 140
  # Fit seasonal vB curve, parameters = Linf, K, t0, C, s, sigma     
  
 svb <- function(p,ages,inc=52) {     
@@ -57,7 +58,7 @@ predLs <- svb(bestsvb$estimate,0:160)
 outfit(bestsvb,backtran = FALSE,title="Seasonal Growth",     
        parnames=c("Linf","K","t0","C","s","sigma"))     
  
-# R-chunk 4  
+# R-chunk 4  Page 140
  #Plot seasonal growth curve and residuals   Figure 5.2     
  
 oldp <- parset(plots=c(2,1))  # MQMF utility wrapper function     
@@ -73,7 +74,7 @@ abline(h=0,col=1,lwd=1)
 par(oldp)  # return par to old settings; this line not in book     
  
 ### Fabens Method with Tagging Data     
-# R-chunk 5  
+# R-chunk 5  Pages 142 - 143
  # tagging growth increment data from Black Island, Tasmania     
  
 data(blackisland);  bi <- blackisland # just to keep things brief     
@@ -85,7 +86,7 @@ abline(h=0,col=1)
 par(oldp)  # return par to old settings; this line not in book     
  
 ### Fitting Models to Tagging Data     
-# R-chunk 6  
+# R-chunk 6  Page 144
  # Fit the vB and Inverse Logistic to the tagging data     
  
 linm <- lm(bi$dl ~ bi$l1) # simple linear regression     
@@ -102,7 +103,7 @@ modelil <- nlm(f=negNLL,p=param2,funk=invl,observed=bi$dl,indat=bi,
 outfit(modelil,backtran = FALSE,title="IL",parnames=label2)     
 predil <- invl(modelil$estimate,bi)     
  
-# R-chunk 7  
+# R-chunk 7  Page 145
  #growth curves and regression fitted to tagging data Fig 5.4     
  
 oldp <- parset(margin=c(0.4,0.4,0.05,0.05))     
@@ -116,7 +117,7 @@ legend("topright",c("vB","LinReg","IL"),lwd=3,bty="n",cex=1.2,
                     col=c(1,7,2),lty=c(1,2,2))     
 par(oldp)  # return par to old settings; this line not in book  
  
-# R-chunk 8  
+# R-chunk 8  Pages 145 - 146
  #residuals for vB and inverse logistic for tagging data Fig 5.5     
  
 oldp <- parset(plots=c(1,2),outmargin=c(1,1,0,0),margin=c(.25,.25,.05,.05))     
@@ -134,7 +135,7 @@ par(oldp)  # return par to old settings; this line not in book
  
 ### A Closer Look at the Fabens Methods     
 ### Implementation of Non-Constant Variances     
-# R-chunk 9  
+# R-chunk 9  Page 149
  # fit the Fabens tag growth curve with and without the option to      
  # modify variation with predicted length. See the MQMF function     
  # negnormL. So first no variation and then linear variation.      
@@ -159,7 +160,7 @@ modelvb2 <- nlm(f=negnormL,p=param,funk=fabens,funksig=sigfunk2,
                 typsize=magnitude(param),iterlim=200)     
 outfit(modelvb2,backtran = FALSE,parnames = label,title="vB inverse DeltaL, sigma < 1")     
  
-# R-chunk 10  
+# R-chunk 10  Page 150
  #plot to two Faben's lines with constant and varying sigma Fig 5.6     
  
 predvB <- fabens(modelvb$estimate,bi)     
@@ -176,7 +177,7 @@ par(oldp)  # return par to old settings; this line not in book
  
 ## Objective Model Selection     
 ### Akiake's Information Criterion     
-# R-chunk 11  
+# R-chunk 11  Page 152
  #compare the relative model fits of Vb and IL     
  
 cat("von Bertalanffy \n")     
@@ -185,7 +186,7 @@ cat("inverse-logistic \n")
 aicbic(modelil,bi)     
  
 ### Likelihood Ratio Test     
-# R-chunk 12  
+# R-chunk 12  Page 154
  # Likelihood ratio comparison of two growth models see Fig 5.4     
  
 vb <- modelvb$minimum # their respective -ve log-likelihoods     
@@ -198,14 +199,14 @@ round(likeratio(vb,il,dof),8)
 ## Maturity     
 ### Introduction     
 ### Alternative Maturity Ogives     
-# R-chunk 13  
+# R-chunk 13  Page 158
  # The Maturity data from tasab data-set     
  
 data(tasab)       # see ?tasab for a list of the codes used     
 properties(tasab) # summarize properties of columns in tasab     
 table(tasab$site,tasab$sex) # sites 1 & 2 vs F, I, and M     
  
-# R-chunk 14  
+# R-chunk 14  Page 158
  #plot the proportion mature vs shell length  Fig 5.7     
  
 propm <- tapply(tasab$mature,tasab$length,mean) #mean maturity at L     
@@ -214,7 +215,7 @@ oldp <- plot1(lens,propm,type="p",cex=0.9,xlab="Length mm",
       ylab="Proportion Mature")     
 par(oldp)  # return par to old settings; this line not in book  
      
-# R-chunk 15  
+# R-chunk 15  Pages 159 - 160
  #Use glm to estimate mature logistic     
  
 binglm <- function(x,digits=6) { #function to simplify printing     
@@ -236,7 +237,7 @@ cof <- outm$coefficients
 cat("Lm50 = ",-cof[1,1]/cof[2,1],"\n")     
 cat("IQ   = ",2*log(3)/cof[2,1],"\n")     
  
-# R-chunk 16  
+# R-chunk 16  Page 161
  #Add maturity logistics to the maturity data plot Fig 5.8     
  
 propm <- tapply(tasab$mature,tasab$length,mean) #prop mature     
@@ -257,7 +258,7 @@ par(oldp)  # return par to old settings; this line not in book
 
  
 ### The Assumption of Symmetry     
-# R-chunk 17  
+# R-chunk 17  Page 163
  #Asymmetrical maturity curve from Schnute and Richard's curve Fig5.9     
  
 L = seq(50,160,1)     
@@ -272,7 +273,7 @@ abline(h=c(0.25,0.5,0.75),lty=3,col="grey")
 abline(v=c(L25,L50,L75),lwd=c(1,2,1),col=c(1,2,1))  
 par(oldp)  # return par to old settings; this line not in book     
  
-# R-chunk 18  
+# R-chunk 18  Page 164 code not printed in the book     
  #Variation possible using the Schnute and Richard's Curve fig 5.10     
  # This code not printed in the book     
  
@@ -334,7 +335,7 @@ par(oldp)  # return par to old settings; this line not in book
 ### Properties of Good Stock Recruitment Relationships     
 ### Recruitment Overfishing     
 ### Beverton and Holt Recruitment     
-# R-chunk 19  
+# R-chunk 19  Page 169
  #plot the MQMF bh function for Beverton-Holt recruitment  Fig 5.11     
  
 B <- 1:3000     
@@ -348,7 +349,7 @@ abline(h=c(500,1000),col=1,lty=2)
 par(oldp)  # return par to old settings; this line not in book    
  
 ### Ricker Recruitment     
-# R-chunk 20  
+# R-chunk 20  Page 170
  #plot the MQMF ricker function for Ricker recruitment  Fig 5.12     
  
 B <- 1:20000     
@@ -363,7 +364,7 @@ par(oldp)  # return par to old settings; this line not in book
  
 ### Deriso's Generalized Model     
  
-# R-chunk 21  
+# R-chunk 21  Page 172
  # plot of three special cases from Deriso-Schnute curve  Fig. 5.13     
 deriso <- function(p,B) return(p[1] * B *(1 - p[2]*p[3]*B)^(1/p[3]))     
 B <- 1:10000     
@@ -382,7 +383,7 @@ par(oldp)  # return par to old settings; this line not in book
 ## Selectivity     
 ### Introduction     
 ### Logistic Selection     
-# R-chunk 22  
+# R-chunk 22  Page 177
  #Selectivity curves from logist and mature functions  See Fig 5.14   
  
 ages <- seq(0,50,1);   in50 <- 25.0     
@@ -401,7 +402,7 @@ par(oldp)  # return par to old settings; this line not in book
  
  
 ### Dome Shaped Selection     
-# R-chunk 23  
+# R-chunk 23  Page 179
  #Examples of domed-shaped selectivity curves from domed. Fig.5.15     
  
 L <- seq(1,30,1)     

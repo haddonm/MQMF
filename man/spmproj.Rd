@@ -16,7 +16,7 @@ spmproj(
 }
 \arguments{
 \item{parmat}{a matrix of N parameter vectors obtained from either 
-asymptotic errors (parasympt), bootstraps (parsboot), or from a
+asymptotic errors (parasympt), bootstraps (bootpar), or from a
 Bayesian analysis (parsbayes).}
 
 \item{indat}{the fisheries data used during model fitting}

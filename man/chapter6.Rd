@@ -16,8 +16,9 @@ chapter6 is not an active function but rather acts
 # On Uncertainty     
 ## Introduction     
 ### Types of Uncertainty     
-### The Example Model     
-# R-chunk 1  
+### The Example Model   
+  
+# R-chunk 1  Page 189
  #Fit a surplus production model to abdat fisheries data     
  
 data(abdat); logce <- log(abdat$cpue)       
@@ -26,7 +27,7 @@ label=c("r","K","Binit","sigma") # simpspm returns
 bestmod <- nlm(f=negLL,p=param,funk=simpspm,indat=abdat,logobs=logce)     
 outfit(bestmod,title="SP-Model",parnames=label) #backtransforms     
  
-# R-chunk 2  
+# R-chunk 2  Page 190
  #plot the abdat data and the optimum sp-model fit  Fig 6.1     
  
 predce <- exp(simpspm(bestmod$estimate,abdat))      
@@ -41,7 +42,7 @@ par(oldp)  # return par to old settings; this line not in book
 ## Bootstrapping     
 ### Empirical Probability Density Distributions     
 ## A Simple Bootstrap Example     
-# R-chunk 3  
+# R-chunk 3  Page 193
  #regression between catches of NPF prawn species Fig 6.2     
  
 data(npf)     
@@ -56,7 +57,7 @@ text(2700,180,label,cex=1.0,font=7,pos=4)
 par(oldp)  # return par to old settings; this line not in book  
   
  
-# R-chunk 4  
+# R-chunk 4  Page 194
 # 5000 bootstrap estimates of correlation coefficient Fig 6.3     
  
 set.seed(12321)     # better to use a less obvious seed, if at all     
@@ -80,7 +81,7 @@ text(0.48,300,label,cex=1.0,font=7,pos=4)
 par(oldp)  # return par to old settings; this line not in book    
  
 ## Bootstrapping Time-Series Data     
-# R-chunk 5  
+# R-chunk 5  Page 196
  # fitting Schaefer model with log-normal residuals with 24 years      
  
 data(abdat); logce <- log(abdat$cpue) # of abalone fisheries data     
@@ -92,12 +93,12 @@ optres <- abdat[,"cpue"]/predce     # optimum log-normal residual
 optmsy <- exp(optpar[1])*exp(optpar[2])/4     
 sampn <- length(optres)        # number of residuals and of years     
  
-# R-chunk 6  
+# R-chunk 6  Page 196 Table 6.1 code not included in the book      
  
 outtab <- halftable(cbind(abdat,predce,optres),subdiv=2)     
 kable(outtab, digits=c(0,0,3,3,3,0,0,3,3,3), caption='(ref:tab601)')     
  
-# R-chunk 7  
+# R-chunk 7  Pages 196 - 197
  # 1000 bootstrap Schaefer model fits; takes a few seconds     
  
 start <- Sys.time() # use of as.matrix faster than using data.frame     
@@ -117,7 +118,7 @@ for (i in 1:N) {  # fit the models and save solutions
 }     
 cat("total time = ",Sys.time()-start, "seconds   \n")     
  
-# R-chunk 8  
+# R-chunk 8  Page 197
  # bootstrap replicates in grey behind main plot Fig 6.4     
  
 oldp <- plot1(abdat[,"year"],abdat[,"cpue"],type="n",xlab="Year",     
@@ -128,7 +129,7 @@ points(abdat[,"year"],abdat[,"cpue"],pch=16,cex=1.0,col=1)
 lines(abdat[,"year"],predce,lwd=2,col=1) 
 par(oldp)  # return par to old settings; this line not in book      
  
-# R-chunk 9  
+# R-chunk 9  Pages 198 - 199
  #histograms of bootstrap parameters and model outputs Fig 6.5     
  
 dohist <- function(invect,nmvar,bins=30,bootres,avpar) { #adhoc     
@@ -148,7 +149,7 @@ abline(v=c(optmsy,msyB[pick]),lwd=c(3,2,3,2),col=c(3,4,4,4))
 par(oldp)  # return par to old settings; this line not in book      
  
 ### Parameter Correlation     
-# R-chunk 10  
+# R-chunk 10  Page 200
  #relationships between parameters and MSY  Fig 6.6     
  
 parboot1 <- cbind(parboot,msy)     
@@ -156,7 +157,7 @@ parboot1 <- cbind(parboot,msy)
 pairs(parboot1,pch=16,col=rgb(red=1,green=0,blue=0,alpha = 1/20))     
  
 ## Asymptotic Errors     
-# R-chunk 11  
+# R-chunk 11  Page 203
  #Fit Schaefer model and generate the Hessian     
  
 data(abdat)     
@@ -178,7 +179,7 @@ cat("Lower 95\% ",round(exp(L95),5),"\n")
  
 ### Uncertainty about the Model Outputs     
 ### Sampling from a Multi-Variate Normal Distribution     
-# R-chunk 12  
+# R-chunk 12  Page 204
  # Use multi-variate normal to generate percentile CI    Fig 6.7     
  
 library(mvtnorm) # use RStudio, or install.packages("mvtnorm")     
@@ -200,12 +201,12 @@ points(abdat[,"year"],abdat[,"cpue"],pch=16,cex=1.0)#orig data
 lines(abdat[,"year"],exp(simpspm(optpar,abdat)),lwd=2,col=1)  
 par(oldp)  # return par to old settings; this line not in book     
      
-# R-chunk 13  
+# R-chunk 13  Page 205
  #correlations between parameters when using mvtnorm Fig 6.8     
  
 pairs(cbind(mvnpar,msy),pch=16,col=rgb(red=1,0,0,alpha = 1/10))    
  
-# R-chunk 14  
+# R-chunk 14  Pages 206 - 207
  #N parameter vectors from the multivariate normal Fig 6.9     
  
 mvnres <- apply(mvnpar,2,quants)  # table of quantiles     
@@ -225,14 +226,14 @@ plothist(mvnpar[,"Binit"],optpar[3],"Binit",mvnres[pick,"Binit"])
 plothist(msy,meanmsy,"MSY",msymvn[pick])    
 par(oldp)  # return par to old settings; this line not in book   
  
-# R-chunk 15  
+# R-chunk 15   Page 208 Table 6.2 code not included in the book
  #Tabulate percentile CI from bootstrap (B) and multi-variate (mvn)     
  
 kable(cbind(bootres,msyB),digits=c(4,3,3,4,3), caption='(ref:tab602)')     
 kable(cbind(mvnres,msymvn),digits=c(4,3,3,4,3))     
  
 ## Likelihood Profiles     
-# R-chunk 16  
+# R-chunk 16  Page 209
  #Fit the Schaefer surplus production model to abdat     
  
 data(abdat); logce <- log(abdat$cpue)    # using negLL     
@@ -240,7 +241,7 @@ param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))
 optmod <- nlm(f=negLL,p=param,funk=simpspm,indat=abdat,logobs=logce)     
 outfit(optmod,parnames=c("r","K","Binit","sigma"))     
  
-# R-chunk 17  
+# R-chunk 17  Page 210
  #the code for MQMF's negLLP function     
  
 negLLP <- function(pars, funk, indat, logobs, initpar=pars,     
@@ -259,14 +260,14 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
   return(LL)     
 } # end of negLLP     
  
-# R-chunk 18  
+# R-chunk 18  Page 211
  #does negLLP give same answers as negLL when no parameters fixed?     
  
 param <- log(c(r= 0.42,K=9400,Binit=3400,sigma=0.05))      
 bestmod <- nlm(f=negLLP,p=param,funk=simpspm,indat=abdat,logobs=logce)     
 outfit(bestmod,parnames=c("r","K","Binit","sigma"))     
  
-# R-chunk 19  
+# R-chunk 19  Page 211
  #Likelihood profile for r values 0.325 to 0.45     
  
 rval <- seq(0.325,0.45,0.001)  # set up the test sequence     
@@ -286,18 +287,18 @@ for (i in 1:ntrial) {  #i <- 1
 }     
 minLL <- min(result[,"-veLL"]) #minimum across r values used.     
  
-# R-chunk 20  
+# R-chunk 20   Page 212 Table 6.3 code not included in the book
  #tabulate first 12 records from likelihood profile     
  
 kable(head(result,12),digits=c(3,3,3,4,5), caption='(ref:tab603)')     
  
 ### Likelihood Ratio Based Confidence Intervals     
-# R-chunk 21  
+# R-chunk 21  Page 213
  #likelihood profile on r from the Schaefer model Fig 6.10     
  
 plotprofile(result,var="r",lwd=2)  # review the code      
  
-# R-chunk 22  
+# R-chunk 22  Page 214
  #Likelihood profile for K values 7200 to 12000     
  
 Kval <- seq(7200,12000,10)     
@@ -319,24 +320,24 @@ minLLK <- min(resultK[,"-veLL"])
  #kable(head(result,12),digits=c(4,3,3,4,5))  # if wanted.     
  
  
-# R-chunk 23  
+# R-chunk 23  Page 214
  #likelihood profile on K from the Schaefer model Fig 6.11     
  
 plotprofile(resultK,var="K",lwd=2)     
  
 ### -ve Log-Likelihoods or Likelihoods     
-# R-chunk 24  
+# R-chunk 24  Page 215
  #translate -velog-likelihoods into likelihoods     
  
 likes <- exp(-resultK[,"-veLL"])/sum(exp(-resultK[,"-veLL"]),na.rm=TRUE)     
 resK <- cbind(resultK,likes,cumlike=cumsum(likes))     
  
-# R-chunk 25  
+# R-chunk 25   Page 216 Table 6.4 code not included in the book
  #tabulate head of likelihood profile matrix for K     
  
 kable(head(resK,8),digits=c(4,0,3,4,5,9,7),caption='(ref:tab604)')     
  
-# R-chunk 26  
+# R-chunk 26  Page 216 Figure 6.12 code not in the book
  #K parameter likelihood profile  Fig 6.12     
  
 oldp <- plot1(resK[,"K"],resK[,"likes"],xlab="K value",     
@@ -350,7 +351,7 @@ text(9500,0.005,label,cex=1.2,pos=4)
 par(oldp)  # return par to old settings; this line not in book   
  
 ### Percentile Likelihood Profiles for Model Outputs     
-# R-chunk 27  
+# R-chunk 27  Page 217 - 218
  #examine effect on -veLL of MSY values from 740 - 1050t     
  #need a different negLLP() function, negLLO(): O for output.     
  #now optvar=888.831 (rK/4), the optimum MSY, varval ranges 740-1050      
@@ -381,13 +382,13 @@ for (i in 1:ntrial) {  # i <- 1
 }     
 minLLO <- min(resultO[,"-veLL"])     
  
-# R-chunk 28  
+# R-chunk 28   Page 218 Table 6.5 code not included in the book
  #tabulate first and last few records of profile on MSY     
  
 kable(head(resultO[,1:7],4),digits=c(3,3,3,4,2,3,2),caption='(ref:tab605)')     
 kable(tail(resultO[,1:7],4),digits=c(3,3,3,4,2,3,2))     
  
-# R-chunk 29  
+# R-chunk 29   Page 219 Figure 6.13 code not included in the book
  #likelihood profile on MSY from the Schaefer model Fig 6.13     
  
 plotprofile(resultO,var="TrialMSY",lwd=2)     
@@ -398,8 +399,9 @@ plotprofile(resultO,var="TrialMSY",lwd=2)
 ### The Burn-in Period   
 ### Convergence to the Stationary Distribution     
 ### The Jumping Distribution     
-### Application of MCMC to the Example      
-# R-chunk 30  
+### Application of MCMC to the Example    
+  
+# R-chunk 30  Page 225
  #activate and plot the fisheries data in abdat  Fig 6.14     
  
 data(abdat)   # type abdat in the console to see contents     
@@ -408,7 +410,7 @@ plotspmdat(abdat) #use helper function to plot fishery stats vs year
  
 ### Markov Chain Monte Carlo     
 ### A First Example of an MCMC     
-# R-chunk 31  
+# R-chunk 31  Pages 228 - 229
  # Conduct MCMC analysis to illustrate burn-in. Fig 6.15     
  
 data(abdat);  logce <- log(abdat$cpue)     
@@ -444,7 +446,7 @@ cat("time   = ",Sys.time() - begin,"\n")
 cat("Accept = ",result4[[2]],"\n")     
  
  
-# R-chunk 32  
+# R-chunk 32  Pages 229 - 230
 #first example and start of 3 initial chains for MCMC Fig6.15     
  
 oldp <- parset(cex=0.85)        
@@ -459,14 +461,14 @@ lines(post3[1:P,"K"],post3[1:P,"r"],lwd=1,col=1)
 points(post3[1:P,"K"],post3[1:P,"r"],pch=2,cex=1.2,col=1)    
 par(oldp)  # return par to old settings; this line not in book   
  
-# R-chunk 33  
+# R-chunk 33  Pages 230 - 231
  #pairs plot of parameters from the first MCMC Fig 6.16     
  
 posterior <- result4[[1]][[1]]     
 msy <-posterior[,1]*posterior[,2]/4        
 pairs(cbind(posterior[,1:4],msy),pch=16,col=rgb(1,0,0,1/50),font=7)     
  
-# R-chunk 34  
+# R-chunk 34  Pages 231 - 232
  #plot the traces from the first MCMC example Fig 6.17     
  
 posterior <- result4[[1]][[1]]  
@@ -483,7 +485,7 @@ for (i in 1:4) {
 }    
 par(oldp)  # return par to old settings; this line not in book   
  
-# R-chunk 35  
+# R-chunk 35  Page 233
  #Use acf to examine auto-correlation with thinstep = 16   Fig 6.18     
  
 posterior <- result4[[1]][[1]]     
@@ -494,7 +496,7 @@ for (i in 1:4) auto <- acf(posterior[,i],type="correlation",lwd=2,
 par(oldp)  # return par to old settings; this line not in book  
  
  
-# R-chunk 36  
+# R-chunk 36  Pages 233 - 234
  #setup MCMC with thinstep of 128 per parameter  Fig 6.19     
  
 begin=gettime()     
@@ -514,7 +516,7 @@ cat(gettime() - begin)
  
  
 ### Marginal Distributions      
-# R-chunk 37  
+# R-chunk 37  Pages 235 - 236
  # plot marginal distributions from the MCMC  Fig 6.20     
  
 dohist <- function(x,xlab) { # to save a little space     
@@ -550,7 +552,7 @@ par(oldp)  # return par to old settings; this line not in book
   
  
 ## The Use of Rcpp     
-# R-chunk 38  
+# R-chunk 38  Pages 236 - 237
  #profile the running of do_MCMC  using the now well known abdat      
  
 data(abdat); logce <- log(abdat$cpue); fish <- as.matrix(abdat)       
@@ -564,14 +566,14 @@ Rprof(NULL)
 outprof <- summaryRprof()     
  
  
-# R-chunk 39  
+# R-chunk 39   Page 238 Table 6.6 code not included in the book
  #tabulate output of Rprof on do_MCMC function     
  
 kable(head(outprof$by.self,12),caption='(ref:tab606)')     
  
 ### Addressing Vectors and Matrices     
 ### Replacement for simpspm()     
-# R-chunk 40  
+# R-chunk 40  Page 240
  
 library(Rcpp)     
  #Send a text string containing the C++ code to cppFunction this will      
@@ -610,7 +612,7 @@ cppFunction('NumericVector simpspmC(NumericVector pars,
 }')     
  
  
-# R-chunk 41  
+# R-chunk 41  Page 241
  #Ensure results obtained from simpspm and simpspmC are same     
  
 library(microbenchmark)     
@@ -630,18 +632,18 @@ out2 <- rbind(out2,out2[2,]/out2[1,])
 rownames(out2) <- c("simpspm","simpspmC","TimeRatio")     
  
  
-# R-chunk 42  
+# R-chunk 42   Page 241 Table 6.7 code not included in the book
  #compare results from simpspm and simpspmC     
  
 kable(halftable(cbind(spmR,spmC)),row.names=TRUE,digits=c(4,4,4,4,4,4),caption='(ref:tab607)')     
  
  
-# R-chunk 43  
+# R-chunk 43   Page 242 Table 6.8 code not included in the book
  #output from microbenchmark comparison of simpspm and simpspmC     
  
 kable(out2,row.names=TRUE,digits=c(3,3,3,3,3,3,3,0),caption='(ref:tab608)')     
  
-# R-chunk 44  
+# R-chunk 44  Pages 242 - 243
  #How much does using simpspmC in do_MCMC speed the run time?     
  #Assumes Rcpp code has run, eg source("Rcpp_functions.R")     
  
@@ -672,7 +674,7 @@ postC <- resultC[[1]][[1]]
 cat("Time Ratio = ",timeC/timeR)     
  
  
-# R-chunk 45  
+# R-chunk 45  Page 243
 #compare marginal distributions of the 2 chains  Fig 6.21     
 
 oldp <- par(no.readonly=TRUE)  # this line not in the book
@@ -686,7 +688,7 @@ par(oldp)  # return par to old settings; this line not in book
   
  
 ### Multiple Independent Chains     
-# R-chunk 46  
+# R-chunk 46  Page 244
  #run multiple = 3 chains     
  
 setscale <- c(0.07,0.06,0.07,0.45)  # I only use a seed for      
@@ -700,7 +702,7 @@ resultC <- do_MCMC(chains=3,burnin=100,N=reps,thinstep=256,
 cat("time = ",gettime() - beginC," secs  \n")     
  
  
-# R-chunk 47  
+# R-chunk 47  Pages 244 - 245
  #3 chain run using simpspmC, 10000 reps, thinstep=256 Fig 6.22     
 
 oldp <- par(no.readonly=TRUE) 
@@ -715,7 +717,7 @@ for (i in 1:4) {
 } 
 par(oldp)  # return par to old settings; this line not in book      
  
-# R-chunk 48  
+# R-chunk 48  Pages 245 - 246
  #generate summary stats from the 3 MCMC chains     
  
 av <- matrix(0,nrow=3,ncol=4,dimnames=list(1:3,label))     
@@ -736,7 +738,7 @@ cat("Variance Relative to Mean Variance of Chains \n")
 relsig                                             
  
  
-# R-chunk 49  
+# R-chunk 49  Pages 246 - 247
  #compare quantile from the 2 most widely separate MCMC chains     
  
 tmp <- resultC$result[[2]] # the 10000 values of each parameter     
@@ -756,7 +758,7 @@ cat("97.5\% ",round(100*(ch1[5,] - ch2[5,])/ch1[5,],4),"\n")
  
  
 ### Replicates Required to Avoid Serial Correlation     
-# R-chunk 50  
+# R-chunk 50  Page 248
  #compare two higher thinning rates per parameter in MCMC     
  
 param <- log(c(r=0.39,K=9200,Binit=3400,sigma=0.05))     
@@ -771,7 +773,7 @@ result2 <- do_MCMC(chains=1,burnin=50,N=1000,thinstep=2048,
                    priorcalc=calcprior,scales=setscale,schaefer=TRUE)     
  
  
-# R-chunk 51  
+# R-chunk 51  Page 248
  #autocorrelation of 2 different thinning rate chains Fig6.23     
  
 posterior1 <- result1$result[[1]]     
@@ -791,7 +793,7 @@ for (i in 1:4) {
 mtext("Lag",side=1,line=-0.1,outer=TRUE,cex=1.2)     
 par(oldp)  # return par to old settings; this line not in book    
  
-# R-chunk 52  
+# R-chunk 52  Page 249
 #visual comparison of 2 chains marginal densities  Fig 6.24     
  
 oldp <- parset(plots=c(2,2),cex=0.85)      
@@ -803,7 +805,7 @@ for (i in 1:4) {
 }    
 par(oldp)  # return par to old settings; this line not in book   
  
-# R-chunk 53  
+# R-chunk 53  Pages 250 - 251
  #tablulate a summary of the two different thinning rates.     
  
 cat("1024 thinning rate \n")     

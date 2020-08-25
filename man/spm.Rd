@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm.r
 \name{spm}
 \alias{spm}
-\title{spm - calculates the dynamics of a Schaefer or Fox model}
+\title{spm calculates the dynamics of a Schaefer or Fox model}
 \usage{
 spm(inp, indat, schaefer = TRUE, year = "year", cats = "catch", index = "cpue")
 }
@@ -20,12 +20,12 @@ model using negative log-likelihoods.}
 be a simple Schaefer model (p=1) or approximately a Fox model 
 (p=1e-08). The default is TRUE}
 
-\item{year}{the name of the year variable (in case your dataset 
-names it fishingyearinwhichthecatchwastaken)}
+\item{year}{the column name of the year variable (in case your dataset 
+names it fishingyearinwhichthecatchwastaken), default='year'}
 
-\item{cats}{name of the catch variable, again this is for generality}
+\item{cats}{column name of the catch variable, default='catch'}
 
-\item{index}{the name of the cpue variable, for generality}
+\item{index}{the name of the cpue variable, default='cpue'}
 }
 \value{
 a list of five objects; parameters plus q, then outmat, the 

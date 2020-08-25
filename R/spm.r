@@ -32,18 +32,18 @@ altnegLL <- function(inp,indat) { # inp=pars; indat=dataspm
 #' @title fitSPM fits a surplus production model
 #'
 #' @description fitSPM fits a surplus production model (either Schaefer or 
-#'     Fox) by applying first optim (using Nelder-Mead) and then nlm. Being 
+#'     Fox) by first applying optim (using Nelder-Mead) and then nlm. Being 
 #'     automated it is recommended that this only be used once plausible 
 #'     initial parameters have been identified (through rules of thumb or 
 #'     trial and error). It uses negLL1 to apply a negative log-likelihood, 
 #'     assuming log-normal residual errors and uses a penalty to prevent 
-#'     the first parameter from becoming < 0.0. If that is not wanted then
+#'     the first parameter (r) from becoming < 0.0. If that is not wanted then
 #'     set funkone to FALSE, which would then use negLL by itself.
 #'     The output object is the usual object output from nlm, which can 
 #'     be neatly printed using the MQMF function outfit.
 #'     The $estimate values can be used in plotspmmod to plot the 
 #'     outcome, or in spmboot to conduct bootstrap sampling of the residuals 
-#'     from the CPUE model fit to gain an appreciation of any uncertainty 
+#'     from the CPUE model fit, to gain an appreciation of any uncertainty 
 #'     in the analysis. Because it requires log(parameters) it does not 
 #'     use the magnitude function to set the values of the parscale 
 #'     parameters.
@@ -51,7 +51,7 @@ altnegLL <- function(inp,indat) { # inp=pars; indat=dataspm
 #' @param pars the initial parameter values to start the search for the 
 #'     optimum. These need to be on the log-scale (log-transformed)
 #' @param fish the matrix containing the fishery data 'year', 'catch', and
-#'     'cpue' as a minimum. These exact headings are required.
+#'     'cpue' as a minimum. These exact column names are required.
 #' @param schaefer if TRUE, the default, then simpspm is used to fit the
 #'     Schaefer model. If FALSE then the approximate Fox model is fitted 
 #'     by setting the p parameter to 1e-08 inside simpspm.
@@ -87,7 +87,7 @@ fitSPM <- function(pars,fish,schaefer=TRUE,maxiter=1000,
    return(best2)
 } # end of fitSPM
 
-#' @title getlag used to look for the response of cpue to previous catches
+#' @title getlag is used to look for the response of cpue to previous catches
 #'
 #' @description getlag is a wrapper for the ccf function (cross correlation)
 #'     that is used within the spm analyses to determine at what
@@ -145,9 +145,9 @@ getlag <- function(fish,maxlag=10,plotout=TRUE,indexI=1) {
 #' @description getMSY calculates the MSY for the Polacheck et al 1993 
 #'     generalized surplus production equation. This simplifies to rK/4 
 #'     when p = 1.0. But this is a general equation that covers off for 
-#'     all values of p.
+#'     all positive values of p.
 #'
-#' @param pars the model parameters r, K, Binit, sigma; p is separate
+#' @param pars the model parameters r, K, Binit, sigma; p is kept separate
 #' @param p asymmetry parameter for the Polacheck et al 1993 equation,
 #'     default=1.0 = Schaefer
 #'     
@@ -170,16 +170,17 @@ getMSY <- function(pars,p=1.0) {
 
 #' @title getrmse calculates the rmse of the input 'invar' series
 #'
-#' @description getrmse calculates the rmse of the input invar series 
-#'     (defaults to 'cpue') against an input 'year' time series. This is 
-#'     primarily designed to generate a more feasible estimate of the 
-#'     intrinsic variability of a cpue time-series that may be obtained 
-#'     from a cpue standardization
+#' @description getrmse calculates the root mean square error (rmse) of the 
+#'     input invar series (defaults to 'cpue') against an input 'year' time 
+#'     series. This is primarily designed to generate an alternative estimate 
+#'     of the intrinsic variability of a cpue time-series to that which may be 
+#'     obtained from a cpue standardization
 #'
 #' @param indat the matrix, spmdat, or data.frame containing both a 'year'
 #'     column and an invar column (default to 'cpue')
-#' @param invar the column whose rmse is wanted; defaults to 'cpue'
-#' @param inyr the column that points to the year name
+#' @param invar the column name of the variable whose rmse is wanted; defaults 
+#'     to 'cpue'
+#' @param inyr the column name that points to the 'year' name
 #' @return a list of the rmse and the loess predicted values of the invar 
 #'     for each year in the time-series
 #' @export
@@ -222,13 +223,14 @@ getrmse <- function(indat,invar="cpue",inyr="year"){
 #'     when estimating the uncertainty around an spm fit, or when 
 #'     conducting projections from a model fit while attempting to 
 #'     account for uncertainty. Use of this function requires the 
-#'     mvnnorm package. It could be generalized to suit any model.
+#'     mvnnorm package. It could be generalized to suit any model. It is 
+#'     designed for use only with models fitted using maximum likelihood.
 #'
 #' @param bestmod the output from nlm containing the optimal parameters in
 #'     log-space, and the hessian
 #' @param N the number of parameter vectors to be sampled from the multi-
 #'     variate normal defined by the optimal parameters and the inverse of
-#'     the hessian (the variance covariance matrix).
+#'     the hessian (the variance-covariance matrix).
 #'
 #' @return an N x numpar matrix of parameter vectors
 #' @export
@@ -260,7 +262,7 @@ parasympt <- function(bestmod,N) {
 
 #' @title plotlag plots the effect of a lag between two variables
 #'
-#' @description the use of the function ccf can suggest a lagged 
+#' @description the use of the base function ccf can suggest a lagged 
 #'     relationship between a driver variable and a react(ing) variable. 
 #'     For example, cpue may respond to catches in a negative manner after 
 #'     a lag of a few years. One looks for a negative lag, which would 
@@ -540,7 +542,7 @@ plotspmmod <- function(inp,indat,schaefer=TRUE,limit=0.2,
 
 #' @title plotproj generate a plot of a matrix of biomass projections
 #' 
-#' @description plotproj generate a plot of a matrix of biomass projections
+#' @description plotproj generate a plot of a matrix of N biomass projections
 #'     and includes the option of including reference points relative to 
 #'     Bzero = K. Quantiles are included in the plot
 #'
@@ -548,7 +550,7 @@ plotspmmod <- function(inp,indat,schaefer=TRUE,limit=0.2,
 #' @param spmout the object output from the function spm
 #' @param qprob the quantiles to include in the plot, default=c(0.1,0.5,0.9)
 #' @param refpts the proportion of Bzero=K acting as limit and target
-#'     reference points
+#'     reference points ( a vector of two)
 #' @param fnt the font to use in the figure, default = 7 = bold Times
 #'
 #' @return This plots a graph and returns, invisibly, the requested 
@@ -657,7 +659,7 @@ plotspmdat <- function(x, ...){
 #'     points so that the random variation covers the parameter space 
 #'     reasonably well.
 #'
-#' @param inpar the parameter set to begin the trials with
+#' @param inpar the parameter set with which to begin the trials
 #' @param fish the fisheries data: at least year, catch, and cpue
 #' @param N number of random trials to run; default = 10 = not enough
 #' @param scaler the divisor that sets the degree of normal random 
@@ -666,7 +668,7 @@ plotspmdat <- function(x, ...){
 #' @param verbose progress and summary statistics to the screen? 
 #'     default = FALSE
 #' @param schaefer default = TRUE, which sets the analysis to the 
-#'     Schaefer model. setting it to FALSE applies the Fox model
+#'     Schaefer model. setting it to FALSE applies the approximate Fox model
 #' @param funk the function used to generate the predicted cpue
 #' @param funkone defaults=FALSE; use negLL or negLL1, with FALSE 
 #'     robustSPM will use negLL, with TRUE it will use negLL1
@@ -674,8 +676,8 @@ plotspmdat <- function(x, ...){
 #' @param steptol is the steptol from nlm as used in fitSPM, the 
 #'     default value is 1e-06, as usual.
 #'
-#' @return a list of results from each run, the range of values across 
-#'     runs, and the median values.
+#' @return a list containing the results from each run, the range of values 
+#'     across runs, and the median values.
 #' @export
 #'
 #' @examples
@@ -748,23 +750,23 @@ robustSPM <- function(inpar,fish,N=10,scaler=40,verbose=FALSE,
 #'     only a single cpue time-series. simpspm must have at least three 
 #'     parameters, including the sigma, even if sum-of-squared residuals 
 #'     is used as a minimizer, then sigma would just float. The column 
-#'     titles for year, catch and cpue are included to facilitate ease
+#'     names for year, catch and cpue are included to facilitate ease
 #'     of use with other data sets.
 #'
 #' @param pars the parameters of the SPM are either c(r,K,Binit,sigma),
 #'     or c(r, K, sigma), the sigma is required in both cases. Binit is 
 #'     required if the fishery data starts after the stock has been
 #'     depleted. Each parameter must be log-transformed for improved 
-#'     model stability and is transformed inside simpspm.
+#'     model stability and is back-transformed inside simpspm.
 #' @param indat the data which needs to include year, catch, and cpue. 
 #' @param schaefer a logical value determining whether the spm is to be 
 #'     a simple Schaefer model (p=1) or approximately a Fox model 
 #'     (p=1e-08). The default is TRUE = Schaefer model
-#' @param year the column name within indat containing the years
-#' @param cats the column name within indat containing the catches
-#' @param index the column name within indat containing the cpue.
+#' @param year column name within indat containing the years, default='year'
+#' @param cats column name within indat containing the catches, default='catch'
+#' @param index column name within indat containing the cpue. default='cpue'
 #'
-#' @return a vector of length nyrs of log(cpue)
+#' @return a vector of length nyrs of the predicted log(cpue)
 #' @export
 #'
 #' @examples
@@ -812,12 +814,13 @@ simpspm <- function(pars, indat,schaefer=TRUE,
 #' @param schaefer a logical value determining whether the spm is to 
 #'     be a simple Schaefer model (p=1) or approximately a Fox model 
 #'     (p=1e-08). The default is TRUE
-#' @param year the column name within indat containing the years
-#' @param cats the column name within indat containing the catches
+#' @param year column name within indat containing the years, default='year'
+#' @param cats column name within indat containing the catches, default='catch'
 #' @param index the prefix in the column names given to the indices of 
 #'     relative abundance used, perhaps 'cpue' as in cpueTW, cpueAL, 
 #'     etc. grep is used to search for columns containing this prefix 
-#'     to identify whether there are more than one column of cpue data.
+#'     to identify whether there are more than one column of cpue data. Be sure 
+#'     to only use the prefix for indices of relative abundance.
 #'
 #' @return a vector or matrix of nyrs of the predicted CPUE
 #' @export
@@ -857,7 +860,7 @@ simpspmM <- function(pars,indat,schaefer=TRUE,
   return(predCE)
 } # end of simpspmM
 
-#' @title spm - calculates the dynamics of a Schaefer or Fox model
+#' @title spm calculates the dynamics of a Schaefer or Fox model
 #'
 #' @description spm calculates the dynamics using a Schaefer of Fox 
 #'     model. The outputs include  predicted Biomass, year, catch, cpue,
@@ -882,10 +885,10 @@ simpspmM <- function(pars,indat,schaefer=TRUE,
 #' @param schaefer a logical value determining whether the spm is to 
 #'     be a simple Schaefer model (p=1) or approximately a Fox model 
 #'     (p=1e-08). The default is TRUE
-#' @param year the name of the year variable (in case your dataset 
-#'     names it fishingyearinwhichthecatchwastaken)
-#' @param cats name of the catch variable, again this is for generality
-#' @param index the name of the cpue variable, for generality
+#' @param year the column name of the year variable (in case your dataset 
+#'     names it fishingyearinwhichthecatchwastaken), default='year'
+#' @param cats column name of the catch variable, default='catch'
+#' @param index the name of the cpue variable, default='cpue'
 #'
 #' @return a list of five objects; parameters plus q, then outmat, the 
 #'     matrix with the dynamics, msy the maximum sustainable yield, and 
@@ -954,7 +957,8 @@ spm <- function(inp,indat,schaefer=TRUE,year="year",cats="catch",
 #'     It does this by saving the original fishery data, estimating 
 #'     the cpue residuals, and multiplying the optimum predicted CPUE 
 #'     by a bootstrap sample of the log-normal residuals (Haddon, 2011,
-#'     p311). This bootstrap sample of CPUE replaces the original 
+#'     p311; and the On Uncertainty chapter in the URMQMF book, p195). 
+#'     This bootstrap sample of CPUE replaces the original 
 #'     fish[,"cpue"] and the model is re-fitted. This is repeated iter 
 #'     times and the outputs reported ready for the derivation of 
 #'     percentile confidence intervals. The optimum solution is used 
@@ -965,7 +969,8 @@ spm <- function(inp,indat,schaefer=TRUE,year="year",cats="catch",
 #'     the median should provide some notion of any bias in the 
 #'     mean estimate.
 #'
-#' @param optpar The optimum model parameters from an earlier analysis
+#' @param optpar The optimum model parameters from fitting a surplus production 
+#'     model
 #' @param fishery fishery data containing the original observed cpue values
 #' @param iter the number of boostrap replicates to be run, default=1000
 #' @param schaefer default=TRUE, should a Schaefer or a Fox model be run
@@ -979,7 +984,7 @@ spm <- function(inp,indat,schaefer=TRUE,year="year",cats="catch",
 #'  data(dataspm); fish <- as.matrix(dataspm)
 #'  pars <- log(c(r=0.24,K=5150,Binit=2800,0.15))
 #'  ans <- fitSPM(pars,dataspm,schaefer=TRUE,maxiter=1000)
-#'  boots <- spmboot(ans$estimate,fishery=fish,iter=5,schaefer=TRUE)
+#'  boots <- spmboot(ans$estimate,fishery=fish,iter=5,schaefer=TRUE) 
 #'  dynam <- boots$dynam
 #'  bootpar <- boots$bootpar
 #'  rows <- colnames(bootpar)
@@ -991,8 +996,8 @@ spm <- function(inp,indat,schaefer=TRUE,year="year",cats="catch",
 #'    qtil <- quantile(tmp,probs=c(0.025,0.05,0.5,0.95,0.975),na.rm=TRUE)
 #'    bootCI[i,] <- c(qtil,mean(tmp,na.rm=TRUE))
 #'  }
-#'  round(bootCI,3) # we have used only 5 bootstraps, normally use
-#'  pairs(bootpar[,c("r","K","Binit","MSY")])   # 1000, 2000, or more
+#'  round(bootCI,3) # we used only 5 bootstraps for a speedy example, normally 
+#'  pairs(bootpar[,c("r","K","Binit","MSY")]) # use 1000, 2000, or more
 spmboot <- function(optpar,fishery,iter=1000,schaefer=TRUE) {
   out <- spm(inp=optpar,indat=fishery,schaefer=schaefer)
   outmat <- out$outmat
@@ -1033,28 +1038,29 @@ spmboot <- function(optpar,fishery,iter=1000,schaefer=TRUE) {
 
 #' @title spmCE - calculates the dynamics for multiple cpue time-series
 #'
-#' @description spmCE calculates the dynamics using a Schaefer of Fox 
+#' @description spmCE calculates the full dynamics using a Schaefer of Fox 
 #'     model and is used instead of spm when there are multiple index 
 #'     vectors. The outputs include  predicted Biomass, year, catch, 
 #'     cpue, predicted cpue, contributions to q, ssq, and depletion 
-#'     levels. Generally it would be more sensible to use simpspm when 
-#'     fitting a Schaefer model and simpfox when fitting a Fox model
-#'     as those functions are designed to generate only the predicted 
-#'     cpue required by the functions ssq and negLLM, but the example 
-#'     shows how it could be used. 
+#'     levels. Generally it would be more sensible to use simpspmM when 
+#'     fitting a Schaefer or Fox model as that function is designed to 
+#'     generate only the predicted cpue vectors required by the function 
+#'     negLLM, nevertheless, the example shows how it could be used. 
 #'
 #' @param inp a vector of 2 or 3 model parameters (r,K) or (r,K,Binit), 
 #'     you would use the latter if it was suspected that the fishery 
-#'     data started after some initial depletion had occurred. Then 
-#'     there should be the same number of sigma values as there are 
-#'     cpue time-series
+#'     data started after some initial depletion had occurred. In addition,  
+#'     there should then be the same number of sigma values as there are 
+#'     cpue time-series. For two cpue series with an initial depletion we 
+#'     would expect to have r, K, Binit, sigma1 and sigma2
 #' @param indat a matrix with at least columns 'year', 'catch', and 'cpue'
 #' @param schaefer a logical value determining whether the spm is to be a
 #'     simple Schaefer model (p=1) or approximately a Fox model (p=1e-08). 
 #'     The default is TRUE
-#' @param year the column name within indat containing the years
-#' @param cats the column name within indat containing the catches
-#' @param index the column name within indat containing the cpue.
+#' @param year column name within indat containing the years, default='year'
+#' @param cats column name within indat containing the catches, default='catch'
+#' @param index column name within indat containing the prefix for cpue,
+#'     default='cpue'
 #' @return a list of five objects; outmat the matrix with the dynamics 
 #'     results, q catchability, msy the maximum sustainable yield, the 
 #'     parameter values, and sumout, which contains r, K, B0, msy, p, 
@@ -1237,7 +1243,7 @@ spmphaseplot <- function(answer,Blim=0.2,Btarg=0.5,filename="",resol=200,
 #'     optimum future catch levels.
 #'
 #' @param parmat a matrix of N parameter vectors obtained from either 
-#'     asymptotic errors (parasympt), bootstraps (parsboot), or from a
+#'     asymptotic errors (parasympt), bootstraps (bootpar), or from a
 #'     Bayesian analysis (parsbayes).
 #' @param indat the fisheries data used during model fitting
 #' @param constC the constant catch level imposed in the projection years

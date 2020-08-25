@@ -12,7 +12,7 @@ log-space, and the hessian}
 
 \item{N}{the number of parameter vectors to be sampled from the multi-
 variate normal defined by the optimal parameters and the inverse of
-the hessian (the variance covariance matrix).}
+the hessian (the variance-covariance matrix).}
 }
 \value{
 an N x numpar matrix of parameter vectors
@@ -23,7 +23,8 @@ parasympt generates N vectors from a multi-variate normal
     when estimating the uncertainty around an spm fit, or when 
     conducting projections from a model fit while attempting to 
     account for uncertainty. Use of this function requires the 
-    mvnnorm package. It could be generalized to suit any model.
+    mvnnorm package. It could be generalized to suit any model. It is 
+    designed for use only with models fitted using maximum likelihood.
 }
 \examples{
   data(abdat)

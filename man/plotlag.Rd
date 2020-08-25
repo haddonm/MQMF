@@ -41,7 +41,7 @@ a list containing some summary results, the anova of the linear
     model fitted in aov, and a summary of the linear model in summ
 }
 \description{
-the use of the function ccf can suggest a lagged 
+the use of the base function ccf can suggest a lagged 
     relationship between a driver variable and a react(ing) variable. 
     For example, cpue may respond to catches in a negative manner after 
     a lag of a few years. One looks for a negative lag, which would 

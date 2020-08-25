@@ -14,7 +14,7 @@ plotproj(projs, spmout, qprob = c(0.1, 0.5, 0.9), refpts = NULL, fnt = 7)
 \item{qprob}{the quantiles to include in the plot, default=c(0.1,0.5,0.9)}
 
 \item{refpts}{the proportion of Bzero=K acting as limit and target
-reference points}
+reference points ( a vector of two)}
 
 \item{fnt}{the font to use in the figure, default = 7 = bold Times}
 }
@@ -23,7 +23,7 @@ This plots a graph and returns, invisibly, the requested
     quantiles and the proportion less than the limit reference point.
 }
 \description{
-plotproj generate a plot of a matrix of biomass projections
+plotproj generate a plot of a matrix of N biomass projections
     and includes the option of including reference points relative to 
     Bzero = K. Quantiles are included in the plot
 }

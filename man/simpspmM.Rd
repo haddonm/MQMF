@@ -28,14 +28,15 @@ index (see below) for example cpue1, cpue2, etc.}
 be a simple Schaefer model (p=1) or approximately a Fox model 
 (p=1e-08). The default is TRUE}
 
-\item{year}{the column name within indat containing the years}
+\item{year}{column name within indat containing the years, default='year'}
 
-\item{cats}{the column name within indat containing the catches}
+\item{cats}{column name within indat containing the catches, default='catch'}
 
 \item{index}{the prefix in the column names given to the indices of 
 relative abundance used, perhaps 'cpue' as in cpueTW, cpueAL, 
 etc. grep is used to search for columns containing this prefix 
-to identify whether there are more than one column of cpue data.}
+to identify whether there are more than one column of cpue data. Be sure 
+to only use the prefix for indices of relative abundance.}
 }
 \value{
 a vector or matrix of nyrs of the predicted CPUE

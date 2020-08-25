@@ -2,7 +2,7 @@
 % Please edit documentation in R/spm.r
 \name{getlag}
 \alias{getlag}
-\title{getlag used to look for the response of cpue to previous catches}
+\title{getlag is used to look for the response of cpue to previous catches}
 \usage{
 getlag(fish, maxlag = 10, plotout = TRUE, indexI = 1)
 }
