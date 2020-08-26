@@ -6,13 +6,14 @@
 \title{MQMF R functions for the New Book}
 \description{
 The MQMF package Provides R functions for use with the 
-    new book: Using R for Modelling and Quantitative Methods in 
-    Fisheries, being published by CRC Press / Chapman & Hall in 
-    their Using R series. Currently no vignettes are included but 
-    all examples from the chapters are included as functions. Try
-    ?chapter2, ?chapter3, ..., ?chapter7. The list of functions 
-    below is not complete so scroll to the bottom of any help file 
-    and click the link to the index of functions instead. A 
+    new book: (\emph{Using R for Modelling and Quantitative Methods in 
+    Fisheries}), being published by CRC Press / Chapman & Hall in 
+    their (\emph{Using R}) series. Currently no vignettes are included but 
+    all examples from the chapters are included as help pages for functions. 
+    Try ?chapter2, ?chapter3, ..., ?chapter7, which will provide a listing
+    of all the code chunks included in the book (and some that are not). 
+    The list of functions below is not complete so scroll to the bottom of 
+    any help file and click the link to the index of functions instead. A 
     development version is available on GitHub at github.com/haddonm/MQMF.
 }
 \section{Some of the utility functions}{
@@ -36,7 +37,7 @@ The MQMF package Provides R functions for use with the
       or nlminb}
   \item{printV}{ prints a vector of numbers vertically rather than 
      horizontally}
-  \item{quants}{ used in apply to estimate quantiles across a vector}
+  \item{quants}{ used in 'apply' to estimate quantiles across a vector}
   \item{which.closest}{ finds the value in a vector closest to a given
       value.}
 }
@@ -45,21 +46,15 @@ The MQMF package Provides R functions for use with the
 \section{Some of the plotting and printing functions}{
 
 \describe{
-  \item{addnorm}{ adds a normal distribution to the output from hist}
-  \item{addlnorm}{ adds a log-normal distribution to output from hist}
+  \item{addnorm}{ fits a normal distribution to the output from hist}
+  \item{addlnorm}{ fits a log-normal distribution to output from hist}
   \item{inthist}{ plots a histogram of integer values more precisely
      than hist.}
-  \item{newplot}{ is a bare-bones setup routine to generate a plot
-     in RStudio using a floating window. If you want to alter the
-     default par settings then you can use either setplot() to get
-     suitable syntax or, more simply, use parsyn() which only give
-     a template for the par syntax}
   \item{parset}{ defines the par statement for a single plot}
   \item{parsyn}{ types the standard syntax for the par command to
      the console}
   \item{plot1}{ simplifies the plotting of two variables in a single
      plot}
-  \item{plot2}{ sets up a plotting window for two plots}
   \item{plotprep}{ Sets up a window and the par values for a plot.
      it checks to see if a graphics device is open and opens a new
      one if not. This is simply a utility function to save typing
@@ -72,11 +67,13 @@ The MQMF package Provides R functions for use with the
      device exists already or not.}
   \item{printV}{ returns a vector cbinded to 1:length(invect),
      which effectively prints the numbers vertically}
+  \item{properties}{ prints a listing of the properties of the column
+      variables within a data.frame}
 }
 }
 
 \references{
 Haddon, M. (2020) Using R for Modelling and Quantitative 
-    Methods in Fisheries, CRC Press / Chapman & Hall/ Boca Raton
+    Methods in Fisheries, CRC Press / Chapman & Hall/ Boca Raton 337p.
     ISBN: 9780367469894
 }

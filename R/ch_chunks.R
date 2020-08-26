@@ -1,7 +1,7 @@
 
 # chapter2 --------
 
-#' @title chapter2 The 14 R-code chunks from A Non-Introduction to R
+#' @title chapter2 The 15 R-code chunks from A Non-Introduction to R
 #'
 #' @description chapter2 contains no active function but rather acts 
 #'     as a repository for the various example code chunks found in 

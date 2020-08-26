@@ -19,6 +19,9 @@ Further amendments to the help pages within the MQMF functions. Modified plot1 t
 
 Final amendments to the help pages within the MQMF functions. Added the book's page numbers to each of the R code chunks in the example functions for chapter2 - chapter7.
 
+# MQMF 0.1.1 26-08-2020
+
+Final version of MQMF for the next release to CRAN, still have pre-CRAN checks to complete.
 
 
 
