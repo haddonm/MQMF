@@ -17,7 +17,7 @@ getseed generates a seed for use within set.seed.
     first required. Here, in getseed, we do not use the process ID so 
     the process is not identical but this at least allows the 
     set.seed value to be stored should the need to repeat a set of 
-    simulations arise. The process generates up to a seve digit number
+    simulations arise. The process generates up to a seven digit number
     it then randomly reorders those digits and that becomes the seed.
     That way, if you were to call getseed in quick succession the
     seeds generated should differ even when they are generated close

@@ -104,7 +104,7 @@ bh <- function(p,B) {
 #' @param K carrying capacity; default = 1000.0
 #' @param N0 Initial population size; default=50.0 = 5 percent depletion. Note
 #'     that the term 'depletion' can be confusing. Surely 50 remaining from 1000
-#'     should be a depletion of 95 precent? But no, it is deemed to be the 
+#'     should be a depletion of 95 percent? But no, it is deemed to be the 
 #'     complement of 5 percent. 
 #' @param Ct annual catch default = 0.0
 #' @param Yrs years of population growth, default=50
@@ -760,7 +760,7 @@ ricker <- function(p,B) {
 #'     parameter to replace the 1.0 on top of the divisor. The main point of the
 #'     curve, however, was to demonstrate how the different equations were 
 #'     related to one another. In working situations it is most efficient 
-#'     to use the original, simpler, curve/qeuation.
+#'     to use the original, simpler, curve/equation.
 #'
 #' @param p a vector of four parameters begin Schnute and Richards' 
 #'     a, b, c, and alpha, in that order.

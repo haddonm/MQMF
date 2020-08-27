@@ -972,7 +972,7 @@ spm <- function(inp,indat,schaefer=TRUE,year="year",cats="catch",
 #' @param optpar The optimum model parameters from fitting a surplus production 
 #'     model
 #' @param fishery fishery data containing the original observed cpue values
-#' @param iter the number of boostrap replicates to be run, default=1000
+#' @param iter the number of bootstrap replicates to be run, default=1000
 #' @param schaefer default=TRUE, should a Schaefer or a Fox model be run
 #'
 #' @return a list of two matrices. One containing the bootstrap parameters 

@@ -31,7 +31,7 @@ srug implements the Schnute and Richards (1990) unified
     parameter to replace the 1.0 on top of the divisor. The main point of the
     curve, however, was to demonstrate how the different equations were 
     related to one another. In working situations it is most efficient 
-    to use the original, simpler, curve/qeuation.
+    to use the original, simpler, curve/equation.
 }
 \examples{
  L <- seq(50,160,1)

@@ -12,7 +12,7 @@ model}
 
 \item{fishery}{fishery data containing the original observed cpue values}
 
-\item{iter}{the number of boostrap replicates to be run, default=1000}
+\item{iter}{the number of bootstrap replicates to be run, default=1000}
 
 \item{schaefer}{default=TRUE, should a Schaefer or a Fox model be run}
 }

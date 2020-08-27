@@ -19,7 +19,7 @@ a vector of numbers
 \description{
 getvector, when reading in a csv file using readLines,
     getvector extracts a line of numbers from a specified line within
-    the readLine object.This function works out how many numbers there
+    the readLines object.This function works out how many numbers there
     are. If you wish to add a comment at the end of a vector of numbers
     it must be separated from them by the separator. e.g. a comma
 }

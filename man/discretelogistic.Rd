@@ -13,7 +13,7 @@ discretelogistic(r = 0.5, K = 1000, N0 = 50, Ct = 0, Yrs = 50, p = 1)
 
 \item{N0}{Initial population size; default=50.0 = 5 percent depletion. Note
 that the term 'depletion' can be confusing. Surely 50 remaining from 1000
-should be a depletion of 95 precent? But no, it is deemed to be the 
+should be a depletion of 95 percent? But no, it is deemed to be the 
 complement of 5 percent.}
 
 \item{Ct}{annual catch default = 0.0}

@@ -16,7 +16,7 @@ model, a minimum of 1, which is the default.}
 }
 \value{
 a vector of the likelihood ratio, the significance of any 
-    difference, the minmum difference required for significance, and
+    difference, the minimum difference required for significance, and
     the degrees of freedom.
 }
 \description{

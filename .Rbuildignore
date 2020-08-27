@@ -2,7 +2,6 @@
 ^data-raw\*$
 ^Meta$
 ^doc$
-^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^md$
@@ -10,3 +9,6 @@
 ^MQMF\.Rcheck$
 ^MQMF\.Rcheck\*$
 ^CRAN-RELEASE$
+^\.git$
+^\.gitignore$
+^MQMF\.Rproj$

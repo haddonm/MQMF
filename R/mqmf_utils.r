@@ -341,7 +341,7 @@ getname <- function(x) {
 #'     first required. Here, in getseed, we do not use the process ID so 
 #'     the process is not identical but this at least allows the 
 #'     set.seed value to be stored should the need to repeat a set of 
-#'     simulations arise. The process generates up to a seve digit number
+#'     simulations arise. The process generates up to a seven digit number
 #'     it then randomly reorders those digits and that becomes the seed.
 #'     That way, if you were to call getseed in quick succession the
 #'     seeds generated should differ even when they are generated close
@@ -427,7 +427,7 @@ gettime <- function() {
 #'
 #' @description getvector, when reading in a csv file using readLines,
 #'     getvector extracts a line of numbers from a specified line within
-#'     the readLine object.This function works out how many numbers there
+#'     the readLines object.This function works out how many numbers there
 #'     are. If you wish to add a comment at the end of a vector of numbers
 #'     it must be separated from them by the separator. e.g. a comma
 #' @param indat the readLines object
@@ -556,7 +556,7 @@ iscol <- function(incol="year",inmat) {
 #'     model, a minimum of 1, which is the default.
 #'
 #' @return a vector of the likelihood ratio, the significance of any 
-#'     difference, the minmum difference required for significance, and
+#'     difference, the minimum difference required for significance, and
 #'     the degrees of freedom.
 #' @export
 #'
