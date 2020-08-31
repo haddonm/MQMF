@@ -1,9 +1,9 @@
 Package: MQMF
 Title: Modelling and Quantitative Methods in Fisheries
 Version: 0.1.1
-Date: 2020-08-26
-Author: Malcolm Haddon
-Maintainer: Malcolm Haddon <malcolm.haddon@gmail.com>
+Date: 2020-08-27
+Authors@R: person("Malcolm","Haddon", email = "malcolm.haddon@gmail.com",
+           role = c("aut", "cre"))
 Description: Complements the book "Using R for Modelling and  
     Quantitative Methods in Fisheries" ISBN: 9780367469894, being 
     published in September 2020 by Chapman & Hall in their "Using R series". 
