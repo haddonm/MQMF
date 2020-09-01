@@ -23,5 +23,15 @@ Final amendments to the help pages within the MQMF functions. Added the book's p
 
 Final version of MQMF for the next release to CRAN, still have pre-CRAN checks to complete.
 
+# MQMF 0.1.1 31-08-2020
 
+The package was submitted to CRAN on 2020-08-31.
+It was accepted and released to CRAN on the same day (commit c41e0cace2).
+Mon, 31 Aug, 15:44 (22 hours ago)
+to me, CRAN-submissions
+
+Dear maintainer,
+thanks, package MQMF_0.1.1.tar.gz is on its way to CRAN.
+Best regards,
+CRAN teams' auto-check service
 
