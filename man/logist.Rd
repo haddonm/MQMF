@@ -7,10 +7,10 @@
 logist(inL50, delta, depend, knifeedge = FALSE)
 }
 \arguments{
-\item{inL50}{is the length at 50 percent selection/maturity/whatever}
+\item{inL50}{length at 50 percent the maximum selection/maturity/whatever}
 
 \item{delta}{is the difference in selection/maturity/whatever between
-inL50 and inL95}
+inL50 and inL95 (inL95 = length at 95 percent of maximum)}
 
 \item{depend}{a vector of lengths/ages for which the logistic value
 will be calculated.}
@@ -25,7 +25,7 @@ A vector of length(depend) with the predicted logistic values
 }
 \description{
 logist calculates a Logistic curve that can be used as a
-    selectivity function, or maturity curve, of wherever a logistic 
+    selectivity function, or maturity curve, or wherever a logistic 
     is required. This version uses the logistic function
     1/(1+exp(-log(19.0)*(lens-inL50)/delta)), which
     explicitly defines the L50 and uses delta = (inL95-inL50) as

@@ -11,8 +11,8 @@ fabens(par, indat, initL = "l1", delT = "dt")
 growth curve}
 
 \item{indat}{the matrix or data.frame of data columns containing at
-least the initial lengths and the deltaT, time intervals between
-tag release and recapture.}
+least the initial lengths at atgging and the deltaT, time intervals 
+between tag release and recapture.}
 
 \item{initL}{column name of the initial lengths within indat, 
 default="l1"}
@@ -26,8 +26,8 @@ a vector of predicted growth increments
 \description{
 fabens requires at least two parameters, Linf and K from
     the von Bertalanffy growth curve in a vector, as well as the 
-    initial length and the change in time between tag release and 
-    recapture. It then calculates the expected growth increment.
+    initial length at the time of tagging and the change in time between tag
+    release and recapture. It then calculates the expected growth increment.
 }
 \examples{
  data(blackisland)

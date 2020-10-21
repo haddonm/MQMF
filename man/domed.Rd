@@ -15,17 +15,27 @@ domed(p, L)
 a vector of selectivities
 }
 \description{
-domed uses 6 parameters and a set of mean size or age
-    classes to calculate a domed selectivity curve with a maximum 
-    of 1.0 (rescaling can be done outside the function), but has 
-    parameters for the selectivity of the initial and final 
-    size/age classes. There is an ascending limb and a descending 
-    limb with the potential of a plateau in between. The six 
-    parameters are 1) the age/size where selectivity first becomes 
-    1.0, 2) the size/age where selectivity first begins to decline, 
-    3) the steepness of the ascending limb, 4) the steepness of the
-    descending limb, 5) the selectivity of the first age/size
-    class, and 6) the selectivity of the last age/size class.
+domed uses 6 parameters and a set of mean size or age classes 
+    to calculate a domed selectivity curve with a maximum of 1.0 (rescaling 
+    can be done outside the function), but has parameters for the selectivity 
+    of the initial and final size/age classes. There is an ascending limb and 
+    a descending limb with the potential of a plateau in between. The six 
+    parameters are 1) the age/size where selectivity first becomes 1.0, 
+    2) the size/age where selectivity first begins to decline, 3) the 
+    steepness of the ascending limb, 4) the steepness of the descending limb, 
+    5) the selectivity of the first age/size class, and 6) the selectivity of 
+    the last age/size class. The descending limb of any dome shaped 
+    selectivity curves imply that the fishing gear used is unable to collect 
+    all representatives of the larger or older classes. The predicted numbers
+    of smaller or younger animals, that are only partially selected, are 
+    inflated because of the partial selection. If any larger or older animals 
+    are, in fact, caught, then the same inflation can happen to those animals 
+    as a result of the partial selection implied by the dome shape. Small and 
+    young animals weight very little, the same cannot be said for the larger 
+    or older animals. Some people refer to the extra biomass this phenomenon
+    can imply as 'ghost biomass', even though it might be real. Whatever the
+    case, when using dome shaped selectivity it is best to be aware of this
+    issue and to be cautious about how this is interpreted.
 }
 \examples{
   L <- seq(1,30,1)

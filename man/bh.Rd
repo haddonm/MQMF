@@ -16,10 +16,12 @@ a vector, the same length as B, of the predicted recruitment(s)
 }
 \description{
 bh implements the Beverton-Holt stock recruitment
-   equation R = aB/(b + B), where R is the recruitment, a and
-   b are the parameters and B is the spawning biomass. a is the 
-   maximum recruitment level and b is the biomass required to
-   generate 0.5 x maximum recruitment
+   equation R = a x B/(b + B), where R is the recruitment, a and
+   b are the parameters and B is the spawning biomass. In this
+   parameterization, a is the maximum recruitment level and b is the 
+   biomass required to generate 0.5 x maximum recruitment. An common 
+   alternative parameterization is to use R = S/(alpha + beta x S). Do not
+   confuse a with alpha and b with beta!
 }
 \examples{
   B <- 1:3000

@@ -28,10 +28,10 @@ bce the Baranov Catch Equation. The total mortality of
     by fishing and others dying naturally. We use the bce to estimate 
     the catch (those killed by fishing). The bce has value because some 
     fish that would be expected to die naturally can be expected to 
-    be caught and killed by fishing so estimating the catch is 
-    slightly more complex than numbers of fish available times the 
-    harvest rate, Nt x Ht. It is invariably better to use the 
-    Baranov Catch Equation when calculating the expected catches.
+    be caught and killed by fishing, so estimating the catch is 
+    rather more complex than numbers of fish available times the 
+    harvest rate, Nt x Ht. If is possible to use the Baranov Catch Equation 
+    when calculating the expected catches then it is usually better to do so.
 }
 \examples{
 age <- 0:25

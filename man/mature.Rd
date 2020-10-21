@@ -21,7 +21,7 @@ A vector of predicted proportion mature for the sizeage
 mature a function 1/(1+(1/exp(a + b x sizeage))) which can
     be expressed as exp(a + b x sizeage)/(1 + exp(a + b x sizeage)).
     This describes a symmetric logistic curve that has the property
-    Lm50 = -a/b and the interquartile distance is 2.log(3)/b.
+    Lm50 = -a/b and the inter-quartile distance is 2.log(3)/b.
 }
 \examples{
 a <- -14.383

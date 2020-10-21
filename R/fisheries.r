@@ -7,10 +7,10 @@
 #'     by fishing and others dying naturally. We use the bce to estimate 
 #'     the catch (those killed by fishing). The bce has value because some 
 #'     fish that would be expected to die naturally can be expected to 
-#'     be caught and killed by fishing so estimating the catch is 
-#'     slightly more complex than numbers of fish available times the 
-#'     harvest rate, Nt x Ht. It is invariably better to use the 
-#'     Baranov Catch Equation when calculating the expected catches.
+#'     be caught and killed by fishing, so estimating the catch is 
+#'     rather more complex than numbers of fish available times the 
+#'     harvest rate, Nt x Ht. If is possible to use the Baranov Catch Equation 
+#'     when calculating the expected catches then it is usually better to do so.
 #'
 #' @param M instantaneous rate of natural mortality, assumed constant
 #' @param Fat a vector of age-specific instantaneous rates of fishing
@@ -58,10 +58,12 @@ bce <- function(M,Fat,Nt,ages) {
 #' @title bh represents one version of Beverton-Holt recruitment
 #' 
 #' @description bh implements the Beverton-Holt stock recruitment
-#'    equation R = aB/(b + B), where R is the recruitment, a and
-#'    b are the parameters and B is the spawning biomass. a is the 
-#'    maximum recruitment level and b is the biomass required to
-#'    generate 0.5 x maximum recruitment 
+#'    equation R = a x B/(b + B), where R is the recruitment, a and
+#'    b are the parameters and B is the spawning biomass. In this
+#'    parameterization, a is the maximum recruitment level and b is the 
+#'    biomass required to generate 0.5 x maximum recruitment. An common 
+#'    alternative parameterization is to use R = S/(alpha + beta x S). Do not
+#'    confuse a with alpha and b with beta!
 #'
 #' @param p a vector of the a and b parameters
 #' @param B a vector, possibly of length 1, of spawning biomass levels
@@ -87,7 +89,7 @@ bh <- function(p,B) {
 #'     
 #'     The time-series nature of population growth is clear from 
 #'     the fact that Nt+1 is a function of Nt. One can thus expect serial
-#'     correlation. Setting the r parameter to <= 1.0, would 
+#'     correlation. Setting the r parameter to values <= 1.0, would 
 #'     generate monotonically damped equilibria. r values between 
 #'     1 < r < 2.03 would generate damped oscillatory equilibria, r 
 #'     values from 2.03 < r < 2.43 should generate stable limit cycles 
@@ -105,7 +107,7 @@ bh <- function(p,B) {
 #' @param N0 Initial population size; default=50.0 = 5 percent depletion. Note
 #'     that the term 'depletion' can be confusing. Surely 50 remaining from 1000
 #'     should be a depletion of 95 percent? But no, it is deemed to be the 
-#'     complement of 5 percent. 
+#'     complement of 5 percent. Fisheries jargon can be confusing. 
 #' @param Ct annual catch default = 0.0
 #' @param Yrs years of population growth, default=50
 #' @param p the production curve asymmetry parameter. the default 
@@ -141,17 +143,27 @@ discretelogistic <- function(r=0.5,K=1000.0,N0=50.0,Ct=0.0,Yrs=50,p=1.0) {
 
 #' @title domed calculates domed selectivity curves
 #' 
-#' @description domed uses 6 parameters and a set of mean size or age
-#'     classes to calculate a domed selectivity curve with a maximum 
-#'     of 1.0 (rescaling can be done outside the function), but has 
-#'     parameters for the selectivity of the initial and final 
-#'     size/age classes. There is an ascending limb and a descending 
-#'     limb with the potential of a plateau in between. The six 
-#'     parameters are 1) the age/size where selectivity first becomes 
-#'     1.0, 2) the size/age where selectivity first begins to decline, 
-#'     3) the steepness of the ascending limb, 4) the steepness of the
-#'     descending limb, 5) the selectivity of the first age/size
-#'     class, and 6) the selectivity of the last age/size class.
+#' @description domed uses 6 parameters and a set of mean size or age classes 
+#'     to calculate a domed selectivity curve with a maximum of 1.0 (rescaling 
+#'     can be done outside the function), but has parameters for the selectivity 
+#'     of the initial and final size/age classes. There is an ascending limb and 
+#'     a descending limb with the potential of a plateau in between. The six 
+#'     parameters are 1) the age/size where selectivity first becomes 1.0, 
+#'     2) the size/age where selectivity first begins to decline, 3) the 
+#'     steepness of the ascending limb, 4) the steepness of the descending limb, 
+#'     5) the selectivity of the first age/size class, and 6) the selectivity of 
+#'     the last age/size class. The descending limb of any dome shaped 
+#'     selectivity curves imply that the fishing gear used is unable to collect 
+#'     all representatives of the larger or older classes. The predicted numbers
+#'     of smaller or younger animals, that are only partially selected, are 
+#'     inflated because of the partial selection. If any larger or older animals 
+#'     are, in fact, caught, then the same inflation can happen to those animals 
+#'     as a result of the partial selection implied by the dome shape. Small and 
+#'     young animals weight very little, the same cannot be said for the larger 
+#'     or older animals. Some people refer to the extra biomass this phenomenon
+#'     can imply as 'ghost biomass', even though it might be real. Whatever the
+#'     case, when using dome shaped selectivity it is best to be aware of this
+#'     issue and to be cautious about how this is interpreted.
 #'
 #' @param p a vector of six parameters.
 #' @param L a vector of the mean of nL age/size classes
@@ -189,14 +201,14 @@ domed <- function(p,L) {
 #' 
 #' @description fabens requires at least two parameters, Linf and K from
 #'     the von Bertalanffy growth curve in a vector, as well as the 
-#'     initial length and the change in time between tag release and 
-#'     recapture. It then calculates the expected growth increment.
+#'     initial length at the time of tagging and the change in time between tag
+#'     release and recapture. It then calculates the expected growth increment.
 #'
 #' @param par a vector of at least Linf, and K from the von Bertalanffy 
 #'     growth curve
 #' @param indat the matrix or data.frame of data columns containing at
-#'     least the initial lengths and the deltaT, time intervals between
-#'     tag release and recapture.
+#'     least the initial lengths at atgging and the deltaT, time intervals 
+#'     between tag release and recapture.
 #' @param initL column name of the initial lengths within indat, 
 #'     default="l1"
 #' @param delT column name of the time interval, deltaT, within indat,
@@ -291,14 +303,15 @@ invl <- function(par,indat,initL="l1",delT="dt") {
 #' @title logist Logistic selectivity function
 #'
 #' @description logist calculates a Logistic curve that can be used as a
-#'     selectivity function, or maturity curve, of wherever a logistic 
+#'     selectivity function, or maturity curve, or wherever a logistic 
 #'     is required. This version uses the logistic function
 #'     1/(1+exp(-log(19.0)*(lens-inL50)/delta)), which
 #'     explicitly defines the L50 and uses delta = (inL95-inL50) as
 #'     the second parameter.
-#' @param inL50 is the length at 50 percent selection/maturity/whatever
+#'     
+#' @param inL50 length at 50 percent the maximum selection/maturity/whatever
 #' @param delta is the difference in selection/maturity/whatever between
-#'     inL50 and inL95
+#'     inL50 and inL95 (inL95 = length at 95 percent of maximum)
 #' @param depend a vector of lengths/ages for which the logistic value
 #'     will be calculated.
 #' @param knifeedge defaults to FALSE. If knifeedge is TRUE then the
@@ -331,7 +344,7 @@ logist <- function(inL50,delta,depend,knifeedge=FALSE) {
 #' @description mature a function 1/(1+(1/exp(a + b x sizeage))) which can
 #'     be expressed as exp(a + b x sizeage)/(1 + exp(a + b x sizeage)).
 #'     This describes a symmetric logistic curve that has the property
-#'     Lm50 = -a/b and the interquartile distance is 2.log(3)/b.
+#'     Lm50 = -a/b and the inter-quartile distance is 2.log(3)/b.
 #'     
 #' @param a is the intercept of the exponential function usually -ve
 #' @param b is the gradient of the exponential function

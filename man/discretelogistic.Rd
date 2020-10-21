@@ -14,7 +14,7 @@ discretelogistic(r = 0.5, K = 1000, N0 = 50, Ct = 0, Yrs = 50, p = 1)
 \item{N0}{Initial population size; default=50.0 = 5 percent depletion. Note
 that the term 'depletion' can be confusing. Surely 50 remaining from 1000
 should be a depletion of 95 percent? But no, it is deemed to be the 
-complement of 5 percent.}
+complement of 5 percent. Fisheries jargon can be confusing.}
 
 \item{Ct}{annual catch default = 0.0}
 
@@ -36,7 +36,7 @@ discretelogistic is an implementation of equation 3.1
     
     The time-series nature of population growth is clear from 
     the fact that Nt+1 is a function of Nt. One can thus expect serial
-    correlation. Setting the r parameter to <= 1.0, would 
+    correlation. Setting the r parameter to values <= 1.0, would 
     generate monotonically damped equilibria. r values between 
     1 < r < 2.03 would generate damped oscillatory equilibria, r 
     values from 2.03 < r < 2.43 should generate stable limit cycles 
