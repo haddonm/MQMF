@@ -18,8 +18,7 @@ available on CRAN, but to install this development version from
 [GitHub](https://github.com/) you can use:
 
 ``` r
-if (!require(devtools)){install.packages("devtools")} 
-
+# install.packages("devtools") #  remove the first hash to install devtools
 devtools::install_github("https://github.com/haddonm/MQMF")
 ```
 

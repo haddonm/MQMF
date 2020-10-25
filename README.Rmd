@@ -22,8 +22,7 @@ Hardback and softback versions are available from _www.routledge.com_, but is al
 The release version of the __MQMF__ package (commit 88bc002499), is available on CRAN, but to install this development version from [GitHub](https://github.com/) you can use:
 
 ```{r echo=TRUE, eval=FALSE}
-if (!require(devtools)){install.packages("devtools")} 
-
+# install.packages("devtools") #  remove the first hash to install devtools
 devtools::install_github("https://github.com/haddonm/MQMF")
 ```
 
