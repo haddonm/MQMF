@@ -31,6 +31,15 @@ There are currently no vignettes, although the example code-chunks from
 the book are all available as the help pages of functions chapter2,
 chapter3, …, and chapter7.
 
+I have now put together the full **GitBook** version so that anyone can
+read the material on-line at: <https://haddonm.github.io/URMQMF>, where
+URMQMF is an abbreviation of *Using R for Modelling and Quantitative
+Methods in Fisheries*. The book itself has been published by Chapman &
+Hall/CRC in its
+[R-Series](https://www.routledge.com/Chapman--HallCRC-The-R-Series/book-series/CRCTHERSER),
+and is available from booksellers, including from
+[Routledge](https://www.routledge.com/Using-R-for-Modelling-and-Quantitative-Methods-in-Fisheries/Haddon/p/book/9780367469887).
+
 This new book is an evolution and adaptation of my book *Modelling and
 Quantitative Methods in Fisheries* (Haddon, 2011). It is designed to
 introduce materials needed to understand the use of R in fisheries and
