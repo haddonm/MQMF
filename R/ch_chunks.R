@@ -2808,7 +2808,7 @@ NULL
 #' str(boots,max.level=1)     
 #'  
 #' # R-chunk 26  Page 285
-#'  #Summarize bootstrapped parameter estimates as quantiles  Table 7.6    
+#'  #Summarize bootstrapped parameter estimates as quantiles  seen in Table 7.5    
 #'  
 #' bootpar <- boots$bootpar     
 #' rows <- colnames(bootpar)     
@@ -2819,7 +2819,9 @@ NULL
 #'    tmp <- bootpar[,i]     
 #'    qtil <- quantile(tmp,probs=c(0.025,0.05,0.5,0.95,0.975),na.rm=TRUE)     
 #'    bootCI[i,] <- c(qtil,mean(tmp,na.rm=TRUE))     
-#' }     
+#' } 
+#' 
+#' # R-chunk 27 page 285  # not visible in the book but this generates Table 7.5         
 #' kable(bootCI,digits=c(4,4,4,4,4,4))     
 #'  
 #' # R-chunk 28  Page 286

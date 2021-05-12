@@ -671,6 +671,10 @@ setpalette <- function(x="R4") { # x="R4"
 #'
 #' @param x the vector of values to be plotted as a histogram
 #' @param maxval the maximum value to be retained in the plotted data
+#' @param newplot is this a new, individual plot (=TRUE) or part of a multiple
+#'     pane plot (=FALSE, the default), which would negate using the notion of
+#'     recording the environment's par setting in oldpar, and returning to them
+#'     on exit
 #' @param ... any of the other arguments used by the base hist function
 #'
 #' @return nothing, but it does plot a histogram
@@ -681,9 +685,11 @@ setpalette <- function(x="R4") { # x="R4"
 #'   hist(x,breaks=30,main="",xlab="log-normal values")
 #'   uphist(x,breaks=30,main="",xlab="log-normal values",maxval=100)
 #'   uphist(x,breaks=30,main="",xlab="log-normal values",maxval=1000)
-uphist <- function(x,maxval=NA,...) {
-  oldpar <- par(no.readonly=TRUE)
-  on.exit(par(oldpar))
+uphist <- function(x,maxval=NA,newplot=FALSE,...) {
+  if (newplot) {
+    oldpar <- par(no.readonly=TRUE)
+    on.exit(par(oldpar))
+  }
   if (is.numeric(maxval)) {
     pick <- which(x > maxval)
     if (length(pick) > 0) x <- x[-pick]
