@@ -201,7 +201,7 @@ addlnorm <- function(inhist,xdata,inc=0.01) {
 inthist <- function(x,col=1,border=1,width=1,xlabel="",ylabel="",
                     main="",lwd=1,xmin=NA,xmax=NA,ymax=NA,plotout=TRUE,
                     prop=FALSE,inc=1,xaxis=TRUE) {
-  if (class(x) == "matrix") {
+  if (inherits(x,"matrix")) {
     counts <- x[,2]
     values <- x[,1]
   } else {

@@ -446,9 +446,11 @@ negLL <- function(pars,funk,logobs,...) {
   logpred <- funk(pars,...)
   pick <- which(is.na(logobs))
   if (length(pick) > 0) {
-    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(pars[npar]),log=T))
+    LL <- -sum(dnorm(x=logobs[-pick],mean=logpred[-pick],sd=exp(pars[npar]),
+                     log=TRUE))
   } else {
-    LL <- -sum(dnorm(logobs,logpred,exp(pars[npar]),log=T))
+    LL <- -sum(dnorm(x=logobs,mean=logpred,sd=exp(pars[npar]),
+                     log=TRUE))
   }
   return(LL)
 } # end of negLL
@@ -487,9 +489,10 @@ negLL1 <- function(pars,funk,logobs,...) {
   logpred <- funk(pars,...)
   pick <- which(is.na(logobs))
   if (length(pick) > 0) {
-    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(pars[npar]),log=T))
+    LL <- -sum(dnorm(x=logobs[-pick],mean=logpred[-pick],sd=exp(pars[npar]),
+                     log=TRUE))
   } else {
-    LL <- -sum(dnorm(logobs,logpred,exp(pars[npar]),log=T))
+    LL <- -sum(dnorm(x=logobs,mean=logpred,sd=exp(pars[npar]),log=TRUE))
   }
   LL <- LL + penalty0(exp(pars[1]))
   return(LL)
@@ -513,7 +516,7 @@ negLL1 <- function(pars,funk,logobs,...) {
 #' @param funk the function that generates the predicted cpue values.
 #'     for multiple time-series in a SPM use simpspmM
 #' @param logobs the log-transformed observed cpue columns in indat,
-#'     the data needed by funk, tranferred inside the ...
+#'     the data needed by funk, transferred inside the ...
 #' @param indat the fisheries data used in the analysis 
 #' @param index the prefix of the columns of each of the indices, 
 #'     defaults to cpue
@@ -545,9 +548,11 @@ negLLM <- function(pars,funk,logobs,indat,index="cpue",harvpen=TRUE,...) {
   for (i in 1:nce) {  #  i=1
     pick <- which(is.na(logobs[,i]))
     if (length(pick) > 0) {
-      LL <- LL + (-sum(dnorm(logobs[-pick,i],logpred[-pick,i],exp(sig[i]),log=T)))
+      LL <- LL + (-sum(dnorm(x=logobs[-pick,i],mean=logpred[-pick,i],
+                             sd=exp(sig[i]),log=TRUE)))
     } else {
-      LL <- LL + (-sum(dnorm(logobs[,i],logpred[,i],exp(sig[i]),log=T)))
+      LL <- LL + (-sum(dnorm(x=logobs[,i],mean=logpred[,i],sd=exp(sig[i]),
+                             log=TRUE)))
     }
   }
   hpen <- 0.0
@@ -598,7 +603,7 @@ negLLM <- function(pars,funk,logobs,indat,index="cpue",harvpen=TRUE,...) {
 negNLL <- function(pars,funk,observed,...) {
   npar <- length(pars)
   predobs <- funk(pars,...)
-  LL <- -sum(dnorm(observed,predobs,pars[npar],log=T))
+  LL <- -sum(dnorm(x=observed,mean=predobs,sd=pars[npar],log=TRUE))
   return(LL)
 } # end of negNLL
 
@@ -642,7 +647,7 @@ negNLL <- function(pars,funk,observed,...) {
 negnormL <- function(pars,funk,funksig,indat,obs="dl",...){
   predobs <- funk(pars,indat,...) #if sigma not a constant then
   sigma <- funksig(pars,predobs) #funksig produces a vector
-  LL <- -sum(dnorm(indat[,obs],predobs,sigma,log=T))
+  LL <- -sum(dnorm(x=indat[,obs],mean=predobs,sd=sigma,log=TRUE))
   return(LL)
 } # end of negnormL
 
@@ -723,9 +728,10 @@ negLLP <- function(pars, funk, indat, logobs, initpar=pars,
   logpred <- funk(usepar,indat,...)
   pick <- which(is.na(logobs))
   if (length(pick) > 0) {
-    LL <- -sum(dnorm(logobs[-pick],logpred[-pick],exp(pars[npar]),log=T))
+    LL <- -sum(dnorm(x=logobs[-pick],mean=logpred[-pick],sd=exp(pars[npar]),
+                     log=TRUE))
   } else {
-    LL <- -sum(dnorm(logobs,logpred,exp(pars[npar]),log=T))
+    LL <- -sum(dnorm(x=logobs,mean=logpred,sd=exp(pars[npar]),log=TRUE))
   }
   return(LL)
 } # end of negLLP

@@ -31,6 +31,7 @@ data(blackisland); bi <- blackisland
 param <- c(Linf=170.0,K=0.3,sigma=4.0)
 modelvb <- nlm(f=negNLL,p=param,funk=fabens,observed=bi$dl,indat=bi,
                initL="l1",delT="dt") # could have used the defaults
+# Do not worry about the warning messages
 aicbic(modelvb,blackisland)  # 588.3382 596.3846 291.1691   3
 }
 \references{

@@ -18,7 +18,7 @@ deviations of the log-normal residuals.}
 for multiple time-series in a SPM use simpspmM}
 
 \item{logobs}{the log-transformed observed cpue columns in indat,
-the data needed by funk, tranferred inside the ...}
+the data needed by funk, transferred inside the ...}
 
 \item{indat}{the fisheries data used in the analysis}
 

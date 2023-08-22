@@ -4,12 +4,17 @@
 \alias{uphist}
 \title{uphist a histogram with an upper limit on the x-axis}
 \usage{
-uphist(x, maxval = NA, ...)
+uphist(x, maxval = NA, newplot = FALSE, ...)
 }
 \arguments{
 \item{x}{the vector of values to be plotted as a histogram}
 
 \item{maxval}{the maximum value to be retained in the plotted data}
+
+\item{newplot}{is this a new, individual plot (=TRUE) or part of a multiple
+pane plot (=FALSE, the default), which would negate using the notion of
+recording the environment's par setting in oldpar, and returning to them
+on exit}
 
 \item{...}{any of the other arguments used by the base hist function}
 }

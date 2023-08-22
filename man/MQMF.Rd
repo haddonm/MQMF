@@ -3,77 +3,54 @@
 \docType{package}
 \name{MQMF}
 \alias{MQMF}
-\title{MQMF R functions for the New Book}
+\alias{MQMF-package}
+\title{MQMF functions for Using R for Modelling and Quantitative Methods in Fisheries}
 \description{
-The MQMF package Provides R functions for use with the 
-    new book: (\emph{Using R for Modelling and Quantitative Methods in 
-    Fisheries}), being published by CRC Press / Chapman & Hall in 
-    their (\emph{Using R}) series. Currently no vignettes are included but 
+The MQMF package Provides functions for use with the book
+    (\emph{Using R for Modelling and Quantitative Methods in Fisheries}), 
+    being published by CRC Press / Chapman & Hall in 
+    their (\emph{Using R}) series. Although no vignettes are included 
     all examples from the chapters are included as help pages for functions. 
-    Try ?chapter2, ?chapter3, ..., ?chapter7, which will provide a listing
+    Try ?chapter2, ?chapter3, ..., or ?chapter7, which will provide a listing
     of all the code chunks included in the book (and some that are not). 
-    The list of functions below is not complete so scroll to the bottom of 
-    any help file and click the link to the index of functions instead. A 
-    development version is available on GitHub at github.com/haddonm/MQMF.
+    To see a listing of all the help files, scroll to the bottom of any help 
+    screen and click the link, and an ordered listing of all visible 
+    functions will be shown. A development version of MQMF is available on 
+    GitHub at https://github.com/haddonm/MQMF.
 }
-\section{Some of the utility functions}{
+\section{Data sets}{
 
 \describe{
-  \item{countones}{ used in apply to count the ones in a vector}
-  \item{countzeros}{ used in apply to count the zeros in a vector}
-  \item{countgtzero}{ halves the height of a tall narrow data.frame}
-  \item{countNAs}{ used in apply to count the NAs in a vector}
-  \item{countgtone}{ used in apply to count the numbers > 1 in a vector}
-  \item{freqMean}{ calculates the mean and st dev count data}
-  \item{getmin}{ find the minimum of a series to help with ylim or xlim}
-  \item{getmax}{ find the maximum of a series to help with ylim or xlim}
-  \item{getname}{ extracts the name of a variable as character}
-  \item{halftable}{ subdivides a table to make it shorter and wider}
-  \item{magnitude}{ defines the relative size of parameters for use when
-      using nlm or optim without log-transforming the parameters}
-  \item{makelabel}{ simplifies combining a name with a vector of numbers
-      for use as a label or a legend entry}
-  \item{outfit}{ prints a pretty version of the results from optim, nlm,
-      or nlminb}
-  \item{printV}{ prints a vector of numbers vertically rather than 
-     horizontally}
-  \item{quants}{ used in 'apply' to estimate quantiles across a vector}
-  \item{which.closest}{ finds the value in a vector closest to a given
-      value.}
-}
-}
-
-\section{Some of the plotting and printing functions}{
-
-\describe{
-  \item{addnorm}{ fits a normal distribution to the output from hist}
-  \item{addlnorm}{ fits a log-normal distribution to output from hist}
-  \item{inthist}{ plots a histogram of integer values more precisely
-     than hist.}
-  \item{parset}{ defines the par statement for a single plot}
-  \item{parsyn}{ types the standard syntax for the par command to
-     the console}
-  \item{plot1}{ simplifies the plotting of two variables in a single
-     plot}
-  \item{plotprep}{ Sets up a window and the par values for a plot.
-     it checks to see if a graphics device is open and opens a new
-     one if not. This is simply a utility function to save typing
-     the standard syntax. Some of the defaults can be changed.
-     Typing the name without () will provide a template for
-     modification. If 'windows' is called repeatedly this will
-     generate a new active graphics device each time leaving the
-     older ones inactive but present. For quick exploratory plots
-     this behaviour is not wanted, hence the check if an active
-     device exists already or not.}
-  \item{printV}{ returns a vector cbinded to 1:length(invect),
-     which effectively prints the numbers vertically}
-  \item{properties}{ prints a listing of the properties of the column
-      variables within a data.frame}
+  \item{abdat}{ a 3 column data.frame of blacklip abalone fishery data}
+  \item{blackisland}{ tagging data for growth of Black Island abalone}
+  \item{dataspm}{ a data.frame of fisheries catch and cpue data}
+  \item{LatA}{ simulated length-at-age for 358 female fish}
+  \item{minnow}{ weekly growth data for use with seasonal growth curves}
+  \item{npf}{ fishery catch data from the Northern Prawn Fishery 1970-1992}
+  \item{pttuna}{ yellowfin tunafishery data from Pella-Tomlinson 1969}
+  \item{schaef}{ yellowfin tuna fishery data from Schaefer 1957}
+  \item{tasab}{ a matrix of abalone maturity-at-length data}
+  \item{tigers}{ tiger prawn recruitment data from Penn and Caputi 1986}
+  \item{twoindex}{ orange roughy catches with hypothetical cpue}
 }
 }
 
 \references{
-Haddon, M. (2020) Using R for Modelling and Quantitative 
+Haddon, M. (2021) Using R for Modelling and Quantitative 
     Methods in Fisheries, CRC Press / Chapman & Hall/ Boca Raton 337p.
-    ISBN: 9780367469894
+    ISBN: 9780367469894.
+    
+    Haddon, M. (2023) https://haddonm.github.io/URMQMF  A GitBook version
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/haddonm/MQMF}
+}
+
+}
+\author{
+\strong{Maintainer}: Malcolm Haddon \email{malcolm.haddon@gmail.com}
+
+}
+\keyword{internal}

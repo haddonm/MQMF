@@ -27,13 +27,14 @@
 #' param <- c(Linf=170.0,K=0.3,sigma=4.0)
 #' modelvb <- nlm(f=negNLL,p=param,funk=fabens,observed=bi$dl,indat=bi,
 #'                initL="l1",delT="dt") # could have used the defaults
+#' # Do not worry about the warning messages
 #' aicbic(modelvb,blackisland)  # 588.3382 596.3846 291.1691   3
 aicbic <- function(model,dat,nLL=TRUE) {  # model <- modelil; dat=bi
-  if (class(dat) %in% c("matrix","data.frame")) {
+  if (inherits(dat,c("matrix","data.frame"))) {
     n <- nrow(dat)
   } else {
     n <- dat
-    if (class(n) != "integer")
+    if (!inherits(n,"integer"))
       stop("input dat is neither the data used or the number of obs \n")
   }
     outputs <- c("value","minimum","objective")
@@ -207,10 +208,10 @@ countzeros <- function(invect) {
 #'  x <- factor(letters) 
 #'  facttonum(x)     # this would be silly, characters are not numbers
 facttonum <- function(invect){
-  if (class(invect) == "factor") {
+  if (inherits(invect,"factor")) {
     outvect <- suppressWarnings(as.numeric(levels(invect))[invect])
   }
-  if (class(invect) == "numeric") outvect <- invect
+  if (inherits(invect,"numeric")) outvect <- invect
   if (any(is.na(outvect)))
     warning("NAs produced, your input vector may have non-numbers present \n")
   return(outvect)

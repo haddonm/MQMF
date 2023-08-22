@@ -31,8 +31,8 @@
 #' 
 #' # R-chunk 2 Page 19
 #'  #A more complex function prepares to plot a single base graphic
-#'  #It has the syntax for opening a window outside of Rstudio and
-#'  #defining a base graphic. It includes oldpar<-par(no.readonly=TRUE)
+#'  #It has syntax for opening a window outside of Rstudio and
+#'  #defining a base graphic. It includes oldpar <- par(no.readonly=TRUE)
 #'  #which is returned invisibly so that the original 'par' settings
 #'  #can be recovered using par(oldpar) after completion of your plot.
 #' 
@@ -54,7 +54,7 @@
 #' # R-chunk 3 pages 20 - 21
 #' #Examine the use of random seeds.
 #' 
-#' seed <- getseed()  # you will very likely get different naswers
+#' seed <- getseed()  # you will very likely get different answers
 #' set.seed(seed)
 #' round(rnorm(5),5)
 #' set.seed(123456)
@@ -65,11 +65,11 @@
 #' ### Plotting in R
 #' # R-chunk 4  page 22
 #' #library(MQMF)   # The development of a simple graph  see Fig. 2.1
-#' #The statements below open the RStudio graphics window, but opening
-#' #a separate graphics window using plotprep is sometimes clearer.
+#' # The statements below open the RStudio graphics window, but opening
+#' # a separate graphics window using plotprep is sometimes clearer.
 #' 
 #' data("LatA")  #LatA = length at age data; try properties(LatA)
-#' #plotprep(width=6.0,height=5.0,newdev=FALSE) #unhash for external plot
+#' # plotprep(width=6.0,height=5.0,newdev=FALSE) #unhash for external plot
 #' oldpar <- par(no.readonly=TRUE)  # not in the book's example
 #' setpalette("R4") #a more balanced, default palette see its help
 #' par(mfrow=c(2,2),mai=c(0.45,0.45,0.1,0.05))  # see ?parsyn
