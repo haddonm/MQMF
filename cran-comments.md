@@ -3,65 +3,59 @@
 
 *  https://CRAN.R-project.org/package=MQMF
 
-* This update is made up of minor revisions and clarifications to a number of the help pages as well as applying the spell_check function from the spelling package.
+* This update is in response to an email from Kurt Hornik  on 19 August 2023 about a change in Rmarkdown with @docType no longer automatically adding an \alias in the
+package help file. I have fixed this using the "_PACKAGE" sentinal. In addition, I have taken the opportunity to correct numerous small typos, 
+clarify the usage of some of the more complex functions, and add usage instructions to the six 'chapter#' functions. 
 
 
 ## Test environments on Wed 26th August
-* local OS Windows 10 Home 2004 OS Build 19041.450
-* rhub: Ubuntu Linux 16.04 LTS, R-devel, GCC
-* rhub: Windows Server 2008 R2 SP1, R-devel, 32/64 bit
-* rhub: macOS 10.13.6 High Sierra, R-release, CRAN's setup
+* local OS Windows 11 Pro OS Build 22621 (10 x64)
 
-## R CMD check results:
-OK in all these cases, with no Errors, no Warnings, and no Notes
+Local Checks
 
+## ── R CMD check results ── MQMF 0.1.5 ────
+Duration: 30.8s
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+## R CMD check(remote=TRUE, manual=TRUE) results MQMF 0.1.5
+Duration: 1m 33s
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+
+## Using devtools::check_win_devel() on 6/Sept/23
+* Check time in seconds: 73
+* Status: OK
+* R Under development (unstable) (2023-09-04 r85066 ucrt)
+
+## Using:  devtools::check_mac_release()
+*  r-release-macosx-arm64|4.3.0|macosx|macOS 13.3.1 (22E261)
+*  Mac mini|Apple M1||en_US.UTF-8|macOS 11.3|clang-1403.0.22.14.1|GNU Fortran (GCC) 12.2.0
+*  checked OK
+
+
+## Using rhub::check_for_cran() 
+* Fedora Linux, R-devel, clang, gfortran
+  GNU Fortran (GCC) 12.2.1 20221121 (Red Hat 12.2.1-4)
+* Ubuntu Linux 20.04.1 LTS, R-release, GCC  
+* {"status":"ok"}
+  Finished: SUCCESS
 
 ### However: 
-Since those first checks, with 
-Fedora Linux, R-devel, GCC, and then again with  
-Ubuntu Linux 16.04 LTS, R-devel, GCC
+with the rhub checks, both reported a Note:
 
-I received a Note:
+* checking HTML version of manual ... NOTE
+Skipping checking HTML validation: no command 'tidy' found
 
-* checking for future file timestamps ... NOTE
-unable to verify current time
+This initially occurred in my local checks until I installed Rtools 4.3, after which it disappeared.
+I concluded this is not something I can amend of fix and hence, continued with my submission.
+This not did not occur in the other test arrangements.
 
-I have tried to find the source of the note and failed but noticed a tread in R-package-devel, from Fri 28th August  suggesting this was a wider problem which related to an external source rather than R or the package under development, hence my current submission. 
-
-On 2020-08-27 2:17 p.m., Duncan Murdoch wrote:
-> R tries to get the time from
->
-> http://worldtimeapi.org/api/timezone/UTC or
-> http://worldclockapi.com/api/json/utc/now
->
-> The first one doesn't accept UTC as a timezone; it appears to want
-> etc/UTC instead.  The second one is offline.
->
-> Duncan Murdoch
->
-> If both of those fail, you'll get the message you saw.
->
-> On 27/08/2020 1:23 p.m., John Fox wrote:
->> Dear r-package-devel list members,
->>
->> I got the following note when checking two different packages today
->> --as-cran, both under R 4.0.2 and under R-devel, on my Windows 10 and
->> macOS Catalina systems, and on several platforms on rhub:
->>
->>     * checking for future file timestamps ... NOTE
->> unable to verify current time
->>
->> I'm writing to inquire about the note because no one else has mentioned
->> this problem recently, in case it's produced by something that I'm
->> doing. There is a discussion of a similar problem from 2019 at
->> <https://stat.ethz.ch/pipermail/r-package-devel/2019q1/003577.html>.
->>
->> Both packages that I was checking are close to CRAN releases and so I'd
->> like to know whether I can disregard the note.
 
 ###Other Comments
 
-* This package complements the book 'Using R for Modelling and Quantitative Methods in Fisheries', which is in the 'Using R' series by CRC Press/Chapman & Hall. It will be formally published (made available) in September 2020. 
+* This package complements the book 'Using R for Modelling and Quantitative Methods in Fisheries', which is in the 'Using R' series by CRC Press/Chapman & Hall. It was formally published in 2021. 
 
 * The original submission raised two issues that needed explanation, I repeat those explanations here, just in case:
 

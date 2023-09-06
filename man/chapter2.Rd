@@ -3,6 +3,12 @@
 \name{chapter2}
 \alias{chapter2}
 \title{chapter2 The 15 R-code chunks from A Non-Introduction to R}
+\usage{
+chapter2(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Should instructions to written to the console, default=TRUE}
+}
 \description{
 chapter2 contains no active function but rather acts 
     as a repository for the various example code chunks found in 

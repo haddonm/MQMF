@@ -3,6 +3,12 @@
 \name{chapter7}
 \alias{chapter7}
 \title{chapter7 The 67 R-code chunks from Surplus Production Models}
+\usage{
+chapter7(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Should instructions to written to the console, default=TRUE}
+}
 \description{
 chapter7 is not an active function but rather acts 
     as a repository for the various example code chunks found in 

@@ -45,12 +45,12 @@ Haddon, M. (2021) Using R for Modelling and Quantitative
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/haddonm/MQMF}
+  \item \url{https://github.com/haddonm/MQMF/}
 }
 
 }
 \author{
-\strong{Maintainer}: Malcolm Haddon \email{malcolm.haddon@gmail.com}
+\strong{Maintainer}: Malcolm Haddon \email{malcolm.haddon@gmail.com} (\href{https://orcid.org/0000-0001-6971-7585}{ORCID})
 
 }
 \keyword{internal}

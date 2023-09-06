@@ -7,7 +7,10 @@
 #'     as a repository for the various example code chunks found in 
 #'     chapter2. There are 15 r-code chunks in chapter2.
 #'     
+#' @param verbose Should instructions to written to the console, default=TRUE
+#'     
 #' @name chapter2
+#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -214,7 +217,20 @@
 #' 
 #' plotspmdat(schaef) # examine the code as an eg of a custom plot
 #' }
-NULL
+chapter2 <- function(verbose=TRUE) {
+  if (verbose) {
+    cat("Chapter 2: A Non-Introduction to R \n\n")
+    cat("Contains 15 code chunks, which this function includes in its help page. \n")
+    cat("To access these examples, type ?chapter2 into the console \n")
+    cat("All the code chunks for the selected chapter will be listed. \n")
+    cat("To run each example chunk now entails selecting the lines of \n")
+    cat("interest, copying them (eg. <ctrl> c), and pasting the lines into the \n")
+    cat("console or an R script file. The idea is to save the user from having \n")
+    cat("to type all the code lines themselves. Doing this is sometimes easier \n")
+    cat("when the help is sent to a separate window, use the fourth icon at \n")
+    cat("the top of the help tab to open a new window containing the help page \n")
+  }
+} # end of chapter2
 
 
 # chapter3 --------
@@ -225,7 +241,10 @@ NULL
 #'     as a repository for the various example code chunks found in 
 #'     chapter3. There are 27 r-code chunks in chapter3.
 #'     
+#' @param verbose Should instructions to written to the console, default=TRUE     
+#'     
 #' @name chapter3
+#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -587,7 +606,21 @@ NULL
 #' kable(yield,digits=c(2,3,3,3))    
 #' 
 #' }
-NULL
+chapter3 <- function(verbose=TRUE) {
+  if (verbose) {
+    cat("Chapter 3: Simple Population Models \n\n")
+    cat("Contains 27 code chunks, which this function includes in its help page. \n")
+    cat("To access these examples, type ?chapter3 into the console \n")
+    cat("All the code chunks for the selected chapter will be listed. \n")
+    cat("To run each example chunk now entails selecting the lines of \n")
+    cat("interest, copying them (eg. <ctrl> c), and pasting the lines into the \n")
+    cat("console or an R script file. The idea is to save the user from having \n")
+    cat("to type all the code lines themselves. Doing this is sometimes easier \n")
+    cat("when the help is sent to a separate window, use the fourth icon at \n")
+    cat("the top of the help tab to open a new window containing the help page \n")
+  }
+} # end of chapter3
+
 
 
 # chapter4 --------
@@ -598,7 +631,10 @@ NULL
 #'     as a repository for the various example code chunks found in 
 #'     chapter4. There are 47 r-code chunks in chapter3.
 #'     
+#' @param verbose Should instructions to written to the console, default=TRUE
+#'     
 #' @name chapter4
+#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -1273,7 +1309,21 @@ NULL
 #' mtext("Cumulative Probability",side=2,outer=TRUE,cex=0.9,font=7)
 #' par(oldp)  # return par to old settings; this line not in book      
 #' }
-NULL
+chapter4 <- function(verbose=TRUE) {
+  if (verbose) {
+    cat("Chapter 4: Model Parameter Estimation \n\n")
+    cat("Contains 47 code chunks, which this function includes in its help page. \n")
+    cat("To access these examples, type ?chapter4 into the console \n")
+    cat("All the code chunks for the selected chapter will be listed. \n")
+    cat("To run each example chunk now entails selecting the lines of \n")
+    cat("interest, copying them (eg. <ctrl> c), and pasting the lines into the \n")
+    cat("console or an R script file. The idea is to save the user from having \n")
+    cat("to type all the code lines themselves. Doing this is sometimes easier \n")
+    cat("when the help is sent to a separate window, use the fourth icon at \n")
+    cat("the top of the help tab to open a new window containing the help page \n")
+  }
+} # end of chapter4
+
 
 
 # chapter5 --------
@@ -1286,7 +1336,10 @@ NULL
 #'     of course, feel free to use and modify any of these example 
 #'     chunks in your own work.
 #'     
+#' @param verbose Should instructions to written to the console, default=TRUE
+#'     
 #' @name chapter5
+#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -1692,7 +1745,21 @@ NULL
 #' lines(L,domed(p2,L),lwd=2,col=4,lty=4)  
 #' par(oldp)  # return par to old settings; this line not in book     
 #' }
-NULL
+chapter5 <- function(verbose=TRUE) {
+  if (verbose) {
+    cat("Chapter 5: Static Models \n\n")
+    cat("Contains 23 code chunks, which this function includes in its help page. \n")
+    cat("To access these examples, type ?chapter5 into the console \n")
+    cat("All the code chunks for the selected chapter will be listed. \n")
+    cat("To run each example chunk now entails selecting the lines of \n")
+    cat("interest, copying them (eg. <ctrl> c), and pasting the lines into the \n")
+    cat("console or an R script file. The idea is to save the user from having \n")
+    cat("to type all the code lines themselves. Doing this is sometimes easier \n")
+    cat("when the help is sent to a separate window, use the fourth icon at \n")
+    cat("the top of the help tab to open a new window containing the help page \n")
+  }
+} # end of chapter5
+
 
 # chapter6 --------
 
@@ -1704,7 +1771,10 @@ NULL
 #'     of course, feel free to use and modify any of these example 
 #'     chunks in your own work.
 #'     
+#' @param verbose Should instructions to written to the console, default=TRUE
+#'     
 #' @name chapter6
+#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -2525,7 +2595,21 @@ NULL
 #' cat("95% 2 ",round((tmp2[5,] - tmp2[1,]),4),"\n")     
 #' cat("Diff  ",round((tmp2[6,] - tmp1[6,]),4),"\n")      
 #' }
-NULL
+chapter6 <- function(verbose=TRUE) {
+  if (verbose) {
+    cat("Chapter 6: Static Models \n\n")
+    cat("Contains 53 code chunks, which this function includes in its help page. \n")
+    cat("To access these examples, type ?chapter6 into the console \n")
+    cat("All the code chunks for the selected chapter will be listed. \n")
+    cat("To run each example chunk now entails selecting the lines of \n")
+    cat("interest, copying them (eg. <ctrl> c), and pasting the lines into the \n")
+    cat("console or an R script file. The idea is to save the user from having \n")
+    cat("to type all the code lines themselves. Doing this is sometimes easier \n")
+    cat("when the help is sent to a separate window, use the fourth icon at \n")
+    cat("the top of the help tab to open a new window containing the help page \n")
+  }
+} # end of chapter6
+
 
 # chapter7 --------
 
@@ -2537,7 +2621,10 @@ NULL
 #'     of course, feel free to use and modify any of these example 
 #'     chunks in your own work.
 #'     
+#' @param verbose Should instructions to written to the console, default=TRUE
+#'     
 #' @name chapter7
+#' @export
 #'
 #' @examples
 #' \dontrun{
@@ -3300,4 +3387,18 @@ NULL
 #'     return predce;     
 #'  }')     
 #' }
-NULL
+chapter7 <- function(verbose=TRUE) {
+  if (verbose) {
+    cat("Chapter 7: Static Models \n\n")
+    cat("Contains 67 code chunks, which this function includes in its help page. \n")
+    cat("To access these examples, type ?chapter7 into the console \n")
+    cat("All the code chunks for the selected chapter will be listed. \n")
+    cat("To run each example chunk now entails selecting the lines of \n")
+    cat("interest, copying them (eg. <ctrl> c), and pasting the lines into the \n")
+    cat("console or an R script file. The idea is to save the user from having \n")
+    cat("to type all the code lines themselves. Doing this is sometimes easier \n")
+    cat("when the help is sent to a separate window, use the fourth icon at \n")
+    cat("the top of the help tab to open a new window containing the help page \n")
+  }
+} # end of chapter7
+

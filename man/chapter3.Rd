@@ -3,6 +3,12 @@
 \name{chapter3}
 \alias{chapter3}
 \title{chapter3 The 27 R-code chunks from Simple Population Models}
+\usage{
+chapter3(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Should instructions to written to the console, default=TRUE}
+}
 \description{
 chapter3 is not an active function but rather acts 
     as a repository for the various example code chunks found in 

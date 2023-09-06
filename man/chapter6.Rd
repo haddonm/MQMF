@@ -3,6 +3,12 @@
 \name{chapter6}
 \alias{chapter6}
 \title{chapter6 The 53 R-code chunks from On Uncertainty}
+\usage{
+chapter6(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Should instructions to written to the console, default=TRUE}
+}
 \description{
 chapter6 is not an active function but rather acts 
     as a repository for the various example code chunks found in 

@@ -3,6 +3,12 @@
 \name{chapter5}
 \alias{chapter5}
 \title{chapter5 The 23 R-code chunks from Static Models}
+\usage{
+chapter5(verbose = TRUE)
+}
+\arguments{
+\item{verbose}{Should instructions to written to the console, default=TRUE}
+}
 \description{
 chapter5 is not an active function but rather acts 
     as a repository for the various example code chunks found in 
